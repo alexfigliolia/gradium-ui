@@ -1,0 +1,6 @@
+.gradient-at {
+  --stroke: var(--theme-dark);
+  & path {
+    stroke: var(--stroke);
+  }
+}

@@ -1,0 +1,50 @@
+$black: #333333;
+$gray: #7e7e7e;
+$light-gray: #dedede;
+$yellow: #ffd500;
+$orange: #ff6a00;
+$green: #09ff80; 
+$teal: #03d9ff;
+$light-blue: #03a3ff;
+$blue: #0379ff;
+$pink: #ff0088;
+$red: #ff002b;
+$light-orange:#ff8228;
+$header-height: 70px;
+$footer-height: 150px;
+
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin textClip() {
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@mixin textGradient($direction: bottom) {
+  background: linear-gradient(to $direction, var(--theme-light), var(--theme-dark));
+  @include textClip;
+}
+
+@mixin buttonGradient($direction: right) {
+  background: linear-gradient(to $direction, var(--theme-light), var(--theme-dark));
+}
+
+@mixin skeleton {
+  background: linear-gradient(90deg, #eee 25%, #e7e7e7 50%, #eee 75%);
+  background-size: 200% 100%;
+  animation: skeleton-animation 1.5s infinite ease-in-out;
+}
+
+@keyframes skeleton-animation {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}

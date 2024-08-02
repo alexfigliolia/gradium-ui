@@ -1,0 +1,72 @@
+@use "Styles/Variables";
+
+:root {
+  --background: #fff;
+  --text-color: #{Variables.$black};
+  --text-color-light: #{Variables.$gray};
+  --theme-light: #{Variables.$teal};
+  --theme-dark: #{Variables.$blue};
+  --theme-mid: #{Variables.$light-blue};
+  --theme-gray: #{Variables.$light-gray};
+}
+
+html[data-theme='dark'] {
+  --background: #292929;
+  --text-color: #fff;
+  --text-color-light: #{Variables.$light-gray};
+  --theme-light: #{Variables.$yellow};
+  --theme-dark: #{Variables.$orange};
+  --theme-mid: #{Variables.$light-orange};
+  --theme-gray: #{Variables.$light-gray};
+}
+
+* {
+  box-sizing: border-box;
+  color: var(--text-color);
+}
+
+
+html {
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  font-family: "Outfit", -apple-system, BlinkMacSystemFont, "“Segoe UI”", Roboto,
+  Helvetica, Arial, sans-serif;
+  background-color: var(--background);
+}
+
+input, label, button {
+  font-family: "Outfit", -apple-system, BlinkMacSystemFont, "“Segoe UI”", Roboto,
+  Helvetica, Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  font-size: 1em;
+}
+
+button {
+  padding: 0;
+  cursor: pointer;
+}
+
+h1, h2, h3, h4, h5, h6, p, ol {
+  margin: 0;
+  color: #{Variables.$black};
+}
+
+p {
+  line-height: 1.5;
+}
+
+ol {
+  padding: 0;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance:none;
+}
+
