@@ -208,6 +208,16 @@
   resolved "https://registry.yarnpkg.com/@figliolia/event-emitter/-/event-emitter-1.1.4.tgz#c4377c808ee7e4a19dfe37d8a0277b7f9a763467"
   integrity sha512-0UmkV2yY2h+HEYY96FbEYMumNK8A9XNqwWtA4r7wgnyjbQ7ehtRS38+bMO2+5sdbnibRIbZYC1U4hgnjb701cA==
 
+"@figliolia/galena-dark-mode@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@figliolia/galena-dark-mode/-/galena-dark-mode-1.0.4.tgz#744fa9cc86073cbf6a87732253dc585148861f46"
+  integrity sha512-OV1Kz8UWAxb6Pztw8WS+pDB2T2lylI9F6Qs0/Yt/HM3TrYAnHW7EOH9Wz6bK8V5Rz96+HKL0Wt+3wBIYyozsHg==
+
+"@figliolia/galena-window@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@figliolia/galena-window/-/galena-window-1.0.0.tgz#222d8a83350265f01171ca5400e3606d74567c5b"
+  integrity sha512-9vFvaEyC7Zye9PlxttZrGmciN0d5TrcC5BKEjB0kcZbiVMpR04GlRSuuVMZqdiEkT+nGEUC1j9VuPplSLYCc9g==
+
 "@figliolia/galena@^2.2.6", "@figliolia/galena@^2.3.1":
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/@figliolia/galena/-/galena-2.3.1.tgz#0cf1c7ec6ed61f3626ae0d6c30ae4ddf896a1637"

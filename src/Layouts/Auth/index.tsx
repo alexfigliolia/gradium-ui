@@ -1,13 +1,12 @@
-import type { FormEvent } from "react";
-import { memo, useCallback, useEffect, useMemo } from "react";
+import { memo, useEffect, useMemo } from "react";
 import { Outlet } from "react-router-dom";
 import { AuthButton } from "Components/AuthButton";
 import { BrandSVGGradient } from "Components/BrandSVGGradient";
 import { ThemeToggle } from "Components/ThemeToggle";
-import { useLoadingState } from "Hooks/useLoadingState";
+import { useFormState } from "Hooks/useFormState";
 import { Blob } from "Icons/Blob";
 import { Gradium } from "Icons/Gradium";
-import { useScreen } from "State/Screen";
+import { selectHeight, useScreen } from "State/Screen";
 import type { Propless } from "Types/React";
 import { Anchor } from "./Anchor";
 import { BlobWithText } from "./BlobWithText";
@@ -17,21 +16,20 @@ import "./styles.scss";
 export default memo(
   function Auth(_: Propless) {
     const signUp = useSignUpScreen();
-    const height = useScreen(state => state.height);
+    const height = useScreen(selectHeight);
     const text = useMemo(() => (signUp ? "Sign Up!" : "Login!"), [signUp]);
-    const {
-      setState: _1,
-      resetState,
-      error,
-      success,
-      loading,
-    } = useLoadingState();
-    const onSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      console.log(
-        Array.from(new FormData(e.target as HTMLFormElement).entries()),
-      );
-    }, []);
+    const { onSubmit, error, success, loading, resetState } = useFormState(
+      (data, setState, resetState) => {
+        setState("loading", true);
+        console.log(Array.from(data).entries());
+        setTimeout(() => {
+          setState("success", true);
+          setTimeout(() => {
+            resetState();
+          }, 2000);
+        }, 2000);
+      },
+    );
 
     useEffect(() => {
       resetState();

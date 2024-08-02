@@ -1,5 +1,8 @@
+import type { IScreen } from "@figliolia/galena-window";
+import { WindowManager } from "@figliolia/galena-window";
 import { createUseState } from "@figliolia/react-galena";
-import { ScreenModel } from "Models/Screen";
 
-export const Screen = new ScreenModel();
+export const Screen = new WindowManager();
 export const useScreen = createUseState(Screen);
+
+export const selectHeight = (state: IScreen) => state.height;

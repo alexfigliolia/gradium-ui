@@ -5,6 +5,11 @@ export type IStateValue<T extends IStateKey> = T extends "error"
   ? boolean | string
   : boolean;
 
+export type IStateSetter<T extends IStateKey = IStateKey> = (
+  state: T,
+  value: IStateValue<T>,
+) => void;
+
 export const useLoadingState = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
