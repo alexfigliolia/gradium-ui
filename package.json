@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@figliolia/classnames": "1.0.0",
+    "@figliolia/day-night-toggle": "^1.0.1",
     "@figliolia/event-emitter": "^1.1.4",
     "@figliolia/galena": "^2.3.1",
     "@figliolia/react-galena": "^3.2.1",

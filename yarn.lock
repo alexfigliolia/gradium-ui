@@ -191,6 +191,18 @@
   resolved "https://registry.yarnpkg.com/@figliolia/classnames/-/classnames-1.0.0.tgz#e686c202d28abdee386bd73e5a9b3bd28a02a0e1"
   integrity sha512-htKzzObZtoK45uJ8K3KVXGxyJcT0yJA6uVVPBvmUUjoFmzm9UIUwWuKw/7X8kUIXVMhT27ySA2mgWzkPWSAbPw==
 
+"@figliolia/classnames@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@figliolia/classnames/-/classnames-1.0.1.tgz#cb3b6ead371f8c4b2550351165c9fcd256f7b817"
+  integrity sha512-C0v417+15L2yVMsrbY8UjcglbQiJBdmofKTxNKDNgTRMDVdG5NKMxPSq1FTcPkUPNH2uFpK1P1bv+3yf4EgbXw==
+
+"@figliolia/day-night-toggle@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@figliolia/day-night-toggle/-/day-night-toggle-1.0.1.tgz#11843c82d4959f756a0e3f04ef6d237f3835be66"
+  integrity sha512-ZUeyJ0n0P/JRA+5fSPZVZ1dDeiJbTZjIUte+vB1R6c7+O/3a+h3VNNsVb97lJS+CoUEMxz5xZxlG7U8KfK/1gw==
+  dependencies:
+    "@figliolia/classnames" "^1.0.1"
+
 "@figliolia/event-emitter@^1.1.4":
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/@figliolia/event-emitter/-/event-emitter-1.1.4.tgz#c4377c808ee7e4a19dfe37d8a0277b7f9a763467"

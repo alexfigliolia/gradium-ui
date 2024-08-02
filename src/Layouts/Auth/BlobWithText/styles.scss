@@ -2,42 +2,56 @@
 
 .blob-with-text {
   position: absolute;
-  width: 70vh;
-  top: -35vh;
-  left: -20vh;
-  @media (min-width: 670px) {
-    width: 110vh;
-    top: -60vh;
-    left: -40vh;
+  top: 0;
+  left: 0;
+  height: 20vh;
+  width: 20vh;
+  @media (min-width: 1200px) {
+    height: 30vh;
+    width: 30vh;
   }
   @media (min-width: 1500px) {
-    left: -10vh;
-  } 
-  &> svg > path {
-    fill: url(#blobWithText);
-  }
-  &>svg {
-    height: 100%;
-    width: 100%;
+    left: 10vw;
   }
   &>div {
-    position: absolute;
-    top: 8.5vh;
-    left: 1.5vh;
-    height: 100%;
     width: 100%;
-    @include Variables.center;
-    text-align: center;
-    @media (min-width: 670px) {
-      top: 16vh;
-      left: 3.5vh;
-    } 
-    @media (min-width: 1500px) {
-      left: 1.5vh;
-    } 
-    &>h1 {
-      font-size: 6vh;
-      color: #fff;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    &>svg {
+      top: 0;
+      left: 0;
+      z-index: 1;
+      width: 300%;
+      height: 300%;
+      position: absolute;
+      translate: -35% -45%;
+      &> path {
+        fill: url(#blobWithText);
+      }
+    }
+    &>div {
+      height: 100%;
+      min-width: 125%;
+      z-index: 2;
+      @include Variables.center;
+      &>h1 {
+        width: 100%;
+        text-align: center;
+        color: #fff;
+        font-size: 5.5vh;
+        margin-top: -2vh;
+        white-space: nowrap;
+        @media (min-width: 1200px) {
+          font-size: 7vh;
+        }
+        @media (min-width: 1500px) {
+          font-size: 8vh; 
+          margin-left: -8vh;
+        }
+      }
     }
   }
 }

@@ -3,7 +3,7 @@ import { memo, useCallback, useEffect, useMemo } from "react";
 import { Outlet } from "react-router-dom";
 import { AuthButton } from "Components/AuthButton";
 import { BrandSVGGradient } from "Components/BrandSVGGradient";
-import { DayNightToggle } from "Components/DayNightToggle";
+import { ThemeToggle } from "Components/ThemeToggle";
 import { useLoadingState } from "Hooks/useLoadingState";
 import { Blob } from "Icons/Blob";
 import { Gradium } from "Icons/Gradium";
@@ -39,9 +39,7 @@ export default memo(
 
     return (
       <section className="auth-screen" style={{ height, maxHeight: height }}>
-        <BlobWithText defs={<BrandSVGGradient id="blobWithText" />}>
-          {text}
-        </BlobWithText>
+        <BlobWithText>{text}</BlobWithText>
         <div className="content">
           <Gradium>
             <BrandSVGGradient id="gradiumIcon" x1={0} y1={0} x2={1} y2={1} />
@@ -61,7 +59,7 @@ export default memo(
         <Blob>
           <BrandSVGGradient id="blobShape" />
         </Blob>
-        <DayNightToggle />
+        <ThemeToggle />
       </section>
     );
   },
