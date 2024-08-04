@@ -4,14 +4,14 @@ $light-gray: #dedede;
 $yellow: #ffd500;
 $orange: #ff6a00;
 $green: #09ff80; 
-$teal: #03d9ff;
-$light-blue: #03a3ff;
-$blue: #0379ff;
+$teal: #0acdf0;
+$light-blue: #0898ec;
+$blue: #0773ee;
 $pink: #ff0088;
 $red: #ff002b;
 $light-orange:#ff8228;
-$header-height: 70px;
-$footer-height: 150px;
+$nav-height-small: 70px;
+$nav-width-large: 250px;
 
 @mixin center {
   display: flex;

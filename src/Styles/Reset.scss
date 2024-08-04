@@ -4,6 +4,9 @@
   --background: #fff;
   --text-color: #{Variables.$black};
   --text-color-light: #{Variables.$gray};
+  --nav-bar-background: #06222d;
+  --nav-bar-text-color: #{rgba(#fff, 0.85)};
+  --nav-bar-hover: #{rgba(#fff, 0.05)};
   --theme-light: #{Variables.$teal};
   --theme-dark: #{Variables.$blue};
   --theme-mid: #{Variables.$light-blue};
@@ -14,6 +17,9 @@ html[data-theme='dark'] {
   --background: #292929;
   --text-color: #fff;
   --text-color-light: #{Variables.$light-gray};
+  --nav-bar-background: #232323;
+  --nav-bar-text-color: #{rgba(#fff, 0.75)};
+  --nav-bar-hover: #{rgba(#fff, 0.05)};
   --theme-light: #{Variables.$yellow};
   --theme-dark: #{Variables.$orange};
   --theme-mid: #{Variables.$light-orange};

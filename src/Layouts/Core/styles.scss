@@ -1,0 +1,18 @@
+@use "Styles/Variables";
+
+.core {
+  width: 100%;
+  padding: 1em;
+  min-height: 100vh;
+  @media (min-width: 957px) {
+    margin-left: Variables.$nav-width-large;
+    width: calc(100% - Variables.$nav-width-large);
+  }
+}
+
+svg.gradient-hidden {
+  height: 0;
+  width: 0;
+  position: absolute;
+  visibility: collapse;
+}
