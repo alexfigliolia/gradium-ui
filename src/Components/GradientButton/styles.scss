@@ -1,0 +1,13 @@
+@use "Styles/Variables";
+
+.gradient-button {
+  padding: 0.5em 1.5em;
+  border-radius: 3em;
+  color: #fff;
+  border: none;
+  font-size: 1em;
+  font-weight: 600;
+  box-shadow: 0px 2.5px 5px rgba(#000, 0.2);
+  @include Variables.buttonGradient;
+  @include Variables.center;
+}

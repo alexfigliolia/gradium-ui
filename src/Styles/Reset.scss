@@ -1,12 +1,13 @@
 @use "Styles/Variables";
 
 :root {
-  --background: #fff;
+  --background: #f5f5f5;
   --text-color: #{Variables.$black};
   --text-color-light: #{Variables.$gray};
   --nav-bar-background: #06222d;
   --nav-bar-text-color: #{rgba(#fff, 0.85)};
   --nav-bar-hover: #{rgba(#fff, 0.05)};
+  --tile-background: #fff;
   --theme-light: #{Variables.$teal};
   --theme-dark: #{Variables.$blue};
   --theme-mid: #{Variables.$light-blue};
@@ -20,6 +21,7 @@ html[data-theme='dark'] {
   --nav-bar-background: #232323;
   --nav-bar-text-color: #{rgba(#fff, 0.75)};
   --nav-bar-hover: #{rgba(#fff, 0.05)};
+  --tile-background: #424141;
   --theme-light: #{Variables.$yellow};
   --theme-dark: #{Variables.$orange};
   --theme-mid: #{Variables.$light-orange};
@@ -39,6 +41,7 @@ html {
   font-family: "Outfit", -apple-system, BlinkMacSystemFont, "“Segoe UI”", Roboto,
   Helvetica, Arial, sans-serif;
   background-color: var(--background);
+  color: var(--text-color);
 }
 
 input, label, button {
@@ -56,9 +59,16 @@ button {
   cursor: pointer;
 }
 
+button, a {
+  outline: none;
+  &:focus-visible {
+    outline: 2px solid var(--theme-dark);
+  }
+}
+
 h1, h2, h3, h4, h5, h6, p, ol {
   margin: 0;
-  color: #{Variables.$black};
+  color: var(--text-color);
 }
 
 p {

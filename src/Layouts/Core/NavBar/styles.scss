@@ -7,7 +7,9 @@
   height: Variables.$nav-height-small;
   z-index: 10;
   position: fixed;
-  @include Variables.center;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   @media (min-width: 957px) {
     bottom: auto;
     top: 0;
@@ -31,6 +33,7 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+    backdrop-filter: blur(5px);
     background-color: var(--nav-bar-background);
     @media (min-width: 670px) {
       width: 70%;
@@ -90,7 +93,7 @@
             fill: url(#headerGradient);
           }
           & circle {
-            fill: var(--background);
+            fill: var(--nav-bar-background);
           }
         }
       }
