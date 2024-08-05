@@ -1,0 +1,38 @@
+@use "Styles/Variables";
+
+.new-property {
+  & h2,
+  & p {
+    width: 100%;
+    text-align: center;
+  }
+  & h2 {
+    margin-bottom: 0.5em;
+  }
+  & p {
+    margin-bottom: 1.5em;
+    color: var(--text-color-light);
+  }
+  & form {
+    width: 90%;
+    max-width: 400px;
+    margin: auto;
+    margin-bottom: 1em;
+    &> .input {
+      margin-bottom: 2em;
+    }
+    &> .gradient-button {
+      margin: auto;
+    }
+  }
+  & .closer-button {
+    top: 1em;
+    right: 1em;
+    --dimensions: 3.5em;
+    position: absolute;
+    transition: opacity 0.25s;
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { GradientGradium } from "Icons/GradientGradium";
+import { Gradium } from "Icons/Gradium";
 import type { Propless } from "Types/React";
 import "./styles.scss";
 
@@ -7,7 +7,7 @@ export const Logo = memo(
   function Logo(_: Propless) {
     return (
       <div className="logo">
-        <GradientGradium id="logoGradient" />
+        <Gradium />
         <span>Gradium</span>
       </div>
     );

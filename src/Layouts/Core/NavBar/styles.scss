@@ -58,7 +58,7 @@
         &.buildings-filled,
         &.staff-filled {
           & path {
-            fill: url(#headerGradient);
+            fill: url(#globalBrandGradient);
           }
         }
         &.staff-stroked {
@@ -78,7 +78,7 @@
         &.schedule-filled {
           & path {
             &:nth-of-type(2) {
-              fill: url(#headerGradient);
+              fill: url(#globalBrandGradient);
             }
           }
         }
@@ -90,7 +90,7 @@
         }
         &.settings-filled {
           & path {
-            fill: url(#headerGradient);
+            fill: url(#globalBrandGradient);
           }
           & circle {
             fill: var(--nav-bar-background);
@@ -101,26 +101,26 @@
         &:hover > div > svg {
           &.buildings-stroked {
             & path {
-              fill: url(#headerGradient);
+              fill: url(#globalBrandGradient);
             }
           }
           &.staff-stroked {
             & path {
-              fill: url(#headerGradient);
+              fill: url(#globalBrandGradient);
               &:nth-of-type(3) {
                 fill: none;
-                stroke: url(#headerGradient);
+                stroke: url(#globalBrandGradient);
               }
             }
           }
           &.schedule-stroked {
             & path:nth-of-type(2) {
-              fill: url(#headerGradient);
+              fill: url(#globalBrandGradient);
             }
           }
           &.settings-stroked {
             & path {
-              stroke: url(#headerGradient);
+              stroke: url(#globalBrandGradient);
             }
           }
         }

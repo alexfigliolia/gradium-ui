@@ -6,10 +6,14 @@
     align-items: center;
     justify-content: space-between;
     @media (min-width: 670px) {
+      margin-bottom: 2em;
+    }
+    @media (min-width: 957px) {
       justify-content: flex-start;
     }
     &>h1 {
       font-weight: 600;
+      font-size: 1.5em;
       @media (min-width: 670px) {
         font-size: 1.75em;
       }

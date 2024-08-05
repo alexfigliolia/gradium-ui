@@ -1,8 +1,8 @@
 import { Fragment, memo } from "react";
 import { Input } from "Components/Input";
-import { GradientAt } from "Icons/GradientAt";
-import { GradientLock } from "Icons/GradientLock";
-import { GradientUser } from "Icons/GradientUser";
+import { At } from "Icons/At";
+import { Lock } from "Icons/Lock";
+import { User } from "Icons/User";
 import type { Propless } from "Types/React";
 
 export default memo(
@@ -11,7 +11,7 @@ export default memo(
       <Fragment>
         <Input
           required
-          icon={<GradientUser id="gradientUser" />}
+          icon={<User />}
           type="text"
           label="Name"
           name="name"
@@ -19,7 +19,7 @@ export default memo(
         />
         <Input
           required
-          icon={<GradientAt id="gradientAt" />}
+          icon={<At />}
           type="email"
           label="Email"
           name="email"
@@ -27,7 +27,7 @@ export default memo(
         />
         <Input
           required
-          icon={<GradientLock id="gradientLock" />}
+          icon={<Lock />}
           type="password"
           label="Password"
           name="password"

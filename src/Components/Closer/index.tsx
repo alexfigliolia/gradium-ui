@@ -1,17 +1,18 @@
 import type { ButtonHTMLAttributes } from "react";
 import { memo } from "react";
 import { useClassNames } from "@figliolia/classnames";
+import { X } from "Icons/X";
 import "./styles.scss";
 
-export const GradientButton = memo(function GradientButton({
+export const Closer = memo(function Closer({
   children,
   className,
   ...rest
 }: ButtonHTMLAttributes<HTMLButtonElement>) {
-  const classes = useClassNames("gradient-button", className);
+  const classes = useClassNames("closer-button", className);
   return (
-    <button {...rest} className={classes}>
-      {children}
+    <button className={classes} {...rest}>
+      <X>{children}</X>
     </button>
   );
 });

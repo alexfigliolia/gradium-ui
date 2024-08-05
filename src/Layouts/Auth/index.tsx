@@ -1,6 +1,6 @@
 import { memo, useEffect, useMemo } from "react";
 import { Outlet } from "react-router-dom";
-import { AuthButton } from "Components/AuthButton";
+import { ActionButton } from "Components/ActionButton";
 import { BrandSVGGradient } from "Components/BrandSVGGradient";
 import { ThemeToggle } from "Components/ThemeToggle";
 import { useFormState } from "Hooks/useFormState";
@@ -45,12 +45,13 @@ export default memo(
           <h1>Gradium</h1>
           <form onSubmit={onSubmit}>
             <Outlet />
-            <AuthButton
-              label={text}
+            <ActionButton
+              type="submit"
               error={!!error}
               success={success}
-              loading={loading}
-            />
+              loading={loading}>
+              {text}
+            </ActionButton>
           </form>
           <Anchor />
         </div>

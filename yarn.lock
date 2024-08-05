@@ -196,6 +196,13 @@
   resolved "https://registry.yarnpkg.com/@figliolia/classnames/-/classnames-1.0.1.tgz#cb3b6ead371f8c4b2550351165c9fcd256f7b817"
   integrity sha512-C0v417+15L2yVMsrbY8UjcglbQiJBdmofKTxNKDNgTRMDVdG5NKMxPSq1FTcPkUPNH2uFpK1P1bv+3yf4EgbXw==
 
+"@figliolia/data-structures@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@figliolia/data-structures/-/data-structures-1.0.4.tgz#6a87d09e2e8d7a9af6805ec710551cb346f426a6"
+  integrity sha512-7zUwVzXvqMskCMSeY9kF9RoaNBQl9RsQX9bwlxE92IcNDPwLiBrybWRS3DD5TsECwAoKCxUjERV+SVbVBDXYOg==
+  dependencies:
+    "@figliolia/event-emitter" "^1.1.4"
+
 "@figliolia/day-night-toggle@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@figliolia/day-night-toggle/-/day-night-toggle-1.0.1.tgz#11843c82d4959f756a0e3f04ef6d237f3835be66"
@@ -225,6 +232,14 @@
   dependencies:
     "@figliolia/event-emitter" "^1.1.4"
 
+"@figliolia/modal-stack@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@figliolia/modal-stack/-/modal-stack-1.0.3.tgz#05ffbfa9da1f4f250224a2c384ee1c389bce5e3a"
+  integrity sha512-e0QW9hShVKrieXI+A6qkKFRs7v3qG2NByVcrfbbF7Lwoj9jnOZgKdiOsclA/2kTmXKEdsHmab27UwwJh4puXCQ==
+  dependencies:
+    "@figliolia/data-structures" "^1.0.4"
+    "@figliolia/event-emitter" "^1.1.4"
+
 "@figliolia/react-galena@^3.2.1":
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/@figliolia/react-galena/-/react-galena-3.2.1.tgz#ceb6201bd183cd0e2f3efd7acf686e841ec5afc7"
@@ -236,6 +251,11 @@
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/@figliolia/react-lazy/-/react-lazy-1.0.8.tgz#b4deb4f4104365670c3f09e6e23be78a905a3094"
   integrity sha512-TiZRKqZYNZVAd1K/lqQdrZtL6PA92xEtOQjW8dPdFOEorxaPAQ/VuM3Hc8il8Y7vx0BlzNoHEhxFc+dbGtmiVQ==
+
+"@figliolia/size-observer@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@figliolia/size-observer/-/size-observer-1.0.2.tgz#dd6ae39e975664b2c7a5bbec4d891bd49bdeef93"
+  integrity sha512-AQRGxoJJP3NHACGWNf+pcem0mI8tPQm1QlRiq71ezxS4hHgvww11IpH1Xk1uy/EWvHkjNEL41lmdvXKNogVHCw==
 
 "@humanwhocodes/config-array@^0.11.14":
   version "0.11.14"

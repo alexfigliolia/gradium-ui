@@ -1,0 +1,18 @@
+@use "Styles/Variables";
+
+.closer-button {
+  --dimensions: 3em;
+  height: var(--dimensions);
+  width: var(--dimensions);
+  border: none;
+  background-color: transparent;
+  border-radius: calc(var(--dimensions) * 0.5);
+  @include Variables.center;
+  &> svg {
+    width: calc(var(--dimensions) * 0.75);
+    height: calc(var(--dimensions) * 0.75);
+    & path {
+      stroke: url(#globalBrandGradient);
+    }
+  }
+}

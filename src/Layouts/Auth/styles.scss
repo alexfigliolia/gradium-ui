@@ -33,8 +33,6 @@
     } 
     &>p {
       font-size: 1.1em;
-      margin-top: 1em;
-      margin-bottom: -1em;
       color: var(--text-color-light);
       &>a {
         font-weight: 600;
@@ -55,6 +53,9 @@
       border-radius: 0.25em;
       @media (min-width: 670px) {
         padding: 2em;
+      }
+      &>.action-button {
+        margin: 1em auto;
       }
     }
   }

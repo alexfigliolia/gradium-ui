@@ -1,36 +1,39 @@
+import type { Options } from "flickity";
 import Flickity from "flickity";
 import type { HTMLAttributes } from "react";
-import { memo, useEffect, useRef } from "react";
+import { memo, useLayoutEffect, useRef } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import "./styles.scss";
+
+const DEFAULT_OPTIONS: Options = {
+  draggable: true,
+  prevNextButtons: false,
+  pageDots: false,
+  setGallerySize: false,
+};
 
 export const ImageSlider = memo(function ImageSlider({
   images,
   className,
+  options = DEFAULT_OPTIONS,
+  ...rest
 }: Props) {
   const slider = useRef<Flickity>();
   const container = useRef<HTMLDivElement>(null);
   const classes = useClassNames("image-slider", className);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!container.current) {
       return;
     }
-    slider.current = new Flickity(container.current, {
-      cellAlign: "left",
-      contain: true,
-      prevNextButtons: false,
-      pageDots: false,
-      adaptiveHeight: true,
-      watchCSS: true,
-    });
+    slider.current = new Flickity(container.current, options);
     return () => {
       if (slider.current) {
         slider.current.destroy();
       }
     };
-  }, []);
+  }, [options, images]);
   return (
-    <div ref={container} className={classes}>
+    <div ref={container} className={classes} {...rest}>
       {images.map(image => {
         return (
           <div key={image} className="is-slide">
@@ -47,4 +50,5 @@ export const ImageSlider = memo(function ImageSlider({
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   images: string[];
+  options?: Options;
 }
