@@ -26,13 +26,13 @@ export const ActionSheet = memo(function ActionSheet({
   const DDOptions: IDragDetectorOptions<HTMLDivElement> = useMemo(
     () => ({
       yThreshold: threshold,
-      callback: ({ y, yDelta, exit, rect }) => {
+      callback: ({ y, yDelta, yDistance, exit, rect }) => {
         if (exit) {
           setTranslate(0);
           timeout.execute(() => {
             setDragging(false);
           }, 16);
-          if ((y >= 100 && yDelta > 0) || yDelta > 15) {
+          if ((y >= 100 && yDelta > 0) || yDelta > 15 || yDistance > 60) {
             return close();
           }
         } else {
