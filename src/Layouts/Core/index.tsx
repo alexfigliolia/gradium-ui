@@ -12,9 +12,6 @@ export default memo(
         <div className="core">
           <Outlet />
         </div>
-        {/* <svg className="gradient-hidden">
-          <BrandSVGGradient id="globalBrandGradient" />
-        </svg> */}
       </Fragment>
     );
   },

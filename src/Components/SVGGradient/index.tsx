@@ -1,10 +1,10 @@
 import type { SVGAttributes } from "react";
 import { memo } from "react";
-import CSSVars from "Styles/Exports.module.scss";
+import { teal, blue } from "Styles/Exports.module.scss";
 
 export const SVGGradient = memo(function SVGGradient({
-  color1 = CSSVars.teal,
-  color2 = CSSVars.blue,
+  color1 = teal,
+  color2 = blue,
   ...rest
 }: Props) {
   return (

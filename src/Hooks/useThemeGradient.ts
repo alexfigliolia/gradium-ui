@@ -1,10 +1,10 @@
 import { useLayoutEffect, useState } from "react";
 import type { IThemeName } from "@figliolia/galena-dark-mode";
 import { Theme } from "State/Theme";
-import CSSVars from "Styles/Exports.module.scss";
+import { yellow, orange, blue, teal } from "Styles/Exports.module.scss";
 
-const DARK_GRADIENT: [string, string] = [CSSVars.yellow, CSSVars.orange];
-const LIGHT_GRADIENT: [string, string] = [CSSVars.teal, CSSVars.blue];
+const DARK_GRADIENT: [string, string] = [yellow, orange];
+const LIGHT_GRADIENT: [string, string] = [teal, blue];
 
 const getGradient = (theme: IThemeName) =>
   theme === "dark" ? DARK_GRADIENT : LIGHT_GRADIENT;
