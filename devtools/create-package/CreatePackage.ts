@@ -1,14 +1,11 @@
 import { mkdirSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { join, resolve } from "node:path";
 import { parseArgs } from "node:util";
 import { ChildProcess } from "@figliolia/child-process";
 import TSConfig from "../../tsconfig.json";
 
 export class CreatePackage {
-  private static fileName = fileURLToPath(import.meta.url);
-  private static directory = dirname(this.fileName);
-  public static ROOT = resolve(this.directory, "../../");
+  public static ROOT = resolve(__dirname, "../../");
   public static SRC = join(this.ROOT, "src");
   public static TSCONFIG_PATH = join(this.ROOT, "tsconfig.json");
 
