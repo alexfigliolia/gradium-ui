@@ -3,13 +3,13 @@ import type { IDragDetectorOptions } from "Tools/DragDetector";
 import { DragDetector } from "Tools/DragDetector";
 
 export const useDragDetector = <T extends Element>(
-  options: IDragDetectorOptions,
+  options: IDragDetectorOptions<T>,
 ): DragDetector<T> => {
   const detector = useRef(new DragDetector<T>(options));
 
   useEffect(() => {
-    const DD = new DragDetector<T>(options);
-    detector.current = DD;
+    const { current: DD } = detector;
+    DD.setOptions(options);
     return () => {
       DD.destroy();
     };

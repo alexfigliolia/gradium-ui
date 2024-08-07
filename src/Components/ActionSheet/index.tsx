@@ -67,9 +67,7 @@ export const ActionSheet = memo(function ActionSheet({
       onClick={onClickOutside}>
       <div
         role="dialog"
-        ref={detector.register}
-        onMouseDown={detector.onMouseDown}
-        onTouchStart={detector.onMouseDown}
+        {...detector.bindings}
         style={{
           transform: `translateY(${translate}px)`,
           transition: `transform ${translate === 0 && !detector.active ? "0.5s" : "0s"}, translate 0.5s, opacity 0.5s, scale 0.5s`,

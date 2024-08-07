@@ -31,6 +31,10 @@ export class DragDetector<T extends Element> {
     this.node = node;
   };
 
+  public setOptions(options: IDragDetectorOptions<T>) {
+    this.options = DragDetector.mergeDefaultOptions(options)
+  }
+
   public listen() {
     document.addEventListener("mousemove", this.onMouseMove);
     document.addEventListener("mouseup", this.onMouseUp);
@@ -104,6 +108,12 @@ export class DragDetector<T extends Element> {
     });
     this.destroy();
   };
+
+  public readonly bindings = {
+    ref: this.register,
+    onMouseDown: this.onMouseDown,
+    onTouchStart: this.onMouseDown
+  }
 
   private static mouseCoordinates<T extends Element>(
     node: T,
