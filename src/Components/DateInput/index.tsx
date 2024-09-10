@@ -6,6 +6,7 @@ import { DatePicker } from "Components/DatePicker";
 import { Input, type InputProps } from "Components/Input";
 import { useClickOutside } from "Hooks/useClickOutside";
 import { useFocusedKeyListener } from "Hooks/useFocusedKeyListener";
+import { Triangle } from "Icons/Triangle";
 import { Devices } from "Tools/Devices";
 import type { Callback } from "Types/Generics";
 import { Controller } from "./Controller";
@@ -55,9 +56,14 @@ export const DateInput = memo(function DateInput({
   const dateISO = useMemo(() => Controller.toISODate(value), [value]);
 
   const inputClasses = useClassNames("date-input", className);
-  const pickerClasses = useClassNames(pickerLocationX, pickerLocationY, {
-    open,
-  });
+  const pickerClasses = useClassNames(
+    "picker",
+    pickerLocationX,
+    pickerLocationY,
+    {
+      open,
+    },
+  );
   return (
     <Input
       {...rest}
@@ -71,11 +77,12 @@ export const DateInput = memo(function DateInput({
       onFocus={onFocus}
       onBlur={focusManager.onBlur}>
       {!Devices.IS_MOBILE_BROWSER && (
-        <DatePicker
-          value={dateISO}
-          onChange={onChange}
-          className={pickerClasses}
-        />
+        <div className={pickerClasses}>
+          <div>
+            <DatePicker value={dateISO} onChange={onChange} />
+            <Triangle />
+          </div>
+        </div>
       )}
     </Input>
   );

@@ -12,12 +12,11 @@
       }
     }
   }
-  &>.date-picker {
+  &>.picker {
     position: absolute;
-    top: 100%;
+    top: calc(100% + 1em);
     left: 0;
-    width: 100%;
-    max-width: 350px;
+    width: auto;
     z-index: 10;
     opacity: 0;
     pointer-events: none;
@@ -27,10 +26,20 @@
     &.above {
       top: auto;
       bottom: calc(100% + 1.5em);
+      translate: 0 -1.5em;
+      &>div .triangle-icon {
+        top: auto;
+        bottom: -1em;
+        rotate: 180deg;
+      }
     }
     &.right {
       left: auto;
       right: 0;
+      &>div .triangle-icon {
+        left: auto;
+        right: 1.5em;
+      }
     }
     &.open {
       opacity: 1;
@@ -38,6 +47,22 @@
       visibility: visible;
       pointer-events: all;
       transition: opacity 0.4s, translate 0.4s, visibility 0s, height 0.5s;
+    }
+    &>div {
+      &>.date-picker {
+        max-width: 350px;
+      }
+      & .triangle-icon {
+        height: 1.5em;
+        width: 1.5em;
+        position: absolute;
+        top: -1em;
+        left: 1.5em;
+        filter: drop-shadow(0 -0.25em 0.2em rgba(#000, 0.1));
+        &>g {
+          fill: var(--drop-down-background);
+        }
+      }
     }
   }
 }

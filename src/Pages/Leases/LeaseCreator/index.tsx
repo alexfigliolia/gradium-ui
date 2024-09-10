@@ -45,15 +45,18 @@ export const LeaseCreator = memo(function LeaseCreator() {
       open={open}
       close={Modals.newLease.close}>
       <h2>Create Lease</h2>
+      <p>
+        Leases are your contractual obligations to a specific tenant or tenants
+      </p>
       <form ref={form} className="options" onSubmit={onSubmit}>
         <DropDown
           required
           label="Space"
-          value={new Set([unit])}
-          icon={<Building />}
           list={spaces}
-          onChange={onSelectUnit}
           name="living-space"
+          icon={<Building />}
+          value={new Set([unit])}
+          onChange={onSelectUnit}
         />
         <h3>Term</h3>
         <div className="split">
@@ -71,8 +74,8 @@ export const LeaseCreator = memo(function LeaseCreator() {
             name="end-date"
             label="End Date"
             icon={<Clock />}
-            onChange={NewLease.setEnd}
             pickerLocationX="right"
+            onChange={NewLease.setEnd}
           />
         </div>
         <Input
