@@ -1,14 +1,14 @@
 import type { ChangeEvent } from "react";
-import { Fragment, memo, useCallback } from "react";
-import { GradientBorderButton } from "Components/GradientBorderButton";
+import { Fragment, memo, useCallback, useMemo } from "react";
 import { Input } from "Components/Input";
-import { Add } from "Icons/Add";
 import { At } from "Icons/At";
 import { Trash } from "Icons/Trash";
 import { User } from "Icons/User";
 import type { ILessee } from "Models/NewLease";
 import { NewLease } from "State/NewLease";
+import { Validators } from "Tools/Validators";
 import type { Callback } from "Types/Generics";
+import { AddButton } from "./AddButton";
 
 export const Lessee = memo(function Lessees({
   name,
@@ -39,6 +39,12 @@ export const Lessee = memo(function Lessees({
   const deleteEntry = useCallback(() => {
     NewLease.deleteLessee(index);
   }, [index]);
+
+  const disabled = useMemo(
+    () =>
+      !Validators.validateFullName(name) || !Validators.validateEmail(email),
+    [name, email],
+  );
 
   return (
     <Fragment>
@@ -71,13 +77,7 @@ export const Lessee = memo(function Lessees({
           </button>
         )}
       </div>
-      {last && (
-        <GradientBorderButton
-          onClick={add}
-          disabled={!name.length || !email.length}>
-          Add <Add aria-hidden />
-        </GradientBorderButton>
-      )}
+      {last && <AddButton add={add} disabled={disabled} />}
     </Fragment>
   );
 });

@@ -3,17 +3,21 @@
 .tabs {
   width: 100%;
   display: flex;
-  column-gap: 1em;
+  align-items: center;
+  justify-content: space-between;
+  @media (min-width: 670px) {
+    column-gap: 1em;
+    justify-content: flex-start;
+  }
   &>a {
     color: #fff;
     font-size: 0.9em;
     text-decoration: none;
-    padding: 0.5em 0.75em;
-    width: 100%;
+    padding: 0.5em 0.8em;
     border-radius: 2em;
+    font-weight: 600;
     @include Variables.center;
     @media (min-width: 670px) {
-      width: auto;
       font-size: 1em;
       padding: 0.6em 1em;
     }
@@ -27,6 +31,9 @@
         color: #fff;
         background: var(--leases-theme);
       }
+      &:focus-visible {
+        outline: 0.1em solid var(--leases-theme);
+      }
     }
     &.amenities-link {
       border: 2px solid var(--amenities-theme);
@@ -34,6 +41,9 @@
       &.active {
         color: #fff;
         background: var(--amenities-theme);
+      }
+      &:focus-visible {
+        outline: 0.1em solid var(--amenities-theme);
       }
     }
     &.maintenance-link {
@@ -43,6 +53,9 @@
         color: #fff;
         background: var(--maintenance-theme);
       }
+      &:focus-visible {
+        outline: 0.1em solid var(--maintenance-theme);
+      }
     }
     &.finances-link {
       border: 2px solid var(--finances-theme);
@@ -50,6 +63,9 @@
       &.active {
         color: #fff;
         background: var(--finances-theme);
+      }
+      &:focus-visible {
+        outline: 0.1em solid var(--finances-theme);
       }
     }
   }

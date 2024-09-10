@@ -4,7 +4,8 @@
   border-radius: 0.25em;
   transition: all 0.3s;
   &:has(:focus-visible) {
-    outline: 2px solid var(--theme-mid);
+    outline-offset: 0.3em;
+    outline: 0.2em solid var(--theme-mid);
   }
   &:has(>input[type="file"]:disabled) {
     opacity: 0.25;

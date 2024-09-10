@@ -1,6 +1,9 @@
 @use "Styles/Variables";
 
 .confirmation-sheet.new-lease {
+  & .sheet-content {
+    max-width: 425px;
+  }
   & h2 {
     margin-bottom: 1em;
     margin-top: 0.5em;
@@ -45,7 +48,6 @@
     max-width: 37.5px;
     border: none;
     border-radius: 50%;
-    outline: none;
     @include Variables.center;
     @include Variables.buttonGradient;
     transition: box-shadow 0.4s, scale 0.4s;
