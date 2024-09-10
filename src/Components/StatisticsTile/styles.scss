@@ -1,0 +1,11 @@
+.stats-tile {
+  &>div {
+    &> h2 {
+      font-size: 1.3em;
+      margin-bottom: 0.15em;
+      @media (min-width: 670px) {
+        font-size: 1.5em;
+      }
+    }
+  }
+}

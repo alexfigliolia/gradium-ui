@@ -1,0 +1,95 @@
+{
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  },
+  "compilerOptions": {
+    "composite": true,
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": [
+      "ESNext",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "module": "ESNext",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": "./src",
+    "paths": {
+      "Components/*": [
+        "./Components/*"
+      ],
+      "Declarations/*": [
+        "./Declarations/*"
+      ],
+      "Generics/*": [
+        "./Generics/*"
+      ],
+      "Graphs/*": [
+        "./Graphs/*"
+      ],
+      "Hooks/*": [
+        "./Hooks/*"
+      ],
+      "Icons/*": [
+        "./Icons/*"
+      ],
+      "Images/*": [
+        "./Images/*"
+      ],
+      "Layouts/*": [
+        "./Layouts/*"
+      ],
+      "LazyLoading/*": [
+        "./LazyLoading/*"
+      ],
+      "Models/*": [
+        "./Models/*"
+      ],
+      "Pages/*": [
+        "./Pages/*"
+      ],
+      "Root/*": [
+        "./Root/*"
+      ],
+      "Router/*": [
+        "./Router/*"
+      ],
+      "State/*": [
+        "./State/*"
+      ],
+      "Styles/*": [
+        "./Styles/*"
+      ],
+      "Tools/*": [
+        "./Tools/*"
+      ],
+      "Types/*": [
+        "./Types/*"
+      ]
+    }
+  },
+  "include": [
+    "src",
+    "**/*.ts",
+    "**/*.json",
+    "**/*.cjs",
+    "**/*.js",
+    ".eslintrc.cjs"
+  ]
+}

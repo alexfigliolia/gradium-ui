@@ -1,0 +1,17 @@
+@use "Styles/Variables";
+
+:export {
+  black: Variables.$black;
+  teal: Variables.$teal;
+  blue: Variables.$blue;
+  orange: Variables.$orange;
+  yellow: Variables.$yellow;
+  tileBackgroundLight: Variables.$tile-background-light;
+  tileBackgroundDark: Variables.$tile-background-dark;
+  progressLowLight: Variables.$progress-low-light;
+  progressLowDark: Variables.$progress-low-dark;
+  progressMidLight: Variables.$progress-mid-light;
+  progressMidDark: Variables.$progress-mid-dark;
+  progressHighLight: Variables.$progress-high-light;
+  progressHighDark: Variables.$progress-high-dark;
+}

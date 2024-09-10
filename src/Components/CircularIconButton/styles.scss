@@ -1,0 +1,52 @@
+@use "Styles/Variables";
+
+.circular-icon-button {
+  height: 2.75em;
+  width: 2.75em;
+  min-width: 2.75em;
+  border-radius: 50%;
+  background-color: #fff;
+  font-size: 1em;
+  @include Variables.center;
+  border: none;
+  outline: none;
+  @include Variables.buttonGradient(bottom);
+  position: relative;
+  transition-duration: 0.3s;
+  box-shadow: 0 0.1em 0.5em rgba(#000, 0.3);
+  &:hover {
+    box-shadow: 0 0.1em 0.5em var(--theme-dark);
+  }
+  &:focus {
+    box-shadow: 0 0.1em 0.5em var(--theme-dark);
+    &::after {
+      opacity: 1;
+      scale: 1;
+    }
+  }
+  &:focus-visible {
+    outline: none;
+  }
+  &>svg {
+    height: 2em;
+    width: 2em;
+    fill: #fff;
+  }
+  &:after {
+    content: "";
+    top: 0;
+    left: 0;
+    width: 130%;
+    height: 130%;
+    z-index: 0;
+    border-radius: 50%;
+    position: absolute;
+    background-color: transparent;
+    border: 2px solid var(--theme-mid);
+    scale: 0.5;
+    opacity: 0;
+    translate: -14% -14%;
+    transition-duration: 0.5s;
+    box-shadow: 0 0.1em 0.5em var(--theme-dark);
+  }
+}

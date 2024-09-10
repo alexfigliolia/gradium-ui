@@ -1,0 +1,12 @@
+.page.property-configuration .forms > form.spaces .input-group.living-space-inputs {
+  & label.input.name-input {
+    @media (min-width: 1500px) {
+      width: calc(50% - 0.65em);
+    }
+  }
+  & label.input.dropdown.type-dropdown {
+    @media (min-width: 670px) {
+      width: calc(50% - 0.65em);
+    }
+  }
+}

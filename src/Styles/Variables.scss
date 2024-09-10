@@ -1,0 +1,70 @@
+$black: #333333;
+$gray: #646363;
+$light-gray: #dedede;
+$yellow: #ffd500;
+$orange: #ff6a00;
+$green: #09ff80; 
+$teal: #0acdf0;
+$light-blue: #0898ec;
+$blue: #0773ee;
+$pink: #ff0088;
+$red: #ff002b;
+$light-orange:#ff8228;
+$nav-height-small: 70px;
+$nav-width-large: 250px;
+$progress-low-light: #f7693d;
+$progress-low-dark: #eb1931;
+$progress-mid-light: #42bee8;
+$progress-mid-dark: #1789ed;
+$progress-high-light: #6ceb45;
+$progress-high-dark: #10d57c;
+$tile-background-light: #fff;
+$tile-background-dark: #424141;
+$leases-light: #1660e9;
+$amenities-light: #7842f5;
+$maintenance-light: #e41549;
+$finances-light: #09be5a;
+$leases-dark: #2f77fb;
+$amenities-dark: #814bfe;
+$maintenance-dark: #f72a3f;
+$finances-dark: #08b857;
+
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin textClip() {
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@mixin textGradient($direction: bottom) {
+  background: linear-gradient(to $direction, var(--theme-light), var(--theme-dark));
+  @include textClip;
+}
+
+@mixin buttonGradient($direction: right) {
+  background: linear-gradient(to $direction, var(--theme-light), var(--theme-dark));
+}
+
+@mixin borderGradient($direction: right) {
+  border-image: linear-gradient(to $direction, var(--theme-light), var(--theme-dark));
+}
+
+@mixin skeleton {
+  background: linear-gradient(90deg, #eee 25%, #e7e7e7 50%, #eee 75%);
+  background-size: 200% 100%;
+  animation: skeleton-animation 1.5s infinite ease-in-out;
+}
+
+@keyframes skeleton-animation {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}

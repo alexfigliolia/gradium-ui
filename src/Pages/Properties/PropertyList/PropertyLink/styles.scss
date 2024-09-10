@@ -1,0 +1,72 @@
+@use "Styles/Variables";
+
+.property-link {
+  width: 100%;
+  padding: 1em;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  flex-direction: row;
+  min-height: calc(100px + 2em);
+  column-gap: 1em;
+  background-color: var(--tile-background);
+  border-radius: 0.35em;
+  box-shadow: 0px 0.25em 0.5em rgba(#000, 0.2);
+  @media(min-width: 670px) {
+    width: calc(50% - 0.75em);
+    flex-direction: column;
+    column-gap: 0;
+    row-gap: 0.75em;
+  }
+  @media(min-width: 1350px) {
+    width: calc(33.333% - 1em);
+  }
+  &>.pl-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    &>h3 {
+      color: var(--text-color);
+      font-weight: 500;
+      font-size: 1.5em;
+      margin-bottom: 0.25em;
+    }
+    &>address {
+      font-size: 0.95em;
+      font-style: normal;
+      &>p {
+        color: var(--text-color-light);
+      }
+    }
+    &>div {
+      margin-top: 0.75em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      column-gap: 0.5em;
+      @media (min-width: 670px) {
+        column-gap: 1em;
+      }
+      &>.property-link-to {
+        &>div.text-cover > svg {
+          margin-left: 0.25em;
+          stroke: url(#globalBrandGradient);
+        }
+        &.to-manage > div.text-cover > svg {
+          width: 1.5em;
+          height: 1.5em;
+          margin-left: 0.5em;
+        }
+        &.to-configure > div.text-cover > svg {
+          width: 1.5em;
+          height: 1.5em;
+          & path,
+          & circle {
+            stroke-width: 2px;
+          }
+        }
+      }
+    }
+  }
+}

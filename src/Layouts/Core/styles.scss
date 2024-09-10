@@ -1,0 +1,16 @@
+@use "Styles/Variables";
+
+.core {
+  width: 100%;
+  padding: 1em;
+  min-height: 100vh;
+  padding-bottom: calc(Variables.$nav-height-small + 1em);
+  @media (min-width: 670px) {
+    padding: 1.5em;
+  }
+  @media (min-width: 957px) {
+    padding: 2em;
+    margin-left: Variables.$nav-width-large;
+    width: calc(100% - Variables.$nav-width-large);
+  }
+}

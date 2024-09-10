@@ -1,0 +1,45 @@
+@use "Styles/Variables";
+
+.action-sheet.confirmation-sheet.filter-menu {
+  & .sheet-content {
+    width: 100%;
+    max-width: unset;
+    @media (min-width: 670px) {
+      width: 90%;
+    }
+  }
+  & h2 {
+    margin-top: 0.5em;
+  }
+  & .filters {
+    width: 90%;
+    display: flex;
+    row-gap: 1.5em;
+    margin: 1.5em auto 0 auto;
+    flex-direction: column;
+    padding-bottom: 2em;
+    @media (min-width: 670px) {
+      padding-bottom: 0.5em;
+    }
+    & h3 {
+      text-align: center;
+      font-weight: 400;
+    }
+    & .presets {
+      gap: 0.75em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75em;
+      @media (min-width: 670px) {
+        gap: 1em;
+      }
+    }
+    &>button {
+      margin-top: 1em;
+      &::after {
+        background-color: var(--background-dark);
+      }
+    }
+  }
+}

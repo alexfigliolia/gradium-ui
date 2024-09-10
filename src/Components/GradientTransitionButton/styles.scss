@@ -1,0 +1,75 @@
+@use "Styles/Variables";
+
+button.gradient-transition-button,
+a.gradient-transition-button {
+  --offset: 1.5em;
+  height: 3em;
+  width: 100%;
+  border-radius: 2em;
+  border: none;
+  text-transform: uppercase;
+  background-color: transparent;
+  transition-duration: 0.5s;
+  position: relative;
+  padding: 0;
+  font-weight: 700;
+  font-size: 1em;
+  color: #fff;
+  box-shadow: 0 0.15em 0.4em rgba(#000, 0.15);
+  @include Variables.buttonGradient;
+  transition: box-shadow 0.4s;
+  outline: none;
+  &::before {
+    content: "";
+    top: calc(var(--offset) / -2);
+    left: calc(var(--offset) / -2);
+    width: calc(100% + var(--offset));
+    height: calc(100% + var(--offset));
+    position: absolute;
+    box-sizing: border-box;
+    border: 2px solid var(--theme-mid);
+    border-radius: 5em;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s;
+    box-shadow: 0em 0em 0.5em var(--theme-dark);
+  }
+  &::after {
+    content: attr(data-label);
+    top: 0;
+    left: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    font-weight: 500;
+    @include Variables.center;
+    z-index: 2;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    color: var(--text-color);
+    background-color: var(--background);
+    border-radius: 2em;
+  }
+  &:disabled {
+    cursor: default;
+    box-shadow: none;
+    &::after {
+      opacity: 1;
+    }
+  }
+  &:focus-visible {
+    border: none;
+    box-shadow: 0 0em 0.5em var(--theme-dark);
+    &::before {
+      opacity: 1;
+    }
+  }
+}
+
+a.gradient-transition-button {
+  text-decoration: none;
+  @include Variables.center;
+}

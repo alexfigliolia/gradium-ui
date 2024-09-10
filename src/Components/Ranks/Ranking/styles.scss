@@ -1,0 +1,31 @@
+.ranks > .ranking {
+  width: 100%;
+  &>.label {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.95em;
+    margin-bottom: 0.25em;
+    &>strong {
+      color: var(--text-color-light);
+    }
+    &>.number-animation * {
+      color: var(--text-color-lightest);
+    }
+  }
+  &>.progress {
+    height: 0.65em;
+    width: 100%;
+    padding: 0.2em;
+    border-radius: 0.75em;
+    background-color: var(--background);
+    &>div {
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      transition: width 1.75s;
+      transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  }
+}

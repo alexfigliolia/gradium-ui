@@ -1,0 +1,42 @@
+.date-picker .title-area {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1em;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1em;
+  &>.gradient-border-button {
+    &>div {
+      background-color: var(--drop-down-background);
+      & > svg {
+        width: 0em;
+        height: 1.25em;
+        margin-right: 0em;
+        transition: all 0.4s;
+        fill: var(--text-color);
+      }
+    }
+    &.active > div > svg {
+      width: 1.25em;
+      height: 1.25em;
+      margin-right: 0.5em;
+    }
+    &.month-button {
+      font-size: 1.1em;
+      transition: all 0.4s;
+    }
+    &.year-button {
+      font-size: 0.9em;
+      font-weight: 700;
+      &>div>svg {
+        rotate: 180deg;
+      }
+      &.active >div > svg {
+        margin-right: 0.25em;
+        margin-left: -0.25em;
+        rotate: 0deg;
+      }
+    }
+  }
+}

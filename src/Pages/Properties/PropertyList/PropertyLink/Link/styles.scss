@@ -1,0 +1,82 @@
+@use "Styles/Variables";
+
+.property-link-to {
+  --text-content: "";
+  font-size: 0.95em;
+  flex: 1;
+  padding: 0.5em 1em;
+  border-radius: 2em;
+  border: none;
+  color: transparent;
+  position: relative;
+  overflow: hidden;
+  @include Variables.buttonGradient;
+  text-decoration: none;
+  &:visited {
+    color: transparent;
+  }
+  @media (min-width: 670px) {
+    font-size: 1em;
+  }
+  &>div,
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    transition: translate 0.35s;
+    @include Variables.center;
+  }
+  &>div.gradient-cover {
+    z-index: 2;
+    transition: opacity 0.75s;
+    background-color: var(--background-dark);
+  }
+  &>div.text-cover {
+    translate: 0 -100%;
+    z-index: 3;
+    &>svg {
+      display: none;
+      height: 2em;
+      width: 2em;
+      @media(min-width: 670px) {
+        display: block;
+      }
+    }
+  }
+  &::before {
+    content: attr(data-text-content);
+    color: var(--text-color);
+    z-index: 3;
+  }
+  &::after {
+    content: "";
+    top: 0.15em;
+    left: 0.15em;
+    position: absolute;
+    border-radius: 2em;
+    height: calc(100% - 0.3em);
+    width: calc(100% - 0.3em);
+    background-color: var(--background);
+    transition: background-color 0.35s;
+  }
+  &:focus-visible {
+    outline: none;
+  }
+  &:hover,
+  &:focus {
+    &>div.gradient-cover {
+      opacity: 0;
+    }
+    &>div.text-cover {
+      translate: 0 0;
+    }
+    &::before {
+      translate: 0 100%;
+    }
+    &::after {
+      background-color: var(--background-light);
+    }
+  }
+}

@@ -1,0 +1,21 @@
+@use "Styles/Variables";
+
+.logo {
+  font-size: 1.5em;
+  margin-left: -0.25em;
+  @include Variables.center;
+  &>svg {
+    height: 2.5em;
+    width: 2.5em;
+    margin-right: 0.125em;
+    & path:last-of-type {
+      stroke: url(#globalBrandGradient);
+    }
+  }
+  &>span {
+    font-weight: 700;
+    font-size: 1.25em;
+    margin-left: 0.125em;
+    @include Variables.textGradient;
+  }
+}

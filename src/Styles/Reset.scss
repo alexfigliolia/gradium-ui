@@ -1,0 +1,114 @@
+@use "Styles/Variables";
+
+:root {
+  --background: #f5f5f5;
+  --background-dark: #e9e9e9;
+  --background-light: #fff;
+  --text-color: #{Variables.$black};
+  --text-color-light: #{Variables.$gray};
+  --text-color-lightest: #a7a7a7;
+  --text-color-faint: #898989;
+  --nav-bar-background: #06222d;
+  --nav-bar-text-color: #{rgba(#fff, 0.85)};
+  --nav-bar-hover: #{rgba(#fff, 0.05)};
+  --tile-background: #fff;
+  --drop-down-background: #fff;
+  --drop-down-background-focus: #f0f0f0;
+  --faint: #d0cece;
+  --theme-light: #{Variables.$teal};
+  --theme-dark: #{Variables.$blue};
+  --theme-mid: #{Variables.$light-blue};
+  --theme-gray: #{Variables.$light-gray};
+  --leases-theme: #{Variables.$leases-light};
+  --amenities-theme: #{Variables.$amenities-light};
+  --maintenance-theme: #{Variables.$maintenance-light};
+  --finances-theme: #{Variables.$finances-light};
+}
+
+html[data-theme='dark'] {
+  --background: #292929;
+  --background-light: var(--background);
+  --background-dark: #232222;
+  --text-color: #fff;
+  --text-color-light: #{Variables.$light-gray};
+  --text-color-lightest: #a7a7a7;
+  --text-color-faint: #b3b3b3;
+  --nav-bar-background: var(--background-dark);
+  --nav-bar-text-color: #{rgba(#fff, 0.75)};
+  --nav-bar-hover: #{rgba(#fff, 0.05)};
+  --tile-background: #424141;
+  --drop-down-background: var(--background-dark);
+  --drop-down-background-focus: #363636;
+  --faint: #444343;
+  --theme-light: #{Variables.$yellow};
+  --theme-dark: #{Variables.$orange};
+  --theme-mid: #{Variables.$light-orange};
+  --theme-gray: #767676;
+  --leases-theme: #{Variables.$leases-dark};
+  --amenities-theme: #{Variables.$amenities-dark};
+  --maintenance-theme: #{Variables.$maintenance-dark};
+  --finances-theme: #{Variables.$finances-dark};
+}
+
+* {
+  box-sizing: border-box;
+  color: var(--text-color);
+}
+
+
+html {
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  font-family: "Outfit", -apple-system, BlinkMacSystemFont, "“Segoe UI”", Roboto,
+  Helvetica, Arial, sans-serif;
+  background-color: var(--background);
+  color: var(--text-color);
+  accent-color: var(--theme-mid);
+}
+
+div:focus-visible {
+  outline: 1px solid var(--theme-mid);
+}
+
+input, label, button {
+  font-family: "Outfit", -apple-system, BlinkMacSystemFont, "“Segoe UI”", Roboto,
+  Helvetica, Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  font-size: 1em;
+}
+
+button {
+  padding: 0;
+  cursor: pointer;
+}
+
+button, a {
+  outline: none;
+  &:focus-visible {
+    outline: 2px solid var(--theme-mid);
+  }
+}
+
+h1, h2, h3, h4, h5, h6, p, ol, address {
+  margin: 0;
+  color: var(--text-color);
+}
+
+p {
+  line-height: 1.5;
+}
+
+ol {
+  padding: 0;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance:none;
+}

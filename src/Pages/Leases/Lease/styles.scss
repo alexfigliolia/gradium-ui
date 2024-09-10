@@ -1,0 +1,81 @@
+@use "Styles/Variables";
+
+.lease {
+  width: 100%;
+  padding: 1em;
+  border-radius: 0.5em;
+  font-size: 0.9em;
+  background-color: var(--tile-background);
+  box-shadow: 0em 0.2em 0.75em rgba(#000, 0.2);
+  @media (min-width: 670px) {
+    font-size: 1em;
+  }
+  &>.title {
+    flex: 1;
+    display: flex;
+    column-gap: 20%;
+    align-items: center;
+    justify-content: space-between;
+    &>div {
+      &:first-of-type {
+        &>h4 {
+          white-space: nowrap;
+          font-size: 1.25em;
+        }
+        &>span {
+          color: var(--text-color-lightest);
+          margin-top: 0.25em;
+          white-space: nowrap;
+        }
+      }
+      &:last-of-type {
+        width: 100%;
+        max-width: 200px;
+        display: flex;
+        flex-direction: column;
+        &>div {
+          width: 100%;
+          border-radius: 1em;
+          height: 0.75em;
+          padding: 0.25em;
+          background-color: var(--background);
+          &>div {
+            width: 100%;
+            height: 100%;
+            border-radius: inherit; 
+          }
+        }
+        &>span {
+          font-size: 0.9em;
+          align-self: flex-end;
+          color: var(--text-color-lightest);
+          margin-top: 0.25em;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+  &>.data {
+    margin-top: 1em;
+    row-gap: 0.5em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    &>span {
+      display: block;
+      font-weight: 500;
+      &>strong {
+        color: var(--text-color-light);
+      }
+    }
+    &>.gradient-border-button {
+      width: 100%;
+      font-size: 0.95em;
+      margin-top: 0.5em;
+      --border-radius: 2em;
+      &>div {
+        font-weight: 600;
+      }
+    }
+  }
+}

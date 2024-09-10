@@ -1,0 +1,6 @@
+@use "Styles/Variables";
+
+.progress-circle.animated-progress-circle > svg > circle:last-of-type {
+  transition: stroke-dashoffset 1.75s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}

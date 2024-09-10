@@ -1,0 +1,51 @@
+@use "Styles/Variables";
+
+.financials {
+  &> .area-chart {
+    height: 170px;
+    @media (min-width: 670px) {
+      height: 200px;
+    }
+    & svg {
+      & .axis {
+        & .domain {
+          display: none;
+        }
+        & text {
+          fill: var(--text-color-light);
+        }
+        &.x-axis {
+          & line {
+            display: none;
+          }
+          & text {
+            translate: 0 5px;
+          }
+        }
+        &.y-axis {
+          &>.tick:first-of-type>line {
+            stroke: var(--background-dark);
+          }
+          & line {
+            stroke: var(--background);
+          }
+          & text {
+            translate: -5px;
+          }
+        }
+      }
+      & .line-path {
+        stroke: Variables.$progress-high-dark;
+        &:last-of-type {
+          stroke: Variables.$progress-low-dark;
+        }
+      }
+      & .area-path {
+        fill: url(#revenueGradient);
+        &:nth-of-type(2) {
+          fill: url(#expenseGradient);
+        }
+      }
+    }
+  }
+}

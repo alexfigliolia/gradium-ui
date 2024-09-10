@@ -1,0 +1,19 @@
+.page.property-configuration .forms > form.spaces .input-group.amenity-inputs {
+  & label.input {
+    @media (min-width: 1500px) {
+      width: calc(50% - 0.65em);
+    }
+  }
+  & label.input.number-input.size-input {
+    width: 100%;
+    @media (min-width: 670px) {
+      width: calc(50% - 0.65em);
+    }
+  }
+  & label.input.dropdown,
+  & label.input.number-input.price-input {
+    @media (min-width: 670px) {
+      width: calc(50% - 0.65em);
+    }
+  }
+}

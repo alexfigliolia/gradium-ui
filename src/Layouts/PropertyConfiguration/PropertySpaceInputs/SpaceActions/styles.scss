@@ -1,0 +1,19 @@
+@use "Styles/Variables";
+
+form.spaces > .space-actions {
+  width: 100%;
+  column-gap: 1.5em;
+  @include Variables.center;
+  &>.file-uploader {
+    text-decoration: underline;
+  }
+  &>button {
+    border: none;
+    font-size: 1em;
+    color: var(--theme-mid);
+    background-color: transparent;
+    text-decoration: underline;
+    padding: 0.25em;
+    border-radius: 0.25em;
+  }
+}

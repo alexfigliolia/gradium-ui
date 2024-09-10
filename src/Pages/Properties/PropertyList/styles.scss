@@ -1,0 +1,11 @@
+.property-list {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 1em;
+  @media (min-width: 670px) {
+    row-gap: 0;
+    gap: 1.5em;
+  }
+}

@@ -1,0 +1,6 @@
+@use "Styles/Variables";
+
+.date-picker-screen {
+  min-width: 100%;
+  @include Variables.center;
+}

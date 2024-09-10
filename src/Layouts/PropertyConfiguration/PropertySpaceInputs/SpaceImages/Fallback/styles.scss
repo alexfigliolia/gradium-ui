@@ -1,0 +1,16 @@
+@use "Styles/Variables";
+
+.fallback {
+  height: 150px;
+  width: 150px;
+  @include Variables.center;
+  background-color: var(--background-dark);
+  &>svg {
+    height: 50%;
+    width: 50%;
+    aspect-ratio: 1 / 1;
+    &> g > g {
+      fill: var(--tile-background);
+    }
+  }
+}

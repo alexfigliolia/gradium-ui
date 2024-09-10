@@ -1,0 +1,45 @@
+@use "Styles/Variables";
+
+.lease-progress {
+  width: 100%;
+  row-gap: 0.25em;
+  @include Variables.center;
+  flex-direction: column;
+  &>.bar {
+    width: 100%;
+    height: 0.8em;
+    padding: 0.25em;
+    border-radius: 0.75em;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: var(--background);
+    &>div {
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+    }
+    &.complete > div {
+      background-image: linear-gradient(to right, Variables.$lease-progress-complete-light, Variables.$lease-progress-complete-dark);
+    }
+    &.in-progress > div {
+      background-image: linear-gradient(to right, Variables.$lease-progress-in-progress-light, Variables.$lease-progress-in-progress-dark);
+    }
+    &.terminated > div {
+      background-image: linear-gradient(to right, Variables.$lease-progress-terminated-light, Variables.$lease-progress-terminated-dark);
+    }
+    &.unknown > div {
+      background-image: linear-gradient(to right, Variables.$lease-progress-unknown-light, Variables.$lease-progress-unknown-dark);
+    }
+  }
+  &>.dates {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8em;
+    &>span {
+      color: var(--text-color-faint);
+    }
+  }
+}

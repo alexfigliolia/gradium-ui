@@ -1,0 +1,93 @@
+@use "Styles/Variables";
+
+.page.property-configuration {
+  width: 100%;
+  & .forms {
+    display: flex;
+    row-gap: 1em;
+    flex-direction: column;
+    @media (min-width: 670px) {
+      row-gap: 2em;
+    }
+    &>form {
+      & > h2 > svg {
+        &.map-arrow {
+          rotate: 45deg;
+          translate: 0 -0.15em;
+          fill: url(#globalBrandGradient);
+        }
+        &.image-placeholder {
+          margin-right: 0.6em;
+          &> g > g {
+            fill: url(#globalBrandGradient);
+          }
+        }
+        &.living-space-bed,
+        &.basketball-court {
+          width: 2em;
+          height: 2em;
+          margin-right: 0.5em;
+          fill: url(#globalBrandGradient);
+        }
+        &.basketball-court {
+          & > g > path {
+            fill: var(--tile-background);
+          }
+        }
+      }
+      & .input-group {
+        width: 100%;
+        display: inherit;
+        flex-wrap: inherit;
+        gap: inherit;
+        &>h4 {
+          font-size: 1.15em;
+          width: 100%;
+          font-weight: 600;
+          margin-bottom: 0.1em;
+        }
+        & label.input {
+          --background: var(--tile-background);
+          @media (min-width: 670px) {
+            width: calc(50% - 0.65em);
+          }
+          @media (min-width: 1500px) {
+            width: calc(33.333% - 1.3em);
+          }
+          &>.input-positioner > button > .price-icon {
+            &:first-of-type {
+              stroke: none;
+              fill: var(--text-color-light);
+              &> path {
+                stroke: none;
+              }
+            }
+            &:last-of-type {
+              height: 80%;
+              width: 80%;
+              top: 10%;
+              left: 0%;
+              stroke: none;
+              fill: url(#globalBrandGradient);
+            }
+          }
+        }
+      }
+      &>.gradient-transition-button {
+        margin: 0.5em auto;
+        @media (min-width: 760px) {
+          width: 50%;
+          max-width: 400px;
+        }
+      }
+    }
+    &>.gradient-transition-button {
+      margin-top: 2em;
+      max-width: 500px;
+      align-self: center;
+      &::after {
+        background-color: var(--background-dark);
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+.number-animation {
+  position: relative;
+  overflow: hidden;
+  &>.columns {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    align-items: flex-end;
+    &>.column-container {
+      position: relative;
+      &>.column {
+        bottom: 0;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        transition-duration: 1.75s;
+        transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+      }
+    }
+  }
+  & .dummy {
+    opacity: 0;
+  }
+}

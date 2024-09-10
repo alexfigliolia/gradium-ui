@@ -1,0 +1,24 @@
+@use "Styles/Variables";
+
+.year-input {
+  width: 100%;
+  height: 0px;
+  opacity: 0;
+  visibility: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  transition: visibility 0s 0.4s, opacity 0.4s, height 0.4s;
+  &>.input {
+    &>span,
+    &>.input-positioner {
+      background-color: var(--drop-down-background);
+    }
+  }
+  &.open {
+    opacity: 1;
+    height: 65px;
+    visibility: visible;
+    transition: visibility 0s 0s, opacity 0.4s, height 0.4s;
+  } 
+}

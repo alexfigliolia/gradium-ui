@@ -1,0 +1,131 @@
+@use "Styles/Variables";
+
+.input {
+  --border-radius: 45px;
+  width: 100%;
+  display: flex;
+  font-size: 1em;
+  height: 45px;
+  border-radius: var(--border-radius);
+  padding: 2px;
+  flex-direction: row;
+  position: relative;
+  background-size: 400% 400%;
+  background-position: 0% 50%;
+  transition: background-position 0.6s;
+  background-image: linear-gradient(to right, var(--theme-gray), var(--theme-gray), var(--theme-light), var(--theme-dark));
+  &:has(>.input-positioner>input:is(:-webkit-autofill, :autofill)),
+  &:has(>.input-positioner>input:focus),
+  &:has(button:focus),
+  &:has(>.input-positioner>input:not([type="date"]):not(:placeholder-shown)) {
+    &>span {
+      scale: 0.9;
+      transform: translateY(-1.5em) translateX(-0.25em);
+    }  
+  }
+  &:has(button:focus),
+  &:has(>.input-positioner>input:focus),
+  &:has(select:focus) {
+    background-position: 100% 50%;
+    box-shadow: 0px 2.5px 7.5px rgba(var(--theme-dark), 0.5);
+  }
+  &:has(>.input-positioner>input:valid:not(:disabled)) {
+    &>.input-positioner > button > svg {
+      &:first-of-type {
+        transform: translateX(150%) scale(0.5);
+      }
+      &:last-of-type {
+        transform: translateX(0%) scale(1);
+      }
+    }
+  }
+  &:has(div > button) > span {
+    left: 40px;
+  }
+  &>span {
+    position: absolute;
+    top: 0.55em;
+    left: 15px;
+    z-index: 2;
+    pointer-events: none;
+    color: var(--text-color-light);
+    border-radius: 1em;
+    transition: scale 0.4s, transform 0.4s;
+    padding: 0.2em 0.3em;
+    background-color: var(--background);
+    @include Variables.center;
+  }
+  &>.input-positioner {
+    width: 100%;
+    height: 100%;
+    border-radius: calc(var(--border-radius) * 0.925);
+    overflow: hidden;
+    display: flex;
+    position: relative;
+    background-color: var(--background);
+    &:has(button) > input {
+      padding: 0 10px 0 7.5px;
+    }
+    &>input {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      border: none;
+      outline: none;
+      font-size: 1em;
+      padding: 0 10px 0 15px;
+      background-color: transparent;
+      color: var(--text-color);
+      &:read-only,
+      &:disabled {
+        opacity: 1;
+        color: var(--text-color);
+        -webkit-text-fill-color: var(--text-color);
+      }
+      &:is(:-webkit-autofill, :autofill) {
+        color: var(--text-color);
+        box-shadow: inset 500px 500px 500px var(--background);
+        -webkit-text-fill-color: var(--text-color)
+      } 
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      &[type=number] {
+        -moz-appearance: textfield;
+      }
+    }
+    &>button {
+      width: 35px;
+      min-width: 35px;
+      outline: none;
+      padding: 0;
+      border: none;
+      height: 100%;
+      position: relative;
+      @include Variables.center;
+      background-color: transparent;
+      overflow: hidden;
+      &>svg {
+        height: 70%;
+        width: 70%;
+        margin-left: 20%;
+        transition-duration: 0.4s;
+        stroke: var(--text-color-light);
+        &:first-of-type path,
+        &:first-of-type circle {
+          stroke: var(--text-color-light);
+        }
+        &:last-of-type {
+          position: absolute;
+          top: 12.5%;
+          left: 5%;
+          transform: translateX(-150%) scale(0.5);
+          stroke: url(#globalBrandGradient);
+        }
+      }
+    }
+  }
+}
+

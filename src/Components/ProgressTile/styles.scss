@@ -1,0 +1,47 @@
+@use "Styles/Variables";
+
+.progress-tile {
+  &>.visuals {
+    width: 100%;
+    column-gap: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    &>.progress-circle {
+      --gradient-id: #000;
+      --shadow-color: #000;
+      width: 80%;
+      height: 100%;
+      max-width: 175px;
+      @include Variables.center;
+      @media (min-width: 1400px) {
+        max-width: 150px;
+      }
+      &>svg>circle:last-of-type {
+        stroke: var(--gradient-id);
+        filter: drop-shadow(0em 0.1em 0.25em var(--shadow-color));
+      }
+      & .number-animation {
+        font-size: 30px;
+        @media (min-width: 800px) {
+          font-size: 40px;
+        } 
+      }
+    }
+    &>.ranks {
+      display: none;
+      max-width: 350px;
+      @media (min-width: 1400px) {
+        display: flex;
+        row-gap: 0.5em;
+        flex-direction: column;
+      }
+      &>h3 {
+        font-size: 1.1em;
+        font-weight: 400;
+        text-align: right;
+        margin-bottom: 0.5em;
+      }
+    }
+  }
+}

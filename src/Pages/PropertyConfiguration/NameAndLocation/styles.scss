@@ -1,0 +1,19 @@
+.forms > form.name-and-location {
+  &>.input > .input-positioner > button > svg {
+    &.location-icon {
+      top: 12.5%;
+      left: 5%;
+      height: 75%;
+      width: 75%;
+    }
+    &.city-icon {
+      top: 12.5%;
+      left: 5%;
+      height: 75%;
+      width: 75%;
+      & path {
+        stroke-width: 1.75;
+      }
+    }
+  }
+}

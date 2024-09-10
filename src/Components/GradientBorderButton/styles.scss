@@ -1,0 +1,34 @@
+@use "Styles/Variables";
+
+.gradient-border-button {
+  --color1: var(--theme-light);
+  --color2: var(--theme-dark);
+  --padding: 0.5em 1em;
+  padding: 2px;
+  border: none;
+  --border-radius: 0.5em;
+  background-size: 400% 400%;
+  background-position: 0% 50%;
+  border-radius: var(--border-radius);
+  transition: background-position 0.6s;
+  background-image: linear-gradient(to right, var(--theme-gray), var(--theme-gray), var(--color1), var(--color2));
+  &:not(:disabled) {
+    &:focus-visible,
+    &:hover,
+    &.active {
+      outline: none;
+      background-position: 100% 50%;
+    }
+  }
+  &:disabled {
+    cursor: auto;
+  }
+  &>div {
+    width: 100%;
+    height: 100%;
+    padding: var(--padding);
+    border-radius: calc(var(--border-radius) * 0.75);
+    background-color: var(--background);
+    @include Variables.center;
+  }
+}
