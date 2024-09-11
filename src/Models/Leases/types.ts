@@ -6,6 +6,12 @@ export type ILeaseStatus =
   | "terminated"
   | "pending";
 
+export interface ILessee {
+  id: string;
+  name: string;
+  email: string;
+}
+
 export interface ILease {
   id: number;
   end: string;
@@ -13,6 +19,7 @@ export interface ILease {
   rate: number;
   status: ILeaseStatus;
   space: Pick<IUnit, "name" | "type">;
+  lessees: ILessee[];
 }
 
 export interface ILeases {

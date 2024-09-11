@@ -1,37 +1,52 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
 import { GradientButton } from "Components/GradientButton";
+import { LeaseRemaining } from "Components/LeaseRemaining";
+import { SearchBar } from "Components/SearchBar";
 import { Add } from "Icons/Add";
 import { Search } from "Icons/Search";
-import { selectLeases, useLeases } from "State/Leases";
+import { Page, PageTitle } from "Layouts/Management";
+import type { ILease } from "Models/Leases";
+import { NewLease } from "State/LeaseCRUD";
 import { Modals } from "State/Modals";
 import type { Propless } from "Types/React";
 import { Filters } from "./Filters";
-import { Lease } from "./Lease";
 import { LeaseCreator } from "./LeaseCreator";
+import { LeaseList } from "./LeaseList";
+import { LeaseModifier } from "./LeaseModifier";
+import { SpaceList } from "./SpaceList";
 import "./styles.scss";
 
+const progressRenderer = (lease: ILease) => (
+  <LeaseRemaining {...lease} labelFN={endDate => `Available on ${endDate}`} />
+);
+
 export default memo(function Leases(_: Propless) {
-  const leases = useLeases(selectLeases);
+  const openNewLease = useCallback(() => {
+    NewLease.reset();
+    Modals.newLease.open();
+  }, []);
   return (
-    <div className="leases-section">
-      <div className="title">
-        <h2>Current Leases</h2>
-        <div>
-          <GradientButton onClick={Modals.newLease.open}>
-            <Add />
-          </GradientButton>
-          <GradientButton onClick={Modals.leaseFilters.open}>
-            Search <Search />
-          </GradientButton>
-        </div>
-      </div>
-      <div className="lease-list">
-        {leases.map(lease => {
-          return <Lease key={lease.id} {...lease} />;
-        })}
-      </div>
+    <Page className="leases-section">
+      <PageTitle title="Available Spaces" className="lease-title">
+        <SearchBar placeholder="Search" />
+      </PageTitle>
+      <SpaceList />
+      <PageTitle title="Available Soon" className="lease-title">
+        <SearchBar placeholder="Search" />
+      </PageTitle>
+      <SpaceList className="soon" childFN={progressRenderer} />
+      <PageTitle title="Leases" className="lease-title">
+        <GradientButton onClick={openNewLease}>
+          <Add />
+        </GradientButton>
+        <GradientButton onClick={Modals.leaseFilters.open}>
+          Search <Search />
+        </GradientButton>
+      </PageTitle>
+      <LeaseList />
       <Filters />
       <LeaseCreator />
-    </div>
+      <LeaseModifier />
+    </Page>
   );
 });

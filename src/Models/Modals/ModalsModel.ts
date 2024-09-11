@@ -6,6 +6,7 @@ export class ModalsModel extends State<IModals> {
   constructor() {
     super("Modals", {
       newLease: false,
+      editLease: false,
       newProperty: false,
       deleteSpace: false,
       leaseFilters: false,
@@ -25,6 +26,8 @@ export class ModalsModel extends State<IModals> {
   /* TOGGLES */
   private openNewLease = this.toggleKey("newLease", true);
   private closeNewLease = this.toggleKey("newLease", false);
+  private openEditLease = this.toggleKey("editLease", true);
+  private closeEditLease = this.toggleKey("editLease", false);
   private openNewProperty = this.toggleKey("newProperty", true);
   private closeNewProperty = this.toggleKey("newProperty", false);
   private openDeleteSpace = this.toggleKey("deleteSpace", true);
@@ -38,6 +41,7 @@ export class ModalsModel extends State<IModals> {
 
   /* CONTROLLERS */
   newLease = ModalStack.create(this.openNewLease, this.closeNewLease);
+  editLease = ModalStack.create(this.openEditLease, this.closeEditLease);
   newProperty = ModalStack.create(this.openNewProperty, this.closeNewProperty);
   deleteSpace = ModalStack.create(this.openDeleteSpace, this.closeDeleteSpace);
   leaseFilters = ModalStack.create(

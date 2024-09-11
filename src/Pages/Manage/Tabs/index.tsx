@@ -1,22 +1,26 @@
 import { memo } from "react";
 import { NavLink } from "react-router-dom";
+import { useCurrentProperty } from "Hooks/useCurrentProperty";
 import type { Propless } from "Types/React";
 import "./styles.scss";
 
 export const Tabs = memo(
   function Tabs(_: Propless) {
+    const { slug } = useCurrentProperty();
     return (
       <div className="tabs">
-        <NavLink to="/leases" className="leases-link active">
+        <NavLink to={`/manage/${slug}/leases`} className="leases-link">
           Leases
         </NavLink>
-        <NavLink to="/amenities" className="amenities-link">
+        <NavLink to={`/manage/${slug}/amenities`} className="amenities-link">
           Amenities
         </NavLink>
-        <NavLink to="/maintenance" className="maintenance-link">
+        <NavLink
+          to={`/manage/${slug}/maintenance`}
+          className="maintenance-link">
           Maintenance
         </NavLink>
-        <NavLink to="/finances" className="finances-link">
+        <NavLink to={`/manage/${slug}/finances`} className="finances-link">
           Finances
         </NavLink>
       </div>

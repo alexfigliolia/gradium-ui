@@ -1,16 +1,27 @@
 import type { ChangeEvent } from "react";
 import { State } from "@figliolia/galena";
+import type { ILease, ILessee } from "Models/Leases";
 import { Dates } from "Tools/Dates";
-import type { ILessee, INewLease } from "./types";
+import type { ILeaseCRUD } from "./types";
 
-export class NewLeaseModel extends State<INewLease> {
-  constructor() {
-    super("New Lease", {
+export class LeaseCRUDModel extends State<ILeaseCRUD> {
+  constructor(name: string) {
+    super(name, {
       unit: "",
       end: "",
       start: "",
       rate: "",
       lessees: [{ name: "", email: "" }],
+    });
+  }
+
+  public batch({ id, end, lessees, rate, start }: ILease) {
+    this.update(state => {
+      state.unit = id.toString();
+      state.end = end;
+      state.lessees = lessees.length ? lessees : [{ name: "", email: "" }];
+      state.rate = rate.toString();
+      state.start = start;
     });
   }
 
@@ -36,7 +47,7 @@ export class NewLeaseModel extends State<INewLease> {
     });
   }
 
-  public updateLessee = (index: number, lessee: ILessee) => {
+  public updateLessee = (index: number, lessee: Omit<ILessee, "id">) => {
     this.update(state => {
       state.lessees = state.lessees.map((person, i) => {
         if (index === i) {
@@ -47,11 +58,11 @@ export class NewLeaseModel extends State<INewLease> {
     });
   };
 
-  private createSetter<K extends Extract<keyof INewLease, string>>(
+  private createSetter<K extends Extract<keyof ILeaseCRUD, string>>(
     key: K,
-    formatter?: (value: INewLease[K]) => INewLease[K],
+    formatter?: (value: ILeaseCRUD[K]) => ILeaseCRUD[K],
   ) {
-    return (value: INewLease[K]) => {
+    return (value: ILeaseCRUD[K]) => {
       this.update(state => {
         state[key] = formatter ? formatter(value) : value;
       });

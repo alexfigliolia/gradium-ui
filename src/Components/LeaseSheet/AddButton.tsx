@@ -7,7 +7,11 @@ import type { Callback } from "Types/Generics";
 export const AddButton = memo(function AddButton({ add, disabled }: Props) {
   const classes = useClassNames({ active: !disabled });
   return (
-    <GradientBorderButton onClick={add} disabled={disabled} className={classes}>
+    <GradientBorderButton
+      type="button"
+      onClick={add}
+      disabled={disabled}
+      className={classes}>
       Add <Add aria-hidden />
     </GradientBorderButton>
   );

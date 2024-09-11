@@ -1,0 +1,28 @@
+.space-list {
+  width: 100%;
+  position: relative;
+  &::after {
+    content: "";
+    background-image: linear-gradient(to right, transparent, var(--background));
+    position: absolute;
+    top: 0;
+    right: calc(var(--core-padding) * -1);
+    width: 20%;
+    height: 100%;
+    pointer-events: none;
+  }
+  &>div {
+    --offset: calc(var(--core-padding) * 2);
+    width: calc(100% + var(--offset));
+    padding: 1em 20% 1em var(--core-padding);
+    overflow-x: scroll;
+    margin-top: -1em;
+    margin-left: calc(var(--core-padding) * -1);
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: 1em;
+    &>.space-card {
+      min-width: calc(min(200px, 50%));
+    }
+  }
+}

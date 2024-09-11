@@ -1,0 +1,45 @@
+@use "Styles/Variables";
+
+.lease {
+  &>.title {
+    flex: 1;
+    display: flex;
+    column-gap: 10%;
+    align-items: center;
+    justify-content: space-between;
+    &>.space-label {
+      &>h4 {
+        white-space: nowrap;
+        font-size: 1.25em;
+      }
+      &>span {
+        color: var(--text-color-lightest);
+        margin-top: 0.25em;
+        white-space: nowrap;
+      }
+    }
+  }
+  &>.data {
+    margin-top: 1em;
+    row-gap: 0.5em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    &>span {
+      display: block;
+      font-weight: 500;
+      &>strong {
+        color: var(--text-color-light);
+      }
+    }
+    &>.gradient-border-button {
+      width: 100%;
+      font-size: 0.95em;
+      margin-top: 0.5em;
+      --border-radius: 2em;
+      &>div {
+        font-weight: 600;
+      }
+    }
+  }
+}

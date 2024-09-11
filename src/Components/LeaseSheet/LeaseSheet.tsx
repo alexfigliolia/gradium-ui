@@ -1,5 +1,7 @@
 import type { FormEvent } from "react";
-import { memo, useCallback, useRef } from "react";
+import { memo, useCallback, useMemo, useRef } from "react";
+import { useClassNames } from "@figliolia/classnames";
+import { createUseState } from "@figliolia/react-galena";
 import { ActionButton } from "Components/ActionButton";
 import { Confirmation } from "Components/Confirmation";
 import { DateInput } from "Components/DateInput";
@@ -8,10 +10,11 @@ import { Input } from "Components/Input";
 import { Building } from "Icons/Building";
 import { Clock } from "Icons/Clock";
 import { Price } from "Icons/Price";
-import { Modals, useModals } from "State/Modals";
-import { NewLease, selectFormValues, useNewLease } from "State/NewLease";
+import type { LeaseCRUDModel } from "Models/LeaseCRUD";
+import { selectFormValues } from "State/LeaseCRUD";
 import { Devices } from "Tools/Devices";
-import { Lessee } from "./Lessees";
+import type { Callback } from "Types/Generics";
+import { Lessee } from "./Lessee";
 import "./styles.scss";
 
 const spaces = Array.from({ length: 10 }, (_, i) => ({
@@ -22,32 +25,37 @@ if (Devices.IS_MOBILE_BROWSER) {
   spaces.unshift({ label: "", value: "" });
 }
 
-export const LeaseCreator = memo(function LeaseCreator() {
+export default memo(function LeaseSheet({
+  open,
+  close,
+  title,
+  model,
+  subtitle,
+  onSubmit,
+  className,
+  actionText = "Create",
+}: Props) {
   const form = useRef<HTMLFormElement>(null);
-  const open = useModals(state => state.newLease);
-  const [unit, rate, start, end, lessees] = useNewLease(selectFormValues);
+  const hook = useMemo(() => createUseState(model), [model]);
+  const [unit, rate, start, end, lessees] = hook(selectFormValues);
 
-  const onSelectUnit = useCallback((values: Set<string>) => {
-    NewLease.setUnit(Array.from(values)[0] || "");
-  }, []);
-  const onSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  }, []);
+  const onSelectUnit = useCallback(
+    (values: Set<string>) => {
+      model.setUnit(Array.from(values)[0] || "");
+    },
+    [model],
+  );
   const validate = useCallback(() => {
     if (!form.current) {
       return true;
     }
     return form.current.checkValidity();
   }, []);
+  const classes = useClassNames("lease-sheet", className);
   return (
-    <Confirmation
-      className="new-lease"
-      open={open}
-      close={Modals.newLease.close}>
-      <h2>Create Lease</h2>
-      <p>
-        Leases are your contractual obligations to a specific tenant or tenants
-      </p>
+    <Confirmation className={classes} open={open} close={close}>
+      <h2>{title}</h2>
+      {subtitle && <p>{subtitle}</p>}
       <form ref={form} className="options" onSubmit={onSubmit}>
         <DropDown
           required
@@ -66,7 +74,7 @@ export const LeaseCreator = memo(function LeaseCreator() {
             icon={<Clock />}
             name="start-date"
             label="Start Date"
-            onChange={NewLease.setStart}
+            onChange={model.setStart}
           />
           <DateInput
             required
@@ -75,7 +83,7 @@ export const LeaseCreator = memo(function LeaseCreator() {
             label="End Date"
             icon={<Clock />}
             pickerLocationX="right"
-            onChange={NewLease.setEnd}
+            onChange={model.setEnd}
           />
         </div>
         <Input
@@ -87,7 +95,7 @@ export const LeaseCreator = memo(function LeaseCreator() {
           icon={<Price />}
           autoComplete="off"
           value={rate.toString()}
-          onChange={NewLease.setRate}
+          onChange={model.setRate}
           className="number-input rate-input"
         />
         <h3>Lessees</h3>
@@ -103,9 +111,20 @@ export const LeaseCreator = memo(function LeaseCreator() {
           );
         })}
         <ActionButton type="submit" onClick={() => {}}>
-          Create
+          {actionText}
         </ActionButton>
       </form>
     </Confirmation>
   );
 });
+
+interface Props {
+  open: boolean;
+  close: Callback;
+  className?: string;
+  actionText?: string;
+  title: string;
+  subtitle?: string;
+  model: LeaseCRUDModel;
+  onSubmit: Callback<[event: FormEvent<HTMLFormElement>]>;
+}

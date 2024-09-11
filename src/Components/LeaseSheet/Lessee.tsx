@@ -4,8 +4,8 @@ import { Input } from "Components/Input";
 import { At } from "Icons/At";
 import { Trash } from "Icons/Trash";
 import { User } from "Icons/User";
-import type { ILessee } from "Models/NewLease";
-import { NewLease } from "State/NewLease";
+import type { ILessee } from "Models/Leases";
+import { NewLease } from "State/LeaseCRUD";
 import { Validators } from "Tools/Validators";
 import type { Callback } from "Types/Generics";
 import { AddButton } from "./AddButton";
@@ -82,7 +82,7 @@ export const Lessee = memo(function Lessees({
   );
 });
 
-interface Props extends ILessee {
+interface Props extends Omit<ILessee, "id"> {
   index: number;
   last: boolean;
   validate: Callback<[], boolean>;

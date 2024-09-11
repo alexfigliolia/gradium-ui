@@ -73,6 +73,7 @@ export class LeasesModel extends State<ILeases> {
       start: "",
       rate: 0,
       status: "" as ILeaseStatus,
+      lessees: [],
     };
   }
 
@@ -87,6 +88,7 @@ export class LeasesModel extends State<ILeases> {
       start: addYears(new Date(), 1.5).toISOString(),
       rate: 24000,
       status: "pending",
+      lessees: [],
     },
     {
       id: 1,
@@ -98,6 +100,7 @@ export class LeasesModel extends State<ILeases> {
       start: subYears(new Date(), 0.5).toISOString(),
       rate: 24000,
       status: "in-progress",
+      lessees: [],
     },
     {
       id: 2,
@@ -109,6 +112,7 @@ export class LeasesModel extends State<ILeases> {
       start: subYears(new Date(), 0.6).toISOString(),
       rate: 24000,
       status: "complete",
+      lessees: [],
     },
     {
       id: 3,
@@ -120,6 +124,7 @@ export class LeasesModel extends State<ILeases> {
       start: subYears(new Date(), 0.7).toISOString(),
       rate: 24000,
       status: "terminated",
+      lessees: [],
     },
     {
       id: 4,
@@ -131,6 +136,7 @@ export class LeasesModel extends State<ILeases> {
       start: subYears(new Date(), 0.3).toISOString(),
       rate: 24000,
       status: "in-progress",
+      lessees: [],
     },
   ];
 }

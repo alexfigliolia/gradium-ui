@@ -1,7 +1,7 @@
 import { memo } from "react";
+import { Outlet } from "react-router-dom";
 import { Page } from "Components/Page";
 import { useCurrentProperty } from "Hooks/useCurrentProperty";
-import Leases from "Pages/Leases";
 import type { Propless } from "Types/React";
 import { Tabs } from "./Tabs";
 import "./styles.scss";
@@ -13,7 +13,7 @@ export default memo(
       <Page label={`Manage ${name}`} className="manage-property">
         <Tabs />
         <div className="outlet">
-          <Leases />
+          <Outlet />
         </div>
       </Page>
     );
