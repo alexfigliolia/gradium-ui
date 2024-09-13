@@ -1,5 +1,6 @@
 node_modules
 build
+production/server.js
 coverage
 reports
 .DS_Store

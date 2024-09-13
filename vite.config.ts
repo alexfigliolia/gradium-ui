@@ -1,5 +1,6 @@
 import autoprefixer from "autoprefixer";
 import { defineConfig } from "vite";
+import viteCompression from "vite-plugin-compression";
 import { createHtmlPlugin } from "vite-plugin-html";
 import react from "@vitejs/plugin-react";
 import { BuildSettings } from "./devtools/dev-server";
@@ -43,6 +44,14 @@ export default defineConfig({
       minify: true,
       entry: BuildSettings.alias("Root/index.tsx"),
       template: "public/index.html",
+    }),
+    viteCompression({
+      algorithm: "gzip",
+      filter: /.(js|mjs|json|css|html|jpg|webp|png|avif)$/i,
+    }),
+    viteCompression({
+      algorithm: "brotliCompress",
+      filter: /.(js|mjs|json|css|html|jpg|webp|png|avif)$/i,
     }),
   ],
 });

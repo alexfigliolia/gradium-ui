@@ -4,13 +4,15 @@
   "description": "Tenant Management for small businesses",
   "author": "Alex Figliolia",
   "scripts": {
-    "build": "vite build",
+    "build": "tsx ci/commands/Build.ts",
     "dev": "vite",
     "lint": "tsx ci/commands/Lint.ts",
     "preview": "vite preview",
     "start": "vite",
+    "start:prod": "node production/server.js",
     "test": "tsx ci/commands/Test.ts",
-    "create-package": "tsx devtools/create-package/CLI.ts"
+    "create-package": "tsx devtools/create-package/CLI.ts",
+    "postinstall": "cd production && yarn install"
   },
   "browserslist": [
     "defaults",
@@ -32,6 +34,9 @@
     "@figliolia/react-lazy": "^1.1.0",
     "@figliolia/size-observer": "^1.0.3",
     "@figliolia/task-queue": "^1.0.2",
+    "@fullcalendar/core": "^6.1.15",
+    "@fullcalendar/react": "^6.1.15",
+    "@fullcalendar/timegrid": "^6.1.15",
     "@types/date-fns": "^2.6.0",
     "d3": "^7.9.0",
     "date-fns": "^3.6.0",
@@ -78,5 +83,15 @@
     "vite": "^5.2.13",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-html": "^3.2.2"
-  }
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/mjs/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
+  "main": "dist/cjs/index.js",
+  "module": "dist/mjs/index.js",
+  "types": "dist/types/index.d.ts"
 }
