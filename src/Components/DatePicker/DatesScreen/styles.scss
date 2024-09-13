@@ -3,18 +3,6 @@
   &>table {
     width: 100%;
     border-collapse: collapse;
-    &>thead > tr > th {
-      padding: 0.6em 0;
-      background-color: var(--drop-down-background-focus);
-      &:first-of-type {
-        border-top-left-radius: 0.5em;
-        border-bottom-left-radius: 0.5em;
-      }
-      &:last-of-type {
-        border-top-right-radius: 0.5em;
-        border-bottom-right-radius: 0.5em;
-      }
-    }
     &>tbody {
       &::before {
         content: "";

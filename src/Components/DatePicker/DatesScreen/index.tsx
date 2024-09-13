@@ -1,8 +1,8 @@
 import { memo, useMemo } from "react";
-import { Dates } from "Tools/Dates";
 import type { Callback } from "Types/Generics";
 import { Controller } from "../Controller";
 import { DateButton } from "./DateButton";
+import { WeekDaysHeader } from "./WeekDaysHeader";
 import "./styles.scss";
 
 export const DatesScreen = memo(function DatesScreen({
@@ -15,18 +15,11 @@ export const DatesScreen = memo(function DatesScreen({
     () => Controller.createCalendar(year, month),
     [year, month],
   );
-  const weekdayList = useMemo(() => Dates.localizedDays(), []);
 
   return (
     <div className="date-screen-dates">
       <table>
-        <thead>
-          <tr>
-            {weekdayList.map(day => {
-              return <th key={day}>{day[0]}</th>;
-            })}
-          </tr>
-        </thead>
+        <WeekDaysHeader />
         <tbody>
           {dateLists.map((list, i) => {
             return (

@@ -7,13 +7,13 @@ export class Dates {
   public static ONE_MONTH = this.ONE_DAY * 30;
   public static ONE_YEAR = this.ONE_DAY * 365;
   public static DAY_FORMATTER = new Intl.DateTimeFormat(
-    window?.navigator?.language ?? "en-us",
+    LanguageHandler.locale,
     {
       day: "numeric",
     },
   );
   public static DATE_FORMATTER = new Intl.DateTimeFormat(
-    window?.navigator?.language ?? "en-us",
+    LanguageHandler.locale,
     {
       day: "numeric",
       month: "short",
@@ -23,20 +23,14 @@ export class Dates {
 
   static {
     LanguageHandler.subscribe(() => {
-      this.DAY_FORMATTER = new Intl.DateTimeFormat(
-        window?.navigator?.language ?? "en-us",
-        {
-          day: "numeric",
-        },
-      );
-      this.DATE_FORMATTER = new Intl.DateTimeFormat(
-        window?.navigator?.language ?? "en-us",
-        {
-          day: "numeric",
-          month: "short",
-          year: "numeric",
-        },
-      );
+      this.DAY_FORMATTER = new Intl.DateTimeFormat(LanguageHandler.locale, {
+        day: "numeric",
+      });
+      this.DATE_FORMATTER = new Intl.DateTimeFormat(LanguageHandler.locale, {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      });
     });
   }
 
@@ -62,7 +56,9 @@ export class Dates {
       const now = this.today();
       now.setDate(1);
       now.setMonth(i);
-      return now.toLocaleString(navigator.language, { month: "long" });
+      return now.toLocaleString(LanguageHandler.locale, {
+        month: "long",
+      });
     });
   }
 
@@ -71,7 +67,36 @@ export class Dates {
       const now = this.today();
       const day = now.getDay();
       now.setDate(now.getDate() + (i < day ? -day + i : i - day));
-      return now.toLocaleString(navigator.language, { weekday: "long" });
+      return now.toLocaleString(LanguageHandler.locale, {
+        weekday: "long",
+      });
+    });
+  }
+
+  public static localizedDaysInMonth(date = this.TODAY) {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const lastDateCurrent = new Date(year, month + 1, 0).getDate();
+    return Array.from({ length: lastDateCurrent }, (_, i) => {
+      const date = i + 1;
+      return {
+        year,
+        month,
+        date,
+        ISO: this.toISODateString(new Date(year, month, date)),
+        localizedDate: new Date(year, month, date).toLocaleString(
+          LanguageHandler.locale,
+          { day: "numeric" },
+        ),
+        localizedDayShort: new Date(year, month, date).toLocaleString(
+          LanguageHandler.locale,
+          { weekday: "short" },
+        ),
+        localizedDay: new Date(year, month, date).toLocaleString(
+          LanguageHandler.locale,
+          { weekday: "long" },
+        ),
+      };
     });
   }
 
@@ -143,7 +168,7 @@ export class Dates {
     );
   }
 
-  public static getDay(date: Date) {
+  public static getLocalizedDay(date: Date) {
     return this.DAY_FORMATTER.format(date);
   }
 

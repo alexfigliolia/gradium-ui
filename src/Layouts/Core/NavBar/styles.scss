@@ -120,7 +120,8 @@
             }
           }
           &.settings-stroked {
-            & path {
+            & path,
+            & circle {
               stroke: url(#globalBrandGradient);
             }
           }

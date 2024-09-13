@@ -1,7 +1,6 @@
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import { useLanguageChange } from "Hooks/useLanguageChange";
-import { useSmoothHeight } from "Hooks/useSmoothHeight";
 import { Dates } from "Tools/Dates";
 import { Controller } from "./Controller";
 import { DatesScreen } from "./DatesScreen";
@@ -41,9 +40,11 @@ export const DatePicker = memo(function DatePicker({
     [],
   );
 
-  useLanguageChange(() => {
+  const updateLocalizedMonths = useCallback(() => {
     setPartialState({ monthList: Dates.localizedMonths() });
-  });
+  }, [setPartialState]);
+
+  useLanguageChange(updateLocalizedMonths);
 
   const selectMonth = useCallback(
     (month: number) => {
@@ -66,13 +67,11 @@ export const DatePicker = memo(function DatePicker({
     [setPartialState],
   );
 
-  const [container, height] = useSmoothHeight<HTMLDivElement>();
-
   const classes = useClassNames("date-picker", className);
   const screenClasses = useClassNames("date-picker-screens", state.screen);
   return (
-    <div className={classes} tabIndex={0} style={{ height }}>
-      <div ref={container}>
+    <div className={classes} tabIndex={0}>
+      <div>
         <TitleArea
           setState={setState}
           year={state.selectedYear}

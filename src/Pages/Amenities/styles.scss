@@ -2,4 +2,27 @@
 
 .amenities-section {
   width: 100%;
+  &> .schedule {
+    gap: 0.5em;
+    margin-top: 1em;
+    overflow: hidden;
+    & > .calendar {
+      width: 100%;
+      &>.title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        &>.gradient-border-button {
+          &:first-of-type {
+            font-weight: 500;
+            font-size: 1.15em;
+          }
+          &:last-of-type {
+            font-size: 1em;
+            font-weight: 700;
+          }
+        }
+      }
+    }
+  }
 }

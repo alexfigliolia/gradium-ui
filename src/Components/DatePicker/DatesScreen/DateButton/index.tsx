@@ -1,6 +1,7 @@
-import { memo, useCallback, useMemo } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import { GradientBorderButton } from "Components/GradientBorderButton";
+import { useLanguageChange } from "Hooks/useLanguageChange";
 import { Dates } from "Tools/Dates";
 import type { Callback } from "Types/Generics";
 import "./styles.scss";
@@ -13,6 +14,19 @@ export const DateButton = memo(function DateButton({
 }: Props) {
   const ISO = useMemo(() => date.toISOString(), [date]);
   const active = useMemo(() => ISO === value, [value, ISO]);
+  const [localizedDate, setLocalizedDate] = useState(date.toLocaleDateString());
+  const [localizedDay, setLocalizedDay] = useState(Dates.getLocalizedDay(date));
+
+  const updateLocales = useCallback(() => {
+    setLocalizedDate(date.toLocaleDateString());
+    setLocalizedDay(Dates.getLocalizedDay(date));
+  }, [date]);
+
+  useLanguageChange(updateLocales);
+
+  useEffect(() => {
+    updateLocales();
+  }, [date, updateLocales]);
 
   const onSelectDate = useCallback(() => {
     onClick?.(ISO);
@@ -25,11 +39,9 @@ export const DateButton = memo(function DateButton({
   return (
     <GradientBorderButton
       type="button"
-      data-value={ISO}
-      aria-label={ISO}
       className={classes}
       onClick={onSelectDate}>
-      <time dateTime={ISO}>{Dates.getDay(date)}</time>
+      <time dateTime={localizedDate}>{localizedDay}</time>
     </GradientBorderButton>
   );
 });

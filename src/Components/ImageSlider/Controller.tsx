@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 
 export class Controller {
   public index = 0;
+  public initialRender = true;
   public flickity: Flickity | null = null;
   public slider: HTMLDivElement | null = null;
   public container: HTMLDivElement | null = null;
@@ -55,6 +56,10 @@ export class Controller {
           this.flickity.reloadCells();
           this.flickity.resize();
           this.flickity.reposition();
+          if (this.initialRender) {
+            this.initialRender = false;
+            this.flickity.select(this.index, false, true);
+          }
         }
         resolve(this.clearTimer());
       }, 10);

@@ -24,6 +24,10 @@ export class LanguageHandler extends Subscriptable<Callback> {
     return this.subscriptions.remove(ID);
   }
 
+  public static get locale() {
+    return window?.navigator?.language ?? "en-us";
+  }
+
   private static onLanguageChange = () => {
     void this.subscriptions.execute();
   };
