@@ -1,2 +1,2 @@
 runtime: nodejs20
-entrypoint: node production/server.js
+entrypoint: yarn start:prod
