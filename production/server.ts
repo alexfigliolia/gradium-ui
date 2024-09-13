@@ -3,6 +3,7 @@ import { existsSync } from "fs";
 import path from "path";
 
 const app = express();
+app.set("trust proxy", true);
 
 const buildPath: string[] = [process.cwd()];
 let N = 10;
