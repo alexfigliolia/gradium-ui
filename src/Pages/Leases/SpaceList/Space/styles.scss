@@ -11,11 +11,16 @@
     &>span {
       align-self: center;
       font-size: 1em;
+      margin-top: 0.65em;
+      color: var(--text-color-light);
     }
   }
   &>button {
     --border-radius: 2em;
     font-size: 0.95em;
     font-weight: 700;
+    &>div {
+      background-color: var(--tile-background);
+    }
   }
 }

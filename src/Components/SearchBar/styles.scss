@@ -9,13 +9,15 @@
   background-size: 400% 400%;
   background-position: 0% 50%;
   border-radius: 2em;
-  transition: background-position 0.6s;
-  background-image: linear-gradient(to right, var(--theme-gray), var(--theme-gray), var(--theme-light), var(--theme-dark));
+  transition: background-position 0.6s, box-shadow 0.4s;
+  box-shadow: 0px 1.5px 7.5px rgba(#000, 0.2);
+  background-image: linear-gradient(to right, var(--tile-background), var(--tile-background), var(--theme-light), var(--theme-dark));
   &:has(>div>input:focus-within),
   &:hover {
     background-position: 100% 50%;
   }
   &:has(>div>input:focus-within) {
+    box-shadow: 0px 1.5px 7.5px var(--theme-mid);
     &>div>button>svg {
       fill: url(#globalBrandGradient);      
     }
