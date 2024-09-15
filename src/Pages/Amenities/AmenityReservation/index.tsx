@@ -51,7 +51,6 @@ const amenities = [
 ];
 
 export const AmenityReservation = memo(function AmenityReservation() {
-  cons;
   return (
     <Confirmation open={true} close={() => {}}>
       <h2>Create Reservation</h2>
@@ -66,7 +65,7 @@ export const AmenityReservation = memo(function AmenityReservation() {
           list={amenities.map(a => ({ value: a.id.toString(), label: a.name }))}
           name="living-space"
           icon={<BasketballCourt />}
-          value={new Set([unit])}
+          value={new Set([""])}
           onChange={() => {}}
         />
       </form>

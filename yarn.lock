@@ -438,8 +438,10 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.57.0.tgz#a5417ae8427873f1dd08b70b3574b453e67b5f7f"
   integrity sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==
 
-"@figliolia/bottom-sheet@file:../bottom-sheet":
+"@figliolia/bottom-sheet@^1.0.0":
   version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@figliolia/bottom-sheet/-/bottom-sheet-1.0.0.tgz#f1b136ea5373ff6bd1ff7f7b36126b4b57e3170a"
+  integrity sha512-VRAyJh0X7ZNYSlTUXok+Gr/nhx73sprWfws5CQ+SyivqstzqYPgrFQPR1QKgKk9W5MzIbkf/RUSxQiAshKel+Q==
   dependencies:
     "@figliolia/classnames" "^1.0.1"
     "@figliolia/drag-detector" "^1.0.2"

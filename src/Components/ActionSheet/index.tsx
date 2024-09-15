@@ -63,7 +63,7 @@ export const ActionSheet = memo(function ActionSheet({
     }
   }, [open, detector.node]);
 
-  const classes = useClassNames("action-sheet", className, {
+  const classes = useClassNames("bottom-sheet", className, {
     dim,
     open,
   });

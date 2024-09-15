@@ -1,6 +1,6 @@
 @use "Styles/Variables";
 
-.confirmation-sheet.action-sheet {
+.confirmation-sheet.bottom-sheet {
   &>div {
     @media (min-width: 670px) {
       max-width: 600px;
