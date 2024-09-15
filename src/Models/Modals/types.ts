@@ -6,4 +6,5 @@ export interface IModals {
   leaseFilters: boolean;
   dashboardFilters: boolean;
   deleteProperty: boolean;
+  dateSelector: boolean;
 }

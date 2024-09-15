@@ -5,10 +5,20 @@ import type { IAmenitySchedule, IReservation } from "./types";
 export class AmenityScheduleModel extends State<IAmenitySchedule> {
   constructor() {
     super("Amenity Schedule", {
-      year: 2024,
-      month: 8,
+      currentDate: new Date(),
       events: AmenityScheduleModel.EVENTS(),
     });
+  }
+
+  public selectDate(date: Date) {
+    this.update(state => {
+      state.currentDate = date;
+    });
+  }
+
+  public getEvent(ID: number) {
+    const { currentDate, events } = this.getState();
+    return events[currentDate.getDate()].find(e => e.id === ID);
   }
 
   private static EVENTS() {
@@ -30,8 +40,10 @@ export class AmenityScheduleModel extends State<IAmenitySchedule> {
     d2.setDate(day);
     d2.setHours(15);
     d2.setMinutes(0);
+    let ID = 1;
     return [
       {
+        id: ID++,
         start: d1.toISOString(),
         end: addHours(d1, 2).toISOString(),
         amenity: {
@@ -42,11 +54,13 @@ export class AmenityScheduleModel extends State<IAmenitySchedule> {
         },
       },
       {
+        id: ID++,
         start: d2.toISOString(),
         end: addHours(d2, 2).toISOString(),
         amenity: { name: "Tennis Court", id: 2, open: "07:00", close: "22:00" },
       },
       {
+        id: ID++,
         start: d1.toISOString(),
         end: addHours(d1, 9).toISOString(),
         amenity: {
@@ -57,6 +71,7 @@ export class AmenityScheduleModel extends State<IAmenitySchedule> {
         },
       },
       {
+        id: ID++,
         start: d2.toISOString(),
         end: addHours(d2, 2).toISOString(),
         amenity: { name: "Tennis Court", id: 2, open: "07:00", close: "22:00" },

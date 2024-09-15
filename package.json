@@ -20,6 +20,7 @@
     "not dead"
   ],
   "dependencies": {
+    "@figliolia/bottom-sheet": "file:../bottom-sheet",
     "@figliolia/classnames": "^1.0.1",
     "@figliolia/day-night-toggle": "^1.0.3",
     "@figliolia/decorators": "^2.0.1",

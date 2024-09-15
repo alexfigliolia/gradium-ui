@@ -438,6 +438,13 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.57.0.tgz#a5417ae8427873f1dd08b70b3574b453e67b5f7f"
   integrity sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==
 
+"@figliolia/bottom-sheet@file:../bottom-sheet":
+  version "1.0.0"
+  dependencies:
+    "@figliolia/classnames" "^1.0.1"
+    "@figliolia/drag-detector" "^1.0.2"
+    "@figliolia/react-hooks" "^1.1.0"
+
 "@figliolia/child-process@^1.0.1":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@figliolia/child-process/-/child-process-1.0.4.tgz#5337c847f43a08ff9e1124793fa650f746515da5"
@@ -535,6 +542,11 @@
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@figliolia/react-hooks/-/react-hooks-1.0.3.tgz#ec6398264beea308ef3ba7fe5e1ab24dfa486223"
   integrity sha512-Tm9D//gWcNDcFDTzwJwAvCgSoi75saD3K7MZmIKlqEp/kYUwM7W7kD7S0pwJXYzaAn9djEg2pWMluN9I7UbSyg==
+
+"@figliolia/react-hooks@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@figliolia/react-hooks/-/react-hooks-1.1.0.tgz#7307b737d7945448d196c75ef8e2ae8a19421827"
+  integrity sha512-xHPpVGdStZhvEh+icdY1P87QNwo1OO6KmnI1hBwXeCfbKIAfB0Q4xI0jF0X5tWBl+5GVOC2kAURys6xulf/NxA==
 
 "@figliolia/react-lazy@^1.1.0":
   version "1.1.0"

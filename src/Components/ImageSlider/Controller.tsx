@@ -40,6 +40,12 @@ export class Controller {
     return createPortal(this.renderSlides(images), this.slider);
   }
 
+  public scrollTo(...args: Parameters<Flickity["select"]>) {
+    if (this.flickity) {
+      this.flickity.select(...args);
+    }
+  }
+
   public destroy() {
     this.slider = null;
     this.flickity = null;
@@ -66,7 +72,7 @@ export class Controller {
     });
   }
 
-  public renderSlides(images: IImage[]) {
+  private renderSlides(images: IImage[]) {
     const { length } = images;
     return images.map(({ type, content }, i) => {
       return (

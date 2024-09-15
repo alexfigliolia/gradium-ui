@@ -59,12 +59,23 @@
       }
     }
   }
+  & .fc-event:focus::after {
+    display: none;
+  }
   & .fc-v-event {
+    cursor: pointer;
     background-color: var(--event-background);
     box-shadow: 0px 2.5px 5px rgba(#000, 0.2);
     border: 1px solid #fff;
+    transition: background-color 0.25s;
+    &:hover {
+      background-color: var(--event-background-highlight);
+    }
     & .fc-event-main {
       padding: 0.25em;
+      @media (min-width: 670px) {
+        padding: 0.5em;
+      }
       & .fc-event-time, 
       & .fc-event-title {
         color: #fff;

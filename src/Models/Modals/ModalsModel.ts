@@ -9,6 +9,7 @@ export class ModalsModel extends State<IModals> {
       editLease: false,
       newProperty: false,
       deleteSpace: false,
+      dateSelector: false,
       leaseFilters: false,
       deleteProperty: false,
       dashboardFilters: false,
@@ -32,6 +33,8 @@ export class ModalsModel extends State<IModals> {
   private closeNewProperty = this.toggleKey("newProperty", false);
   private openDeleteSpace = this.toggleKey("deleteSpace", true);
   private closeDeleteSpace = this.toggleKey("deleteSpace", false);
+  private openDateSelector = this.toggleKey("dateSelector", true);
+  private closeDateSelector = this.toggleKey("dateSelector", false);
   private openDeleteProperty = this.toggleKey("deleteProperty", true);
   private closeDeleteProperty = this.toggleKey("deleteProperty", false);
   private openLeaseFilters = this.toggleKey("leaseFilters", true);
@@ -47,6 +50,10 @@ export class ModalsModel extends State<IModals> {
   leaseFilters = ModalStack.create(
     this.openLeaseFilters,
     this.closeLeaseFilters,
+  );
+  dateSelector = ModalStack.create(
+    this.openDateSelector,
+    this.closeDateSelector,
   );
   dashboardFilters = ModalStack.create(
     this.openDashboardFilters,

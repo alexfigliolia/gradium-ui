@@ -1,0 +1,34 @@
+@use "Styles/Variables";
+
+.confirmation-sheet.date-selector {
+  &>div {
+    background-color: var(--drop-down-background);
+    @media (min-width: 670px) {
+      max-width: 500px;
+    }
+  }
+  & .sheet-content  {
+    width: 100%;
+    max-width: none;
+    & .date-picker {
+      box-shadow: none;
+      background-color: var(--drop-down-background);
+      & .date-screen-dates {
+        &>table > thead > tr > th {
+          background-color: var(--background);
+        }
+        & .date-button {
+          width: 70%;
+          &.active {
+            &>div {
+              @include Variables.buttonGradient;
+              &>time {
+                color: #fff;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

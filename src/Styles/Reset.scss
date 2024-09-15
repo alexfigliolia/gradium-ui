@@ -1,7 +1,7 @@
 @use "Styles/Variables";
 
 :root {
-  --dim: #0000006d;
+  --dim: #00000082;
   --background: #f5f5f5;
   --background-dark: #e9e9e9;
   --background-light: #fff;
@@ -25,6 +25,7 @@
   --maintenance-theme: #{Variables.$maintenance-light};
   --finances-theme: #{Variables.$finances-light};
   --event-background: var(--theme-mid);
+  --event-background-highlight: #24aaf7;
 }
 
 html[data-theme='dark'] {
@@ -52,6 +53,7 @@ html[data-theme='dark'] {
   --maintenance-theme: #{Variables.$maintenance-dark};
   --finances-theme: #{Variables.$finances-dark};
   --event-background: #{rgba(Variables.$light-orange, 0.7)};
+  --event-background-highlight: var(--theme-mid);
 }
 
 * {

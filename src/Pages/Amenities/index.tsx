@@ -1,16 +1,19 @@
-import { memo, useMemo, useState } from "react";
+import { Fragment, memo, useCallback, useMemo } from "react";
 import { GradientBorderButton } from "Components/GradientBorderButton";
 import { Tile } from "Components/Tile";
 import { Page, PageTitle } from "Layouts/Management";
+import { selectCurrentDate, useAmenitySchedule } from "State/AmenitySchedule";
+import { Modals } from "State/Modals";
 import { LanguageHandler } from "Tools/LanguageHandler";
 import type { Propless } from "Types/React";
+import { DateSelector } from "./DateSelector";
 import { DaySlider } from "./DaySlider";
 import { DayView } from "./DayView";
 import "./styles.scss";
 
 export default memo(
   function Amenities(_: Propless) {
-    const [active, setActive] = useState(new Date());
+    const active = useAmenitySchedule(selectCurrentDate);
     const month = useMemo(
       () => active.toLocaleString(LanguageHandler.locale, { month: "long" }),
       [active],
@@ -19,20 +22,30 @@ export default memo(
       () => active.toLocaleString(LanguageHandler.locale, { year: "numeric" }),
       [active],
     );
+    const openSelector = useCallback(() => {
+      Modals.dateSelector.open();
+    }, []);
     return (
-      <Page className="amenities-section">
-        <PageTitle title="Reservation Schedule" />
-        <Tile className="schedule">
-          <div className="calendar">
-            <div className="title">
-              <GradientBorderButton>{month}</GradientBorderButton>
-              <GradientBorderButton>{year}</GradientBorderButton>
+      <Fragment>
+        <Page className="amenities-section">
+          <PageTitle title="Reservation Schedule" />
+          <Tile className="schedule">
+            <div className="calendar">
+              <div className="title">
+                <GradientBorderButton onClick={openSelector}>
+                  {month}
+                </GradientBorderButton>
+                <GradientBorderButton onClick={openSelector}>
+                  {year}
+                </GradientBorderButton>
+              </div>
+              <DaySlider />
+              <DayView />
             </div>
-            <DaySlider selectDay={setActive} selectedDate={active} />
-            <DayView selectedDate={active} />
-          </div>
-        </Tile>
-      </Page>
+          </Tile>
+        </Page>
+        <DateSelector />
+      </Fragment>
     );
   },
   () => true,

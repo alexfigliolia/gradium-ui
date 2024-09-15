@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { memo } from "react";
+import { BottomSheet } from "@figliolia/bottom-sheet";
 import { useClassNames } from "@figliolia/classnames";
-import { ActionSheet } from "Components/ActionSheet";
 import { Closer } from "Components/Closer";
 import type { Callback } from "Types/Generics";
 import "./styles.scss";
@@ -14,10 +14,10 @@ export const Confirmation = memo(function Confirmation({
 }: Props) {
   const classes = useClassNames("confirmation-sheet", className);
   return (
-    <ActionSheet dim notch open={open} className={classes} close={close}>
+    <BottomSheet dim notch open={open} className={classes} close={close}>
       <Closer onClick={close} aria-label="Close Confirmation" />
       {children}
-    </ActionSheet>
+    </BottomSheet>
   );
 });
 

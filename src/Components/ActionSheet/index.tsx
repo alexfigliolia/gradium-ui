@@ -8,7 +8,7 @@ import {
 import { useTimeout } from "@figliolia/react-hooks";
 import { useScreen } from "State/Screen";
 import type { OptionalChildren } from "Types/React";
-import "./styles.scss";
+import "./styles.css";
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */

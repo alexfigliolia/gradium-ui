@@ -1,8 +1,18 @@
-import { memo, useMemo } from "react";
-import type { Callback } from "@figliolia/drag-detector";
-import type { FlickityOptions, IImage } from "Components/ImageSlider";
+import { memo, useCallback, useEffect, useMemo, useRef } from "react";
+import { useTimeout } from "@figliolia/react-hooks";
+import type {
+  Controller,
+  FlickityOptions,
+  IImage,
+} from "Components/ImageSlider";
 import { DEFAULT_OPTIONS, ImageSlider } from "Components/ImageSlider";
+import {
+  AmenitySchedule,
+  selectCurrentDate,
+  useAmenitySchedule,
+} from "State/AmenitySchedule";
 import { Dates } from "Tools/Dates";
+import type { Propless } from "Types/React";
 import { DayButton } from "./DayButton";
 import "./styles.scss";
 
@@ -12,43 +22,57 @@ const OPTIONS: FlickityOptions = {
   contain: true,
 };
 
-export const DaySlider = memo(function DaySlider({
-  selectedDate,
-  selectDay,
-}: Props) {
-  const currentDay = useMemo(() => selectedDate.getDate(), [selectedDate]);
-  const month = useMemo(
-    () => Dates.localizedDaysInMonth(selectedDate),
-    [selectedDate],
-  );
+export const DaySlider = memo(function DaySlider(_: Propless) {
+  const timeout = useTimeout();
+  const scrollTo = useRef(true);
+  const controller = useRef<Controller>(null);
+  const active = useAmenitySchedule(selectCurrentDate);
+  const currentDay = useMemo(() => active.getDate(), [active]);
+  const month = useMemo(() => Dates.localizedDaysInMonth(active), [active]);
+  const selectDate = useCallback((date: Date) => {
+    scrollTo.current = false;
+    AmenitySchedule.selectDate(date);
+  }, []);
   const children: IImage[] = useMemo(
     () =>
-      month.map(({ localizedDate, localizedDayShort, year, month, date }) => {
+      month.map(date => {
         return {
           type: "child",
           content: (
             <DayButton
-              key={localizedDate}
-              date={localizedDate}
-              day={localizedDayShort}
-              active={currentDay === date}
-              onClick={() => selectDay(new Date(year, month, date))}
+              {...date}
+              key={date.localizedDate}
+              selectDate={selectDate}
+              active={currentDay === date.date}
             />
           ),
         };
       }),
-    [month, currentDay, selectDay],
+    [month, currentDay, selectDate],
   );
+
+  useEffect(() => {
+    if (scrollTo.current) {
+      timeout.execute(() => {
+        controller.current?.scrollTo(currentDay - 1);
+      }, 10);
+    } else {
+      scrollTo.current = true;
+    }
+  }, [currentDay, timeout]);
+
+  const options = useMemo(
+    () => ({ ...OPTIONS, initialIndex: currentDay - 1 }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
   return (
     <ImageSlider
-      className="day-slider"
+      ref={controller}
       images={children}
-      options={{ ...OPTIONS, initialIndex: currentDay - 1 }}
+      options={options}
+      className="day-slider"
     />
   );
 });
-
-interface Props {
-  selectedDate: Date;
-  selectDay: Callback<[date: Date]>;
-}

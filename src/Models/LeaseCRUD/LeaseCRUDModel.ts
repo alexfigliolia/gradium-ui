@@ -1,10 +1,10 @@
 import type { ChangeEvent } from "react";
-import { State } from "@figliolia/galena";
 import type { ILease, ILessee } from "Models/Leases";
+import { CRUDModel } from "Tools/CRUDModel";
 import { Dates } from "Tools/Dates";
 import type { ILeaseCRUD } from "./types";
 
-export class LeaseCRUDModel extends State<ILeaseCRUD> {
+export class LeaseCRUDModel extends CRUDModel<ILeaseCRUD> {
   constructor(name: string) {
     super(name, {
       unit: "",
@@ -57,15 +57,4 @@ export class LeaseCRUDModel extends State<ILeaseCRUD> {
       });
     });
   };
-
-  private createSetter<K extends Extract<keyof ILeaseCRUD, string>>(
-    key: K,
-    formatter?: (value: ILeaseCRUD[K]) => ILeaseCRUD[K],
-  ) {
-    return (value: ILeaseCRUD[K]) => {
-      this.update(state => {
-        state[key] = formatter ? formatter(value) : value;
-      });
-    };
-  }
 }
