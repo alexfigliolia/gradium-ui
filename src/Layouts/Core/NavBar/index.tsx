@@ -5,6 +5,7 @@ import { Logo } from "Components/Logo";
 import { ThemeToggle } from "Components/ThemeToggle";
 import { AdminRoutes } from "Router/AdminRoutes";
 import type { Propless } from "Types/React";
+import { MenuButton } from "./MenuButton";
 import "./styles.scss";
 
 export const NavBar = memo(
@@ -15,9 +16,12 @@ export const NavBar = memo(
           <Link to="/" className="logo-link">
             <Logo />
           </Link>
-          {AdminRoutes.navigationRoutes.map(route => {
-            return <IconLink key={route.path} {...route} />;
-          })}
+          <div>
+            {AdminRoutes.navigationRoutes.map(route => {
+              return <IconLink key={route.path} {...route} />;
+            })}
+          </div>
+          <MenuButton />
         </nav>
         <ThemeToggle />
       </header>

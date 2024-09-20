@@ -8,10 +8,10 @@
     overflow: visible;
   }
   & .flickity-cell {
-    width: 15%;
+    width: 16.5%;
     max-width: 60px;
     height: 100%;
-    margin-right: 0.75em;
+    margin-right: 3%;
     padding-bottom: 1em;
     &:last-of-type {
       margin-right: 0;
@@ -45,7 +45,7 @@
           }
           &:last-of-type {
             margin: -0.15em;
-            font-size: 3em;
+            font-size: 2.75em;
             font-weight: 200;
           }
         }

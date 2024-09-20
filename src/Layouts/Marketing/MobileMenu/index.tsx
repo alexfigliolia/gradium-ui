@@ -2,13 +2,13 @@ import { memo, useCallback, useMemo, useState } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import type { Dimensions, Options } from "@figliolia/size-observer";
 import { useSizeObserver } from "@figliolia/size-observer";
-import { mobileMenu, Modals, useModals } from "State/Modals";
+import { marketingMobileMenu, Modals, useModals } from "State/Modals";
 import type { Propless } from "Types/React";
 import { Nav } from "../Nav";
 import "./styles.scss";
 
 export const MobileMenu = memo(function MobileMenu(_: Propless) {
-  const open = useModals(mobileMenu);
+  const open = useModals(marketingMobileMenu);
   const [height, setHeight] = useState<string | undefined>();
   const options: Options = useMemo(
     () => ({
@@ -24,7 +24,7 @@ export const MobileMenu = memo(function MobileMenu(_: Propless) {
   const classes = useClassNames("marketing-menu", { open });
 
   const onNavigate = useCallback(() => {
-    Modals.mobileMenu.close();
+    Modals.marketingMobileMenu.close();
   }, []);
 
   return (

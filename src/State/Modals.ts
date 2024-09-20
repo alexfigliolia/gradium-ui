@@ -4,4 +4,11 @@ import { ModalsModel } from "Models/Modals";
 
 export const Modals = new ModalsModel();
 export const useModals = createUseState(Modals);
-export const mobileMenu = (state: IModals) => state.mobileMenu;
+
+export const marketingMobileMenu = (state: IModals) => {
+  return state.marketingMobileMenu;
+};
+
+export const coreMobileMenu = (state: IModals) => {
+  return state.coreMobileMenu;
+};
