@@ -2,6 +2,7 @@ declare module "Styles/Exports.module.scss" {
   class CSSVars {
     public static black: string;
     public static teal: string;
+    public static tealText: string;
     public static blue: string;
     public static orange: string;
     public static yellow: string;

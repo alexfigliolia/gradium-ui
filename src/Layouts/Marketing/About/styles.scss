@@ -1,0 +1,11 @@
+@use "Styles/Variables";
+
+.marketing-about {
+  &>.grid {
+    width: 100%;
+    @include Variables.center;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 2em;
+  }
+}

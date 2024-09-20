@@ -7,3 +7,7 @@ export interface Propless {
 export interface OptionalChildren {
   children?: ReactNode;
 }
+
+export interface OptionalRef<T> {
+  ref?: T;
+}

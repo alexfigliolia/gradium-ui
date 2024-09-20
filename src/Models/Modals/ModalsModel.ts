@@ -8,6 +8,7 @@ export class ModalsModel extends State<IModals> {
       newLease: false,
       editLease: false,
       newProperty: false,
+      mobileMenu: false,
       deleteSpace: false,
       dateSelector: false,
       leaseFilters: false,
@@ -33,6 +34,8 @@ export class ModalsModel extends State<IModals> {
   private closeNewProperty = this.toggleKey("newProperty", false);
   private openDeleteSpace = this.toggleKey("deleteSpace", true);
   private closeDeleteSpace = this.toggleKey("deleteSpace", false);
+  private openMobileMenu = this.toggleKey("mobileMenu", true);
+  private closeMobileMenu = this.toggleKey("mobileMenu", false);
   private openDateSelector = this.toggleKey("dateSelector", true);
   private closeDateSelector = this.toggleKey("dateSelector", false);
   private openDeleteProperty = this.toggleKey("deleteProperty", true);
@@ -45,6 +48,7 @@ export class ModalsModel extends State<IModals> {
   /* CONTROLLERS */
   newLease = ModalStack.create(this.openNewLease, this.closeNewLease);
   editLease = ModalStack.create(this.openEditLease, this.closeEditLease);
+  mobileMenu = ModalStack.create(this.openMobileMenu, this.closeMobileMenu);
   newProperty = ModalStack.create(this.openNewProperty, this.closeNewProperty);
   deleteSpace = ModalStack.create(this.openDeleteSpace, this.closeDeleteSpace);
   leaseFilters = ModalStack.create(

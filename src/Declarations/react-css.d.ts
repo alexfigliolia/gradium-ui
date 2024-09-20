@@ -2,7 +2,10 @@ import "react";
 
 declare module "react" {
   export interface CSSProperties {
+    "--x"?: string;
+    "--y"?: string;
     "--fill"?: string;
+    "--height"?: string;
     "--stroke"?: string;
     "--height"?: number;
     "--maxHeight"?: number;

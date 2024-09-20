@@ -1,8 +1,8 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
 import { IconLink } from "Components/IconLink";
-import { Logo } from "Components/Logo";
 import { ThemeToggle } from "Components/ThemeToggle";
+import { Logo } from "Layouts/Marketing/Logo";
 import { AdminRoutes } from "Router/AdminRoutes";
 import type { Propless } from "Types/React";
 import "./styles.scss";

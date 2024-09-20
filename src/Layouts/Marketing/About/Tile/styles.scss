@@ -1,0 +1,37 @@
+@use "Styles/Variables";
+
+.marketing-tile {
+  @media (min-width: 957px) {
+    width: calc(33.3333% - 1.35em);
+  }
+  &>div {
+    &:hover > div > h2 {
+      &:first-of-type > span {
+        translate: 0 0;
+      }
+      &:last-of-type > span {
+        translate: 0 100%;
+      }
+    }
+    &>div {
+      position: relative;
+      margin-bottom: 0.25em;
+      overflow: hidden;
+      &>h2 {
+        font-size: 1.75em;
+        &:first-of-type >span {
+          color: Variables.$teal-text;
+          translate: 0 -100%;
+        }
+        &:last-of-type {
+          top: 0;
+          left: 0;
+          position: absolute;
+        }
+        &>span {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}

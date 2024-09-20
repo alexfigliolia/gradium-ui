@@ -1,0 +1,14 @@
+@use "Styles/Variables";
+
+.logo.marketing-logo {
+  @media (min-width: Variables.$desktop-marketing-nav) {
+    margin-left: -0.15em;
+  }
+  &>svg path:last-of-type {
+    stroke: url(#tealGradient);
+  }
+  &>span {
+    @include Variables.tealGradient;
+    @include Variables.textClip;
+  }
+}

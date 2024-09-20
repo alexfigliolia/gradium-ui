@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Auth, Core } from "./Routes";
+import { Auth, Core, Marketing } from "./Routes";
 export { AdminRoutes } from "./AdminRoutes";
 
-export const Router = createBrowserRouter([Core, Auth]);
+export const Router = createBrowserRouter([Marketing, Core, Auth]);

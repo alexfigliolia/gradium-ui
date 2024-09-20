@@ -1,16 +1,18 @@
+import type { HTMLProps } from "react";
 import { memo } from "react";
+import { useClassNames } from "@figliolia/classnames";
 import { Gradium } from "Icons/Gradium";
-import type { Propless } from "Types/React";
 import "./styles.scss";
 
-export const Logo = memo(
-  function Logo(_: Propless) {
-    return (
-      <div className="logo">
-        <Gradium />
-        <span>Gradium</span>
-      </div>
-    );
-  },
-  () => true,
-);
+export const Logo = memo(function Logo({
+  className,
+  ...rest
+}: HTMLProps<HTMLDivElement>) {
+  const classes = useClassNames("logo", className);
+  return (
+    <div className={classes} {...rest}>
+      <Gradium />
+      <span>Gradium</span>
+    </div>
+  );
+});

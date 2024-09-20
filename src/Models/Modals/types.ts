@@ -7,4 +7,5 @@ export interface IModals {
   dashboardFilters: boolean;
   deleteProperty: boolean;
   dateSelector: boolean;
+  mobileMenu: boolean;
 }

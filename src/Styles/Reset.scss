@@ -1,8 +1,9 @@
 @use "Styles/Variables";
 
 :root {
+  --padding: 1em;
   --dim: #00000082;
-  --background: #f5f5f5;
+  --background: #{Variables.$light-background};
   --background-dark: #e9e9e9;
   --background-light: #fff;
   --text-color: #{Variables.$black};
@@ -19,6 +20,7 @@
   --theme-light: #{Variables.$teal};
   --theme-dark: #{Variables.$blue};
   --theme-mid: #{Variables.$light-blue};
+  --theme-text: #{Variables.$teal-text};
   --theme-gray: #{Variables.$light-gray};
   --leases-theme: #{Variables.$leases-light};
   --amenities-theme: #{Variables.$amenities-light};
@@ -26,6 +28,9 @@
   --finances-theme: #{Variables.$finances-light};
   --event-background: var(--theme-mid);
   --event-background-highlight: #24aaf7;
+  @media (min-width: 670px) {
+    --padding: 2em;
+  }
 }
 
 html[data-theme='dark'] {

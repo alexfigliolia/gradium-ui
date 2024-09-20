@@ -1,0 +1,11 @@
+@use "Styles/Variables";
+
+.marketing-footer {
+  height: 50vh;
+  max-height: 300px;
+  @include Variables.center;
+  @include Variables.blackGradient;
+  &>.logo {
+    font-size: 2em;
+  }
+}

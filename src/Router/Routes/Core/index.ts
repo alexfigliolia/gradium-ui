@@ -9,7 +9,7 @@ import { Properties } from "./Properties";
 import { PropertyConfiguration } from "./PropertyConfiguration";
 
 export const Core: NonIndexRouteObject = {
-  path: "/",
+  path: "/app",
   Component: CreateLazyComponent({
     loader: () => import("Layouts/Core"),
   }),

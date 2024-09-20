@@ -1,0 +1,11 @@
+@use "Styles/Variables";
+
+.m-sections {
+  width: 100%;
+  --text-color: #{Variables.$black};
+  background-color: Variables.$light-background;
+  &>div {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
