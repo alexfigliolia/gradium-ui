@@ -11,27 +11,29 @@
     width: 100%;
     flex-direction: column;
     @include Variables.center;
-    margin-top: 10vh;
-    @media (min-width: 957px) {
+    margin-top: 6vh;
+    @media (min-width: 390px) {
+      margin-top: 8vh;
+    }
+    @media (min-width: 670px) {
       margin-top: 5vh;
     }
     @media (min-width: 1200px) {
       margin-top: 0;
-    }
-    &>.gradium-icon {
-      display: none;
-      height: 7em;
-      width: 7em;
-      filter: drop-shadow(0px 0px 2.5px rgba(#000, 0.15));
-      & path:last-of-type {
-        stroke: url("#gradiumIcon")
+    } 
+    &>.logo {
+      @media(min-width: 670px) {
+        font-size: 2em;
+      }
+      &>svg {
+        width: 2em;
+        height: 2em;
+      }
+      &>span {
+        font-size: 1.75em;
       }
     }
-    &>h1 {
-      font-size: 3.5em;
-      @include Variables.textGradient(bottom right);
-    } 
-    &>p {
+    &>.anchor {
       font-size: 1.1em;
       color: var(--text-color-light);
       &>a {
@@ -55,7 +57,10 @@
         padding: 2em;
       }
       &>.action-button {
-        margin: 1em auto;
+        margin: 1em auto 0 auto;
+        @media (min-width: 400px) {
+          margin: 1em auto;
+        }
       }
     }
   }

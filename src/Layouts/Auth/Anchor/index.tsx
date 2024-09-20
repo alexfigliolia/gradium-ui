@@ -15,7 +15,7 @@ export const Anchor = memo(function Anchor(_: Propless) {
     [signUp],
   );
   return (
-    <p>
+    <p className="anchor">
       {linkText} <NavLink to={href}>{text}</NavLink>
     </p>
   );

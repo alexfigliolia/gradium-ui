@@ -3,9 +3,9 @@ import { Outlet } from "react-router-dom";
 import { useFormState } from "@figliolia/react-hooks";
 import { ActionButton } from "Components/ActionButton";
 import { BrandSVGGradient } from "Components/BrandSVGGradient";
+import { Logo } from "Components/Logo";
 import { ThemeToggle } from "Components/ThemeToggle";
 import { Blob } from "Icons/Blob";
-import { Gradium } from "Icons/Gradium";
 import { selectHeight, useScreen } from "State/Screen";
 import type { Propless } from "Types/React";
 import { Anchor } from "./Anchor";
@@ -39,10 +39,7 @@ export default memo(
       <section className="auth-screen" style={{ height, maxHeight: height }}>
         <BlobWithText>{text}</BlobWithText>
         <div className="content">
-          <Gradium>
-            <BrandSVGGradient id="gradiumIcon" x1={0} y1={0} x2={1} y2={1} />
-          </Gradium>
-          <h1>Gradium</h1>
+          <Logo />
           <form onSubmit={onSubmit}>
             <Outlet />
             <ActionButton
