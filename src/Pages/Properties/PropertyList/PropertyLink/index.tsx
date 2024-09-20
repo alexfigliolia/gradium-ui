@@ -33,13 +33,13 @@ export const PropertyLink = memo(function PropertyLink({
             text="Manage"
             icon={<Building />}
             className="to-manage"
-            to={`/manage/${slug}`}
+            to={`/app/manage/${slug}`}
           />
           <Link
             text="Configure"
             className="to-configure"
             icon={<SettingsFilled />}
-            to={`/configure/${slug}`}
+            to={`/app/configure/${slug}`}
           />
         </div>
       </div>

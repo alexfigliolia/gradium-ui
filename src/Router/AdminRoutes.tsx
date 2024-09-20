@@ -7,32 +7,32 @@ import type { RouteConfig } from "./types";
 export class AdminRoutes {
   public static readonly PROPERTIES: RouteConfig = {
     label: "Properties",
-    path: "/properties",
+    path: "/app/properties",
     FilledIcon: BuildingsFilled,
     StrokedIcon: BuildingsStroked,
     matcher: path => {
       return (
-        path.startsWith("/properties") ||
-        path.startsWith("/configure") ||
-        path.startsWith("/dashboard") ||
-        path.startsWith("/manage")
+        path.startsWith("/app/properties") ||
+        path.startsWith("/app/configure") ||
+        path.startsWith("/app/dashboard") ||
+        path.startsWith("/app/manage")
       );
     },
   };
   public static readonly STAFF: RouteConfig = {
-    path: "/staff",
+    path: "/app/staff",
     label: "Staff",
     FilledIcon: StaffFilled,
     StrokedIcon: StaffStroked,
   };
   public static readonly SCHEDULE: RouteConfig = {
-    path: "/schedule",
+    path: "/app/schedule",
     label: "Schedule",
     FilledIcon: ScheduleFilled,
     StrokedIcon: ScheduleStroked,
   };
   public static readonly SETTINGS: RouteConfig = {
-    path: "/settings",
+    path: "/app/settings",
     label: "Settings",
     FilledIcon: SettingsFilled,
     StrokedIcon: SettingsStroked,

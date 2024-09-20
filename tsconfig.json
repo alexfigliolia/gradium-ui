@@ -89,6 +89,7 @@
   ],
   "include": [
     "src",
+    "production",
     "**/*.ts",
     "**/*.json",
     "**/*.cjs",

@@ -9,18 +9,20 @@ export const Tabs = memo(
     const { slug } = useCurrentProperty();
     return (
       <div className="tabs">
-        <NavLink to={`/manage/${slug}/leases`} className="leases-link">
+        <NavLink to={`/app/manage/${slug}/leases`} className="leases-link">
           Leases
         </NavLink>
-        <NavLink to={`/manage/${slug}/amenities`} className="amenities-link">
+        <NavLink
+          to={`/app/manage/${slug}/amenities`}
+          className="amenities-link">
           Amenities
         </NavLink>
         <NavLink
-          to={`/manage/${slug}/maintenance`}
+          to={`/app/manage/${slug}/maintenance`}
           className="maintenance-link">
           Maintenance
         </NavLink>
-        <NavLink to={`/manage/${slug}/finances`} className="finances-link">
+        <NavLink to={`/app/manage/${slug}/finances`} className="finances-link">
           Finances
         </NavLink>
       </div>

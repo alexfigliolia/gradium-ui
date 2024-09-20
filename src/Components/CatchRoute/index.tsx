@@ -1,17 +1,19 @@
 import { memo, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Location } from "Tools/Location";
+import { useLocation, useNavigate } from "react-router-dom";
 
-export const CatchRoute = memo(function CatchRoute({ base, to }: Props) {
+export const CatchRoute = memo(function CatchRoute({ to, relative }: Props) {
   const navigate = useNavigate();
-  const params = useParams();
+  const location = useLocation();
   useEffect(() => {
-    navigate(Location.pathFromDefinition(base, params, to), { replace: true });
-  }, [navigate, params, base, to]);
+    if (relative) {
+      return navigate(`${location.pathname}${to}`);
+    }
+    navigate(to);
+  }, [location, relative, to, navigate]);
   return null;
 });
 
 interface Props {
   to: string;
-  base: string;
+  relative?: boolean;
 }
