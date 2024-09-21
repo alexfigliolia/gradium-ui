@@ -2,13 +2,11 @@
 
 .icon-link {
   @include Variables.center;
-  flex-direction: column;
   text-decoration: none;
   &>div {
     width: 2em;
     height: 2em;
     position: relative;
-    margin-bottom: 0.25em;
     &>svg {
       width: 100%;
       height: 100%;
@@ -26,7 +24,6 @@
     }
   }
   &>span {
-    font-size: 0.65em;
     text-transform: uppercase;
     color: var(--nav-bar-text-color);
   }

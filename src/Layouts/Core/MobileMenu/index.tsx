@@ -1,22 +1,19 @@
 import { memo } from "react";
-import { useClassNames } from "@figliolia/classnames";
-import { IconLink } from "Components/IconLink";
-import { AdminRoutes } from "Router/AdminRoutes";
+import { MobileMenu as CoreMobileMenu } from "Components/MobileMenu";
 import { coreMobileMenu, useModals } from "State/Modals";
 import type { Propless } from "Types/React";
+import { AdminNav } from "../AdminNav";
+import "./styles.scss";
 
 export const MobileMenu = memo(
   function MobileMenu(_: Propless) {
     const open = useModals(coreMobileMenu);
-    const classes = useClassNames("core-mobile-menu", { open });
     return (
-      <menu className={classes}>
+      <CoreMobileMenu open={open} className="core-mobile-menu">
         <nav>
-          {AdminRoutes.navigationRoutes.map(route => {
-            return <IconLink key={route.path} {...route} />;
-          })}
+          <AdminNav />
         </nav>
-      </menu>
+      </CoreMobileMenu>
     );
   },
   () => true,
