@@ -1,10 +1,12 @@
+@use "Styles/Variables";
+
 .space-carousel {
   margin: 0.5em 0;
   & .flickity-cell {
     margin-right: 1em;
     height: 150px;
     width: calc(50% - 0.5em);
-    @media (min-width: 670px) {
+    @media (min-width: Variables.$small-vertical-tablet) {
       margin-right: 1.75em;
       width: calc(33.3333% - 1.2em);
     }

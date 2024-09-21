@@ -15,7 +15,7 @@
   &:visited {
     color: transparent;
   }
-  @media (min-width: 670px) {
+  @media (min-width: Variables.$small-vertical-tablet) {
     font-size: 1em;
   }
   &>div,
@@ -40,7 +40,7 @@
       display: none;
       height: 2em;
       width: 2em;
-      @media(min-width: 670px) {
+      @media(min-width: Variables.$small-vertical-tablet) {
         display: block;
       }
     }

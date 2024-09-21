@@ -1,4 +1,5 @@
 import { memo } from "react";
+import { Header as CoreHeader } from "Components/Header";
 import type { Propless } from "Types/React";
 import { Logo } from "../Logo";
 import { MenuButton } from "../MenuButton";
@@ -8,13 +9,11 @@ import "./styles.scss";
 export const Header = memo(
   function Header(_: Propless) {
     return (
-      <header className="public-header">
-        <div>
-          <Logo />
-          <MenuButton />
-          <Nav />
-        </div>
-      </header>
+      <CoreHeader className="public-header">
+        <Logo />
+        <MenuButton />
+        <Nav />
+      </CoreHeader>
     );
   },
   () => true,

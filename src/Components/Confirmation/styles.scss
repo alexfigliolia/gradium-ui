@@ -2,7 +2,7 @@
 
 .confirmation-sheet.bottom-sheet {
   &>div {
-    @media (min-width: 670px) {
+    @media (min-width: Variables.$small-vertical-tablet) {
       max-width: 600px;
     }
   }

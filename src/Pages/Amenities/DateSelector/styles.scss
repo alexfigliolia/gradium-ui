@@ -3,7 +3,7 @@
 .confirmation-sheet.date-selector {
   &>div {
     background-color: var(--drop-down-background);
-    @media (min-width: 670px) {
+    @media (min-width: Variables.$small-vertical-tablet) {
       max-width: 500px;
     }
   }

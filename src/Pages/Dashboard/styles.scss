@@ -14,7 +14,7 @@
         stroke: #fff;
       }
     }
-    @media (min-width: 670px) {
+    @media (min-width: Variables.$small-vertical-tablet) {
       font-size: 1.15em;
     }
   }

@@ -5,7 +5,7 @@
   width: 100%;
   min-height: 100vh;
   padding-bottom: calc(Variables.$nav-height-small * 2);
-  @media (min-width: 957px) {
+  @media (min-width: Variables.$small-desktop) {
     padding-bottom: Variables.$nav-height-small;
   }
   &>.title-area {
@@ -13,16 +13,16 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    @media (min-width: 670px) {
+    @media (min-width: Variables.$small-vertical-tablet) {
       margin-bottom: 2em;
     }
-    @media (min-width: 957px) {
+    @media (min-width: Variables.$small-desktop) {
       justify-content: flex-start;
     }
     &>h1 {
       font-weight: 600;
       font-size: 1.5em;
-      @media (min-width: 670px) {
+      @media (min-width: Variables.$small-vertical-tablet) {
         font-size: 1.75em;
       }
     }

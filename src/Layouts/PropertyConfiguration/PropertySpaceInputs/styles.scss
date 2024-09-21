@@ -20,10 +20,10 @@
       }
       & label.input.dropdown,
       & label.input.number-input {
-        @media (max-width: 670px) {
+        @media (max-width: Variables.$small-vertical-tablet) {
           width: calc(50% - 0.65em);
         }
-        @media (min-width: 670px) {
+        @media (min-width: Variables.$small-vertical-tablet) {
           width: calc(33.333% - 0.85em);
         }
       }

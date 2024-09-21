@@ -23,13 +23,13 @@ export default memo(
         <LivingSpaceTile>
           <GradientTransitionLink
             label="Edit Living Spaces"
-            to={`/configure/${property.slug}/living-spaces`}
+            to={`/app/configure/${property.slug}/living-spaces`}
           />
         </LivingSpaceTile>
         <AmenitiesTile>
           <GradientTransitionLink
             label="Edit Amenities"
-            to={`/configure/${property.slug}/amenities`}
+            to={`/app/configure/${property.slug}/amenities`}
           />
         </AmenitiesTile>
       </PropertyConfigurationPage>

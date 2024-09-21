@@ -13,7 +13,8 @@ $blue: #0773ee;
 $pink: #ff0088;
 $red: #ff002b;
 $light-orange:#ff8228;
-$nav-height-small: 70px;
+$nav-height-small: 90px;
+$nav-height-large: calc(80px + 1em);
 $nav-width-large: 250px;
 $progress-low-light: #f7693d;
 $progress-low-dark: #eb1931;
@@ -31,7 +32,9 @@ $leases-dark: #2f77fb;
 $amenities-dark: #a27aff;
 $maintenance-dark: #ff495c;
 $finances-dark: #15cf69;
-$desktop-marketing-nav: 850px;
+$small-vertical-tablet: 670px;
+$large-vertical-tablet: 850px;
+$small-desktop: 957px;
 
 @mixin center {
   display: flex;

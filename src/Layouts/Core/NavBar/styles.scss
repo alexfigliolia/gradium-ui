@@ -1,20 +1,7 @@
 @use "Styles/Variables";
 
-.core-nav {
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 65px;
-  z-index: 10;
-  position: fixed;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 0 var(--padding);
-  @media (min-width: 670px) {
-    height: 80px;
-  }
-  @media (min-width: 957px) {
+.nav-header.core-nav {
+  @media (min-width: Variables.$small-desktop) {
     top: 0;
     padding: 0;
     flex-direction: column;
@@ -29,156 +16,149 @@
     border-bottom-right-radius: 0.5em;
     border-top-right-radius: 0.5em;
   }
-  &>nav {
-    height: 60px;
-    border-radius: 0.5em;
-    width: 100%;
-    padding: 0 var(--padding);
-    box-shadow: 0px 0px 0.75em rgba(#000, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    @include Variables.blackGradient;
-    @media (min-width: 670px) {
-      height: 70px;
-    }
-    @media (min-width: 957px) {
+  &>div {
+    background: var(--nav-bar-background);
+    @media (min-width: Variables.$small-desktop) {
       width: 100%;
-      height: auto;
+      height: 100vh;
       border-radius: 0;
       padding: 0;
       background: transparent;
       box-shadow: none;
       flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-start;
     }
-    &>.logo-link {
-      border-radius: 0.1em;
-      font-size: 0.7em;
-      text-decoration: none;
-      @media (min-width: 670px) {
-        font-size: 0.8em;
+    &>.burger.core-burger {
+      --stroke: url(#globalBrandGradient);
+      --color: linear-gradient(to right, var(--theme-light), var(--theme-dark));
+      @media (min-width: Variables.$large-vertical-tablet) {
+        display: flex;
+        margin-right: -0.5em;
       }
-      &>.logo > span {
-        font-size: 1.5em;
-        @media (min-width: 670px) {
-          font-size: 1.75em;
-        }
-      }
-      @media (min-width: 957px) {
-        font-size: 1em;
-        margin: 2em auto;
+      @media (min-width: Variables.$small-desktop) {
+        display: none;
       }
     }
-    &>div {
-      width: 100%;
-      display: none;
-      @media (min-width: 957px) {
+    &>nav {
+      @media (min-width: Variables.$small-desktop) {
+        width: 100%;
+      }
+      &>.logo-link {
         display: block;
-      }
-      &>.icon-link {
-        &>div > svg {
-          &.buildings-stroked {
-            & path {
-              fill: var(--nav-bar-text-color);
-            }
-          }
-          &.buildings-filled,
-          &.staff-filled {
-            & path {
-              fill: url(#globalBrandGradient);
-            }
-          }
-          &.staff-stroked {
-            & path {
-              fill: var(--nav-bar-text-color);
-              &:nth-of-type(3) {
-                fill: none;
-                stroke: var(--nav-bar-text-color);
-              }
-            }
-          }
-          &.schedule-stroked {
-            & path:nth-of-type(2) {
-              fill: var(--nav-bar-text-color);
-            }
-          }
-          &.schedule-filled {
-            & path {
-              &:nth-of-type(2) {
-                fill: url(#globalBrandGradient);
-              }
-            }
-          }
-          &.settings-stroked {
-            & path,
-            & circle {
-              stroke-width: 1.5;
-              stroke: var(--nav-bar-text-color);
-            }
-          }
-          &.settings-filled {
-            & path {
-              fill: url(#globalBrandGradient);
-            }
-            & circle {
-              fill: var(--nav-bar-background);
-            }
-          }
+        border-radius: 0.1em;
+        text-decoration: none;
+        @media (min-width: Variables.$small-desktop) {
+          margin: 2em auto;
         }
-        @media (max-width: 957px) {
-          &:hover > div > svg {
+      }
+      &>div {
+        display: none;
+        @media (min-width: Variables.$small-desktop) {
+          width: 100%;
+          display: block;
+        }
+        &>.icon-link {
+          &>div > svg {
             &.buildings-stroked {
+              & path {
+                fill: var(--nav-bar-text-color);
+              }
+            }
+            &.buildings-filled,
+            &.staff-filled {
               & path {
                 fill: url(#globalBrandGradient);
               }
             }
             &.staff-stroked {
               & path {
-                fill: url(#globalBrandGradient);
+                fill: var(--nav-bar-text-color);
                 &:nth-of-type(3) {
                   fill: none;
-                  stroke: url(#globalBrandGradient);
+                  stroke: var(--nav-bar-text-color);
                 }
               }
             }
             &.schedule-stroked {
               & path:nth-of-type(2) {
-                fill: url(#globalBrandGradient);
+                fill: var(--nav-bar-text-color);
+              }
+            }
+            &.schedule-filled {
+              & path {
+                &:nth-of-type(2) {
+                  fill: url(#globalBrandGradient);
+                }
               }
             }
             &.settings-stroked {
               & path,
               & circle {
-                stroke: url(#globalBrandGradient);
+                stroke-width: 1.5;
+                stroke: var(--nav-bar-text-color);
+              }
+            }
+            &.settings-filled {
+              & path {
+                fill: url(#globalBrandGradient);
+              }
+              & circle {
+                fill: var(--nav-bar-background);
               }
             }
           }
-        }
-        @media (min-width: 957px) {
-          padding: 0.75em 2em;
-          width: 100%;
-          flex-direction: row;
-          justify-content: flex-start;
-          &.active,
-          &:hover {
-            background-color: var(--nav-bar-hover);
+          @media (max-width: Variables.$small-desktop) {
+            &:hover > div > svg {
+              &.buildings-stroked {
+                & path {
+                  fill: url(#globalBrandGradient);
+                }
+              }
+              &.staff-stroked {
+                & path {
+                  fill: url(#globalBrandGradient);
+                  &:nth-of-type(3) {
+                    fill: none;
+                    stroke: url(#globalBrandGradient);
+                  }
+                }
+              }
+              &.schedule-stroked {
+                & path:nth-of-type(2) {
+                  fill: url(#globalBrandGradient);
+                }
+              }
+              &.settings-stroked {
+                & path,
+                & circle {
+                  stroke: url(#globalBrandGradient);
+                }
+              }
+            }
           }
-          &>span {
-            font-size: 1em;
-            margin-left: 0.5em;
+          @media (min-width: Variables.$small-desktop) {
+            padding: 0.75em 2em;
+            width: 100%;
+            flex-direction: row;
+            justify-content: flex-start;
+            &.active,
+            &:hover {
+              background-color: var(--nav-bar-hover);
+            }
+            &>span {
+              font-size: 1em;
+              margin-left: 0.5em;
+            }
           }
         }
       }
     }
-  }
-  &>.day-night-toggle {
-    display: none;
-    margin: 1em auto 2em auto;
-    min-height: var(--height);
-    @media(min-width: 957px) {
-      display: block;
+    &>.day-night-toggle {
+      display: none;
+      margin: 1em auto 2em auto;
+      min-height: var(--height);
+      @media(min-width: Variables.$small-desktop) {
+        display: block;
+      }
     }
   }
 }

@@ -1,0 +1,41 @@
+@use "Styles/Variables";
+
+.mobile-menu {
+  --height: auto;
+  position: fixed;
+  top: 69px;
+  left: var(--core-padding);
+  height: auto;
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  @include Variables.blackGradient;
+  z-index: 1001;
+  width: calc(100% - (var(--core-padding) * 2));
+  box-shadow: 0px 10px 10px rgba(#000, 0.2);
+  @include Variables.center;
+  height: 0;
+  overflow: hidden;
+  transition:  
+    height 0.75s 0.5s cubic-bezier(0.87, 0, 0.13, 1), 
+    visibility 0s 1.25s;
+    @media(min-width: Variables.$small-vertical-tablet) {
+      top: 75px;
+    } 
+    @media(min-width: Variables.$large-vertical-tablet) {
+      display: none;
+    }
+  &>div {
+    width: 100%;
+    row-gap: 2em;
+    padding: 3em 0 4em 0;
+    flex-direction: column;
+    @include Variables.center;
+  }
+  &.open {
+    visibility: visible;
+    height: var(--height);
+    transition: 
+      height 0.75s cubic-bezier(0.87, 0, 0.13, 1), 
+      visibility 0s;
+  }
+}

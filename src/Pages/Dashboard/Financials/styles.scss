@@ -3,7 +3,7 @@
 .financials {
   &> .area-chart {
     height: 170px;
-    @media (min-width: 670px) {
+    @media (min-width: Variables.$small-vertical-tablet) {
       height: 200px;
     }
     & svg {

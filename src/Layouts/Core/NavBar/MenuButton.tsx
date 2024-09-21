@@ -2,7 +2,6 @@ import { memo } from "react";
 import { Burger } from "Components/Burger";
 import { coreMobileMenu, Modals, useModals } from "State/Modals";
 import type { Propless } from "Types/React";
-import "./styles.scss";
 
 export const MenuButton = memo(
   function MenuButton(_: Propless) {

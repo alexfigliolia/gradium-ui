@@ -3,13 +3,13 @@
 .presets > .preset {
   border: none;
   font-weight: 500;
-  --padding: 0.5em 0.5em;
+  --core-padding: 0.5em 0.5em;
   --border-radius: 0.5em;
   font-size: 0.85em;
   transition: box-shadow 0.4s, background-position 0.4s;
-  @media (min-width: 670px) {
+  @media (min-width: Variables.$small-vertical-tablet) {
     font-size: 0.9em;
-    --padding: 0.5em 0.75em;
+    --core-padding: 0.5em 0.75em;
   }
   &.active {
     background-position: 100% 50%;

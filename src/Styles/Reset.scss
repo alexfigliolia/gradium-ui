@@ -1,7 +1,7 @@
 @use "Styles/Variables";
 
 :root {
-  --padding: 1em;
+  --core-padding: 1em;
   --dim: #00000082;
   --background: #{Variables.$light-background};
   --background-dark: #e9e9e9;
@@ -28,8 +28,11 @@
   --finances-theme: #{Variables.$finances-light};
   --event-background: var(--theme-mid);
   --event-background-highlight: #24aaf7;
-  @media (min-width: 670px) {
-    --padding: 2em;
+  @media (min-width: Variables.$small-vertical-tablet) {
+    --core-padding: 1.5em;
+  }
+  @media (min-width: Variables.$small-desktop) {
+    --core-padding: 2em;
   }
 }
 
@@ -42,7 +45,7 @@ html[data-theme='dark'] {
   --text-color-light: #{Variables.$light-gray};
   --text-color-lightest: #a7a7a7;
   --text-color-faint: #b3b3b3;
-  --nav-bar-background: #171616;
+  --nav-bar-background: #232121;
   --nav-bar-text-color: #{rgba(#fff, 0.75)};
   --nav-bar-hover: #{rgba(#fff, 0.05)};
   --tile-background: #424141;

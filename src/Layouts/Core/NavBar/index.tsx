@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
+import { Header } from "Components/Header";
 import { IconLink } from "Components/IconLink";
 import { Logo } from "Components/Logo";
 import { ThemeToggle } from "Components/ThemeToggle";
@@ -11,7 +12,7 @@ import "./styles.scss";
 export const NavBar = memo(
   function NavBar(_: Propless) {
     return (
-      <header className="core-nav">
+      <Header className="core-nav">
         <nav>
           <Link to="/" className="logo-link">
             <Logo />
@@ -21,10 +22,10 @@ export const NavBar = memo(
               return <IconLink key={route.path} {...route} />;
             })}
           </div>
-          <MenuButton />
         </nav>
+        <MenuButton />
         <ThemeToggle />
-      </header>
+      </Header>
     );
   },
   () => true,

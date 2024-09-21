@@ -6,7 +6,7 @@
     display: flex;
     row-gap: 1em;
     flex-direction: column;
-    @media (min-width: 670px) {
+    @media (min-width: Variables.$small-vertical-tablet) {
       row-gap: 2em;
     }
     &>form {
@@ -48,7 +48,7 @@
         }
         & label.input {
           --background: var(--tile-background);
-          @media (min-width: 670px) {
+          @media (min-width: Variables.$small-vertical-tablet) {
             width: calc(50% - 0.65em);
           }
           @media (min-width: 1500px) {

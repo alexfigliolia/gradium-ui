@@ -1,0 +1,63 @@
+@use "Styles/Variables";
+
+.nav-header {
+  width: 100%;
+  height: Variables.$nav-height-small;
+  padding: 0 var(--core-padding);
+  position: fixed;
+  @include Variables.center;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  @media(min-width: Variables.$large-vertical-tablet) {
+    height: Variables.$nav-height-large;
+    align-items: flex-end;
+  }
+  &>div {
+    height: 60px;
+    width: 100%;
+    border-radius: 0.5em;
+    padding: 0 calc(var(--core-padding) / 2);
+    @include Variables.blackGradient;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0px 2.5px 10px rgba(#000, 0.1);
+    @media(min-width: Variables.$small-vertical-tablet) {
+      height: 70px;
+    }
+    @media(min-width: Variables.$large-vertical-tablet) {
+      height: 80px;
+      padding: 0 calc(var(--core-padding) * 1);
+    }
+    & .logo {
+      font-size: 1em;
+      margin-left: 0.5em;
+      @media (min-width: Variables.$small-vertical-tablet) {
+        font-size: 1.2em;
+      }
+      @media (min-width: Variables.$large-vertical-tablet) {
+        margin-left: -0.15em;
+      }
+      &>span {
+        font-size: 1.75em;
+      }
+    }
+    &>.burger {
+      font-size: 0.9em;
+      --color: linear-gradient(to right, #{Variables.$teal}, #{Variables.$teal-text});
+      --stroke: url(#tealGradient);
+      --shadow-color: transparent;
+      opacity: 0;
+      translate: 0 -1em;
+      animation: fall 0.5s 0.5s forwards;
+      @media (min-width: Variables.$small-vertical-tablet) {
+        font-size: 1.1em;
+      }
+      @media(min-width: Variables.$large-vertical-tablet) {
+        display: none;
+      }
+    }
+  }
+}
+

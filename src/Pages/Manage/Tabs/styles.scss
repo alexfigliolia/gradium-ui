@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  @media (min-width: 670px) {
+  @media (min-width: Variables.$small-vertical-tablet) {
     column-gap: 1em;
     justify-content: flex-start;
   }
@@ -17,7 +17,7 @@
     border-radius: 2em;
     font-weight: 600;
     @include Variables.center;
-    @media (min-width: 670px) {
+    @media (min-width: Variables.$small-vertical-tablet) {
       font-size: 1em;
       padding: 0.6em 1em;
     }

@@ -1,7 +1,7 @@
 @use "Styles/Variables";
 
 .marketing-tile {
-  @media (min-width: 957px) {
+  @media (min-width: Variables.$small-desktop) {
     width: calc(33.3333% - 1.35em);
   }
   &>div {

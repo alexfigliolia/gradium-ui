@@ -73,7 +73,7 @@
     }
     & .fc-event-main {
       padding: 0.25em;
-      @media (min-width: 670px) {
+      @media (min-width: Variables.$small-vertical-tablet) {
         padding: 0.5em;
       }
       & .fc-event-time, 

@@ -1,9 +1,11 @@
+@use "Styles/Variables";
+
 .image-grid {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 1em;
-  @media (min-width: 670px) {
+  @media (min-width: Variables.$small-vertical-tablet) {
     gap: 1.75em;
   }
   @media (min-width: 1200px) {
@@ -18,7 +20,7 @@
     height: 150px;
     width: calc(50% - 0.5em);
     border-radius: 0.5em;
-    @media (min-width: 670px) {
+    @media (min-width: Variables.$small-vertical-tablet) {
       width: calc(33.3333% - 1.2em);
     }
     @media (min-width: 1200px) {

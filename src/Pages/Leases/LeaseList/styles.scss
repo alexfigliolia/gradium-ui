@@ -1,3 +1,5 @@
+@use "Styles/Variables";
+
 .leases-section > .lease-list {
   width: 100%;
   display: flex;
@@ -5,7 +7,7 @@
   gap: 1em;
   &>.lease {
     width: 100%;
-    @media (min-width: 670px) {
+    @media (min-width: Variables.$small-vertical-tablet) {
       width: calc(50% - 0.5em);
     }
     @media (min-width: 1300px) {

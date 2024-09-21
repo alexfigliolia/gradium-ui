@@ -1,5 +1,5 @@
 .date-picker {
-  --padding: 1em;
+  --core-padding: 1em;
   width: 100%;
   min-width: min-content;
   overflow: hidden;
@@ -10,14 +10,14 @@
   &>div {
     width: 100%;
     position: relative;
-    padding: var(--padding);
+    padding: var(--core-padding);
     &>.date-picker-screens {
-      gap: var(--padding);
+      gap: var(--core-padding);
       display: flex;
       flex-wrap: nowrap;
       transition: translate 0.4s;
       &.month {
-        translate: calc(-100% - var(--padding)) 0;
+        translate: calc(-100% - var(--core-padding)) 0;
         &>.date-picker-screen {
           &:first-of-type {
             visibility: hidden;

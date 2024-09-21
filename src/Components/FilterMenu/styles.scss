@@ -4,7 +4,7 @@
   & .sheet-content {
     width: 100%;
     max-width: unset;
-    @media (min-width: 670px) {
+    @media (min-width: Variables.$small-vertical-tablet) {
       width: 90%;
     }
   }
@@ -18,7 +18,7 @@
     margin: 1.5em auto 0 auto;
     flex-direction: column;
     padding-bottom: 2em;
-    @media (min-width: 670px) {
+    @media (min-width: Variables.$small-vertical-tablet) {
       padding-bottom: 0.5em;
     }
     & h3 {
@@ -31,7 +31,7 @@
       align-items: center;
       justify-content: space-between;
       margin-bottom: 0.75em;
-      @media (min-width: 670px) {
+      @media (min-width: Variables.$small-vertical-tablet) {
         gap: 1em;
       }
     }

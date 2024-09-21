@@ -5,12 +5,12 @@
   padding-top: 3em;
   @include Variables.center;
   flex-direction: column;
-  @media (min-width: 670px) {
+  @media (min-width: Variables.$small-vertical-tablet) {
     padding-top: 7em;
   }
   &:last-of-type {
     padding-bottom: 3em;
-    @media (min-width: 670px) {
+    @media (min-width: Variables.$small-vertical-tablet) {
       padding-bottom: 7em;
     }
   }

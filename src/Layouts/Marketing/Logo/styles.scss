@@ -1,7 +1,7 @@
 @use "Styles/Variables";
 
 .logo.marketing-logo {
-  @media (min-width: Variables.$desktop-marketing-nav) {
+  @media (min-width: Variables.$large-vertical-tablet) {
     margin-left: -0.15em;
   }
   &>svg path:last-of-type {

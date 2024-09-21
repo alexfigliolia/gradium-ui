@@ -1,16 +1,20 @@
 @use "Styles/Variables";
 
 .core {
-  --core-padding: 1em;
   width: 100%;
-  padding: var(--core-padding);
+  padding-top: calc(Variables.$nav-height-small + 0.5em);
+  padding-left: var(--core-padding);
+  padding-right: var(--core-padding);
+  padding-bottom: calc(Variables.$nav-height-small + 1em) var(--core-padding);
   min-height: 100vh;
-  padding-bottom: calc(Variables.$nav-height-small + 1em);
-  @media (min-width: 670px) {
-    --core-padding: 1.5em;
+  @media (min-width: Variables.$small-vertical-tablet) {
+    padding-top: calc(Variables.$nav-height-small + 1.5em);
   }
-  @media (min-width: 957px) {
-    --core-padding: 2em;
+  @media (min-width: Variables.$large-vertical-tablet) {
+    padding-top: calc(Variables.$nav-height-small + 2.5em);
+  }
+  @media (min-width: Variables.$small-desktop) {
+    padding-top: var(--core-padding);
     margin-left: Variables.$nav-width-large;
     width: calc(100% - Variables.$nav-width-large);
   }
