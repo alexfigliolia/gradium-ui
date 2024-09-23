@@ -7,17 +7,28 @@ import type { IProperty } from "Models/Properties";
 
 export class AdminRoutes {
   public static readonly PROPERTIES = (
-    <ExactLink to="/app/properties" Icon={Building} label="Properties" />
+    <ExactLink
+      key="properties"
+      to="/app/properties"
+      Icon={Building}
+      label="Properties"
+    />
   );
   public static readonly PERFORMANCE = (
     <RelativeLink
+      key="performance"
       to="/app/performance"
       label="Performance"
       Icon={Performance}
     />
   );
   public static readonly FINANCES = (
-    <RelativeLink to="/app/finances" label="Finances" Icon={Money} />
+    <RelativeLink
+      key="finances"
+      to="/app/finances"
+      label="Finances"
+      Icon={Money}
+    />
   );
 
   public static propertyLinks(properties: IProperty[]) {

@@ -1,6 +1,7 @@
 @use "Styles/Variables";
 
 .confirmation-sheet.bottom-sheet {
+  z-index: 10000;
   &>div {
     @media (min-width: Variables.$small-vertical-tablet) {
       max-width: 600px;
