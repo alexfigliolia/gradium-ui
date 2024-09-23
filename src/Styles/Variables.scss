@@ -6,8 +6,8 @@ $light-gray: #dedede;
 $yellow: #ffd500;
 $orange: #ff6a00;
 $green: #09ff80; 
-$teal: #0acdf0;
-$teal-text: #00bcff;
+$light-teal: #00d0ff;
+$teal: #00bcff;
 $light-blue: #0898ec;
 $blue: #0773ee;
 $pink: #ff0088;
@@ -62,16 +62,16 @@ $small-desktop: 957px;
   @include textClip;
 }
 
-@mixin tealGradient($direction: right) {
-  background: linear-gradient(to $direction, $teal, $teal-text)
-}
-
 @mixin blackGradient($direction: right) {
   background: linear-gradient(to $direction, #2c2c2c, #252525);
 }
 
 @mixin buttonGradient($direction: right) {
   background: linear-gradient(to $direction, var(--theme-light), var(--theme-dark));
+}
+
+@mixin marketingGradient($direction: right) {
+  background: linear-gradient(to $direction, $light-teal, $teal);
 }
 
 @mixin brandGradient($direction: right) {

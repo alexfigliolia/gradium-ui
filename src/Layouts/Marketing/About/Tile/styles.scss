@@ -20,7 +20,7 @@
       &>h2 {
         font-size: 1.75em;
         &:first-of-type >span {
-          color: Variables.$teal-text;
+          color: Variables.$teal;
           translate: 0 -100%;
         }
         &:last-of-type {

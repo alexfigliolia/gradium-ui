@@ -13,8 +13,8 @@ export const SVGGradients = memo(
         <HiddenSVG id="globalBrandGradient" colors={colors} />
         <HiddenSVG id="redGradient" colors={["#f85c5c", "#f14242"]} />
         <HiddenSVG
-          id="tealGradient"
-          colors={[CSSVars.teal, CSSVars.tealText]}
+          id="marketingGradient"
+          colors={[CSSVars.lightTeal, CSSVars.teal]}
         />
         {Progress.mapGradients((name, colors) => {
           return <HiddenSVG key={name} id={name} colors={colors} />;

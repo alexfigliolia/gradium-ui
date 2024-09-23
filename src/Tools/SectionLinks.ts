@@ -3,16 +3,22 @@ import { Subscriptable } from "@figliolia/event-emitter";
 import type { Callback } from "Types/Generics";
 
 export class SectionLinks extends Subscriptable<Callback<[string]>> {
+  ids: Set<string>;
   activeSection = "";
-  ids = new Set<string>();
+  offsetSelectors: Set<string>;
   sections = new Set<HTMLElement>();
+  offsetElements = new Set<HTMLElement>();
   private listenerIDs = new Set<string>();
+  constructor(ids: string[], ...offsetSelectors: string[]) {
+    super();
+    this.ids = new Set(ids);
+    this.offsetSelectors = new Set(offsetSelectors);
+  }
 
-  public initialize(ids: string[]) {
+  public initialize() {
     if (typeof window == "undefined") {
       return;
     }
-    this.ids = new Set(ids);
     this.registerNodes();
     this.findActiveSection();
     this.detectHash();
@@ -24,9 +30,9 @@ export class SectionLinks extends Subscriptable<Callback<[string]>> {
     if (typeof window === "undefined") {
       return;
     }
-    this.ids.clear();
     this.activeSection = "";
     this.sections.clear();
+    this.offsetElements.clear();
     this.removeAllListeners();
     document.removeEventListener("scroll", this.onScroll);
     window.removeEventListener("hashchange", this.onHashChange);
@@ -44,7 +50,10 @@ export class SectionLinks extends Subscriptable<Callback<[string]>> {
     }
     const node = document.getElementById(id);
     if (node) {
-      window.scrollTo({ top: node.offsetTop + 10, behavior });
+      window.scrollTo({
+        top: node.offsetTop + 10 - this.getCurrentOffset(),
+        behavior,
+      });
     }
   }
 
@@ -62,13 +71,23 @@ export class SectionLinks extends Subscriptable<Callback<[string]>> {
         this.sections.add(node);
       }
     }
+    for (const selector of this.offsetSelectors) {
+      const nodes = document.querySelectorAll(selector);
+      for (const node of nodes) {
+        this.offsetElements.add(node as HTMLElement);
+      }
+    }
   }
 
   private findActiveSection = () => {
+    const offset = this.getCurrentOffset();
     for (const section of this.sections) {
       const Y = window.scrollY;
       const sectionTop = section.offsetTop;
-      if (Y >= sectionTop && Y < sectionTop + section.offsetHeight) {
+      if (
+        Y >= sectionTop - offset &&
+        Y < sectionTop + section.offsetHeight - offset
+      ) {
         const ID = section.getAttribute("id") ?? "";
         if (ID !== this.activeSection) {
           this.activeSection = ID;
@@ -91,4 +110,12 @@ export class SectionLinks extends Subscriptable<Callback<[string]>> {
   private onHashChange = () => {
     this.detectHash("smooth");
   };
+
+  private getCurrentOffset() {
+    let offset = 0;
+    for (const element of this.offsetElements) {
+      offset += element.offsetHeight;
+    }
+    return offset;
+  }
 }

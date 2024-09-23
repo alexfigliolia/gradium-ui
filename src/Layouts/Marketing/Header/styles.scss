@@ -1,13 +1,57 @@
 @use "Styles/Variables";
 
-.nav-header.public-header > div > .marketing-nav {
-  display: none;
-  @media(min-width: Variables.$large-vertical-tablet) {
-    @include Variables.center;
-    column-gap: 3em;
-    height: 70px;
+.nav-header.marketing-header > div {
+  &>.burger {
+    --color: linear-gradient(to right, #{Variables.$light-teal}, #{Variables.$teal});
+    --stroke: url(#marketingGradient);
+    --shadow-color: transparent;
   }
-  @media(min-width: 1200px) {
-    font-size: 1.15em;
+  &> .marketing-nav {
+    display: none;
+    @media(min-width: Variables.$large-vertical-tablet) {
+      @include Variables.center;
+      column-gap: 2.5em;
+      height: 70px;
+    }
+    @media(min-width: 1200px) {
+      font-size: 1.15em;
+    }
+    &>a {
+      @include Variables.center;
+      &:last-of-type > svg {
+        display: none;
+      }
+      &>svg {
+        width: 1.1em;
+        height: 1.1em;
+        fill: #fff;
+        margin-right: 0.35em;
+        transition-duration: 0.3s;
+        &.home-icon,
+        &.open-lock-icon {
+          fill: none;
+          stroke: #fff;
+        }
+        &.open-lock-icon > circle {
+          stroke: none;
+          fill: #fff;
+        }
+        &.plug-icon {
+          width: 1.3em;
+          height: 1.3em;
+          margin-right: 0.15em;
+        }
+      }
+      &.active > svg {
+        fill: Variables.$teal;
+        filter: drop-shadow(0em 0.1em 0.25em rgba(#000, 0.5));
+        &.home-icon,
+        &.open-lock-icon {
+          fill: none;
+          stroke: Variables.$teal;
+        }
+      }
+    }
   }
 }
+

@@ -9,10 +9,10 @@ import "./styles.scss";
 export const Header = memo(
   function Header(_: Propless) {
     return (
-      <CoreHeader className="public-header">
+      <CoreHeader className="marketing-header">
         <Logo />
         <MenuButton />
-        <Nav />
+        <Nav icons />
       </CoreHeader>
     );
   },

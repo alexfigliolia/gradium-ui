@@ -1,13 +1,22 @@
 import { useLayoutEffect, useState } from "react";
+import { Home } from "Icons/Home";
+import { Info } from "Icons/Info";
+import { OpenLock } from "Icons/OpenLock";
+import { Plug } from "Icons/Plug";
 import { SectionLinks } from "Tools/SectionLinks";
 
 export class Routing {
-  public static readonly SectionLinks = new SectionLinks();
   public static readonly useActiveLink = this.generateHook();
   public static readonly SECTION_IDS = ["home", "about", "solutions"];
+  public static readonly SectionLinks = new SectionLinks(
+    this.SECTION_IDS,
+    ".nav-header.marketing-header",
+  );
+  public static readonly ICONS = [Home, Info, Plug];
+  public static readonly LOGIN_ICON = OpenLock;
 
   public static initialize() {
-    this.SectionLinks.initialize(this.SECTION_IDS);
+    this.SectionLinks.initialize();
   }
 
   public static destroy() {

@@ -5,10 +5,10 @@
     margin-left: -0.15em;
   }
   &>svg path:last-of-type {
-    stroke: url(#tealGradient);
+    stroke: url(#marketingGradient);
   }
   &>span {
-    @include Variables.tealGradient;
+    @include Variables.marketingGradient;
     @include Variables.textClip;
   }
 }

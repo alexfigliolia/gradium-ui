@@ -41,13 +41,14 @@
       }
       &>span {
         font-size: 1.75em;
+        background: none;
+        background-clip: none;
+        -webkit-text-fill-color: unset;
+        color: Variables.$teal;
       }
     }
     &>.burger {
       font-size: 0.9em;
-      --color: linear-gradient(to right, #{Variables.$teal}, #{Variables.$teal-text});
-      --stroke: url(#tealGradient);
-      --shadow-color: transparent;
       opacity: 0;
       translate: 0 -1em;
       animation: fall 0.5s 0.5s forwards;

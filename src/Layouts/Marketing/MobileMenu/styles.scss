@@ -1,39 +1,93 @@
 @use "Styles/Variables";
 
 .mobile-menu.marketing-menu {
+  transition: height 0.75s 0.25s cubic-bezier(0.87, 0, 0.13, 1), visibility 0s 1s;
   &> div > .marketing-nav {
     width: 100%;
-    row-gap: 2em;
-    padding: 3em 0 4em 0;
     flex-direction: column;
     @include Variables.center;
+    padding-top: 7.5px;
     &>a {
+      height: 3.5em;
+      width: 100%;
       display: block;
       text-decoration: none;
-      font-size: 2em;
+      font-size: 1.5em;
+      padding: 0 1em;
+      box-shadow: 0em 0.15em 0.4em rgba(#000, 0.2);
+      display: flex;
+      align-items: center;
+      flex-direction: row-reverse;
+      justify-content: space-between;
       translate: 0 0;
       opacity: 1;
+      @media (min-width: Variables.$small-vertical-tablet) {
+        font-size: 1.65em;
+      }
+      &>svg {
+        height: 1.25em;
+        width: 1.25em;
+        fill: #fff;
+        transition-duration: 0.3s;
+        @media (min-width: Variables.$small-vertical-tablet) {
+          font-size: 1.15em;
+        }
+        &.home-icon {
+          fill: none;
+          stroke: #fff;
+        }
+        &.plug-icon {
+          width: 1.6em;
+          height: 1.6em;
+          margin-right: -0.15em;
+        }
+      }
+      &.active,
+      &:hover {
+        background: rgba(#000, 0.2);
+        color: Variables.$teal;
+        text-shadow: 0em 0.1em 0.35em rgb(from Variables.$teal r g b / 20%);
+        &> svg {
+          fill: Variables.$teal;
+          filter: drop-shadow(0em 0.1em 0.5em rgb(from Variables.$teal r g b / 50%));
+          &.home-icon {
+            fill: none;
+            stroke: Variables.$teal;
+          }
+        }
+      }
       @for $i from 1 through 4 {
         &:nth-of-type(#{$i}) {
           animation: ascend-2 0.75s $i * 0.05s - 0.05s cubic-bezier(0.65, 0, 0.35, 1) forwards;
         }
       }
       &:last-of-type {
-        font-size: 1.5em;
-        width: 80%;
-        max-width: 300px;
-        border-radius: 4em;
-        text-align: center;
-        margin-top: 0.5em;
+        text-transform: none;
+        background: transparent;
+        transition-duration: 0.3s;
+        box-shadow: 0em 0.15em 0.4em rgba(#000, 0.2);
+        &:hover {
+          background: rgba(#000, 0.2);
+        }
+        &>.open-lock-icon {
+          fill: none;
+          stroke: #fff;
+          &>circle {
+            fill: #fff;
+          }
+        }
       }
     }
   }
-  &.open > div .marketing-nav > a {
-    opacity: 0;
-    translate: 0 100%;
-    @for $i from 1 through 4 {
-      &:nth-of-type(#{$i}) {
-        animation: ascend-1 0.6s 0.5s + $i * 0.05s forwards;
+  &.open {
+    transition: height 0.75s cubic-bezier(0.87, 0, 0.13, 1),  visibility 0s;
+    &> div .marketing-nav > a {
+      opacity: 0;
+      translate: 0 100%;
+      @for $i from 1 through 4 {
+        &:nth-of-type(#{$i}) {
+          animation: ascend-1 0.6s 0.5s + $i * 0.05s forwards;
+        }
       }
     }
   }

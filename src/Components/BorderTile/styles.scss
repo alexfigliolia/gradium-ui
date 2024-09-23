@@ -42,7 +42,7 @@
       radial-gradient(21% 37% at 72% 23%, #D3FF6D9C 24%, #073AFF00 100%),
       radial-gradient(35% 56% at 91% 74%, #8A4FFFF5 9%, #073AFF00 100%),
       radial-gradient(74% 86% at 67% 38%, #6DFFAEF5 24%, #073AFF00 100%),
-      linear-gradient(125deg, Variables.$teal-text 100%, Variables.$blue 100%);
+      linear-gradient(125deg, Variables.$teal 100%, Variables.$blue 100%);
     translate: var(--x) var(--y);
   }
 }
