@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import { useFormState } from "@figliolia/react-hooks";
 import { ActionButton } from "Components/ActionButton";
 import { BrandSVGGradient } from "Components/BrandSVGGradient";
-import { Logo } from "Components/Logo";
+import { ThemeLogo } from "Components/ThemeLogo";
 import { ThemeToggle } from "Components/ThemeToggle";
 import { Blob } from "Icons/Blob";
 import { selectHeight, useScreen } from "State/Screen";
@@ -39,7 +39,7 @@ export default memo(
       <section className="auth-screen" style={{ height, maxHeight: height }}>
         <BlobWithText>{text}</BlobWithText>
         <div className="content">
-          <Logo />
+          <ThemeLogo />
           <form onSubmit={onSubmit}>
             <Outlet />
             <ActionButton

@@ -9,13 +9,14 @@
     width: 2.5em;
     margin-right: 0.125em;
     & path:last-of-type {
-      stroke: url(#globalBrandGradient);
+      stroke: url(#marketingGradient);
     }
   }
   &>span {
     font-weight: 700;
     font-size: 1.25em;
     margin-left: 0.125em;
-    @include Variables.textGradient(right);
+    @include Variables.marketingGradient(right);
+    @include Variables.textClip;
   }
 }

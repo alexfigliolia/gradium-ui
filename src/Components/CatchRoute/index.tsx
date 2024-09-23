@@ -5,10 +5,12 @@ export const CatchRoute = memo(function CatchRoute({ to, relative }: Props) {
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
+    let path: string = to;
+    const options = { replace: true };
     if (relative) {
-      return navigate(`${location.pathname}${to}`);
+      path = `${location.pathname}${to}`;
     }
-    navigate(to);
+    navigate(path, options);
   }, [location, relative, to, navigate]);
   return null;
 });

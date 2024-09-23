@@ -1,0 +1,12 @@
+@use "Styles/Variables";
+
+.logo.theme-logo {
+  &>svg {
+    & path:last-of-type {
+      stroke: url(#globalBrandGradient);
+    }
+  }
+  &>span {
+    @include Variables.textGradient(right);
+  }
+}
