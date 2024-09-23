@@ -86,31 +86,9 @@
       translate: 0 100%;
       @for $i from 1 through 4 {
         &:nth-of-type(#{$i}) {
-          animation: ascend-1 0.6s 0.5s + $i * 0.05s forwards;
+          animation: ascend 0.6s 0.5s + $i * 0.05s forwards;
         }
       }
     }
-  }
-}
-
-@keyframes ascend-1 {
-  0% {
-    opacity: 0;
-    translate: 0 100%;   
-  }
-  100% {
-    opacity: 1;
-    translate: 0 0;
-  }
-}
-
-@keyframes ascend-2 {
-  0% {
-    opacity: 1;
-    translate: 0 0;
-  }
-  100% {
-    opacity: 0;
-    translate: 0 -200%;
   }
 }

@@ -6,10 +6,24 @@
   overflow-y: scroll;
   display: block;
   max-height: calc(100svh - (69px + 20px));
+  transition:  
+  height 0.75s 0s cubic-bezier(0.87, 0, 0.13, 1), 
+  visibility 0s 0.75s;
   @media (min-width: Variables.$large-vertical-tablet) {
+    top: 86px;
     max-height: calc(100svh - (86px + 20px));
   }
   @media (min-width: Variables.$small-desktop) {
     display: none;
+  }
+  & a {
+    opacity: 1;
+    translate: 0 0; 
+    animation: ascend-2 0.75s 0s cubic-bezier(0.65, 0, 0.35, 1)  forwards;
+  }
+  &.open a {
+    opacity: 0;
+    translate: 0 100%; 
+    animation: ascend 0.75s 0.25s cubic-bezier(0.65, 0, 0.35, 1) forwards;
   }
 }

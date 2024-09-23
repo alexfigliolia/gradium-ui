@@ -1,12 +1,15 @@
 import type { ComponentType } from "react";
 import { memo } from "react";
 import { NavLink } from "react-router-dom";
-import { useClassNames } from "@figliolia/classnames";
+import "./styles.scss";
 
-export const Link = memo(function Link({ label, to, Icon, className }: Props) {
-  const classes = useClassNames("icon-theme-link", className);
+export const RelativeLink = memo(function RelativeLink({
+  to,
+  label,
+  Icon,
+}: Props) {
   return (
-    <NavLink to={to} className={classes}>
+    <NavLink to={to} className="icon-theme-link">
       <div>
         <Icon aria-hidden />
         <Icon aria-hidden />
@@ -20,5 +23,4 @@ interface Props {
   to: string;
   label: string;
   Icon: ComponentType;
-  className?: string;
 }

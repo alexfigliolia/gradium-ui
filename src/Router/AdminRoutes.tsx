@@ -1,47 +1,43 @@
-import { BuildingsFilled, BuildingsStroked } from "Icons/Buildings";
-import { ScheduleFilled, ScheduleStroked } from "Icons/Schedule";
-import { SettingsFilled, SettingsStroked } from "Icons/Settings";
-import { StaffFilled, StaffStroked } from "Icons/Staff";
-import type { RouteConfig } from "./types";
+import { NavLink } from "react-router-dom";
+import { Building } from "Icons/Building";
+import { Money } from "Icons/Money";
+import { Performance } from "Icons/Performance";
+import { ExactLink, RelativeLink } from "Layouts/Management/Link";
+import type { IProperty } from "Models/Properties";
 
 export class AdminRoutes {
-  public static readonly PROPERTIES: RouteConfig = {
-    label: "Properties",
-    path: "/app/properties",
-    FilledIcon: BuildingsFilled,
-    StrokedIcon: BuildingsStroked,
-    matcher: path => {
-      return (
-        path.startsWith("/app/properties") ||
-        path.startsWith("/app/configure") ||
-        path.startsWith("/app/dashboard") ||
-        path.startsWith("/app/manage")
-      );
-    },
-  };
-  public static readonly STAFF: RouteConfig = {
-    path: "/app/staff",
-    label: "Staff",
-    FilledIcon: StaffFilled,
-    StrokedIcon: StaffStroked,
-  };
-  public static readonly SCHEDULE: RouteConfig = {
-    path: "/app/schedule",
-    label: "Schedule",
-    FilledIcon: ScheduleFilled,
-    StrokedIcon: ScheduleStroked,
-  };
-  public static readonly SETTINGS: RouteConfig = {
-    path: "/app/settings",
-    label: "Settings",
-    FilledIcon: SettingsFilled,
-    StrokedIcon: SettingsStroked,
-  };
+  public static readonly PROPERTIES = (
+    <ExactLink to="/app/properties" Icon={Building} label="Properties" />
+  );
+  public static readonly PERFORMANCE = (
+    <RelativeLink
+      to="/app/performance"
+      label="Performance"
+      Icon={Performance}
+    />
+  );
+  public static readonly FINANCES = (
+    <RelativeLink to="/app/finances" label="Finances" Icon={Money} />
+  );
 
-  public static readonly navigationRoutes = [
-    this.PROPERTIES,
-    this.STAFF,
-    this.SCHEDULE,
-    this.SETTINGS,
-  ];
+  public static propertyLinks(properties: IProperty[]) {
+    return properties.map(({ slug, name }) => {
+      const link = `/app/manage/${slug}`;
+      return (
+        <NavLink key={slug} to={link} className="is-property">
+          <span aria-hidden />
+          <span>{name}</span>
+        </NavLink>
+      );
+    });
+  }
+
+  public static links(properties: IProperty[]) {
+    return [
+      this.PROPERTIES,
+      ...this.propertyLinks(properties),
+      this.PERFORMANCE,
+      this.FINANCES,
+    ];
+  }
 }
