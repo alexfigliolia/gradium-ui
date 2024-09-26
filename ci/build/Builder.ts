@@ -9,7 +9,7 @@ export class Builder {
 
   private static async compileServer() {
     chdir("./production");
-    await this.exec("ls");
+    await this.exec("cat node_modules/bin/ts-packager");
     await this.exec("yarn build");
     await this.exec("mv ./dist/cjs/server.js server.js");
     await this.exec("rm -rf dist");
