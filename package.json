@@ -52,6 +52,7 @@
   "devDependencies": {
     "@apollo/rover": "^0.26.2",
     "@figliolia/child-process": "^1.0.1",
+    "@figliolia/ts-packager": "^1.1.0",
     "@graphql-codegen/cli": "^5.0.2",
     "@graphql-codegen/client-preset": "^4.3.3",
     "@types/d3": "^7.4.3",
