@@ -3,7 +3,7 @@ import path from "path";
 import { ChildProcess } from "@figliolia/child-process";
 
 export class CodeGen {
-  private static TYPES_DIRECTORY = "src/GQL/Types";
+  private static TYPES_DIRECTORY = "src/GraphQL/Types";
   public static async run() {
     await this.getSchema();
     await this.generateTypes();
@@ -13,7 +13,7 @@ export class CodeGen {
 
   private static getSchema() {
     return new ChildProcess(
-      `npx -p @apollo/rover rover graph introspect https://localhost:4000/graphql --output ${this.schemaPath} --insecure-accept-invalid-certs`,
+      `npx -p @apollo/rover rover graph introspect http://localhost:4000/graphql --output ${this.schemaPath} --insecure-accept-invalid-certs`,
     ).handler;
   }
 

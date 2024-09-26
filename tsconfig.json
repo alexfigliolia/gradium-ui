@@ -13,6 +13,9 @@
       "DOM",
       "DOM.Iterable"
     ],
+    "types": [
+      "vite/client"
+    ],
     "module": "ESNext",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -39,6 +42,9 @@
       ],
       "Generics/*": [
         "./Generics/*"
+      ],
+      "GraphQL/*": [
+        "./GraphQL/*"
       ],
       "Graphs/*": [
         "./Graphs/*"
