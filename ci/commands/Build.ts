@@ -1,5 +1,5 @@
-import { Compiler } from "../production/Compiler";
+import { Builder } from "../build/Builder";
 
 (async () => {
-  await Compiler.build();
+  await Builder.build();
 })().catch(console.log);

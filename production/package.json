@@ -4,9 +4,9 @@
   "description": "",
   "main": "dist/cjs/index.js",
   "scripts": {
-    "build": "yarn ts-packager -c build-common -e ./"
+    "build": "yarn ts-packager -c build-common -e ./server.ts"
   },
-  "author": "",
+  "author": "Alex Figliolia",
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.0"

@@ -1,18 +1,18 @@
-import express, { static as staticFiles } from "express";
+import { default as Express, static as staticFiles } from "express";
 import { existsSync } from "fs";
-import path from "path";
+import { join } from "path";
 
-const app = express();
+const app = Express();
 app.set("trust proxy", true);
 
 const buildPath: string[] = [process.cwd()];
 let N = 10;
 while (N > 0) {
   N--;
-  console.log("testing", path.join(...buildPath));
+  console.log("testing", join(...buildPath));
   if (
-    existsSync(path.join(...buildPath, "build")) &&
-    existsSync(path.join(...buildPath, "src"))
+    existsSync(join(...buildPath, "build")) &&
+    existsSync(join(...buildPath, "src"))
   ) {
     break;
   } else {
@@ -20,7 +20,7 @@ while (N > 0) {
   }
 }
 
-const buildDirectory = path.join(...buildPath, "build");
+const buildDirectory = join(...buildPath, "build");
 
 app.use((req, res, next) => {
   if (
@@ -31,7 +31,7 @@ app.use((req, res, next) => {
     res.header("Cache-Control", "private, no-cache, no-store, must-revalidate");
     res.header("Expires", "-1");
     res.header("Pragma", "no-cache");
-    res.sendFile(path.join(buildDirectory, "index.html"));
+    res.sendFile(join(buildDirectory, "index.html"));
   }
 });
 

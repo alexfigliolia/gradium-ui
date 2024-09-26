@@ -1,7 +1,7 @@
 import { chdir } from "process";
 import { ChildProcess } from "@figliolia/child-process";
 
-export class Compiler {
+export class Builder {
   public static async build() {
     await this.exec("yarn vite build");
     await this.compileServer();
@@ -9,6 +9,7 @@ export class Compiler {
 
   private static async compileServer() {
     chdir("./production");
+    await this.exec("ls");
     await this.exec("yarn build");
     await this.exec("mv ./dist/cjs/server.js server.js");
     await this.exec("rm -rf dist");
