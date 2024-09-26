@@ -1,0 +1,39 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+type Query {
+  verifySession: Boolean!
+}
+type Mutation {
+  login(email: String!, password: String!): LoggedInUser!
+  logout: Boolean!
+  createAccount(name: String!, email: String!, password: String!): LoggedInUser!
+  forgotPassword(email: String!): Boolean!
+}
+type LoggedInUser {
+  id: Int!
+  email: String!
+  name: String!
+  affiliations: [UserAffiliation!]!
+}
+type UserAffiliation {
+  organizationId: String!
+  roles: [PersonRole!]!
+}
+type PersonRole {
+  role: PersonRoleType!
+}
+enum PersonRoleType {
+  owner
+  manager
+  maintenance
+  resident
+}
+"Exposes a URL that specifies the behavior of this scalar."
+directive @specifiedBy(
+    "The URL that specifies the behavior of this scalar."
+    url: String!
+  ) on SCALAR
+"Indicates exactly one field must be supplied and this field must not be `null`."
+directive @oneOf on INPUT_OBJECT
