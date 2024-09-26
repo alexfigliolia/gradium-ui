@@ -8,8 +8,8 @@ export class Compiler {
   }
 
   private static async compileServer() {
-    chdir("production");
-    await this.exec("yarn ts-packager -c build-common -e ./");
+    chdir("./production");
+    await this.exec("yarn build");
     await this.exec("mv ./dist/cjs/server.js server.js");
     await this.exec("rm -rf dist");
   }
