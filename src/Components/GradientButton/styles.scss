@@ -9,6 +9,6 @@
   font-weight: 600;
   position: relative;
   box-shadow: 0em 0.15em 0.3em rgba(#000, 0.2);
-  @include Variables.buttonGradient;
+  @include Variables.themeGradient;
   @include Variables.center;
 }

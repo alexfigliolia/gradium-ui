@@ -47,11 +47,11 @@
         }
       }
       &:last-of-type {
-        stroke: url(#globalBrandGradient);
+        stroke: url(#themeGradient);
         transform: rotateY(180deg);
         &.pin-icon {
           stroke: none;
-          fill: url(#globalBrandGradient);
+          fill: url(#themeGradient);
         }
       }
     }

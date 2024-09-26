@@ -21,7 +21,7 @@
           width: 70%;
           &.active {
             &>div {
-              @include Variables.buttonGradient;
+              @include Variables.themeGradient;
               &>time {
                 color: #fff;
               }

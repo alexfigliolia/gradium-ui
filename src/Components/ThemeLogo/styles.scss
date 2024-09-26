@@ -3,7 +3,7 @@
 .logo.theme-logo {
   &>svg {
     & path:last-of-type {
-      stroke: url(#globalBrandGradient);
+      stroke: url(#themeGradient);
     }
   }
   &>span {

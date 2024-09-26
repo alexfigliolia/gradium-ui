@@ -10,7 +10,7 @@
   @include Variables.center;
   border: none;
   outline: none;
-  @include Variables.buttonGradient(bottom);
+  @include Variables.themeGradient(bottom);
   position: relative;
   transition-duration: 0.3s;
   box-shadow: 0 0.1em 0.5em rgba(#000, 0.3);

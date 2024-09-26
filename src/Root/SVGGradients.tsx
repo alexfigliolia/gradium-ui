@@ -10,8 +10,31 @@ export const SVGGradients = memo(
     const colors = useThemeGradient();
     return (
       <Fragment>
-        <HiddenSVG id="globalBrandGradient" colors={colors} />
-        <HiddenSVG id="redGradient" colors={["#f85c5c", "#f14242"]} />
+        <HiddenSVG id="themeGradient" colors={colors} />
+        <HiddenSVG
+          id="errorGradient"
+          y1={0}
+          y2={1}
+          x1={0}
+          x2={0}
+          colors={[CSSVars.errorLight, CSSVars.errorDark]}
+        />
+        <HiddenSVG
+          id="infoGradient"
+          y1={0}
+          y2={1}
+          x1={0}
+          x2={0}
+          colors={[CSSVars.infoLight, CSSVars.infoDark]}
+        />
+        <HiddenSVG
+          id="successGradient"
+          y1={0}
+          y2={1}
+          x1={0}
+          x2={0}
+          colors={[CSSVars.successLight, CSSVars.successDark]}
+        />
         <HiddenSVG
           id="marketingGradient"
           colors={[CSSVars.lightTeal, CSSVars.teal]}

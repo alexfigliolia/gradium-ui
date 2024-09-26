@@ -10,7 +10,7 @@
   color: transparent;
   position: relative;
   overflow: hidden;
-  @include Variables.buttonGradient;
+  @include Variables.themeGradient;
   text-decoration: none;
   &:visited {
     color: transparent;

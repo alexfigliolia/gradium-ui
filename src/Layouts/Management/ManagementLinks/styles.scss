@@ -42,7 +42,7 @@
       }
       &:hover >span:first-of-type,
       &.active >span:first-of-type {
-        @include Variables.buttonGradient;
+        @include Variables.themeGradient;
       }
     }
   }

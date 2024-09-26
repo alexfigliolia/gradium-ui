@@ -28,7 +28,7 @@
       flex-direction: column;
     }
     &>.burger.core-burger {
-      --stroke: url(#globalBrandGradient);
+      --stroke: url(#themeGradient);
       --color: linear-gradient(to right, var(--theme-light), var(--theme-dark));
       @media (min-width: Variables.$large-vertical-tablet) {
         display: flex;

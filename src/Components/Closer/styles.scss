@@ -18,7 +18,7 @@
       width: calc(var(--dimensions) * 0.75);
       height: calc(var(--dimensions) * 0.75);
       & path {
-        stroke: url(#globalBrandGradient);
+        stroke: url(#themeGradient);
       }
     }
     &::after {

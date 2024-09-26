@@ -19,7 +19,7 @@
   &:has(>div>input:focus-within) {
     box-shadow: 0px 1.5px 7.5px var(--theme-mid);
     &>div>button>svg {
-      fill: url(#globalBrandGradient);      
+      fill: url(#themeGradient);      
     }
   }
   &>div {

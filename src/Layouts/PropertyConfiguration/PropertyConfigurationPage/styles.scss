@@ -14,12 +14,12 @@
         &.map-arrow {
           rotate: 45deg;
           translate: 0 -0.15em;
-          fill: url(#globalBrandGradient);
+          fill: url(#themeGradient);
         }
         &.image-placeholder {
           margin-right: 0.6em;
           &> g > g {
-            fill: url(#globalBrandGradient);
+            fill: url(#themeGradient);
           }
         }
         &.living-space-bed,
@@ -27,7 +27,7 @@
           width: 2em;
           height: 2em;
           margin-right: 0.5em;
-          fill: url(#globalBrandGradient);
+          fill: url(#themeGradient);
         }
         &.basketball-court {
           & > g > path {
@@ -68,7 +68,7 @@
               top: 10%;
               left: 0%;
               stroke: none;
-              fill: url(#globalBrandGradient);
+              fill: url(#themeGradient);
             }
           }
         }

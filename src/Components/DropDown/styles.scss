@@ -74,7 +74,7 @@
         }
         &.selected {
           color: #fff;
-          @include Variables.buttonGradient;
+          @include Variables.themeGradient;
         }
       }
     }

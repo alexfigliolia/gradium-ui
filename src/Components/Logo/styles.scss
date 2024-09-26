@@ -17,6 +17,6 @@
     font-size: 1.25em;
     margin-left: 0.125em;
     @include Variables.marketingGradient(right);
-    @include Variables.textClip;
+    @include Variables.clipText;
   }
 }

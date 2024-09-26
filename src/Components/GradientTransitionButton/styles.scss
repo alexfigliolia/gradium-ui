@@ -16,7 +16,7 @@ a.gradient-transition-button {
   font-size: 1em;
   color: #fff;
   box-shadow: 0 0.15em 0.4em rgba(#000, 0.15);
-  @include Variables.buttonGradient;
+  @include Variables.themeGradient;
   transition: box-shadow 0.4s;
   outline: none;
   &::before {

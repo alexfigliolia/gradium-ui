@@ -9,6 +9,6 @@
   }
   &>span {
     @include Variables.marketingGradient;
-    @include Variables.textClip;
+    @include Variables.clipText;
   }
 }
