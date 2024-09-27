@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/cjs/index.js",
   "scripts": {
-    "build": "yarn ts-packager -c build-common -e ./server.ts"
+    "build": "yarn ts-packager -c build-common -e server.ts"
   },
   "author": "Alex Figliolia",
   "license": "ISC",

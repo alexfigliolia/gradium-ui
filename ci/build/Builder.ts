@@ -3,8 +3,18 @@ import { ChildProcess } from "@figliolia/child-process";
 
 export class Builder {
   public static async build() {
+    await this.clean()
     await this.exec("yarn vite build");
     await this.compileServer();
+  }
+
+  public static async clean() {
+    try {
+      await this.exec("rm -rf build")
+      await this.exec("rm production/server.js")
+    } catch (error) {
+      // silence
+    }
   }
 
   private static async compileServer() {
