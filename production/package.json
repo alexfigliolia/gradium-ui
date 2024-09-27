@@ -9,7 +9,8 @@
   "author": "Alex Figliolia",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.0"
+    "express": "^4.21.0",
+    "helmet": "^7.1.0"
   },
   "devDependencies": {
     "@figliolia/ts-packager": "^1.1.0",
