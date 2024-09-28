@@ -4,7 +4,7 @@ export const graphQLRequest = async <D, V extends Record<string, any>>(
   query: string,
   variables: V,
 ) => {
-  const client = new GraphQLClient(import.meta.env.VITE_GRAPHQL_URL, {
+  const client = new GraphQLClient(import.meta.env._VITE_GRAPHQL_URL, {
     errorPolicy: "all",
     credentials: "include",
     method: "POST",

@@ -18,6 +18,7 @@ export default defineConfig({
       },
     },
   },
+  envPrefix: ["VITE_", "_VITE_"],
   resolve: {
     alias: BuildSettings.aliases,
   },
@@ -27,7 +28,7 @@ export default defineConfig({
     open: true,
     proxy: {
       "/graphql": {
-        target: ENV.GRAPHQL_URL,
+        target: ENV._VITE_GRAPHQL_URL,
         changeOrigin: true,
       },
     },

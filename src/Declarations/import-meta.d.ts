@@ -1,5 +1,5 @@
 declare interface ImportMeta {
   env: {
-    VITE_GRAPHQL_URL: string;
+    _VITE_GRAPHQL_URL: string;
   };
 }
