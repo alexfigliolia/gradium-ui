@@ -25,13 +25,15 @@ export class App {
       }
       next();
     });
-    this.instance.use(
-      (req, res, next) =>
-        void staticCompression(this.buildDirectory, {
-          maxAge: 31557600,
-          immutable: true,
-        })(req, res, next),
-    );
+    this.instance.use((req, res, next) => {
+      return void staticCompression(this.buildDirectory, {
+        maxAge: 31557600,
+        immutable: true,
+      })(req, res, next);
+    });
+    this.instance.get("*", (_, res) => {
+      res.sendFile(join(this.buildDirectory, "index.html"));
+    });
   }
 
   private static locateBuild() {
@@ -54,5 +56,3 @@ export class App {
     process.exit(0);
   }
 }
-
-App.initialize();
