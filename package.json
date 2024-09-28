@@ -4,6 +4,7 @@
   "description": "Tenant Management for small businesses",
   "author": "Alex Figliolia",
   "scripts": {
+    "gcp-build": "yarn build",
     "build": "tsx ci/commands/Build.ts",
     "clean": "tsx ci/commands/Clean.ts",
     "dev": "vite",
