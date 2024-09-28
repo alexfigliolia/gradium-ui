@@ -9,7 +9,6 @@
     "dev": "vite",
     "lint": "tsx ci/commands/Lint.ts",
     "preview": "vite preview",
-    "start": "node ./production/server.js",
     "test": "tsx ci/commands/Test.ts",
     "generate-types": "tsx devtools/codegen/CLI.ts",
     "create-package": "tsx devtools/create-package/CLI.ts",
