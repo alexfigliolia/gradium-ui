@@ -12,11 +12,6 @@ export default defineConfig({
     postcss: {
       plugins: [autoprefixer],
     },
-    preprocessorOptions: {
-      scss: {
-        api: "modern-compiler",
-      },
-    },
   },
   envPrefix: ["VITE_", "_VITE_"],
   resolve: {
