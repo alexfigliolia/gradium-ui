@@ -14,5 +14,11 @@
 .gitignore
 
 # Node.js dependencies:
-./node_modules/
+/node_modules
+/ci
+/devtools
+/public
+/src
 .env*
+/*.ts
+/*.cjs
