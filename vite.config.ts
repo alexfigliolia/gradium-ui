@@ -12,6 +12,11 @@ export default defineConfig({
     postcss: {
       plugins: [autoprefixer],
     },
+    preprocessorOptions: {
+      scss: {
+        api: "modern-compiler",
+      },
+    },
   },
   resolve: {
     alias: BuildSettings.aliases,

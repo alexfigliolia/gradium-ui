@@ -9,6 +9,7 @@
   "author": "Alex Figliolia",
   "license": "ISC",
   "dependencies": {
+    "@figliolia/static-compression": "^1.0.1",
     "express": "^4.21.0",
     "helmet": "^7.1.0"
   },

@@ -1,7 +1,8 @@
-import { default as Express, static as staticFiles } from "express";
+import { default as Express } from "express";
 import { existsSync } from "fs";
 import helmet from "helmet";
 import { join } from "path";
+import staticCompression from "@figliolia/static-compression";
 
 export class App {
   public static instance = Express();
@@ -25,7 +26,11 @@ export class App {
       next();
     });
     this.instance.use(
-      staticFiles(this.buildDirectory, { maxAge: 31557600, immutable: true }),
+      (req, res, next) =>
+        void staticCompression(this.buildDirectory, {
+          maxAge: 31557600,
+          immutable: true,
+        })(req, res, next),
     );
   }
 
@@ -34,17 +39,19 @@ export class App {
     let N = 10;
     while (N > 0) {
       N--;
-      console.log("testing", join(...buildPath));
       if (
         existsSync(join(...buildPath, "build")) &&
         existsSync(join(...buildPath, "src"))
       ) {
-        break;
+        return join(...buildPath, "build");
       } else {
         buildPath.push("..");
       }
     }
-    return join(...buildPath, "build");
+    console.log(
+      "UI build directory not found. Please run `yarn build` and restart the server",
+    );
+    process.exit(0);
   }
 }
 
