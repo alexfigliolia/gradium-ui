@@ -1,8 +1,10 @@
 import { writeFileSync } from "fs";
 import path from "path";
 import { ChildProcess } from "@figliolia/child-process";
+import "dotenv/config";
 
 export class CodeGen {
+  private static URL = process.env.GRAPHQL_URL ?? "";
   private static TYPES_DIRECTORY = "src/GraphQL/Types";
   public static async run() {
     await this.getSchema();
@@ -13,12 +15,12 @@ export class CodeGen {
 
   private static getSchema() {
     return new ChildProcess(
-      `npx -p @apollo/rover rover graph introspect http://localhost:4000/graphql --output ${this.schemaPath} --insecure-accept-invalid-certs`,
+      `yarn -p @apollo/rover rover graph introspect ${this.URL} --output ${this.schemaPath} --insecure-accept-invalid-certs`,
     ).handler;
   }
 
   private static generateTypes() {
-    return new ChildProcess(`graphql-codegen`).handler;
+    return new ChildProcess("graphql-codegen").handler;
   }
 
   private static fixEntryPoint() {
