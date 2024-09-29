@@ -28,9 +28,10 @@
     justify-content: space-between;
     &>h3 {
       color: var(--text-color);
-      font-weight: 500;
-      font-size: 1.5em;
       margin-bottom: 0.25em;
+      text-transform: uppercase;
+      font-size: 1.2em;
+      font-weight: 700;
     }
     &>address {
       font-size: 0.95em;

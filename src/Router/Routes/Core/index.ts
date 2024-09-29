@@ -1,5 +1,6 @@
 import type { NonIndexRouteObject } from "react-router-dom";
 import { CreateLazyComponent } from "Tools/LazyLoading";
+import { Account } from "./Account";
 import { AmenitiesConfiguration } from "./AmenitiesConfiguration";
 import { Dashboard } from "./Dashboard";
 import { Home } from "./Home";
@@ -16,6 +17,7 @@ export const Core: NonIndexRouteObject = {
   children: [
     Home,
     Manage,
+    Account,
     Dashboard,
     Properties,
     PropertyConfiguration,

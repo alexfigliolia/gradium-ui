@@ -12,3 +12,5 @@ export const marketingMobileMenu = (state: IModals) => {
 export const coreMobileMenu = (state: IModals) => {
   return state.coreMobileMenu;
 };
+
+export const forgotPassword = (state: IModals) => state.forgotPassword;

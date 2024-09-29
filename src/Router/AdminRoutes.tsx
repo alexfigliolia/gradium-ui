@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { Account } from "Icons/Account";
 import { Building } from "Icons/Building";
 import { Money } from "Icons/Money";
 import { Performance } from "Icons/Performance";
@@ -30,6 +31,9 @@ export class AdminRoutes {
       Icon={Money}
     />
   );
+  public static readonly SETTINGS = (
+    <ExactLink key="account" to="/app/account" label="Account" Icon={Account} />
+  );
 
   public static propertyLinks(properties: IProperty[]) {
     return properties.map(({ slug, name }) => {
@@ -49,6 +53,7 @@ export class AdminRoutes {
       ...this.propertyLinks(properties),
       this.PERFORMANCE,
       this.FINANCES,
+      this.SETTINGS,
     ];
   }
 }

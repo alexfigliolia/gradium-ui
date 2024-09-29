@@ -11,10 +11,17 @@ export const Confirmation = memo(function Confirmation({
   close,
   children,
   className,
+  clickOutside,
 }: Props) {
   const classes = useClassNames("confirmation-sheet", className);
   return (
-    <BottomSheet dim notch open={open} className={classes} close={close}>
+    <BottomSheet
+      dim
+      notch
+      open={open}
+      close={close}
+      className={classes}
+      clickOutside={clickOutside}>
       <Closer onClick={close} aria-label="Close Confirmation" />
       {children}
     </BottomSheet>
@@ -24,6 +31,7 @@ export const Confirmation = memo(function Confirmation({
 interface Props {
   open: boolean;
   close: Callback;
+  clickOutside?: boolean;
   className?: string;
   children?: ReactNode;
 }

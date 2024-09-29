@@ -1,7 +1,6 @@
-import { memo, useMemo, useState } from "react";
+import { memo, useMemo } from "react";
 import { useClassNames } from "@figliolia/classnames";
-import type { Dimensions, Options } from "@figliolia/size-observer";
-import { useSizeObserver } from "@figliolia/size-observer";
+import { useNodeHeight } from "Hooks/useNodeHeight";
 import type { OptionalChildren } from "Types/React";
 import "./styles.scss";
 
@@ -10,22 +9,15 @@ export const MobileMenu = memo(function MobileMenu({
   children,
   className,
 }: Props) {
-  const [height, setHeight] = useState<string | undefined>();
-  const options: Options = useMemo(
-    () => ({
-      height: true,
-      type: "border-box",
-      onChange: ({ height }: Dimensions) => {
-        setHeight(`${height}px`);
-      },
-    }),
-    [],
+  const [node, height] = useNodeHeight<HTMLDivElement>();
+  const pixelHeight = useMemo(
+    () => (height ? `${height}px` : undefined),
+    [height],
   );
-  const node = useSizeObserver<HTMLDivElement>(options);
   const classes = useClassNames("mobile-menu", className, { open });
 
   return (
-    <menu className={classes} style={{ "--height": height }}>
+    <menu className={classes} style={{ "--height": pixelHeight }}>
       <div ref={node}>{children}</div>
     </menu>
   );

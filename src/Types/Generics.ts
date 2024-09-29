@@ -10,3 +10,8 @@ export type FilterKeys<T, V> = {
 };
 
 export type KeysOfType<T, V> = Extract<keyof FilterKeys<T, V>, string>;
+
+export interface Identity {
+  id: number;
+  name: string;
+}

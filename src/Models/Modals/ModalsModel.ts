@@ -10,6 +10,7 @@ export class ModalsModel extends State<IModals> {
       newProperty: false,
       deleteSpace: false,
       dateSelector: false,
+      forgotPassword: false,
       leaseFilters: false,
       deleteProperty: false,
       dashboardFilters: false,
@@ -35,6 +36,8 @@ export class ModalsModel extends State<IModals> {
   private closeNewProperty = this.toggleKey("newProperty", false);
   private openDeleteSpace = this.toggleKey("deleteSpace", true);
   private closeDeleteSpace = this.toggleKey("deleteSpace", false);
+  private openForgotPassword = this.toggleKey("forgotPassword", true);
+  private closeForgotPassword = this.toggleKey("forgotPassword", false);
   private openCoreMobileMenu = this.toggleKey("coreMobileMenu", true);
   private closeCoreMobileMenu = this.toggleKey("coreMobileMenu", false);
   private openMobileMenu = this.toggleKey("marketingMobileMenu", true);
@@ -49,8 +52,6 @@ export class ModalsModel extends State<IModals> {
   private closeDashboardFilters = this.toggleKey("dashboardFilters", false);
 
   /* CONTROLLERS */
-  newLease = ModalStack.create(this.openNewLease, this.closeNewLease);
-  editLease = ModalStack.create(this.openEditLease, this.closeEditLease);
   marketingMobileMenu = ModalStack.create(
     this.openMobileMenu,
     this.closeMobileMenu,
@@ -59,6 +60,12 @@ export class ModalsModel extends State<IModals> {
     this.openCoreMobileMenu,
     this.closeCoreMobileMenu,
   );
+  forgotPassword = ModalStack.create(
+    this.openForgotPassword,
+    this.closeForgotPassword,
+  );
+  newLease = ModalStack.create(this.openNewLease, this.closeNewLease);
+  editLease = ModalStack.create(this.openEditLease, this.closeEditLease);
   newProperty = ModalStack.create(this.openNewProperty, this.closeNewProperty);
   deleteSpace = ModalStack.create(this.openDeleteSpace, this.closeDeleteSpace);
   leaseFilters = ModalStack.create(

@@ -6,7 +6,10 @@ export const LoggedInUserFragment = gql`
     name
     email
     affiliations {
-      organizationId
+      organization {
+        id
+        name
+      }
       roles {
         role
       }

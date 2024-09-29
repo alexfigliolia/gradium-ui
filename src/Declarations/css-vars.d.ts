@@ -7,6 +7,12 @@ declare module "Styles/Exports.module.scss" {
     public static yellow: string;
     public static lightBlue: string;
     public static lightTeal: string;
+    public static errorLight: string;
+    public static errorDark: string;
+    public static infoLight: string;
+    public static infoDark: string;
+    public static successLight: string;
+    public static successDark: string;
     public static tileBackgroundLight: string;
     public static tileBackgroundDark: string;
     public static progressLowLight: string;

@@ -40,8 +40,8 @@
           white-space: nowrap;
         }
       }
-      &:hover >span:first-of-type,
-      &.active >span:first-of-type {
+      &:hover > span:first-of-type,
+      &.active > span:first-of-type {
         @include Variables.themeGradient;
       }
     }

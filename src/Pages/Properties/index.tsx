@@ -13,7 +13,7 @@ export default memo(
       <Fragment>
         <Page
           className="properties"
-          label="Properties"
+          label="Your Properties"
           titleArea={
             <GradientButton
               className="new-property-button"
