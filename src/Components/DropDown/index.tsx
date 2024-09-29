@@ -1,9 +1,8 @@
 import { memo, useCallback, useMemo, useState } from "react";
 import { useClassNames } from "@figliolia/classnames";
-import { useController } from "@figliolia/react-hooks";
-import type { InputProps } from "Components/Input";
+import { useClickOutside, useController } from "@figliolia/react-hooks";
+import type { InputProps, InputRef } from "Components/Input";
 import { Input } from "Components/Input";
-import { useClickOutside } from "Hooks/useClickOutside";
 import { Devices } from "Tools/Devices";
 import { Controller } from "./Controller";
 import { DesktopSelect } from "./DesktopSelect";
@@ -37,15 +36,25 @@ function IDropDown<T extends IListItem>({
 
   const { open: openDD, close: closeDD } = controller.Toggle;
   const node = useClickOutside<HTMLLabelElement>(open, closeDD);
-  controller.register(node.current);
 
   const classes = useClassNames("dropdown", className);
+
+  const cacheRef = useCallback(
+    (instance: InputRef | null) => {
+      if (instance) {
+        node(instance.label);
+        controller.register(instance.input);
+      }
+    },
+    [controller, node],
+  );
+
   return (
     <Input
       {...rest}
       type="text"
-      ref={node}
       label={label}
+      ref={cacheRef}
       onChange={NOOP}
       onFocus={openDD}
       disabled={disabled}
@@ -73,7 +82,6 @@ function IDropDown<T extends IListItem>({
 }
 
 export const DropDown = memo(IDropDown);
-
 export interface DropDownProps<T extends IListItem = IListItem>
   extends Omit<
     InputProps,

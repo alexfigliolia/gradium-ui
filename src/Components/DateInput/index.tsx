@@ -1,11 +1,14 @@
 import type { ChangeEvent } from "react";
 import { memo, useCallback, useMemo, useState } from "react";
 import { useClassNames } from "@figliolia/classnames";
-import { useController } from "@figliolia/react-hooks";
+import {
+  useClickOutside,
+  useController,
+  useFocusedKeyListener,
+} from "@figliolia/react-hooks";
 import { DatePicker } from "Components/DatePicker";
-import { Input, type InputProps } from "Components/Input";
-import { useClickOutside } from "Hooks/useClickOutside";
-import { useFocusedKeyListener } from "Hooks/useFocusedKeyListener";
+import type { InputProps, InputRef } from "Components/Input";
+import { Input } from "Components/Input";
 import { Triangle } from "Icons/Triangle";
 import { Devices } from "Tools/Devices";
 import type { Callback } from "Types/Generics";
@@ -29,14 +32,9 @@ export const DateInput = memo(function DateInput({
     "Backspace",
   );
   const controller = useController(new Controller(setOpen));
-  const node = useClickOutside<HTMLLabelElement>(open, controller.Toggle.close);
+  controller.register(focusManager);
 
-  const onFocus = useCallback(() => {
-    if (!Devices.IS_MOBILE_BROWSER) {
-      controller.Toggle.open();
-    }
-    focusManager.onFocus();
-  }, [focusManager, controller]);
+  const node = useClickOutside<HTMLLabelElement>(open, controller.Toggle.close);
 
   const onSelect = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -64,17 +62,25 @@ export const DateInput = memo(function DateInput({
       open,
     },
   );
+
+  const cacheRef = useCallback(
+    (instance: InputRef) => {
+      node(instance?.label);
+    },
+    [node],
+  );
+
   return (
     <Input
       {...rest}
-      ref={node}
       minLength={1}
+      ref={cacheRef}
       value={formatted}
       type={INPUT_TYPE}
       autoComplete="off"
       onChange={onSelect}
       className={inputClasses}
-      onFocus={onFocus}
+      onFocus={controller.onFocus}
       onBlur={focusManager.onBlur}>
       {!Devices.IS_MOBILE_BROWSER && (
         <div className={pickerClasses}>

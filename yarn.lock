@@ -960,6 +960,13 @@
   resolved "https://registry.yarnpkg.com/@figliolia/react-hooks/-/react-hooks-1.1.0.tgz#7307b737d7945448d196c75ef8e2ae8a19421827"
   integrity sha512-xHPpVGdStZhvEh+icdY1P87QNwo1OO6KmnI1hBwXeCfbKIAfB0Q4xI0jF0X5tWBl+5GVOC2kAURys6xulf/NxA==
 
+"@figliolia/react-hooks@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@figliolia/react-hooks/-/react-hooks-1.1.4.tgz#39719d5f4df1083c546fb3f02ce51d9e1a1b459a"
+  integrity sha512-ACMZx4a+DX9nYTqmh1IpXvfHCuDP88tLozltaQEFn3u023cu5lTpluPgqNj+lvxFZPvURK/eW3gY759uWgvv0A==
+  dependencies:
+    "@figliolia/size-observer" "^1.0.3"
+
 "@figliolia/react-lazy@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@figliolia/react-lazy/-/react-lazy-1.1.0.tgz#94468847ced6966603d62f43452f302e3dbcab66"

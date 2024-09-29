@@ -17,6 +17,7 @@
       box-shadow: 0em 0.15em 0.4em rgba(#000, 0.2);
       display: flex;
       align-items: center;
+      font-weight: 400;
       flex-direction: row-reverse;
       justify-content: space-between;
       translate: 0 0;
@@ -24,35 +25,42 @@
       @media (min-width: Variables.$small-vertical-tablet) {
         font-size: 1.65em;
       }
-      &>svg {
-        height: 1.25em;
-        width: 1.25em;
-        fill: #fff;
-        transition-duration: 0.3s;
+      &:focus-visible {
+        outline: none;
+      }
+      &>div {
+        margin-right: 0em;
         @media (min-width: Variables.$small-vertical-tablet) {
-          font-size: 1.15em;
+          width: 1.4em;
+          height: 1.4em;
         }
-        &.home-icon {
-          fill: none;
-          stroke: #fff;
-        }
-        &.plug-icon {
+        &:has(>svg.plug-icon) {
           width: 1.6em;
           height: 1.6em;
           margin-right: -0.15em;
+          @media (min-width: Variables.$small-vertical-tablet) {
+            width: 1.75em;
+            height: 1.75em;
+          }
+        }
+        &>svg {
+          overflow: visible;
         }
       }
       &.active,
-      &:hover {
+      &:hover,
+      &:focus-visible {
         background: rgba(#000, 0.2);
         color: Variables.$teal;
         text-shadow: 0em 0.1em 0.35em rgb(from Variables.$teal r g b / 20%);
-        &> svg {
-          fill: Variables.$teal;
-          filter: drop-shadow(0em 0.1em 0.5em rgb(from Variables.$teal r g b / 50%));
-          &.home-icon {
-            fill: none;
-            stroke: Variables.$teal;
+      }
+      &:focus-visible {
+        &>div > svg {
+          &:first-of-type {
+            transform: rotateY(-180deg);
+          }
+          &:last-of-type {
+            transform: rotateY(0deg);
           }
         }
       }
@@ -69,11 +77,15 @@
         &:hover {
           background: rgba(#000, 0.2);
         }
-        &>.open-lock-icon {
-          fill: none;
-          stroke: #fff;
-          &>circle {
-            fill: #fff;
+        &>div{
+          width: 1.35em;
+          height: 1.35em;
+          &>.open-lock-icon:first-of-type {
+            fill: none;
+            stroke: #fff;
+            &>circle {
+              fill: #fff;
+            }
           }
         }
       }

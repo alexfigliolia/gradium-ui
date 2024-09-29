@@ -12,7 +12,7 @@ export const Header = memo(
       <CoreHeader className="marketing-header">
         <Logo />
         <MenuButton />
-        <Nav icons />
+        <Nav />
       </CoreHeader>
     );
   },

@@ -1,7 +1,7 @@
 import type { CSSProperties, InputHTMLAttributes } from "react";
 import { memo, useRef } from "react";
 import { useClassNames } from "@figliolia/classnames";
-import { useFocusedKeyListener } from "Hooks/useFocusedKeyListener";
+import { useFocusedKeyListener } from "@figliolia/react-hooks";
 import type { OptionalChildren } from "Types/React";
 import "./styles.scss";
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */

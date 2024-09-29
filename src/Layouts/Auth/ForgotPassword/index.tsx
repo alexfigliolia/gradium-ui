@@ -2,7 +2,7 @@ import { memo, useEffect, useRef } from "react";
 import { useFormState, useTimeout } from "@figliolia/react-hooks";
 import { ActionButton } from "Components/ActionButton";
 import { Confirmation } from "Components/Confirmation";
-import type { MaybeInput } from "Components/Input";
+import type { InputRef } from "Components/Input";
 import { Input } from "Components/Input";
 import { forgotPassword as forgotPasswordQuery } from "GraphQL/Mutations/forgotPassword.gql";
 import type {
@@ -20,7 +20,7 @@ export const ForgotPassword = memo(
   function ForgotPassword(_: Propless) {
     const timeout = useTimeout();
     const open = useModals(forgotPassword);
-    const input = useRef<MaybeInput>(null);
+    const controller = useRef<InputRef>(null);
     const clickOutside = useToasts(toastsEmpty);
 
     const { loading, success, error, onSubmit } = useFormState(
@@ -49,8 +49,8 @@ export const ForgotPassword = memo(
     useEffect(() => {
       if (!open) {
         timeout.execute(() => {
-          if (input.current) {
-            input.current.value = "";
+          if (controller.current?.input) {
+            controller.current.input.value = "";
           }
         }, 300);
       }
@@ -70,11 +70,11 @@ export const ForgotPassword = memo(
         <form onSubmit={onSubmit}>
           <Input
             required
-            ref={input}
             type="email"
             name="email"
             label="Email"
             icon={<At />}
+            ref={controller}
           />
           <ActionButton
             type="submit"

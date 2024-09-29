@@ -1,14 +1,9 @@
 @use "Styles/Variables";
 
 .marketing-nav {
-  &>a:last-of-type {
-    color: #fff;
-    @include Variables.brandGradient;
-    border-radius: 0.25em;
-    padding: 0.4em 1em;
-    text-transform: uppercase;
-    font-size: 1.15em;
-    text-decoration: none;
-    box-shadow: 0em 0.1em 0.5em rgba(#000, 0.2), 0em 0em 0.25em rgb(from Variables.$teal r g b / 75%);
+  &>.icon-theme-link.scroll-link {
+    &.active > div > svg:last-of-type {
+      filter: drop-shadow(0em 0.1em 0.2em rgb(from #{Variables.$teal} r g b / 25%));
+    }
   }
 }

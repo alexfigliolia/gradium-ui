@@ -30,7 +30,7 @@
     "@figliolia/modal-stack": "^1.0.5",
     "@figliolia/page-switch": "^1.0.8",
     "@figliolia/react-galena": "^3.2.1",
-    "@figliolia/react-hooks": "^1.1.0",
+    "@figliolia/react-hooks": "^1.1.4",
     "@figliolia/react-lazy": "^1.1.0",
     "@figliolia/size-observer": "^1.0.3",
     "@figliolia/task-queue": "^1.0.2",

@@ -14,7 +14,7 @@ export const MobileMenu = memo(function MobileMenu(_: Propless) {
 
   return (
     <CoreMobileMenu open={open} className="marketing-menu">
-      <Nav icons onNavigate={onNavigate} />
+      <Nav onNavigate={onNavigate} />
     </CoreMobileMenu>
   );
 });

@@ -1,14 +1,13 @@
 import type { ForwardedRef } from "react";
 import { forwardRef, memo, useImperativeHandle, useState } from "react";
 import { useClassNames } from "@figliolia/classnames";
-import { useMount } from "@figliolia/react-hooks";
+import { useMount, useNodeDimensions } from "@figliolia/react-hooks";
 import type {
   AreaChart as AreaChartController,
   IAreaChart,
 } from "Graphs/AreaChart";
 import type { Coordinate } from "Graphs/types";
 import { useAreaChart } from "Graphs/useAreaChart";
-import { useNodeDimensions } from "Hooks/useNodeDimensions";
 import type { OptionalChildren } from "Types/React";
 import "./styles.scss";
 

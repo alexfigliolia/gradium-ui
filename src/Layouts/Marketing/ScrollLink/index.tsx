@@ -1,7 +1,7 @@
-import type { MouseEvent } from "react";
+import type { ComponentType, MouseEvent, SVGProps } from "react";
 import { memo, useCallback, useMemo } from "react";
-import { Link } from "react-router-dom";
 import { useClassNames } from "@figliolia/classnames";
+import { ExactLink } from "Layouts/Management/Link";
 import type { Callback } from "Types/Generics";
 import type { OptionalChildren } from "Types/React";
 import { Routing } from "../Routing";
@@ -9,7 +9,7 @@ import "./styles.scss";
 
 export const ScrollLink = memo(function ScrollLink({
   id,
-  children,
+  Icon,
   onNavigate,
 }: Props) {
   const activeID = Routing.useActiveLink();
@@ -23,13 +23,18 @@ export const ScrollLink = memo(function ScrollLink({
     [id, onNavigate],
   );
   return (
-    <Link className={classes} to={href} onClick={onClick}>
-      {children}
-    </Link>
+    <ExactLink
+      to={href}
+      label={id}
+      Icon={Icon}
+      onClick={onClick}
+      className={classes}
+    />
   );
 });
 
 interface Props extends OptionalChildren {
   id: string;
+  Icon: ComponentType<SVGProps<SVGSVGElement>>;
   onNavigate?: Callback<[MouseEvent<HTMLAnchorElement>]>;
 }

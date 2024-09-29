@@ -1,7 +1,11 @@
 import type { MouseEvent } from "react";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useClassNames } from "@figliolia/classnames";
-import { useMount, useTimeout } from "@figliolia/react-hooks";
+import {
+  useFocusedKeyListener,
+  useMount,
+  useTimeout,
+} from "@figliolia/react-hooks";
 import { Closer } from "Components/Closer";
 import { useNodeHeight } from "Hooks/useNodeHeight";
 import type { IndexedToast } from "Models/Toasts";
@@ -32,13 +36,16 @@ export const Toast = memo(function Toast({
   const hide = useCallback(
     <E extends MouseEvent<HTMLButtonElement> | undefined>(e?: E) => {
       e && e.preventDefault();
+      if (!visible) {
+        return;
+      }
       setVisible(false);
       timeout.execute(dismiss, 650);
       if (ID.current) {
         ModalStack.delete(ID.current);
       }
     },
-    [dismiss, timeout],
+    [dismiss, timeout, visible],
   );
 
   useMount(() => {
@@ -55,6 +62,8 @@ export const Toast = memo(function Toast({
 
   const classes = useClassNames("toast", type, { visible });
 
+  const listener = useFocusedKeyListener(hide);
+
   return (
     <div className={classes} style={{ "--height": pixelHeight }}>
       <div ref={node}>
@@ -63,7 +72,7 @@ export const Toast = memo(function Toast({
         </h4>
         <p>{message}</p>
       </div>
-      <Closer onMouseDown={hide} />
+      <Closer onMouseDown={hide} {...listener.events} />
     </div>
   );
 });

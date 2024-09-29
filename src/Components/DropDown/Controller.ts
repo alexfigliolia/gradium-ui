@@ -6,13 +6,13 @@ import type { IListItem } from "./types";
 export class Controller {
   Toggle: ModalToggle;
   setOpen: Callback<[open: boolean]>;
-  node: HTMLLabelElement | null = null;
+  node: HTMLInputElement | null = null;
   constructor(setOpen: Callback<[open: boolean]>) {
     this.setOpen = setOpen;
     this.Toggle = ModalStack.create(this.open, this.close);
   }
 
-  public register(node: HTMLLabelElement | null) {
+  public register(node: HTMLInputElement | null) {
     this.node = node;
   }
 
@@ -29,7 +29,7 @@ export class Controller {
     if (!this.node) {
       return;
     }
-    this.node.querySelector("input")?.blur();
+    this.node.blur();
   }
 
   public static toTable<T extends IListItem>(list: T[]) {

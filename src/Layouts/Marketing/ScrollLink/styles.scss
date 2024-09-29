@@ -1,6 +1,6 @@
 @use "Styles/Variables";
 
-.scroll-link {
+.scroll-link.icon-theme-link {
   display: flex;
   color: #fff;
   text-decoration: none;
@@ -8,14 +8,50 @@
   position: relative;
   top: -0.05em;
   border-radius: 0.1em;
+  font-weight: 500;
   transition-duration: 0.3s;
   text-transform: capitalize;
-  text-shadow: 0px 1.5px 5px rgba(#000, 0.5), 0px 0px 7.5px rgba(#000, 0.25);
+  text-shadow: 0px 0.1em 0.33em rgba(#000, 0.5), 0px 0px 0.5em rgba(#000, 0.25);
+  &>div {
+    width: 1.25em;
+    height: 1.25em;
+    margin-right: 0.5em;
+    &:has(>svg.plug-icon) {
+      width: 1.45em;
+      height: 1.45em;
+    }
+    &:has(>svg.home-icon) {
+      width: 1.35em;
+      height: 1.35em;
+    }
+    &>svg {
+      &.info-icon,
+      &.plug-icon {
+        stroke: none;
+        &:first-of-type {
+          fill: #fff;
+        }
+        &:last-of-type {
+          fill: url(#marketingGradient);
+        }
+      }
+      &.home-icon:last-of-type,
+      &.open-lock-icon:last-of-type {
+        stroke: url(#marketingGradient);
+        &>path:last-of-type {
+          stroke: Variables.$teal;
+        }
+        &>circle {
+          fill: Variables.$teal;
+        }
+      }
+    }
+  }
   &:visited {
     color: #fff;
   }
   &.active {
     color: Variables.$teal;
-    text-shadow: 0px 1.5px 5px rgba(#000, 0.5);
+    text-shadow: 0px 0.1em 0.3em rgba(#000, 0.5);
   }
 }

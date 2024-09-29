@@ -12,18 +12,25 @@ import "./styles.scss";
 export const Input = memo(
   forwardRef(function Input(
     { icon, label, children, className, placeholder, ...rest }: InputProps,
-    ref: ForwardedRef<MaybeInput>,
+    ref: ForwardedRef<InputRef>,
   ) {
     const input = useRef<HTMLInputElement>(null);
+    const labelNode = useRef<HTMLLabelElement>(null);
     const focus = useCallback(() => {
       input.current?.focus?.();
     }, []);
     const classes = useClassNames("input", className);
-    useImperativeHandle<MaybeInput, MaybeInput>(ref, () => input.current, [
-      input,
-    ]);
+
+    useImperativeHandle(
+      ref,
+      () => ({
+        input: input.current,
+        label: labelNode.current,
+      }),
+      [input],
+    );
     return (
-      <label className={classes}>
+      <label className={classes} ref={labelNode}>
         <span>{label}</span>
         <div className="input-positioner">
           {icon && (
@@ -45,4 +52,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon?: ReactNode;
 }
 
-export type MaybeInput = HTMLInputElement | null;
+export interface InputRef {
+  label: HTMLLabelElement | null;
+  input: HTMLInputElement | null;
+}

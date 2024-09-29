@@ -3,12 +3,12 @@ import { Account } from "Icons/Account";
 import { Building } from "Icons/Building";
 import { Money } from "Icons/Money";
 import { Performance } from "Icons/Performance";
-import { ExactLink, RelativeLink } from "Layouts/Management/Link";
+import { RelativeLink } from "Layouts/Management/Link";
 import type { IProperty } from "Models/Properties";
 
 export class AdminRoutes {
   public static readonly PROPERTIES = (
-    <ExactLink
+    <RelativeLink
       key="properties"
       to="/app/properties"
       Icon={Building}
@@ -32,7 +32,12 @@ export class AdminRoutes {
     />
   );
   public static readonly SETTINGS = (
-    <ExactLink key="account" to="/app/account" label="Account" Icon={Account} />
+    <RelativeLink
+      key="account"
+      to="/app/account"
+      label="Account"
+      Icon={Account}
+    />
   );
 
   public static propertyLinks(properties: IProperty[]) {

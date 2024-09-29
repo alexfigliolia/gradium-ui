@@ -1,7 +1,7 @@
 import type { ComponentType } from "react";
 import { memo } from "react";
 import { NavLink } from "react-router-dom";
-import "./styles.scss";
+import { IconThemeLink } from "Components/IconThemeLink";
 
 export const RelativeLink = memo(function RelativeLink({
   to,
@@ -9,13 +9,9 @@ export const RelativeLink = memo(function RelativeLink({
   Icon,
 }: Props) {
   return (
-    <NavLink to={to} className="icon-theme-link">
-      <div>
-        <Icon aria-hidden />
-        <Icon aria-hidden />
-      </div>
+    <IconThemeLink to={to} Icon={Icon} Tag={NavLink}>
       {label}
-    </NavLink>
+    </IconThemeLink>
   );
 });
 
