@@ -11,15 +11,17 @@
   margin-bottom: 0;
   border-radius: 0.25em;
   background: var(--tile-background);
+  translate: 70px 0;
   box-shadow: 0em 0.1em 0.5em rgba(#000, 0.2);
-  transition: height 0.4s 0.25s, margin-bottom 0.4s 0.25s, opacity 0.3s, visibility 0s 0.4s;
+  transition: height 0.4s 0.35s, margin-bottom 0.4s 0.35s, opacity 0.4s, translate 0.4s, visibility 0s 0.75s;
   &.visible {
     height: var(--height);
     opacity: 1;
     visibility: visible;
     pointer-events: all;
     margin-bottom: 1em;
-    transition: height 0.3s, margin-bottom 0.3s, opacity 0.4s 0.25s, visibility 0s;
+    translate: 0 0;
+    transition: height 0.3s, margin-bottom 0.3s, opacity 0.4s 0.25s, translate 0.4s 0.25s, visibility 0s;
   }
   &.error {
     @include Variables.toastFade(rgb(from Variables.$error-dark r g b / 20%));

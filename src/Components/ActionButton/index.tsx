@@ -16,7 +16,11 @@ export const ActionButton = memo(function ActionButton({
 }: Props) {
   const classes = useClassNames("action-button", rest);
   return (
-    <GradientButton type={type} className={classes} onClick={onClick}>
+    <GradientButton
+      type={type}
+      onClick={onClick}
+      className={classes}
+      disabled={rest.loading}>
       {children}
       <TriangeLoader />
       <Check />
