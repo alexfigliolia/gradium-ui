@@ -21,16 +21,16 @@
     --x: 0px;
     --y: 0px;
     position: absolute;
-    top: -100%;
-    left: -100%;
-    height: 200%;
-    width: 200%;
+    top: -125%;
+    left: -125%;
+    height: 250%;
+    width: 250%;
     opacity: 0;
     z-index: 0;
     aspect-ratio: 1 / 1;
     transition: opacity 1s;
     background: 100% 100%;
-    background-position: 0px 0px,0px 0px,0px 0px,0px 0px,0px 0px,0px 0px,0px 0px,0px 0px,0px 0px,0px 0px,0px 0px;
+    background-position: 0px 0px, 0px 0px, 0px 0px, 0px 0px, 0px 0px, 0px 0px, 0px 0px, 0px 0px, 0px 0px, 0px 0px, 0px 0px;
     background-image: 
       radial-gradient(18% 28% at 24% 50%, #CEFAFFFF 7%, #073AFF00 100%),
       radial-gradient(18% 28% at 18% 71%, #FFFFFF59 6%, #073AFF00 100%),

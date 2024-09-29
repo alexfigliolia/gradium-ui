@@ -16,8 +16,8 @@ export const BorderTile = memo(function BorderTile({
     y: 0,
     opacity: 0,
   });
-  const controller = useController(new Controller(setFrame));
   const classes = useClassNames("border-tile", className);
+  const controller = useController(new Controller(setFrame));
   return (
     <div className={classes} {...rest} {...controller.bindings}>
       <div>{children}</div>
