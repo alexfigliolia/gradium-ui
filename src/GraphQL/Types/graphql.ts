@@ -27,7 +27,7 @@ export type LoggedInUser = {
 export type Mutation = {
   __typename?: 'Mutation';
   createAccount: LoggedInUser;
-  forgotPassword: Scalars['Boolean']['output'];
+  forgotPassword: Scalars['String']['output'];
   login: LoggedInUser;
   logout: Scalars['Boolean']['output'];
 };
@@ -101,7 +101,7 @@ export type ForgotPasswordMutationVariables = Exact<{
 }>;
 
 
-export type ForgotPasswordMutation = { __typename?: 'Mutation', forgotPassword: boolean };
+export type ForgotPasswordMutation = { __typename?: 'Mutation', forgotPassword: string };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String']['input'];

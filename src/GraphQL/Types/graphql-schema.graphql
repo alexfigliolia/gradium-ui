@@ -27,7 +27,7 @@ type Mutation {
   login(email: String!, password: String!): LoggedInUser!
   logout: Boolean!
   createAccount(name: String!, email: String!, password: String!): LoggedInUser!
-  forgotPassword(email: String!): Boolean!
+  forgotPassword(email: String!): String!
 }
 enum PersonRoleType {
   owner

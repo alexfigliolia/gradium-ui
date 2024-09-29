@@ -1,17 +1,18 @@
-import { memo } from "react";
+import { memo, useEffect, useRef } from "react";
 import { useFormState, useTimeout } from "@figliolia/react-hooks";
 import { ActionButton } from "Components/ActionButton";
 import { Confirmation } from "Components/Confirmation";
+import type { MaybeInput } from "Components/Input";
 import { Input } from "Components/Input";
 import { forgotPassword as forgotPasswordQuery } from "GraphQL/Mutations/forgotPassword.gql";
-import { graphQLRequest } from "GraphQL/request";
 import type {
   ForgotPasswordMutation,
   ForgotPasswordMutationVariables,
 } from "GraphQL/Types";
+import { UIClient } from "GraphQL/UIClient";
 import { At } from "Icons/At";
 import { forgotPassword, Modals, useModals } from "State/Modals";
-import { Toasts, toastsEmpty, useToasts } from "State/Toasts";
+import { toastsEmpty, useToasts } from "State/Toasts";
 import type { Propless } from "Types/React";
 import "./styles.scss";
 
@@ -19,29 +20,23 @@ export const ForgotPassword = memo(
   function ForgotPassword(_: Propless) {
     const timeout = useTimeout();
     const open = useModals(forgotPassword);
+    const input = useRef<MaybeInput>(null);
+    const clickOutside = useToasts(toastsEmpty);
+
     const { loading, success, error, onSubmit } = useFormState(
       (data, setState) => {
         setState("loading", true);
-        void graphQLRequest<
-          ForgotPasswordMutation,
-          ForgotPasswordMutationVariables
-        >(forgotPasswordQuery, {
-          email: data.get("email")?.toString() ?? "",
-        })
-          .then(() => {
-            setState("success", true);
-            Toasts.toast({
-              type: "success",
-              message:
-                "We've sent you an email with instructions to reset your password",
-            });
-          })
-          .catch(error => {
-            setState("error", error[0].message ?? "");
-            Toasts.toast({
-              type: "error",
-              message: error[0].message ?? "",
-            });
+        const client = new UIClient({
+          setState,
+          errorMessage: "first",
+          successMessage: ["forgotPassword"],
+        });
+        void client
+          .executeQuery<
+            ForgotPasswordMutation,
+            ForgotPasswordMutationVariables
+          >(forgotPasswordQuery, {
+            email: data.get("email")?.toString() ?? "",
           })
           .finally(() => {
             timeout.execute(() => {
@@ -51,7 +46,15 @@ export const ForgotPassword = memo(
       },
     );
 
-    const clickOutside = useToasts(toastsEmpty);
+    useEffect(() => {
+      if (!open) {
+        timeout.execute(() => {
+          if (input.current) {
+            input.current.value = "";
+          }
+        }, 300);
+      }
+    }, [open, timeout]);
 
     return (
       <Confirmation
@@ -61,12 +64,13 @@ export const ForgotPassword = memo(
         close={Modals.forgotPassword.close}>
         <h2>Reset Password</h2>
         <p>
-          You&apos;ll receive an email at the specified address with a link
-          toreset your password
+          You&apos;ll receive an email at the specified address with a link to
+          reset your password
         </p>
         <form onSubmit={onSubmit}>
           <Input
             required
+            ref={input}
             type="email"
             name="email"
             label="Email"

@@ -1,20 +1,29 @@
 import type { ForwardedRef, InputHTMLAttributes, ReactNode } from "react";
-import { forwardRef, memo, useCallback, useRef } from "react";
+import {
+  forwardRef,
+  memo,
+  useCallback,
+  useImperativeHandle,
+  useRef,
+} from "react";
 import { useClassNames } from "@figliolia/classnames";
 import "./styles.scss";
 
 export const Input = memo(
   forwardRef(function Input(
     { icon, label, children, className, placeholder, ...rest }: InputProps,
-    ref: ForwardedRef<HTMLLabelElement>,
+    ref: ForwardedRef<MaybeInput>,
   ) {
     const input = useRef<HTMLInputElement>(null);
     const focus = useCallback(() => {
       input.current?.focus?.();
     }, []);
     const classes = useClassNames("input", className);
+    useImperativeHandle<MaybeInput, MaybeInput>(ref, () => input.current, [
+      input,
+    ]);
     return (
-      <label className={classes} ref={ref}>
+      <label className={classes}>
         <span>{label}</span>
         <div className="input-positioner">
           {icon && (
@@ -35,3 +44,5 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   icon?: ReactNode;
 }
+
+export type MaybeInput = HTMLInputElement | null;
