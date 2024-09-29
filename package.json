@@ -4,15 +4,13 @@
   "description": "Tenant Management for small businesses",
   "author": "Alex Figliolia",
   "scripts": {
-    "build": "tsx ci/commands/Build.ts",
-    "clean": "tsx ci/commands/Clean.ts",
+    "build": "vite build",
     "dev": "vite",
     "lint": "tsx ci/commands/Lint.ts",
     "preview": "vite preview",
     "test": "tsx ci/commands/Test.ts",
     "generate-types": "tsx devtools/codegen/CLI.ts",
-    "create-package": "tsx devtools/create-package/CLI.ts",
-    "postinstall": "cd ./production && yarn install"
+    "create-package": "tsx devtools/create-package/CLI.ts"
   },
   "browserslist": [
     "defaults",
