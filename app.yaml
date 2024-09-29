@@ -1,9 +1,10 @@
 runtime: nodejs20
 service: default
 handlers:
-  - url: /(.*\..+)$
-    static_files: build/\1
-    upload: build/(.*\..+)$
-  - url: /.*
-    static_files: build/index.html
-    upload: build/index.html
+- url: /
+  static_files: build/index.html
+  upload: build/index.html
+
+- url: /assets/(.*)
+  static_files: build/assets/\1
+  upload: build/assets/(.*)
