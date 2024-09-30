@@ -36,16 +36,13 @@ export const Toast = memo(function Toast({
   const hide = useCallback(
     <E extends MouseEvent<HTMLButtonElement> | undefined>(e?: E) => {
       e && e.preventDefault();
-      if (!visible) {
-        return;
-      }
-      setVisible(false);
-      timeout.execute(dismiss, 650);
       if (ID.current) {
         ModalStack.delete(ID.current);
       }
+      setVisible(false);
+      timeout.execute(dismiss, 650);
     },
-    [dismiss, timeout, visible],
+    [dismiss, timeout],
   );
 
   useMount(() => {

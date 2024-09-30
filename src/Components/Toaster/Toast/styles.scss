@@ -35,6 +35,10 @@
         fill: url(#errorGradient);
       }
     }
+    &>.closer-button > div::after {
+      border: 2px solid Variables.$error-dark;
+      box-shadow: 0em 0em 0.5em rgb(from Variables.$error-dark r g b / 50%);
+    }
   }
   &.info {
     @include Variables.toastFade(rgb(from Variables.$info-dark r g b / 20%));
@@ -47,6 +51,10 @@
       &>svg {
         fill: url(#infoGradient);
       }
+    }
+    &>.closer-button > div::after {
+      border: 2px solid Variables.$info-dark;
+      box-shadow: 0em 0em 0.5em rgb(from Variables.$info-dark r g b / 50%);
     }
   }
   &.success {
@@ -63,6 +71,10 @@
         margin-right: 0.25em;
         stroke: url(#successGradient);
       }
+    }
+    &>.closer-button > div::after {
+      border: 2px solid Variables.$success-dark;
+      box-shadow: 0em 0em 0.5em rgb(from Variables.$success-dark r g b / 50%);
     }
   }
   &>.closer-button {

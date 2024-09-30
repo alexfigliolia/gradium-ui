@@ -108,6 +108,10 @@ button, a {
   }
 }
 
+a {
+  border-radius: 0.25em;
+}
+
 h1, h2, h3, h4, h5, h6, p, ol, address {
   margin: 0;
   color: var(--text-color);
