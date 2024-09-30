@@ -3,9 +3,11 @@ import { GraphQLClient } from "graphql-request";
 export const graphQLRequest = async <D, V extends Record<string, any>>(
   query: string,
   variables: V,
+  signal?: AbortSignal,
 ) => {
   const URL = `${window?.location?.origin ?? ""}/graphql`;
   const client = new GraphQLClient(URL, {
+    signal,
     mode: "cors",
     method: "POST",
     errorPolicy: "all",

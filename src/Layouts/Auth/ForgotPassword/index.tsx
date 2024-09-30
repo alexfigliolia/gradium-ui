@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef } from "react";
-import { useFormState, useTimeout } from "@figliolia/react-hooks";
+import { useFormState, useTimeout, useUnmount } from "@figliolia/react-hooks";
 import { ActionButton } from "Components/ActionButton";
 import { Confirmation } from "Components/Confirmation";
 import type { InputRef } from "Components/Input";
@@ -19,6 +19,7 @@ import "./styles.scss";
 export const ForgotPassword = memo(
   function ForgotPassword(_: Propless) {
     const timeout = useTimeout();
+    const client = useRef<UIClient>();
     const open = useModals(forgotPassword);
     const controller = useRef<InputRef>(null);
     const clickOutside = useToasts(toastsEmpty);
@@ -26,23 +27,17 @@ export const ForgotPassword = memo(
     const { loading, success, error, onSubmit } = useFormState(
       (data, setState) => {
         setState("loading", true);
-        const client = new UIClient({
+        client.current = new UIClient({
           setState,
           errorMessage: "first",
           successMessage: ["forgotPassword"],
         });
-        void client
-          .executeQuery<
-            ForgotPasswordMutation,
-            ForgotPasswordMutationVariables
-          >(forgotPasswordQuery, {
-            email: data.get("email")?.toString() ?? "",
-          })
-          .finally(() => {
-            timeout.execute(() => {
-              setState("loading", false);
-            }, 2000);
-          });
+        void client.current.executeQuery<
+          ForgotPasswordMutation,
+          ForgotPasswordMutationVariables
+        >(forgotPasswordQuery, {
+          email: data.get("email")?.toString() ?? "",
+        });
       },
     );
 
@@ -55,6 +50,12 @@ export const ForgotPassword = memo(
         }, 300);
       }
     }, [open, timeout]);
+
+    useUnmount(() => {
+      if (client.current) {
+        client.current.abort();
+      }
+    });
 
     return (
       <Confirmation

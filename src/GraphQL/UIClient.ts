@@ -7,6 +7,8 @@ export class UIClient {
   errorMessage: string;
   setState: ILoadingStateSetter;
   successMessage: string | string[];
+  private Abort = new AbortController();
+  private timer: ReturnType<typeof setTimeout> | null = null;
   constructor({ setState, successMessage, errorMessage = "first" }: IUIClient) {
     this.setState = setState;
     this.errorMessage = errorMessage;
@@ -16,8 +18,9 @@ export class UIClient {
   public executeQuery<D, V extends Record<string, any>>(
     query: string,
     variables: V,
+    onComplete = this.onComplete,
   ) {
-    const promise = graphQLRequest<D, V>(query, variables);
+    const promise = graphQLRequest<D, V>(query, variables, this.Abort.signal);
     void promise
       .then(response => {
         this.setState("success", true);
@@ -27,15 +30,38 @@ export class UIClient {
         });
       })
       .catch(error => {
+        if (error?.name === "AbortError") {
+          return;
+        }
         const message = this.parseErrorMessage(error);
         this.setState("error", message);
         Toasts.toast({
           type: "error",
           message,
         });
-      });
+      })
+      .finally(onComplete);
     return promise;
   }
+
+  public abort() {
+    this.Abort.abort();
+    this.cancelCallback();
+    this.Abort = new AbortController();
+  }
+
+  private cancelCallback() {
+    if (this.timer) {
+      clearTimeout(this.timer);
+      this.timer = null;
+    }
+  }
+
+  private onComplete = () => {
+    this.timer = setTimeout(() => {
+      this.setState("loading", false);
+    }, 2000);
+  };
 
   private parseSuccessMessage<T>(response: T) {
     if (typeof this.successMessage === "string") {
