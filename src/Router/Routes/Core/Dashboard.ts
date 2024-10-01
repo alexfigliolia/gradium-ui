@@ -1,9 +1,6 @@
-import type { NonIndexRouteObject } from "react-router-dom";
-import { CreateLazyComponent } from "Tools/LazyLoading";
+import { LazyDashboardPage } from "Pages/Dashboard/Lazy";
 
-export const Dashboard: NonIndexRouteObject = {
+export const Dashboard = {
   path: "/app/dashboard/:slug",
-  Component: CreateLazyComponent({
-    loader: () => import("Pages/Dashboard"),
-  }),
+  Component: LazyDashboardPage,
 };

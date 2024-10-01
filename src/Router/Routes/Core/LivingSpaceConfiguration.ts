@@ -1,9 +1,6 @@
-import type { NonIndexRouteObject } from "react-router-dom";
-import { CreateLazyComponent } from "Tools/LazyLoading";
+import { LazyLivingSPaceConfigurationPage } from "Pages/LivingSpaceConfiguration/Lazy";
 
-export const LivingSpaceConfiguration: NonIndexRouteObject = {
+export const LivingSpaceConfiguration = {
   path: "/app/configure/:slug/living-spaces",
-  Component: CreateLazyComponent({
-    loader: () => import("Pages/LivingSpaceConfiguration"),
-  }),
+  Component: LazyLivingSPaceConfigurationPage,
 };

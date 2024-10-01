@@ -967,10 +967,10 @@
   dependencies:
     "@figliolia/size-observer" "^1.0.3"
 
-"@figliolia/react-lazy@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@figliolia/react-lazy/-/react-lazy-1.1.0.tgz#94468847ced6966603d62f43452f302e3dbcab66"
-  integrity sha512-3fF9FCwLm/R5Y++PQsCQhvau9Fy6B2UoK5NcEo/LHRcd1Yuj0kxRFxr+qQifHKLRmqCc/LyxaTWFmqsuZ374qw==
+"@figliolia/react-lazy@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@figliolia/react-lazy/-/react-lazy-1.1.2.tgz#ce23e900f36d33f7ef8aa41b97c7ceffab1b14c0"
+  integrity sha512-wTQeN+1aLkeFB9XtT/cqx2aETltv23exurdwY88TbvoVDhgQPLtxuo5hPbUWA93IwKU2kKkckjBC5tWm7zzmEA==
   dependencies:
     "@figliolia/data-structures" "^1.1.0"
 

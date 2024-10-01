@@ -1,5 +1,6 @@
-import type { NonIndexRouteObject } from "react-router-dom";
-import { CreateLazyComponent } from "Tools/LazyLoading";
+import { redirect } from "react-router-dom";
+import { LazyCoreLayout } from "Layouts/Core/Lazy";
+import { Authentication } from "Tools/Authentication";
 import { Account } from "./Account";
 import { AmenitiesConfiguration } from "./AmenitiesConfiguration";
 import { Dashboard } from "./Dashboard";
@@ -9,11 +10,15 @@ import { Manage } from "./Manage";
 import { Properties } from "./Properties";
 import { PropertyConfiguration } from "./PropertyConfiguration";
 
-export const Core: NonIndexRouteObject = {
+export const Core = {
   path: "/app",
-  Component: CreateLazyComponent({
-    loader: () => import("Layouts/Core"),
-  }),
+  Component: LazyCoreLayout,
+  loader: async () => {
+    if (await Authentication.isAuthenticated()) {
+      return null;
+    }
+    throw redirect("/register/login");
+  },
   children: [
     Home,
     Manage,

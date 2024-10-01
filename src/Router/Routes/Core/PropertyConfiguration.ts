@@ -1,9 +1,6 @@
-import type { NonIndexRouteObject } from "react-router-dom";
-import { CreateLazyComponent } from "Tools/LazyLoading";
+import { LazyPropertyConfigurationPage } from "Pages/PropertyConfiguration/Lazy";
 
-export const PropertyConfiguration: NonIndexRouteObject = {
+export const PropertyConfiguration = {
   path: "/app/configure/:slug",
-  Component: CreateLazyComponent({
-    loader: () => import("Pages/PropertyConfiguration"),
-  }),
+  Component: LazyPropertyConfigurationPage,
 };

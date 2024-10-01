@@ -118,7 +118,7 @@ export default memo(function LeaseSheet({
   );
 });
 
-interface Props {
+export interface Props {
   open: boolean;
   close: Callback;
   className?: string;

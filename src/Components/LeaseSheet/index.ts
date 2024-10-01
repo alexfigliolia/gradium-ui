@@ -1,1 +1,1 @@
-export { default as LeaseSheet } from "./LeaseSheet";
+export { default as LeaseSheet, type Props } from "./LeaseSheet";

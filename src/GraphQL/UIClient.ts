@@ -1,6 +1,7 @@
 import type { ILoadingStateSetter } from "@figliolia/react-hooks";
 import { Toasts } from "State/Toasts";
 import { Errors } from "Tools/Errors";
+import type { Callback } from "Types/Generics";
 import { graphQLRequest } from "./request";
 
 export class UIClient {
@@ -9,7 +10,11 @@ export class UIClient {
   successMessage: string | string[];
   private Abort = new AbortController();
   private timer: ReturnType<typeof setTimeout> | null = null;
-  constructor({ setState, successMessage, errorMessage = "first" }: IUIClient) {
+  constructor({
+    setState,
+    successMessage = "",
+    errorMessage = "first",
+  }: IUIClient) {
     this.setState = setState;
     this.errorMessage = errorMessage;
     this.successMessage = successMessage;
@@ -18,29 +23,20 @@ export class UIClient {
   public executeQuery<D, V extends Record<string, any>>(
     query: string,
     variables: V,
-    onComplete = this.onComplete,
+    onComplete?: Callback,
   ) {
+    let success = true;
+    this.setState("loading", true);
     const promise = graphQLRequest<D, V>(query, variables, this.Abort.signal);
     void promise
-      .then(response => {
-        this.setState("success", true);
-        Toasts.toast({
-          type: "success",
-          message: this.parseSuccessMessage<D>(response),
-        });
+      .then(res => {
+        success = true;
+        this.onSuccess<D>(res);
       })
-      .catch(error => {
-        if (error?.name === "AbortError") {
-          return;
-        }
-        const message = this.parseErrorMessage(error);
-        this.setState("error", message);
-        Toasts.toast({
-          type: "error",
-          message,
-        });
-      })
-      .finally(onComplete);
+      .catch(this.onError)
+      .finally(() => {
+        this.onComplete(success ? onComplete : undefined);
+      });
     return promise;
   }
 
@@ -57,11 +53,36 @@ export class UIClient {
     }
   }
 
-  private onComplete = () => {
+  private onSuccess = <T>(response: T) => {
+    this.setState("success", true);
+    if (this.successMessage) {
+      Toasts.toast({
+        type: "success",
+        message: this.parseSuccessMessage<T>(response),
+      });
+    }
+  };
+
+  private onError = (error: any) => {
+    if (error?.name === "AbortError") {
+      return;
+    }
+    const message = this.parseErrorMessage(error);
+    this.setState("error", message);
+    Toasts.toast({
+      type: "error",
+      message,
+    });
+  };
+
+  private onComplete(callback?: Callback) {
     this.timer = setTimeout(() => {
       this.setState("loading", false);
+      this.setState("error", false);
+      this.setState("success", false);
+      callback?.();
     }, 2000);
-  };
+  }
 
   private parseSuccessMessage<T>(response: T) {
     if (typeof this.successMessage === "string") {
@@ -92,5 +113,5 @@ export class UIClient {
 interface IUIClient {
   errorMessage?: string;
   setState: ILoadingStateSetter;
-  successMessage: string | string[];
+  successMessage?: string | string[];
 }

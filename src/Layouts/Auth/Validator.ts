@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { Toasts } from "State/Toasts";
+import { Errors } from "Tools/Errors";
 import type { Callback } from "Types/Generics";
 
 export class Validator {
@@ -10,7 +11,7 @@ export class Validator {
 
   private static validateEmail = (email: string) => {
     const { error } = this.EMAIL_PARSER.safeParse(email);
-    return error?.message || false;
+    return Errors.parseFirst(error, false) || false;
   };
 
   private static validateName = (name: string) => {
@@ -49,7 +50,7 @@ export class Validator {
     validator: Callback<[string], string | false>,
   ) {
     return (data: FormData) => {
-      const value = (data.get(key) ?? "") as string;
+      const value = this.parseForm(data, key);
       const error = validator(value);
       if (error) {
         Toasts.toast({
@@ -60,6 +61,10 @@ export class Validator {
       }
       return value;
     };
+  }
+
+  public static parseForm(data: FormData, key: string) {
+    return (data.get(key) ?? "") as string;
   }
 
   public static nameParser = this.parse("name", this.validateName);

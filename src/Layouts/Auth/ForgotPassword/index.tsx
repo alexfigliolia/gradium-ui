@@ -26,7 +26,6 @@ export const ForgotPassword = memo(
 
     const { loading, success, error, onSubmit } = useFormState(
       (data, setState) => {
-        setState("loading", true);
         client.current = new UIClient({
           setState,
           errorMessage: "first",

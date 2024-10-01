@@ -13,6 +13,7 @@ declare module "Styles/Exports.module.scss" {
     public static infoDark: string;
     public static successLight: string;
     public static successDark: string;
+    public static fadeDuration: string;
     public static tileBackgroundLight: string;
     public static tileBackgroundDark: string;
     public static progressLowLight: string;

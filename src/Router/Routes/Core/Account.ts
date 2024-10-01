@@ -1,9 +1,6 @@
-import type { NonIndexRouteObject } from "react-router-dom";
-import { CreateLazyComponent } from "Tools/LazyLoading";
+import { LazyAccountPage } from "Pages/Account/Lazy";
 
-export const Account: NonIndexRouteObject = {
+export const Account = {
   path: "/app/account",
-  Component: CreateLazyComponent({
-    loader: () => import("Pages/Account"),
-  }),
+  Component: LazyAccountPage,
 };

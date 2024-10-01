@@ -1,9 +1,6 @@
-import type { NonIndexRouteObject } from "react-router-dom";
-import { CreateLazyComponent } from "Tools/LazyLoading";
+import { LazyLeasesPage } from "Pages/Leases/Lazy";
 
-export const Leases: NonIndexRouteObject = {
+export const Leases = {
   path: "/app/manage/:slug/leases",
-  Component: CreateLazyComponent({
-    loader: () => import("Pages/Leases"),
-  }),
+  Component: LazyLeasesPage,
 };
