@@ -1,0 +1,27 @@
+.radio-group {
+  --size: 1.65em;
+  --theme: var(--theme-dark);
+  --border-color: var(--theme);
+  --shadow-color: var(--theme);
+  width: 100%;
+  border: none;
+  padding: 0;
+  &.horizontal > div {
+    flex-direction: row;
+    padding: 0;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    column-gap: 1em;
+  }
+  &>legend {
+    margin-bottom: 1em;
+  }
+  &>div {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: 1em;
+    padding-left: 0.5em;
+  }
+}

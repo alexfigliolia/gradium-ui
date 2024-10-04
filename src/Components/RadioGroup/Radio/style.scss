@@ -1,0 +1,51 @@
+@use "Styles/Variables";
+
+.radio-group > div > label {
+  @include Variables.center;
+  font-size: 1em;
+  position: relative;
+  transition: text-shadow 0.25s;
+  &:has(>div>input:focus-visible) {
+    text-shadow: 0em 0em 0.5em rgb(from var(--shadow-color) r g b / 50%);
+  }
+  &:hover {
+    &>div {
+      box-shadow: 0em 0em 0.5em var(--shadow-color);
+    }
+  }
+  &>div {
+    position: relative;
+    margin-right: 0.5em;
+    width: var(--size);
+    height: var(--size);
+    border: calc(var(--size) / 10) solid var(--border-color);
+    border-radius: 50%;
+    transition: box-shadow 0.4s;
+    @include Variables.center;
+    &:has(>input:checked) {
+      &::after {
+        scale: 1;
+      }
+    }
+    &:has(>input:focus-visible) {
+      box-shadow: 0em 0em 0.5em var(--shadow-color);
+    }
+    &::after {
+      content: "";
+      width: 50%;
+      height: 50%;
+      border-radius: 50%;
+      scale: 0;
+      transition: scale 0.25s;
+      background-color: var(--border-color);
+    }
+    &>input {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      position: absolute;
+    }
+  }
+}

@@ -16,8 +16,8 @@ export default memo(
         <div className="organization-configs">
           <OrgNameTile />
           <StaffTile />
-          <BillingTile />
           <PaymentsTile />
+          <BillingTile />
         </div>
       </Page>
     );
