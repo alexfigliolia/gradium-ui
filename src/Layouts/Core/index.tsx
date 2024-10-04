@@ -1,6 +1,5 @@
 import { Fragment, memo } from "react";
 import { Outlet } from "react-router-dom";
-import { Toaster } from "Components/Toaster";
 import type { Propless } from "Types/React";
 import { MobileMenu } from "./MobileMenu";
 import { NavBar } from "./NavBar";
@@ -15,7 +14,6 @@ export default memo(
         <div className="core">
           <Outlet />
         </div>
-        <Toaster />
       </Fragment>
     );
   },

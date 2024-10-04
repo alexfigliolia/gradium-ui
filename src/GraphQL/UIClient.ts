@@ -1,4 +1,8 @@
-import type { ILoadingStateSetter } from "@figliolia/react-hooks";
+import type {
+  ILoadingStateKey,
+  ILoadingStateSetter,
+  ILoadingStateValue,
+} from "@figliolia/react-hooks";
 import { Toasts } from "State/Toasts";
 import { Errors } from "Tools/Errors";
 import type { Callback } from "Types/Generics";
@@ -25,7 +29,7 @@ export class UIClient {
     variables: V,
     onComplete?: Callback,
   ) {
-    let success = true;
+    let success = false;
     this.setState("loading", true);
     const promise = graphQLRequest<D, V>(query, variables, this.Abort.signal);
     void promise
@@ -108,6 +112,11 @@ export class UIClient {
     }
     return this.errorMessage;
   }
+
+  public static NOOPStateSetter<T extends ILoadingStateKey>(
+    _state: T,
+    _value: ILoadingStateValue<T>,
+  ) {}
 }
 
 interface IUIClient {

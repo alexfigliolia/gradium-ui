@@ -1,11 +1,14 @@
-import type { RefObject } from "react";
+import type { RefCallback, RefObject } from "react";
 import { useCallback, useImperativeHandle, useState } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import CSSVars from "Styles/Exports.module.scss";
 import type { Callback } from "Types/Generics";
 
 export const useFadeTransition = (
-  ref: RefObject<Callback<[Callback]> | undefined>,
+  ref:
+    | RefObject<Callback<[Callback]>>
+    | RefCallback<Callback<[Callback]>>
+    | null,
   ...classNames: (string | undefined)[]
 ) => {
   const [fade, setFade] = useState(false);

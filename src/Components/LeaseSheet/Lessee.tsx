@@ -41,8 +41,7 @@ export const Lessee = memo(function Lessees({
   }, [index]);
 
   const disabled = useMemo(
-    () =>
-      !Validators.validateFullName(name) || !Validators.validateEmail(email),
+    () => Validators.validateName(name) || Validators.validateEmail(email),
     [name, email],
   );
 

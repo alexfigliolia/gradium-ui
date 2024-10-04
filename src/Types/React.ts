@@ -11,3 +11,9 @@ export interface OptionalChildren {
 export interface OptionalRef<T> {
   ref?: T;
 }
+
+export interface ActionState {
+  error?: boolean;
+  loading?: boolean;
+  success?: boolean;
+}

@@ -41,17 +41,23 @@
       position: absolute;
       transition: transform 0.65s, filter 0.65s;
       backface-visibility: hidden;
-      // transform-style: preserve-3d;
       &.account-icon {
         top: 10%;
         left: 10%;
         width: 80%;
         height: 80%;
       }
+      &.organization-icon {
+        top: -2.5%;
+        left: -2.5%;
+        width: 105%;
+        height: 105%;
+      }
       &:first-of-type {
         stroke: #fff;
-        &.pin-icon,
-        &.account-icon {
+        &.account-icon,
+        &.buildings-stroked,
+        &.organization-icon {
           stroke: none;
           fill: #fff;
         }
@@ -59,8 +65,9 @@
       &:last-of-type {
         stroke: url(#themeGradient);
         transform: rotateY(180deg);
-        &.pin-icon,
-        &.account-icon {
+        &.account-icon,
+        &.buildings-stroked,
+        &.organization-icon {
           stroke: none;
           fill: url(#themeGradient);
         }

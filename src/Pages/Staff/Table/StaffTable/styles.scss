@@ -1,0 +1,38 @@
+.staff-table {
+  width: 100%;
+  border-collapse: collapse;
+  &>thead > tr {
+    &> th {
+      padding: 0 1em;
+      text-align: left;
+      color: var(--text-color-light);
+      background-color: var(--background);
+      &:first-of-type {
+        border-top-left-radius: 0.5em;
+        border-bottom-left-radius: 0.5em;
+      }
+      &:last-of-type {
+        border-top-right-radius: 0.5em;
+        border-bottom-right-radius: 0.5em;
+      }
+      &>svg {
+        width: 2em;
+        height: 2em;
+        fill: var(--text-color-light);
+      }
+    }
+  }
+  &>tbody > tr {
+    border-bottom: 0.1em solid var(--background);
+    &> td {
+      height: 3em;
+      padding: 0 0.5em;
+      margin-bottom: 0.25em;
+      &>svg {
+        width: 1em;
+        height: 1em;
+        fill: var(--text-color-light);
+      }
+    }
+  }
+}

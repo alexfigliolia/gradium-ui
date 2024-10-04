@@ -20,6 +20,7 @@ export const Toast = memo(function Toast({
   title,
   message,
   dismiss,
+  children,
 }: IndexedToast) {
   const ID = useRef<string>();
   const timeout = useTimeout();
@@ -68,6 +69,7 @@ export const Toast = memo(function Toast({
           <Icon /> {heading}
         </h4>
         <p>{message}</p>
+        {children}
       </div>
       <Closer onMouseDown={hide} {...listener.events} />
     </div>

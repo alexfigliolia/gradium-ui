@@ -2,12 +2,12 @@ import type { SVGProps } from "react";
 import { memo } from "react";
 import { useClassNames } from "@figliolia/classnames";
 
-export const Money = memo(function Money({
+export const MoneyStroked = memo(function MoneyStroked({
   children,
   className,
   ...rest
 }: SVGProps<SVGSVGElement>) {
-  const classes = useClassNames("money-icon", className);
+  const classes = useClassNames("money-stroked-icon", className);
   return (
     <svg
       viewBox="0 0 24 24"

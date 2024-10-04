@@ -1,4 +1,4 @@
-import type { MutableRefObject } from "react";
+import type { RefObject } from "react";
 import type { NavigateFunction } from "react-router-dom";
 import type { ILoadingStateSetter } from "@figliolia/react-hooks";
 import { createAccount } from "GraphQL/Mutations/createAccount.gql";
@@ -10,20 +10,19 @@ import type {
   LoginMutationVariables,
 } from "GraphQL/Types";
 import { UIClient } from "GraphQL/UIClient";
+import { Validators } from "Tools/Validators";
 import type { Callback } from "Types/Generics";
-import { Validator } from "./Validator";
 
-export class Controller extends Validator {
+export class Controller {
   private Client?: UIClient;
   navigate: NavigateFunction;
   setState: ILoadingStateSetter;
-  fadeOut: MutableRefObject<Callback<[Callback]> | undefined>;
+  fadeOut: RefObject<Callback<[Callback]>>;
   constructor(
     setState: ILoadingStateSetter,
     navigate: NavigateFunction,
-    fadeOut: MutableRefObject<Callback<[Callback]> | undefined>,
+    fadeOut: RefObject<Callback<[Callback]>>,
   ) {
-    super();
     this.fadeOut = fadeOut;
     this.setState = setState;
     this.navigate = navigate;
@@ -36,35 +35,35 @@ export class Controller extends Validator {
   public async onSubmit(data: FormData, signUp: boolean) {
     try {
       if (signUp) {
-        await this.signUP(data);
+        await this.signUP(data, signUp);
         return;
       }
-      await this.login(data);
+      await this.login(data, signUp);
     } catch (error) {
       // Errors have been handled by this point
     }
   }
 
-  public async login(data: FormData) {
-    const email = Controller.emailParser(data);
+  public async login(data: FormData, signUp: boolean) {
+    const email = Validators.emailParser(data);
     await this.getClient().executeQuery<LoginMutation, LoginMutationVariables>(
       login,
       {
         email,
-        password: Controller.parseForm(data, "password"),
+        password: Validators.parseForm(data, "password"),
       },
-      this.navigateToApp,
+      this.navigateToApp(signUp),
     );
   }
 
-  public async signUP(data: FormData) {
-    const name = Controller.nameParser(data);
-    const email = Controller.emailParser(data);
-    const password = Controller.passwordParser(data);
+  public async signUP(data: FormData, signUP: boolean) {
+    const name = Validators.nameParser(data);
+    const email = Validators.emailParser(data);
+    const password = Validators.passwordParser(data);
     await this.getClient().executeQuery<
       CreateAccountMutation,
       CreateAccountMutationVariables
-    >(createAccount, { name, email, password }, this.navigateToApp);
+    >(createAccount, { name, email, password }, this.navigateToApp(signUP));
   }
 
   private getClient() {
@@ -81,11 +80,14 @@ export class Controller extends Validator {
     }
   }
 
-  private navigateToApp = () => {
-    if (this.fadeOut.current) {
-      this.fadeOut.current(() => this.navigate("/app"));
-    } else {
-      this.navigate("/app");
-    }
-  };
+  private navigateToApp(signUp: boolean) {
+    return () => {
+      const route = signUp ? "/app/organization" : "/app";
+      if (this.fadeOut.current) {
+        this.fadeOut.current(() => this.navigate(route));
+      } else {
+        this.navigate(route);
+      }
+    };
+  }
 }

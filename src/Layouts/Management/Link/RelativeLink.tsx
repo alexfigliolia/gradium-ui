@@ -15,7 +15,7 @@ export const RelativeLink = memo(function RelativeLink({
   );
 });
 
-interface Props {
+export interface Props {
   to: string;
   label: string;
   Icon: ComponentType;

@@ -2,6 +2,7 @@ import { Fragment, memo } from "react";
 import { RouterProvider } from "react-router-dom";
 import { useSetup as useSetupTheme } from "@figliolia/galena-dark-mode";
 import { useSetup as useSetupWindow } from "@figliolia/galena-window";
+import { LazyToaster } from "Components/Toaster/Lazy";
 import { useControllerLifecycle } from "Hooks/useControllerLifecycle";
 import { Router } from "Router";
 import { Screen } from "State/Screen";
@@ -21,6 +22,7 @@ export const App = memo(
       <Fragment>
         <SVGGradients />
         <RouterProvider router={Router} />
+        <LazyToaster />
       </Fragment>
     );
   },

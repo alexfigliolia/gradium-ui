@@ -1,0 +1,16 @@
+@use "Styles/Variables";
+
+.page.organization .tile.payments {
+  &> p > span {
+    font-weight: 600;
+    @include Variables.textGradient(right);
+  }
+  &>.action-button {
+    height: 45px;
+    max-width: 400px;
+    margin: auto;
+    @media (min-width: 957px) {
+      margin: 0;
+    }
+  }
+}

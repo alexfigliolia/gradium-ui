@@ -1,0 +1,37 @@
+.invite-staff-member {
+  display: flex;
+  width: 100%;
+  max-width: 700px;
+  &>.input,
+  &>.input>.input-positioner {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  &>.input {
+    --background: var(--tile-background);
+  }
+  &>button.action-button { 
+    height: auto;
+    width: auto;
+    border-radius: 0px;
+    white-space: nowrap;
+    padding: 0 1.5em 0 1.25em;
+    font-size: 1em;
+    font-weight: 700;
+    background-color: var(--theme-dark);
+    border: none;
+    border-top-right-radius: 45px;
+    border-bottom-right-radius: 45px;
+    transition: box-shadow 0.4s;
+    &.loading {
+      width: auto;
+      &>.triangle-loader {
+        translate: -50% -52.5%;
+        scale: 0.55;
+      }
+    }
+    &:hover {
+      box-shadow: 0em 0.2em 0.5em rgba(#000, 0.2);
+    }
+  }
+}

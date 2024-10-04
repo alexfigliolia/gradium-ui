@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { RenderableMap } from "Tools/RenderableMap";
 import type { Callback } from "Types/Generics";
 
@@ -8,6 +9,7 @@ export interface IToast {
   message: string;
   type: IToastType;
   duration?: number;
+  children?: ReactNode;
 }
 
 export interface IndexedToast extends IToast {

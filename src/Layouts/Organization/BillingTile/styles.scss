@@ -1,0 +1,21 @@
+@use "Styles/Variables";
+
+.page.organization .tile.billing {
+  &>h2 > svg {
+    width: 1.4em;
+    height: 1.4em;
+    margin-right: 0.3em;
+  }
+  &>p > span {
+    font-weight: 600;
+    @include Variables.textGradient(right);
+  }
+  &>.action-button {
+    height: 45px;
+    max-width: 400px;
+    margin: auto;
+    @media (min-width: 957px) {
+      margin: 0;
+    }
+  }
+}

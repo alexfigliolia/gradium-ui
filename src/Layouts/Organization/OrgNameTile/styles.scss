@@ -1,0 +1,31 @@
+@use "Styles/Variables";
+
+.page.organization .tile.org-name {
+  flex-direction: column;
+  row-gap: 1em;
+  &> p > span {
+    font-weight: 600;
+    @include Variables.textGradient(right);
+  }
+  &>.input {
+    max-width: 400px;
+    margin: auto;
+    --background: var(--tile-background);
+    @media (min-width: 957px) {
+      margin: 0;
+    }
+    &> .input-positioner {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      &> button svg {
+        stroke: none;
+        &:first-of-type {
+          fill: var(--text-color-light);
+        }
+        &:last-of-type {
+          fill: url(#themeGradient);
+        }
+      }
+    }
+  }
+}

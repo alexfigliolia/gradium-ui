@@ -5,7 +5,7 @@ import { GradientButton } from "Components/GradientButton";
 import { TriangeLoader } from "Components/TriangleLoader";
 import { Check } from "Icons/Check";
 import { Error } from "Icons/Error";
-import type { OptionalChildren } from "Types/React";
+import type { ActionState, OptionalChildren } from "Types/React";
 import "./styles.scss";
 
 export const ActionButton = memo(function ActionButton({
@@ -29,10 +29,7 @@ export const ActionButton = memo(function ActionButton({
   );
 });
 
-interface Props extends OptionalChildren {
-  error?: boolean;
-  loading?: boolean;
-  success?: boolean;
+interface Props extends OptionalChildren, ActionState {
   type?: "submit" | "reset" | "button";
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }

@@ -3,7 +3,7 @@ schema {
   mutation: Mutation
 }
 type Query {
-  userScope(id: Int!): LoggedInUser!
+  userScope: LoggedInUser!
   verifySession: Boolean!
 }
 type LoggedInUser {
@@ -28,6 +28,8 @@ type Mutation {
   logout: Boolean!
   createAccount(name: String!, email: String!, password: String!): LoggedInUser!
   forgotPassword(email: String!): String!
+  inviteStaffMember(organizationId: Int!, email: String!): Boolean!
+  setOrganizationName(name: String!, organizationId: Int!): Boolean!
 }
 enum PersonRoleType {
   owner

@@ -1,23 +1,62 @@
-import { State } from "@figliolia/galena";
 import { userScope } from "GraphQL/Queries/userScope.gql";
 import { graphQLRequest } from "GraphQL/request";
 import type {
   LoggedInUser,
+  PersonRoleType,
   UserScopeQuery,
   UserScopeQueryVariables,
 } from "GraphQL/Types";
+import { Accessor } from "./Accessor";
 
-export class ScopeModel extends State<LoggedInUser> {
+export class ScopeModel extends Accessor {
   constructor() {
     super("Scope", {
       id: -1,
       name: "",
       email: "",
       affiliations: [],
+      currentOrganizationId: -1,
+      currentOrganizationName: "",
+      currentPermissions: new Set(),
     });
   }
 
-  public initialize(scope: LoggedInUser) {
+  public async initialize() {
+    if (this.getState().id === -1) {
+      await this.refetch();
+    }
+    return this.getState();
+  }
+
+  public updateOrgName(name: string, orgID: number) {
+    const update = [...this.getState().affiliations];
+    for (const aff of update) {
+      if (aff.organization.id === orgID) {
+        aff.organization.name = name;
+      }
+    }
+    this.update(state => {
+      state.affiliations = update;
+      if (orgID === state.currentOrganizationId) {
+        state.currentOrganizationName = name;
+      }
+    });
+  }
+
+  public hasPermissions(...permissions: PersonRoleType[]) {
+    const { currentPermissions } = this.getState();
+    if (!currentPermissions.size && permissions.length) {
+      return false;
+    }
+    for (const permission of permissions) {
+      if (currentPermissions.has(permission)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public setState(scope: LoggedInUser) {
     this.update(state => {
       for (const key in scope) {
         // @ts-ignore
@@ -29,10 +68,13 @@ export class ScopeModel extends State<LoggedInUser> {
   public async refetch() {
     const scope = await graphQLRequest<UserScopeQuery, UserScopeQueryVariables>(
       userScope,
-      {
-        id: this.getState().id,
-      },
+      {},
     );
-    this.initialize(scope.userScope);
+    this.setState(scope.userScope);
+    const affiliation = scope.userScope.affiliations[0];
+    if (!affiliation) {
+      return;
+    }
+    this.setCurrentAffiliation(affiliation);
   }
 }

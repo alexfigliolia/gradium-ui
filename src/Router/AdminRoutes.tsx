@@ -1,9 +1,13 @@
 import { NavLink } from "react-router-dom";
+import { PersonRoleType } from "GraphQL/Types";
 import { Account } from "Icons/Account";
 import { Building } from "Icons/Building";
-import { Money } from "Icons/Money";
+import { BuildingsStroked } from "Icons/Buildings";
+import { MoneyStroked } from "Icons/Money";
+import { Organization } from "Icons/Organization";
 import { Performance } from "Icons/Performance";
 import { RelativeLink } from "Layouts/Management/Link";
+import { PermissionBasedLink } from "Layouts/Management/Link/PermissionBasedLink";
 import type { IProperty } from "Models/Properties";
 
 export class AdminRoutes {
@@ -23,15 +27,34 @@ export class AdminRoutes {
       Icon={Performance}
     />
   );
+  public static readonly STAFF = (
+    <PermissionBasedLink
+      key="staff"
+      to="/app/staff"
+      label="Staff"
+      Icon={Organization}
+      permissions={[PersonRoleType.Owner, PersonRoleType.Manager]}
+    />
+  );
   public static readonly FINANCES = (
-    <RelativeLink
+    <PermissionBasedLink
       key="finances"
       to="/app/finances"
       label="Finances"
-      Icon={Money}
+      Icon={MoneyStroked}
+      permissions={[PersonRoleType.Owner]}
     />
   );
-  public static readonly SETTINGS = (
+  public static readonly ORGANIZATION = (
+    <PermissionBasedLink
+      key="organization"
+      Icon={BuildingsStroked}
+      label="Organization"
+      to="/app/organization"
+      permissions={[PersonRoleType.Owner, PersonRoleType.Manager]}
+    />
+  );
+  public static readonly ACCOUNT = (
     <RelativeLink
       key="account"
       to="/app/account"
@@ -57,8 +80,10 @@ export class AdminRoutes {
       this.PROPERTIES,
       ...this.propertyLinks(properties),
       this.PERFORMANCE,
+      this.STAFF,
       this.FINANCES,
-      this.SETTINGS,
+      this.ORGANIZATION,
+      this.ACCOUNT,
     ];
   }
 }

@@ -5,7 +5,6 @@ import { ActionButton } from "Components/ActionButton";
 import { BrandSVGGradient } from "Components/BrandSVGGradient";
 import { ThemeLogo } from "Components/ThemeLogo";
 import { ThemeToggle } from "Components/ThemeToggle";
-import { Toaster } from "Components/Toaster";
 import { useFadeTransition } from "Hooks/useFadeTransition";
 import { Blob } from "Icons/Blob";
 import { selectHeight, useScreen } from "State/Screen";
@@ -24,7 +23,7 @@ export default memo(
     const signUp = useSignUpScreen();
     const height = useScreen(selectHeight);
     const controller = useRef<Controller>();
-    const fadeOut = useRef<Callback<[Callback]>>();
+    const fadeOut = useRef<Callback<[Callback]>>(null);
     const text = useMemo(() => Controller.buttonText(signUp), [signUp]);
     const { onSubmit, error, success, loading, resetState } = useFormState(
       (data, setState) => {
@@ -67,7 +66,6 @@ export default memo(
         </Blob>
         <ThemeToggle />
         <ForgotPassword />
-        <Toaster />
       </section>
     );
   },
