@@ -4,7 +4,9 @@ export const LoggedInUserFragment = gql`
   fragment LoggedInUserFragment on LoggedInUser {
     id
     name
-    email
+    emails {
+      email
+    }
     affiliations {
       organization {
         id

@@ -73,7 +73,7 @@ $fade-duration: 500ms;
   @include clipText;
 }
 
-@mixin textGradient($direction: bottom) {
+@mixin gradientText($direction: bottom) {
   background: linear-gradient(to $direction, var(--theme-light), var(--theme-dark));
   @include clipText;
 }

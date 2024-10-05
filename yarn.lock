@@ -863,14 +863,14 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.57.1.tgz#de633db3ec2ef6a3c89e2f19038063e8a122e2c2"
   integrity sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==
 
-"@figliolia/bottom-sheet@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@figliolia/bottom-sheet/-/bottom-sheet-1.0.3.tgz#e4ba51d5415d3f08f396da605e1e6dbeab1d7fb4"
-  integrity sha512-r6DxqyBZtdlBPVJMKsvtPIrsI9H/5sR82eZUIOiITp41CZhRG2ynJNTCdqxx/twRHeN2OPC1Qt28YXOSXgd1TQ==
+"@figliolia/bottom-sheet@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@figliolia/bottom-sheet/-/bottom-sheet-1.1.0.tgz#6142db2e84677d68df8aa629a54851130e6734f3"
+  integrity sha512-P992xaiJa00vxDo/uCfULaoKw8KobwKbRTEC69XY6b3OSkgA8W6LdfoZdme6etJYVMigs/tyI055+v0I26x9Gw==
   dependencies:
     "@figliolia/classnames" "^1.0.1"
     "@figliolia/drag-detector" "^1.0.3"
-    "@figliolia/react-hooks" "^1.1.0"
+    "@figliolia/react-hooks" "^1.1.6"
 
 "@figliolia/child-process@^1.0.1":
   version "1.0.4"
@@ -955,15 +955,15 @@
   dependencies:
     "@figliolia/galena" "^2.3.5"
 
-"@figliolia/react-hooks@^1.0.3", "@figliolia/react-hooks@^1.1.0":
+"@figliolia/react-hooks@^1.0.3":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@figliolia/react-hooks/-/react-hooks-1.1.0.tgz#7307b737d7945448d196c75ef8e2ae8a19421827"
   integrity sha512-xHPpVGdStZhvEh+icdY1P87QNwo1OO6KmnI1hBwXeCfbKIAfB0Q4xI0jF0X5tWBl+5GVOC2kAURys6xulf/NxA==
 
-"@figliolia/react-hooks@^1.1.5":
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/@figliolia/react-hooks/-/react-hooks-1.1.5.tgz#140e523578f645d96d1e1ed42fa49ee2c5635eb9"
-  integrity sha512-bU0UCwNen/o119Ay5CbBNvTVjL8kDVbFBWv90r7FPvNY0mdSwDODulbSPQNtNMI7/FmVyTEP9CJXg8ySCZQdRw==
+"@figliolia/react-hooks@^1.1.6":
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/@figliolia/react-hooks/-/react-hooks-1.1.6.tgz#203fc6ea7c74667f613262e99cc2029011fad964"
+  integrity sha512-BBLl1q0n/hYsVZlj64VsQd1cCg9tG/vA/7xL3BlykmEp2ieqGuyxzj9i6BNeQwHy/H9Rrj8cmHd22YU6T1NZWQ==
   dependencies:
     "@figliolia/size-observer" "^1.0.3"
 

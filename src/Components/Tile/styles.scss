@@ -1,3 +1,5 @@
+@use "Styles/Variables";
+
 .tile {
   width: 100%;
   padding: 1.25em;
@@ -32,5 +34,9 @@
     margin-top: -0.5em;
     margin-bottom: 0.75em;
     max-width: 700px;
+    &> span {
+      font-weight: 600;
+      @include Variables.gradientText(right);
+    }
   }
 }

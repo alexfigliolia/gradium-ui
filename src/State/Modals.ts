@@ -14,3 +14,7 @@ export const coreMobileMenu = (state: IModals) => {
 };
 
 export const forgotPassword = (state: IModals) => state.forgotPassword;
+
+export const emailInfo = (state: IModals) => state.emailInfo;
+
+export const linkEmail = (state: IModals) => state.linkEmail;

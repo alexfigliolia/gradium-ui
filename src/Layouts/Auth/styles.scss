@@ -44,7 +44,7 @@
       &>a {
         font-weight: 600;
         text-decoration: underline;
-        @include Variables.textGradient(bottom right);
+        @include Variables.gradientText(bottom right);
         &:visited {
           color: var(--theme-dark);
         }

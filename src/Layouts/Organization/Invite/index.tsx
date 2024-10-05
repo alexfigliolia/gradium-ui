@@ -1,7 +1,6 @@
 import { memo, useRef } from "react";
 import { useFormState } from "@figliolia/react-hooks";
-import { ActionButton } from "Components/ActionButton";
-import { Input } from "Components/Input";
+import { ActionInput } from "Components/ActionInput";
 import { inviteStaffMember } from "GraphQL/Mutations/inviteStaffMember.gql";
 import type {
   InviteStaffMemberMutation,
@@ -12,7 +11,6 @@ import { At } from "Icons/At";
 import { Scope } from "State/Scope";
 import { Validators } from "Tools/Validators";
 import type { Propless } from "Types/React";
-import "./styles.scss";
 
 export const Invite = memo(
   function Invite(_: Propless) {
@@ -31,19 +29,20 @@ export const Invite = memo(
     );
 
     return (
-      <form onSubmit={onSubmit} className="invite-staff-member">
-        <Input
-          required
-          icon={<At />}
-          type="email"
-          label="Email"
-          name="email"
-          autoComplete="off"
-        />
-        <ActionButton error={!!error} success={success} loading={loading}>
-          Send
-        </ActionButton>
-      </form>
+      <ActionInput
+        required
+        name="email"
+        type="email"
+        label="Email"
+        icon={<At />}
+        error={!!error}
+        success={success}
+        loading={loading}
+        buttonText="Send"
+        autoComplete="off"
+        onSubmit={onSubmit}
+        className="invite-staff-member"
+      />
     );
   },
   () => true,

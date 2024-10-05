@@ -11,7 +11,7 @@ export class Validators {
 
   public static validateEmail = (email: string) => {
     const { error } = this.EMAIL_PARSER.safeParse(email);
-    return Errors.parseFirst(error, false) || false;
+    return Errors.parseFirst(error?.issues, false) || false;
   };
 
   public static validateName = (name: string) => {

@@ -1,4 +1,6 @@
 export interface IModals {
+  emailInfo: boolean;
+  linkEmail: boolean;
   newLease: boolean;
   editLease: boolean;
   newProperty: boolean;

@@ -10,7 +10,7 @@
     font-weight: 500;
     position: relative;
     display: inline-flex;
-    @include Variables.textGradient(bottom);
+    @include Variables.gradientText(bottom);
     &::after {
       content: "";
       top: 100%;

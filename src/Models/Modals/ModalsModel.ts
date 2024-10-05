@@ -5,6 +5,8 @@ import type { IModals } from "./types";
 export class ModalsModel extends State<IModals> {
   constructor() {
     super("Modals", {
+      emailInfo: false,
+      linkEmail: false,
       newLease: false,
       editLease: false,
       newProperty: false,
@@ -28,6 +30,10 @@ export class ModalsModel extends State<IModals> {
   };
 
   /* TOGGLES */
+  private openLinkEmail = this.toggleKey("linkEmail", true);
+  private closeLinkEmail = this.toggleKey("linkEmail", false);
+  private openEmailInfo = this.toggleKey("emailInfo", true);
+  private closeEmailInfo = this.toggleKey("emailInfo", false);
   private openNewLease = this.toggleKey("newLease", true);
   private closeNewLease = this.toggleKey("newLease", false);
   private openEditLease = this.toggleKey("editLease", true);
@@ -60,6 +66,8 @@ export class ModalsModel extends State<IModals> {
     this.openCoreMobileMenu,
     this.closeCoreMobileMenu,
   );
+  linkEmail = ModalStack.create(this.openLinkEmail, this.closeLinkEmail);
+  emailInfo = ModalStack.create(this.openEmailInfo, this.closeEmailInfo);
   forgotPassword = ModalStack.create(
     this.openForgotPassword,
     this.closeForgotPassword,

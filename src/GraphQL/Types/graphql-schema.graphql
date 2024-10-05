@@ -8,9 +8,12 @@ type Query {
 }
 type LoggedInUser {
   id: Int!
-  email: String!
   name: String!
+  emails: [LinkedEmail!]!
   affiliations: [UserAffiliation!]!
+}
+type LinkedEmail {
+  email: String!
 }
 type UserAffiliation {
   organization: OrgAffiliation!
@@ -26,10 +29,16 @@ type PersonRole {
 type Mutation {
   login(email: String!, password: String!): LoggedInUser!
   logout: Boolean!
+  linkEmail(userId: Int!, email: String!): BasicUser!
+  updateEmail(userId: Int!, previous: String!, next: String!): BasicUser!
   createAccount(name: String!, email: String!, password: String!): LoggedInUser!
   forgotPassword(email: String!): String!
   inviteStaffMember(organizationId: Int!, email: String!): Boolean!
   setOrganizationName(name: String!, organizationId: Int!): Boolean!
+}
+type BasicUser {
+  name: String!
+  emails: [LinkedEmail!]!
 }
 enum PersonRoleType {
   owner

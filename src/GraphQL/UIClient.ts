@@ -35,7 +35,7 @@ export class UIClient {
     void promise
       .then(res => {
         success = true;
-        this.onSuccess<D>(res);
+        return this.onSuccess<D>(res);
       })
       .catch(this.onError)
       .finally(() => {
@@ -65,6 +65,7 @@ export class UIClient {
         message: this.parseSuccessMessage<T>(response),
       });
     }
+    return response;
   };
 
   private onError = (error: any) => {

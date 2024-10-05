@@ -17,7 +17,7 @@
     "not dead"
   ],
   "dependencies": {
-    "@figliolia/bottom-sheet": "^1.0.3",
+    "@figliolia/bottom-sheet": "^1.1.0",
     "@figliolia/classnames": "^1.0.1",
     "@figliolia/data-structures": "^1.1.0",
     "@figliolia/day-night-toggle": "^1.0.3",
@@ -30,7 +30,7 @@
     "@figliolia/modal-stack": "^1.0.5",
     "@figliolia/page-switch": "^1.0.8",
     "@figliolia/react-galena": "^3.2.1",
-    "@figliolia/react-hooks": "^1.1.5",
+    "@figliolia/react-hooks": "^1.1.6",
     "@figliolia/react-lazy": "^1.1.2",
     "@figliolia/size-observer": "^1.0.3",
     "@figliolia/task-queue": "^1.0.2",

@@ -7,7 +7,7 @@
   margin-top: -1em;
   align-self: flex-end;
   border-radius: 0.25em;
-  @include Variables.textGradient;
+  @include Variables.gradientText;
   @media (min-width: Variables.$small-vertical-tablet) {
     font-size: 1em;
   }

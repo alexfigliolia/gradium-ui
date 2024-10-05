@@ -6,10 +6,6 @@
     height: 1.4em;
     margin-right: 0.3em;
   }
-  &>p > span {
-    font-weight: 600;
-    @include Variables.textGradient(right);
-  }
   &>.action-button {
     height: 45px;
     max-width: 400px;

@@ -3,10 +3,6 @@
 .page.organization .tile.org-name {
   flex-direction: column;
   row-gap: 1em;
-  &> p > span {
-    font-weight: 600;
-    @include Variables.textGradient(right);
-  }
   &>.input {
     max-width: 400px;
     margin: auto;

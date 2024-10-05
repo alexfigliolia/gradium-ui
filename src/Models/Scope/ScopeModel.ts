@@ -1,6 +1,7 @@
 import { userScope } from "GraphQL/Queries/userScope.gql";
 import { graphQLRequest } from "GraphQL/request";
 import type {
+  BasicUser,
   LoggedInUser,
   PersonRoleType,
   UserScopeQuery,
@@ -13,7 +14,7 @@ export class ScopeModel extends Accessor {
     super("Scope", {
       id: -1,
       name: "",
-      email: "",
+      emails: [],
       affiliations: [],
       currentOrganizationId: -1,
       currentOrganizationName: "",
@@ -26,6 +27,13 @@ export class ScopeModel extends Accessor {
       await this.refetch();
     }
     return this.getState();
+  }
+
+  public updateBasicInfo({ name, emails }: BasicUser) {
+    this.update(state => {
+      state.name = name;
+      state.emails = emails;
+    });
   }
 
   public updateOrgName(name: string, orgID: number) {

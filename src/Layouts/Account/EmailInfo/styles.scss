@@ -1,0 +1,39 @@
+@use "Styles/Variables";
+
+.confirmation-sheet.email-info {
+  & .sheet-content {
+    width: 95%;
+    max-width: 500px;
+    @media (min-width: 670px) {
+      font-size: 1.1em;
+    }
+  }
+  & h2 {
+    @include Variables.center;
+    @include Variables.gradientText;
+    font-size: 2em;
+    &>svg {
+      width: 1.25em;
+      height: 1.25em;
+      margin-right: 0.1em;
+      stroke: url(#themeGradient);
+    }
+  }
+  & p {
+    &> span {
+      font-weight: 600;
+      @include Variables.gradientText;
+    }
+  }
+  & ul {
+    padding: 0;
+    padding-left: 1em;
+    &>li {
+      margin-bottom: 1em;
+    }
+  }
+  & .gradient-button {
+    padding: 1em 2em;
+    margin: 2em auto;
+  }
+}
