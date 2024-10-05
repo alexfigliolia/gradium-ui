@@ -12,7 +12,7 @@
   border-radius: 0.25em;
   background: var(--tile-background);
   translate: 70px 0;
-  box-shadow: 0em 0.1em 0.5em rgba(#000, 0.2);
+  box-shadow: var(--shadow-level-2-mid);
   transition: height 0.4s 0.35s, margin-bottom 0.4s 0.35s, opacity 0.4s, translate 0.4s, visibility 0s 0.75s;
   &.visible {
     height: var(--height);
@@ -37,7 +37,7 @@
     }
     &>.closer-button > div::after {
       border: 2px solid Variables.$error-dark;
-      box-shadow: 0em 0em 0.5em rgb(from Variables.$error-dark r g b / 50%);
+      box-shadow: #{Variables.$shadow-overhead-level-2} rgb(from Variables.$error-dark r g b / 50%);
     }
   }
   &.info {
@@ -54,7 +54,7 @@
     }
     &>.closer-button > div::after {
       border: 2px solid Variables.$info-dark;
-      box-shadow: 0em 0em 0.5em rgb(from Variables.$info-dark r g b / 50%);
+      box-shadow: #{Variables.$shadow-overhead-level-2} rgb(from Variables.$info-dark r g b / 50%);
     }
   }
   &.success {
@@ -74,7 +74,7 @@
     }
     &>.closer-button > div::after {
       border: 2px solid Variables.$success-dark;
-      box-shadow: 0em 0em 0.5em rgb(from Variables.$success-dark r g b / 50%);
+      box-shadow: #{Variables.$shadow-overhead-level-2} rgb(from Variables.$success-dark r g b / 50%);
     }
   }
   &>.closer-button {

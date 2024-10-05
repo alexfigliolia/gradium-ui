@@ -13,7 +13,7 @@
       opacity: 0.25;
     }
     &.active {
-      box-shadow: 0em 0.1em 0.35em rgba(#000, 0.2);
+      box-shadow: var(--shadow-level-1-mid);
       & > div > time {
         font-weight: 600;
       }

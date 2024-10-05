@@ -6,11 +6,11 @@
   position: relative;
   transition: text-shadow 0.25s;
   &:has(>div>input:focus-visible) {
-    text-shadow: 0em 0em 0.5em rgb(from var(--shadow-color) r g b / 50%);
+    text-shadow: #{Variables.$shadow-overhead-level-2} rgb(from var(--shadow-color) r g b / 50%);
   }
   &:hover {
     &>div {
-      box-shadow: 0em 0em 0.5em var(--shadow-color);
+      box-shadow: #{Variables.$shadow-overhead-level-2} var(--shadow-color);
     }
   }
   &>div {
@@ -28,7 +28,7 @@
       }
     }
     &:has(>input:focus-visible) {
-      box-shadow: 0em 0em 0.5em var(--shadow-color);
+      box-shadow: #{Variables.$shadow-overhead-level-2} var(--shadow-color);
     }
     &::after {
       content: "";

@@ -8,7 +8,7 @@
   row-gap: 1em;
   border-radius: 0.5em;
   text-align: center;
-  box-shadow: 0em 0.2em 0.75em rgba(#000, 0.2);
+  box-shadow: var(--shadow-level-3-mid);
   @media (min-width: 670px) {
     width: calc(50% - 1em);
   }
@@ -44,6 +44,7 @@
       transition: color 0.15s 0.3s, background-color 0.3s 0.3s;
       &.disabled {
         cursor: auto;
+        outline: none;
         pointer-events: none;
         transition: color 0.3s 0.3s, background-color 0.3s 0.3s;
         &> div:not(.triangle-loader) {

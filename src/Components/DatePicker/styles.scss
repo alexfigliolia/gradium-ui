@@ -6,7 +6,7 @@
   border-radius: 0.5em;
   transition: height 0.5s, max-height 0.5s;
   background-color: var(--drop-down-background);
-  box-shadow: 0em 0.1em 0.35em rgba(#000, 0.2);
+  box-shadow: var(--shadow-level-2);
   &>div {
     width: 100%;
     position: relative;

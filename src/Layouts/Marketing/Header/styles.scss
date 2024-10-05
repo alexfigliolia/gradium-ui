@@ -30,7 +30,7 @@
         font-weight: 400;
         text-shadow: none;
         text-decoration: none;
-        box-shadow: 0em 0.1em 0.5em rgba(#000, 0.2), 0em 0em 0.25em rgb(from Variables.$teal r g b / 75%);
+        box-shadow: var(--shadow-level-2-mid), #{Variables.$shadow-overhead-level-1} rgb(from Variables.$teal r g b / 75%);
         &>div {
           display: none;
         }

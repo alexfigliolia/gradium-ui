@@ -52,6 +52,14 @@ $small-desktop: 957px;
 
 $fade-duration: 500ms;
 
+$shadow-overhead-level-1: 0em 0em 0.25em;
+$shadow-overhead-level-2: 0em 0em 0.5em;
+$shadow-level-1: 0em 0.1em 0.35em;
+$shadow-level-2: 0em 0.2em 0.5em;
+$shadow-level-3: 0em 0.3em 0.75em;
+$shadow-color-light: rgba(#000, 0.1);
+$shadow-color-mid: rgba(#000, 0.2);
+
 @mixin center {
   display: flex;
   justify-content: center;
@@ -118,6 +126,14 @@ $fade-duration: 500ms;
   background: linear-gradient(90deg, #eee 25%, #e7e7e7 50%, #eee 75%);
   background-size: 200% 100%;
   animation: skeleton-animation 1.5s infinite ease-in-out;
+}
+
+@mixin shadowLevel2($color: $shadow-color-light) {
+  box-shadow: #{$shadow-level-2} #{$color};
+}
+
+@mixin shadowLevel3($color: $shadow-color-light) {
+  box-shadow: #{$shadow-level-3} #{$color};
 }
 
 @keyframes skeleton-animation {

@@ -12,7 +12,7 @@
   @include Variables.blackGradient;
   z-index: 1001;
   width: calc(100% - (var(--core-padding) * 2));
-  box-shadow: 0px 10px 10px rgba(#000, 0.2);
+  box-shadow: var(--shadow-level-3-mid);
   @include Variables.center;
   height: 0;
   overflow: hidden;

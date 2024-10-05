@@ -28,6 +28,18 @@
   --finances-theme: #{Variables.$finances-light};
   --event-background: var(--theme-mid);
   --event-background-highlight: #24aaf7;
+  --shadow-color-light: #{Variables.$shadow-color-light};
+  --shadow-color-mid: #{Variables.$shadow-color-mid};
+  --shadow-color-dark: #{rgba(#000, 0.3)};
+  --shadow-level-1: #{Variables.$shadow-level-1} var(--shadow-color-light);
+  --shadow-level-2: #{Variables.$shadow-level-2} var(--shadow-color-light);
+  --shadow-level-3: #{Variables.$shadow-level-3} var(--shadow-color-light);
+  --shadow-level-1-mid: #{Variables.$shadow-level-1} var(--shadow-color-mid);
+  --shadow-level-2-mid: #{Variables.$shadow-level-2} var(--shadow-color-mid);
+  --shadow-level-3-mid: #{Variables.$shadow-level-3} var(--shadow-color-mid);
+  --shadow-level-1-dark: #{Variables.$shadow-level-1} var(--shadow-color-dark);
+  --shadow-level-2-dark: #{Variables.$shadow-level-2} var(--shadow-color-dark);
+  --shadow-level-3-dark: #{Variables.$shadow-level-3} var(--shadow-color-dark);
   @media (min-width: Variables.$small-vertical-tablet) {
     --core-padding: 1.5em;
   }
@@ -62,6 +74,18 @@ html[data-theme='dark'] {
   --finances-theme: #{Variables.$finances-dark};
   --event-background: #{rgba(Variables.$light-orange, 0.7)};
   --event-background-highlight: var(--theme-mid);
+  --shadow-color-light: #{rgba(#000, 0.35)};
+  --shadow-color-mid: #{rgba(#000, 0.5)};
+  --shadow-color-dark: #{rgba(#000, 0.75)};
+  --shadow-level-1: #{Variables.$shadow-level-1} var(--shadow-color-light);
+  --shadow-level-2: #{Variables.$shadow-level-2} var(--shadow-color-light);
+  --shadow-level-3: #{Variables.$shadow-level-3} var(--shadow-color-light);
+  --shadow-level-1-mid: #{Variables.$shadow-level-1} var(--shadow-color-mid);
+  --shadow-level-2-mid: #{Variables.$shadow-level-2} var(--shadow-color-mid);
+  --shadow-level-3-mid: #{Variables.$shadow-level-3} var(--shadow-color-mid);
+  --shadow-level-1-dark: #{Variables.$shadow-level-1} var(--shadow-color-dark);
+  --shadow-level-2-dark: #{Variables.$shadow-level-2} var(--shadow-color-dark);
+  --shadow-level-3-dark: #{Variables.$shadow-level-3} var(--shadow-color-dark);
 }
 
 * {

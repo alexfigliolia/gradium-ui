@@ -13,6 +13,7 @@ export const ActionButton = memo(function ActionButton({
   onClick,
   children,
   className,
+  tabIndex,
   ...rest
 }: Props) {
   const classes = useClassNames("action-button", className, rest);
@@ -21,6 +22,7 @@ export const ActionButton = memo(function ActionButton({
       type={type}
       onClick={onClick}
       className={classes}
+      tabIndex={tabIndex}
       disabled={rest.loading}>
       <div>{children}</div>
       <TriangeLoader />
@@ -32,6 +34,7 @@ export const ActionButton = memo(function ActionButton({
 
 interface Props extends OptionalChildren, ActionState {
   className?: string;
+  tabIndex?: number;
   type?: "submit" | "reset" | "button";
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }

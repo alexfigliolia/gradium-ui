@@ -22,7 +22,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0px 2.5px 10px rgba(#000, 0.1);
+    box-shadow: var(--shadow-level-3);
     @media(min-width: Variables.$small-vertical-tablet) {
       height: 70px;
     }

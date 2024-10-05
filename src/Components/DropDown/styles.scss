@@ -27,7 +27,7 @@
     border-radius: 0.4em;
     opacity: 0;
     visibility: hidden;
-    box-shadow: 0 0.2em 0.5em rgba(#000, 0.2);
+    box-shadow: var(--shadow-level-2-mid);
     transition: translate 0.4s 0s, opacity 0.4s 0s, visibility 0s 0.4s;
     &.open {
       opacity: 1;

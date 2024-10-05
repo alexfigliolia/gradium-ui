@@ -30,7 +30,7 @@
       border-radius: 50%;
       transition: all 0.3s;
       border: 2px solid var(--theme-mid);
-      box-shadow: 0em 0em 0.5em var(--theme-dark);
+      box-shadow: #{Variables.$shadow-overhead-level-2} var(--theme-dark);
     }
   }
   &:focus-visible {

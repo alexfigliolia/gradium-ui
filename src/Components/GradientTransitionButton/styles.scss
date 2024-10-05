@@ -15,7 +15,7 @@ a.gradient-transition-button {
   font-weight: 700;
   font-size: 1em;
   color: #fff;
-  box-shadow: 0 0.15em 0.4em rgba(#000, 0.15);
+  box-shadow: var(--shadow-level-2-mid);
   @include Variables.themeGradient;
   transition: box-shadow 0.4s;
   outline: none;
@@ -32,7 +32,7 @@ a.gradient-transition-button {
     opacity: 0;
     pointer-events: none;
     transition: all 0.3s;
-    box-shadow: 0em 0em 0.5em var(--theme-dark);
+    box-shadow: #{Variables.$shadow-overhead-level-2} var(--theme-dark);
   }
   &::after {
     content: attr(data-label);
@@ -62,7 +62,7 @@ a.gradient-transition-button {
   }
   &:focus-visible {
     border: none;
-    box-shadow: 0 0em 0.5em var(--theme-dark);
+    box-shadow: #{Variables.$shadow-overhead-level-2} var(--theme-dark);
     &::before {
       opacity: 1;
     }

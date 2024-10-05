@@ -13,6 +13,9 @@
   }
   &.active {
     background-position: 100% 50%;
-    box-shadow: 0em 0.1em 0.35em rgba(#000, 0.25);
+    box-shadow: var(--shadow-level-1-dark);
+    &:focus-visible {
+      outline: none;
+    }
   }
 }

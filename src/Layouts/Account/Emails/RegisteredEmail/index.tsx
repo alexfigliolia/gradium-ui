@@ -1,5 +1,5 @@
 import type { ChangeEvent } from "react";
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import type { ILoadingStateSetter } from "@figliolia/react-hooks";
 import { useFormState } from "@figliolia/react-hooks";
@@ -57,7 +57,12 @@ export const RegisteredEmail = memo(function RegisteredEmail({ email }: Props) {
 
   const { loading, error, success, onSubmit } = useFormState(formAction);
 
-  const classes = useClassNames({ disabled: email === update && !loading });
+  const saveDisabled = useMemo(
+    () => email === update && !loading,
+    [email, update, loading],
+  );
+
+  const classes = useClassNames({ disabled: saveDisabled });
 
   return (
     <form className="registered-email" onSubmit={onSubmit}>
@@ -82,7 +87,8 @@ export const RegisteredEmail = memo(function RegisteredEmail({ email }: Props) {
           className={classes}
           loading={loading}
           error={!!error}
-          success={success}>
+          success={success}
+          tabIndex={saveDisabled ? -1 : undefined}>
           Save
         </ActionButton>
       </div>

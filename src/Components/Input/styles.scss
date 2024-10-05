@@ -27,7 +27,7 @@
   &:has(>.input-positioner>input:focus),
   &:has(select:focus) {
     background-position: 100% 50%;
-    box-shadow: 0px 2.5px 7.5px rgba(var(--theme-dark), 0.5);
+    box-shadow: #{Variables.$shadow-level-2} rgb(from var(--theme-dark) r g b / 50%);
   }
   &:has(>.input-positioner>input:valid:not(:disabled)) {
     &>.input-positioner > button > svg {
