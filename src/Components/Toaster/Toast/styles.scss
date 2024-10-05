@@ -107,6 +107,9 @@
     &>p {
       margin-left: 2em;
       color: var(--text-color-light);
+      &>strong {
+        color: var(--text-color-light);
+      }
     }
   }
 }

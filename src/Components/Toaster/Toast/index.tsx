@@ -68,7 +68,7 @@ export const Toast = memo(function Toast({
         <h4>
           <Icon /> {heading}
         </h4>
-        <p>{message}</p>
+        <p dangerouslySetInnerHTML={{ __html: message }} />
         {children}
       </div>
       <Closer onMouseDown={hide} {...listener.events} />

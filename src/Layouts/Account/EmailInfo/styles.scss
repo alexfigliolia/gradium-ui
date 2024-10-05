@@ -4,9 +4,6 @@
   & .sheet-content {
     width: 95%;
     max-width: 500px;
-    @media (min-width: 670px) {
-      font-size: 1.1em;
-    }
   }
   & h2 {
     @include Variables.center;

@@ -35,7 +35,7 @@ export const LinkEmail = memo(function LinkEmail(_: Propless) {
         const email = Validators.emailParser(data);
         const client = new UIClient({
           setState,
-          successMessage: `The email address "${email}" has been successfully linked to your account`,
+          successMessage: `The email address <strong>${email}</strong> has been successfully linked to your account`,
         });
         const response = await client.executeQuery<
           LinkEmailMutation,

@@ -8,18 +8,21 @@
   border-radius: 0.35em;
   gap: 1.25em;
   background-color: var(--tile-background);
-  box-shadow: var(--shadow-level-2-mid);
+  box-shadow: var(--shadow-level-3-mid);
   @media (min-width: 800px) {
     padding: 2em;
   }
   &>h2 {
     width: 100%;
-    font-size: 1.75em;
+    font-size: 1.5em;
     align-items: center;
     margin-bottom: 0.25em;
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    @media(min-width: 670px) {
+      font-size: 1.75em;
+    }
     & > svg {
       width: 1.5em;
       min-width: 1.5em;

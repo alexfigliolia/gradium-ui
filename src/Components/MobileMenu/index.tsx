@@ -1,4 +1,4 @@
-import { memo, useMemo } from "react";
+import { memo, useEffect, useMemo, useRef } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import { useNodeHeight } from "Hooks/useNodeHeight";
 import type { OptionalChildren } from "Types/React";
@@ -9,6 +9,7 @@ export const MobileMenu = memo(function MobileMenu({
   children,
   className,
 }: Props) {
+  const container = useRef<HTMLMenuElement>(null);
   const [node, height] = useNodeHeight<HTMLDivElement>();
   const pixelHeight = useMemo(
     () => (height ? `${height}px` : undefined),
@@ -16,8 +17,17 @@ export const MobileMenu = memo(function MobileMenu({
   );
   const classes = useClassNames("mobile-menu", className, { open });
 
+  useEffect(() => {
+    if (open && container.current) {
+      container.current.scrollTo({ top: 0, behavior: "instant" });
+    }
+  }, [open, node]);
+
   return (
-    <menu className={classes} style={{ "--height": pixelHeight }}>
+    <menu
+      ref={container}
+      className={classes}
+      style={{ "--height": pixelHeight }}>
       <div ref={node}>{children}</div>
     </menu>
   );

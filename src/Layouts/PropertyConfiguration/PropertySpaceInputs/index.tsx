@@ -19,18 +19,18 @@ export const PropertySpaceInputs = memo(function PropertySpaceInputs({
   photosAndFloorPlans,
 }: Props) {
   const classes = useClassNames("input-group", className);
+  const deleteClasses = useClassNames({ editing });
   return (
     <Fragment>
       <div className="space-title">
         <h3>{name || nameFallback}</h3>
-        {editing && (
-          <CircularIconButton
-            type="button"
-            aria-label="Delete"
-            onClick={onDeleteClick}>
-            <Trash aria-hidden />
-          </CircularIconButton>
-        )}
+        <CircularIconButton
+          type="button"
+          aria-label="Delete"
+          className={deleteClasses}
+          onClick={onDeleteClick}>
+          <Trash aria-hidden />
+        </CircularIconButton>
       </div>
       <div className={classes}>{children}</div>
       <SpaceActions editing={editing} edit={onEditClick} />

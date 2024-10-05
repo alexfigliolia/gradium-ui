@@ -21,7 +21,7 @@ export const DeleteEmail = memo(function DeleteEmail(_: Propless) {
   const deleteEmail = useCallback(() => {
     const client = new UIClient({
       setState,
-      successMessage: `The email address "${email}" has been removed from your account`,
+      successMessage: `The email address <strong>${email}</strong> has been removed from your account`,
     });
     void client
       .executeQuery<DeleteEmailMutation, DeleteEmailMutationVariables>(
