@@ -1,7 +1,9 @@
-import { memo } from "react";
-import { useFormState } from "@figliolia/react-hooks";
+import { memo, useCallback, useEffect, useRef } from "react";
+import type { ILoadingStateSetter } from "@figliolia/react-hooks";
+import { useFormState, useTimeout } from "@figliolia/react-hooks";
 import { ActionButton } from "Components/ActionButton";
 import { Confirmation } from "Components/Confirmation";
+import type { InputRef } from "Components/Input";
 import { Input } from "Components/Input";
 import { linkEmail as linkEmailQuery } from "GraphQL/Mutations/linkEmail.gql";
 import type {
@@ -18,11 +20,23 @@ import "./styles.scss";
 
 export const LinkEmail = memo(function LinkEmail(_: Propless) {
   const open = useModals(linkEmail);
-  const { loading, error, success, onSubmit } = useFormState(
-    async (data, setState) => {
+  const timeout = useTimeout();
+  const input = useRef<InputRef>(null);
+
+  const clear = useCallback(() => {
+    if (input.current?.input) {
+      input.current.input.value = "";
+    }
+  }, []);
+
+  const formAction = useCallback(
+    async (data: FormData, setState: ILoadingStateSetter) => {
       try {
         const email = Validators.emailParser(data);
-        const client = new UIClient({ setState });
+        const client = new UIClient({
+          setState,
+          successMessage: `The email address "${email}" has been successfully linked to your account`,
+        });
         const response = await client.executeQuery<
           LinkEmailMutation,
           LinkEmailMutationVariables
@@ -31,11 +45,19 @@ export const LinkEmail = memo(function LinkEmail(_: Propless) {
           userId: Scope.getState().id,
         });
         Scope.updateBasicInfo(response.linkEmail);
+        timeout.execute(clear, 500);
       } catch (error) {
         // Silence
       }
     },
+    [clear, timeout],
   );
+
+  useEffect(() => {
+    clear();
+  }, [open, clear]);
+
+  const { loading, error, success, onSubmit } = useFormState(formAction);
   return (
     <Confirmation
       open={open}
@@ -53,6 +75,7 @@ export const LinkEmail = memo(function LinkEmail(_: Propless) {
           label="New Email"
           icon={<At />}
           name="email"
+          ref={input}
           autoComplete="off"
         />
         <ActionButton loading={loading} error={!!error} success={success}>

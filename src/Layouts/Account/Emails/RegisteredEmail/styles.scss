@@ -1,0 +1,76 @@
+@use "Styles/Variables";
+
+.registered-email {
+  width: 100%;
+  padding: 1.25em 1em 1em;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
+  border-radius: 0.5em;
+  text-align: center;
+  box-shadow: 0em 0.2em 0.75em rgba(#000, 0.2);
+  @media (min-width: 670px) {
+    width: calc(50% - 1em);
+  }
+  @media (min-width: 1200px) {
+    width: calc(33.333% - 1em);
+  }
+  &>.input {
+    --background: var(--tile-background);
+  }
+  &>div {
+    width: 100%;
+    @include Variables.center;
+    column-gap: 1.5em;
+    &>button {
+      font-weight: 500;
+    }
+    &>.gradient-border-button {
+      font-size: 1em;
+      --border-radius: 4em;
+      --core-padding: 0.4em 1.5em;
+      &>div {
+        transition: color 0.3s;
+      }
+      &:disabled {
+        color: var(--text-color-lightest);
+      }
+    }
+    &>.action-button {
+      box-shadow: none;
+      height: auto;
+      width: auto;
+      text-transform: capitalize;
+      transition: color 0.15s 0.3s, background-color 0.3s 0.3s;
+      &.disabled {
+        cursor: auto;
+        pointer-events: none;
+        transition: color 0.3s 0.3s, background-color 0.3s 0.3s;
+        &> div:not(.triangle-loader) {
+          color: var(--text-color-lightest);
+          background-color: var(--background);
+        }
+      }
+      &.loading {
+        transition: color 0.15s, background-color 0.3s;
+        &>.triangle-loader {
+          translate: -50% -50%;
+          scale: 0.5;
+        }
+        &.success,
+        &.error {
+          &>.triangle-loader {
+            scale: 0;
+          }
+        }
+      }
+      &>div:not(.triangle-loader) {
+        height: 100%;
+        width: 100%;
+        padding: 0.5em 1.5em;
+        border-radius: inherit;
+        background-color: transparent;
+      }
+    }
+  }
+}

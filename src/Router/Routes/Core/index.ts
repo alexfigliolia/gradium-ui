@@ -1,5 +1,6 @@
 import { redirect } from "react-router-dom";
 import { LazyCoreLayout } from "Layouts/Core/Lazy";
+import { BaseModel } from "Models/BaseModel";
 import { Scope } from "State/Scope";
 import { Toasts } from "State/Toasts";
 import { Authentication } from "Tools/Authentication";
@@ -19,6 +20,7 @@ export const Core = {
   Component: LazyCoreLayout,
   loader: async () => {
     if (!(await Authentication.isAuthenticated())) {
+      BaseModel.resetAll();
       throw redirect("/register/login");
     }
     const scope = await Scope.initialize();

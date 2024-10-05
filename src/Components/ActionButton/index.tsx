@@ -12,16 +12,17 @@ export const ActionButton = memo(function ActionButton({
   type,
   onClick,
   children,
+  className,
   ...rest
 }: Props) {
-  const classes = useClassNames("action-button", rest);
+  const classes = useClassNames("action-button", className, rest);
   return (
     <GradientButton
       type={type}
       onClick={onClick}
       className={classes}
       disabled={rest.loading}>
-      {children}
+      <div>{children}</div>
       <TriangeLoader />
       <Check />
       <Error />
@@ -30,6 +31,7 @@ export const ActionButton = memo(function ActionButton({
 });
 
 interface Props extends OptionalChildren, ActionState {
+  className?: string;
   type?: "submit" | "reset" | "button";
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }

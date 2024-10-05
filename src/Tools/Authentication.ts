@@ -18,7 +18,6 @@ export class Authentication {
       >(verifySession, {});
       return data.verifySession;
     } catch (error) {
-      BaseModel.resetAll();
       return false;
     }
   }

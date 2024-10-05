@@ -1,8 +1,8 @@
-import { State } from "@figliolia/galena";
 import type { UserAffiliation } from "GraphQL/Types";
+import { BaseModel } from "Models/BaseModel";
 import type { IScope } from "./types";
 
-export class Accessor extends State<IScope> {
+export class Accessor extends BaseModel<IScope> {
   protected setCurrentOrganization(id: number) {
     const current = this.affiliationById(id);
     if (!current) {

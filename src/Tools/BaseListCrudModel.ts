@@ -1,4 +1,4 @@
-import { State } from "@figliolia/galena";
+import { BaseModel } from "Models/BaseModel";
 
 export interface IListCRUDState<T> {
   list: T[];
@@ -8,7 +8,7 @@ export interface IListCRUDState<T> {
 
 export abstract class BaseListCRUDModel<
   T extends Record<string, any>,
-> extends State<IListCRUDState<T>> {
+> extends BaseModel<IListCRUDState<T>> {
   constructor(name: string) {
     super(name, {
       list: [],

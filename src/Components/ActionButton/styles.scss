@@ -7,6 +7,10 @@
   outline: none;
   font-size: 1.1em;
   transition: color 0.15s 0.9s, width 0.5s 0.4s;
+  &>div:not(.triangle-loader) {
+    color: inherit;
+    transition: inherit;
+  }
   &>.triangle-loader,
   &>.check-icon,
   &>.error-icon {
@@ -57,7 +61,7 @@
     }
     &.success > .triangle-loader,
     &.error > .triangle-loader {
-      translate: -50% -50%;
+      translate: -50% -55%;
       scale: 0;
       visibility: hidden;
       transition: scale 0.4s 0s, translate 0.4s 0s, visibility 0s 0.4s;

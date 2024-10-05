@@ -1,6 +1,6 @@
 import { Fragment, memo } from "react";
 import { Page } from "Components/Page";
-import { EmailInfo, Emails, LinkEmail } from "Layouts/Account";
+import { DeleteEmail, EmailInfo, Emails, LinkEmail } from "Layouts/Account";
 import type { Propless } from "Types/React";
 import "./styles.scss";
 
@@ -13,6 +13,7 @@ export default memo(
         </Page>
         <EmailInfo />
         <LinkEmail />
+        <DeleteEmail />
       </Fragment>
     );
   },

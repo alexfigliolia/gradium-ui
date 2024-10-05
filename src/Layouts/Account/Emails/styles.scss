@@ -37,18 +37,6 @@
     @media (min-width: 1200px) {
       gap: 1.5em;
     }
-    &>.action-input {
-      width: 100%;
-      @media (min-width: 670px) {
-        width: calc(50% - 0.5em);
-      }
-      @media (min-width: 1200px) {
-        width: calc(50% - 1em);
-      }
-      @media (min-width: 1400px) {
-        width: calc(33% - 0.8em);
-      }
-    }
   }
   &>button.gradient-button {
     width: auto;

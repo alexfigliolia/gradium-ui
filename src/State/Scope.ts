@@ -6,3 +6,4 @@ export const Scope = new ScopeModel();
 export const useScope = createUseState(Scope);
 export const selectUserId = (scope: IScope) => scope.id;
 export const selectEmails = (scope: IScope) => scope.emails;
+export const selectTotalEmails = (scope: IScope) => scope.emails.length;

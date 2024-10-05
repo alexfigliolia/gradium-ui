@@ -5,7 +5,7 @@ import { At } from "Icons/At";
 import { Modals } from "State/Modals";
 import { selectEmails, useScope } from "State/Scope";
 import type { Propless } from "Types/React";
-import { Updater } from "./Updater";
+import { RegisteredEmail } from "./RegisteredEmail";
 import "./styles.scss";
 
 export const Emails = memo(
@@ -24,7 +24,7 @@ export const Emails = memo(
         </p>
         <div>
           {emails.map(({ email }, i) => {
-            return <Updater key={i} email={email} />;
+            return <RegisteredEmail key={i} email={email} />;
           })}
         </div>
         <GradientButton onClick={Modals.linkEmail.open}>

@@ -1,10 +1,10 @@
-import { State } from "@figliolia/galena";
 import Building1 from "Images/building-1.jpg";
 import Building2 from "Images/building-2.jpg";
 import House1 from "Images/house.jpg";
+import { BaseModel } from "Models/BaseModel";
 import type { IProperties, IProperty } from "./types";
 
-export class PropertiesModel extends State<IProperties> {
+export class PropertiesModel extends BaseModel<IProperties> {
   constructor() {
     super("Properties", {
       properties: PropertiesModel.DATA,

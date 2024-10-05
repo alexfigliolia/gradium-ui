@@ -1,12 +1,12 @@
 import { subMonths } from "date-fns";
-import { State } from "@figliolia/galena";
+import { BaseModel } from "Models/BaseModel";
 import type {
   CompletionRatePerStaffMember,
   IDashboard,
   OccupancyPerSpace,
 } from "./types";
 
-export class DashboardModel extends State<IDashboard> {
+export class DashboardModel extends BaseModel<IDashboard> {
   constructor() {
     super("Dashboard", {
       startDate: "",

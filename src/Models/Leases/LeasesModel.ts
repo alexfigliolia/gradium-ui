@@ -1,10 +1,10 @@
 import { addYears, subYears } from "date-fns";
 import type { ChangeEvent } from "react";
-import { State } from "@figliolia/galena";
+import { BaseModel } from "Models/BaseModel";
 import type { IUnitType } from "Models/LivingSpaces";
 import type { ILease, ILeases, ILeaseStatus } from "./types";
 
-export class LeasesModel extends State<ILeases> {
+export class LeasesModel extends BaseModel<ILeases> {
   public DISPLAY_MAP: Record<ILeaseStatus | "unknown", string> = {
     complete: "Complete",
     "in-progress": "In Progress",

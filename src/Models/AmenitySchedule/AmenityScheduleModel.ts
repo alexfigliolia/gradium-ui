@@ -1,8 +1,8 @@
 import { addHours } from "date-fns";
-import { State } from "@figliolia/galena";
+import { BaseModel } from "Models/BaseModel";
 import type { IAmenitySchedule, IReservation } from "./types";
 
-export class AmenityScheduleModel extends State<IAmenitySchedule> {
+export class AmenityScheduleModel extends BaseModel<IAmenitySchedule> {
   constructor() {
     super("Amenity Schedule", {
       currentDate: new Date(),

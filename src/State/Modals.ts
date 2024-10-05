@@ -18,3 +18,8 @@ export const forgotPassword = (state: IModals) => state.forgotPassword;
 export const emailInfo = (state: IModals) => state.emailInfo;
 
 export const linkEmail = (state: IModals) => state.linkEmail;
+
+export const selectEmailDeletion = (state: IModals): [boolean, string] => [
+  state.deleteEmail,
+  state.emailToDelete,
+];

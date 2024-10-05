@@ -1,13 +1,16 @@
-import { State } from "@figliolia/galena";
+import { BaseModel } from "Models/BaseModel";
 import { ModalStack } from "Tools/ModalStack";
+import type { FilterKeys } from "Types/Generics";
 import type { IModals } from "./types";
 
-export class ModalsModel extends State<IModals> {
+export class ModalsModel extends BaseModel<IModals> {
   constructor() {
     super("Modals", {
       emailInfo: false,
+      deleteEmail: false,
       linkEmail: false,
       newLease: false,
+      emailToDelete: "",
       editLease: false,
       newProperty: false,
       deleteSpace: false,
@@ -21,9 +24,19 @@ export class ModalsModel extends State<IModals> {
     });
   }
 
-  private toggleKey = <K extends keyof IModals>(key: K, nextValue: boolean) => {
+  public setEmail(email: string) {
+    this.update(state => {
+      state.emailToDelete = email;
+    });
+  }
+
+  private toggleKey = <K extends keyof FilterKeys<IModals, boolean>>(
+    key: K,
+    nextValue: boolean,
+  ) => {
     return () => {
       this.update(state => {
+        // @ts-ignore
         state[key] = nextValue;
       });
     };
@@ -32,6 +45,8 @@ export class ModalsModel extends State<IModals> {
   /* TOGGLES */
   private openLinkEmail = this.toggleKey("linkEmail", true);
   private closeLinkEmail = this.toggleKey("linkEmail", false);
+  private openDeleteEmail = this.toggleKey("deleteEmail", true);
+  private closeDeleteEmail = this.toggleKey("deleteEmail", false);
   private openEmailInfo = this.toggleKey("emailInfo", true);
   private closeEmailInfo = this.toggleKey("emailInfo", false);
   private openNewLease = this.toggleKey("newLease", true);
@@ -68,6 +83,7 @@ export class ModalsModel extends State<IModals> {
   );
   linkEmail = ModalStack.create(this.openLinkEmail, this.closeLinkEmail);
   emailInfo = ModalStack.create(this.openEmailInfo, this.closeEmailInfo);
+  deleteEmail = ModalStack.create(this.openDeleteEmail, this.closeDeleteEmail);
   forgotPassword = ModalStack.create(
     this.openForgotPassword,
     this.closeForgotPassword,
