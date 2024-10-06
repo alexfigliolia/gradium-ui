@@ -3,9 +3,9 @@
 .mobile-menu {
   --height: auto;
   position: fixed;
-  top: 69px;
   padding: 0;
   margin: 0;
+  top: calc((Variables.$nav-height-small + 1em) - 0.475em);
   left: var(--core-padding);
   border-bottom-left-radius: 0.5em;
   border-bottom-right-radius: 0.5em;
@@ -20,7 +20,7 @@
     height 0.75s 0.5s cubic-bezier(0.87, 0, 0.13, 1), 
     visibility 0s 1.25s;
     @media(min-width: Variables.$small-vertical-tablet) {
-      top: 75px;
+      top: calc((Variables.$nav-height-mid + 1em) - 0.45em);
     } 
     @media(min-width: Variables.$large-vertical-tablet) {
       display: none;

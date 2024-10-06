@@ -9,7 +9,7 @@
   left: 0;
   z-index: 1000;
   &>div {
-    height: 60px;
+    height: Variables.$nav-height-small;
     width: 100%;
     border-radius: 0.5em;
     padding: 0 calc(var(--core-padding) / 2);
@@ -19,10 +19,10 @@
     justify-content: space-between;
     box-shadow: var(--shadow-level-3);
     @media(min-width: Variables.$small-vertical-tablet) {
-      height: 70px;
+      height: Variables.$nav-height-mid;
     }
     @media(min-width: Variables.$large-vertical-tablet) {
-      height: 80px;
+      height: Variables.$nav-height-large;
       padding: 0 var(--core-padding);
     }
     & .logo {

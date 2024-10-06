@@ -9,8 +9,9 @@
   transition: height 0.75s 0s cubic-bezier(0.87, 0, 0.13, 1), 
   visibility 0s 0.75s;
   @media (min-width: Variables.$large-vertical-tablet) {
-    top: 86px;
-    max-height: calc(100svh - (86px + 20px));
+    top: calc((Variables.$nav-height-large + 1em) - 0.45em);
+    max-height: calc(100svh - (((Variables.$nav-height-large + 1em) - 0.45em) + 20px));
+    max-height: calc(100vh - (((Variables.$nav-height-large + 1em) - 0.45em) + 20px));
   }
   @media (min-width: Variables.$small-desktop) {
     display: none;
