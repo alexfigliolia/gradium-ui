@@ -24,8 +24,8 @@ export const BorderTile = memo(function BorderTile({
       <div
         className="border"
         style={{
-          "--x": `${frame.x}px`,
-          "--y": `${frame.y}px`,
+          "--x": `${frame.x}%`,
+          "--y": `${frame.y}%`,
           opacity: frame.opacity,
         }}
       />

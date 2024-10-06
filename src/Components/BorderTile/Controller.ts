@@ -24,7 +24,7 @@ export class Controller {
   };
 
   private onMouseLeave = () => {
-    this.setFrame(previous => ({ ...previous, opacity: 0 }));
+    this.setFrame({ x: 0, y: 0, opacity: 0 });
   };
 
   public readonly bindings = {
@@ -48,11 +48,13 @@ export class Controller {
     } else {
       ({ clientX, clientY } = e);
     }
-    const { left, top } = this.node.getBoundingClientRect();
+    const { left, top, width, height } = this.node.getBoundingClientRect();
+    const x = ((clientX - left) / width) * 100;
+    const y = ((clientY - top) / height) * 100;
     this.setFrame(previous => ({
       ...previous,
-      y: clientY - top,
-      x: clientX - left,
+      x,
+      y,
     }));
   }
 }
