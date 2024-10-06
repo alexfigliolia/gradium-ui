@@ -1,3 +1,6 @@
-.page.account {
-  
+.page.account > .tiles {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--core-padding);
 }

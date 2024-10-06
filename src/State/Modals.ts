@@ -23,3 +23,5 @@ export const selectEmailDeletion = (state: IModals): [boolean, string] => [
   state.deleteEmail,
   state.emailToDelete,
 ];
+
+export const selectResetPassword = (state: IModals) => state.resetPassword;

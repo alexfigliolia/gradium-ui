@@ -1,7 +1,7 @@
 import { Fragment, memo } from "react";
 import { Input } from "Components/Input";
 import { At } from "Icons/At";
-import { Lock } from "Icons/Lock";
+import { LockStroked } from "Icons/Lock";
 import { Modals } from "State/Modals";
 import type { Propless } from "Types/React";
 import "./styles.scss";
@@ -20,7 +20,7 @@ export default memo(
         />
         <Input
           required
-          icon={<Lock />}
+          icon={<LockStroked />}
           type="password"
           label="Password"
           name="password"

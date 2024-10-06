@@ -1,14 +1,13 @@
-import type { SVGAttributes } from "react";
+import type { SVGProps } from "react";
 import { memo } from "react";
 import { useClassNames } from "@figliolia/classnames";
-import type { OptionalChildren } from "Types/React";
 
-export const Lock = memo(function Lock({
+export const LockStroked = memo(function LockStroked({
   children,
   className,
   ...rest
-}: Props) {
-  const classes = useClassNames("lock-icon", className);
+}: SVGProps<SVGSVGElement>) {
+  const classes = useClassNames("lock-stroked-icon", className);
   return (
     <svg
       viewBox="0 0 24 24"
@@ -27,5 +26,3 @@ export const Lock = memo(function Lock({
     </svg>
   );
 });
-
-interface Props extends OptionalChildren, SVGAttributes<SVGSVGElement> {}

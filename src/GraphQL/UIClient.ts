@@ -60,10 +60,7 @@ export class UIClient {
   private onSuccess = <T>(response: T) => {
     this.setState("success", true);
     if (this.successMessage) {
-      Toasts.toast({
-        type: "success",
-        message: this.parseSuccessMessage<T>(response),
-      });
+      Toasts.success(this.parseSuccessMessage<T>(response));
     }
     return response;
   };
@@ -74,10 +71,7 @@ export class UIClient {
     }
     const message = this.parseErrorMessage(error);
     this.setState("error", message);
-    Toasts.toast({
-      type: "error",
-      message,
-    });
+    Toasts.toast(message);
   };
 
   private onComplete(callback?: Callback) {

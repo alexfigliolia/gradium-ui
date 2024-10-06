@@ -42,6 +42,18 @@ export class ToastsModel extends BaseModel<IToasts> {
     });
   }
 
+  public error(message: string) {
+    return this.toast({ type: "error", message });
+  }
+
+  public info(message: string) {
+    return this.toast({ type: "info", message });
+  }
+
+  public success(message: string) {
+    return this.toast({ type: "info", message });
+  }
+
   public dismiss(ID: string) {
     this.update(state => {
       const stack = new RenderableMap(state.toasts);

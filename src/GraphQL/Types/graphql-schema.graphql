@@ -32,6 +32,7 @@ type Mutation {
   linkEmail(userId: Int!, email: String!): BasicUser!
   deleteEmail(userId: Int!, email: String!): BasicUser!
   updateEmail(userId: Int!, previous: String!, next: String!): BasicUser!
+  resetPassword(userId: Int!, previous: String!, next: String!): Boolean!
   createAccount(name: String!, email: String!, password: String!): LoggedInUser!
   forgotPassword(email: String!): String!
   inviteStaffMember(organizationId: Int!, email: String!): Boolean!

@@ -13,6 +13,7 @@ export class ModalsModel extends BaseModel<IModals> {
       emailToDelete: "",
       editLease: false,
       newProperty: false,
+      resetPassword: false,
       deleteSpace: false,
       dateSelector: false,
       forgotPassword: false,
@@ -49,6 +50,8 @@ export class ModalsModel extends BaseModel<IModals> {
   private closeDeleteEmail = this.toggleKey("deleteEmail", false);
   private openEmailInfo = this.toggleKey("emailInfo", true);
   private closeEmailInfo = this.toggleKey("emailInfo", false);
+  private openResetPassword = this.toggleKey("resetPassword", true);
+  private closeResetPassword = this.toggleKey("resetPassword", false);
   private openNewLease = this.toggleKey("newLease", true);
   private closeNewLease = this.toggleKey("newLease", false);
   private openEditLease = this.toggleKey("editLease", true);
@@ -83,6 +86,10 @@ export class ModalsModel extends BaseModel<IModals> {
   );
   linkEmail = ModalStack.create(this.openLinkEmail, this.closeLinkEmail);
   emailInfo = ModalStack.create(this.openEmailInfo, this.closeEmailInfo);
+  resetPassword = ModalStack.create(
+    this.openResetPassword,
+    this.closeResetPassword,
+  );
   deleteEmail = ModalStack.create(this.openDeleteEmail, this.closeDeleteEmail);
   forgotPassword = ModalStack.create(
     this.openForgotPassword,

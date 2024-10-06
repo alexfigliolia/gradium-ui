@@ -6,6 +6,7 @@ export interface IModals {
   editLease: boolean;
   newProperty: boolean;
   deleteSpace: boolean;
+  resetPassword: boolean;
   leaseFilters: boolean;
   forgotPassword: boolean;
   dashboardFilters: boolean;

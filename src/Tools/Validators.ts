@@ -45,7 +45,7 @@ export class Validators {
     return false;
   };
 
-  private static parse(
+  public static createParser(
     key: string,
     validator: Callback<[string], string | false>,
   ) {
@@ -53,10 +53,7 @@ export class Validators {
       const value = this.parseForm(data, key);
       const error = validator(value);
       if (error) {
-        Toasts.toast({
-          type: "error",
-          message: error,
-        });
+        Toasts.error(error);
         throw new Error("terminate");
       }
       return value;
@@ -67,7 +64,10 @@ export class Validators {
     return (data.get(key) ?? "") as string;
   }
 
-  public static nameParser = this.parse("name", this.validateName);
-  public static emailParser = this.parse("email", this.validateEmail);
-  public static passwordParser = this.parse("password", this.validatePassword);
+  public static nameParser = this.createParser("name", this.validateName);
+  public static emailParser = this.createParser("email", this.validateEmail);
+  public static passwordParser = this.createParser(
+    "password",
+    this.validatePassword,
+  );
 }

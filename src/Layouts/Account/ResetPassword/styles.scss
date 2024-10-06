@@ -1,0 +1,11 @@
+.confirmation-sheet.reset-password {
+  & form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5em;
+    &>.action-button {
+      margin: 0.5em auto 1em auto;
+    }
+  }
+}
