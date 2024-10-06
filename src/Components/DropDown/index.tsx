@@ -35,7 +35,11 @@ function IDropDown<T extends IListItem>({
   );
 
   const { open: openDD, close: closeDD } = controller.Toggle;
-  const node = useClickOutside<HTMLLabelElement>(open, closeDD);
+  const node = useClickOutside({
+    open,
+    callback: closeDD,
+    refCallback: true,
+  });
 
   const classes = useClassNames("dropdown", className);
 

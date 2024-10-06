@@ -34,7 +34,11 @@ export const DateInput = memo(function DateInput({
   const controller = useController(new Controller(setOpen));
   controller.register(focusManager);
 
-  const node = useClickOutside<HTMLLabelElement>(open, controller.Toggle.close);
+  const node = useClickOutside({
+    open,
+    refCallback: true,
+    callback: controller.Toggle.close,
+  });
 
   const onSelect = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
