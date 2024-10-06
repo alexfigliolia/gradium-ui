@@ -17,6 +17,10 @@
     overflow: hidden;
     &>div {
       transition: scale 0.4s;
+      & .flickity-cell {
+        width: 100%;
+        height: 100%;
+      }
     }
     &.is-desktop:focus-visible {
       &> div {
