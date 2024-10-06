@@ -60,7 +60,7 @@ export const ForgotPassword = memo(
       <Confirmation
         open={open}
         clickOutside={clickOutside}
-        className="forgot-password-sheet"
+        className="forgot-password-sheet tight"
         close={Modals.forgotPassword.close}>
         <h2>Reset Password</h2>
         <p>

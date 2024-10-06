@@ -61,7 +61,7 @@ export const LinkEmail = memo(function LinkEmail(_: Propless) {
   return (
     <Confirmation
       open={open}
-      className="link-email"
+      className="link-email tight"
       close={Modals.linkEmail.close}>
       <h2>Link Email Address</h2>
       <p>

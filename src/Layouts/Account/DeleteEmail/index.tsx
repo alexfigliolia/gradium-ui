@@ -44,7 +44,7 @@ export const DeleteEmail = memo(function DeleteEmail(_: Propless) {
   return (
     <Confirmation
       open={open}
-      className="delete-email"
+      className="delete-email tight"
       close={Modals.deleteEmail.close}>
       <h2>Confirmation</h2>
       <p>

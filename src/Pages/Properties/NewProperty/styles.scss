@@ -2,15 +2,10 @@
 
 .new-property.bottom-sheet {
   & form {
-    width: 90%;
-    max-width: 400px;
-    margin: auto;
-    margin-bottom: 1em;
-    &> .input {
-      margin-bottom: 2em;
-    }
-    &> .gradient-button {
-      margin: auto;
-    }
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    row-gap: 2em;
   }
 }

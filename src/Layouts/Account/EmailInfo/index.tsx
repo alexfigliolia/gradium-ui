@@ -23,11 +23,11 @@ export const EmailInfo = memo(function EmailInfo(_: Propless) {
       <ul>
         <li>
           You may link any number of email addresses to your gradium account.
-          Those may include those for personal or business use
+          They can include thosed used for personal or business use
         </li>
         <li>
-          Organizations who have invited you to join can only see the email
-          provided when sending the invitation
+          Organizations who have invited you to join can only see the email you
+          provided them for sending the invitation
         </li>
         <li>
           Likewise the people you invite to join your own organization can only

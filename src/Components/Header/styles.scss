@@ -2,17 +2,12 @@
 
 .nav-header {
   width: 100%;
-  height: Variables.$nav-height-small;
   padding: 0 var(--core-padding);
   position: fixed;
   @include Variables.center;
-  top: 0;
+  top: 1em;
   left: 0;
   z-index: 1000;
-  @media(min-width: Variables.$large-vertical-tablet) {
-    height: Variables.$nav-height-large;
-    align-items: flex-end;
-  }
   &>div {
     height: 60px;
     width: 100%;
@@ -28,7 +23,7 @@
     }
     @media(min-width: Variables.$large-vertical-tablet) {
       height: 80px;
-      padding: 0 calc(var(--core-padding) * 1);
+      padding: 0 var(--core-padding);
     }
     & .logo {
       font-size: 1em;

@@ -33,7 +33,7 @@ export const NewProperty = memo(
     return (
       <Confirmation
         open={open}
-        className="new-property"
+        className="new-property tight"
         close={Modals.newProperty.close}>
         <h2>New Property</h2>
         <p>What would you like to name this property?</p>

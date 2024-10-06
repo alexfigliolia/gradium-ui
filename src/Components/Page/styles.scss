@@ -6,22 +6,19 @@
   min-height: 100vh;
   opacity: 0;
   animation: show 0.5s forwards;
-  padding-bottom: calc(Variables.$nav-height-small * 2);
-  @media (min-width: Variables.$small-desktop) {
-    padding-bottom: Variables.$nav-height-small;
-  }
   &.fade {
     animation: hide 0.5s forwards;
   }
   &>.title-area {
-    margin-bottom: 1em;
+    margin-bottom: 1.5em;
     display: flex;
     align-items: center;
     justify-content: space-between;
     @media (min-width: Variables.$small-vertical-tablet) {
-      margin-bottom: 2em;
+      justify-content: flex-start;
     }
     @media (min-width: Variables.$small-desktop) {
+      margin-bottom: 2em;
       justify-content: flex-start;
     }
     &>h1 {

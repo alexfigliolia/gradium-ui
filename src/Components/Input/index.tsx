@@ -34,7 +34,11 @@ export const Input = memo(
         <span>{label}</span>
         <div className="input-positioner">
           {icon && (
-            <button type="button" onClick={focus} tabIndex={-1}>
+            <button
+              type="button"
+              onClick={focus}
+              tabIndex={-1}
+              disabled={rest.disabled || rest.readOnly}>
               {icon}
               {icon}
             </button>

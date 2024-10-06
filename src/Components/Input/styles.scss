@@ -29,6 +29,12 @@
     background-position: 100% 50%;
     box-shadow: #{Variables.$shadow-level-2} rgb(from var(--theme-dark) r g b / 30%);
   }
+  &:has(>.input-positioner > input:disabled),
+  &:has(>.input-positioner > input:read-only) {
+    & button {
+      pointer-events: none;
+    }
+  }
   &:has(>.input-positioner>input:valid:not(:disabled)) {
     &>.input-positioner > button > svg {
       &:first-of-type {

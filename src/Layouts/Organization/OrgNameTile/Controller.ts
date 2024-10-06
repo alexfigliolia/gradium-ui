@@ -13,7 +13,7 @@ export class Controller {
   constructor(setState: ILoadingStateSetter) {
     this.setState = setState;
   }
-  private Debouncer = new Debouncer(this.update.bind(this), 1000);
+  private Debouncer = new Debouncer(this.update.bind(this), 2000);
 
   public executeQuery(name: string) {
     return this.Debouncer.execute(name);
