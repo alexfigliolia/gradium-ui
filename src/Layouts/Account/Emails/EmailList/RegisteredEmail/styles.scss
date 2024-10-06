@@ -9,12 +9,7 @@
   border-radius: 0.5em;
   text-align: center;
   box-shadow: var(--shadow-level-3-mid);
-  @media (min-width: 670px) {
-    width: calc(50% - 1em);
-  }
-  @media (min-width: 1200px) {
-    width: calc(33.333% - 1em);
-  }
+  background-color: var(--tile-background);
   &>.input {
     --background: var(--tile-background);
   }

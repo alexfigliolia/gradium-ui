@@ -1,0 +1,29 @@
+.email-list {
+  width: 100%;
+  margin-bottom: 1em;
+  @media (min-width: 670px) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2em;
+    @media (min-width: 1200px) {
+      gap: 1.5em;
+    }
+    &>.registered-email {
+      @media (min-width: 670px) {
+        width: calc(50% - 1em);
+      }
+      @media (min-width: 1200px) {
+        width: calc(33.333% - 1em);
+      }
+    }
+  }
+  &.flickity-enabled {
+    &>.flickity-viewport {
+      & .flickity-cell {
+        width: 95%;
+        margin-right: 5%;
+      }
+    }
+  }
+}

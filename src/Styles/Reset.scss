@@ -115,8 +115,10 @@ input, label, button {
 }
 
 body {
+  width: 100%;
   margin: 0;
   font-size: 1em;
+  overflow: hidden;
 }
 
 button {
