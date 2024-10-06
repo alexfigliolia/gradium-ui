@@ -4,7 +4,7 @@
   &>div {
     background-color: var(--drop-down-background);
     @media (min-width: Variables.$small-vertical-tablet) {
-      max-width: 500px;
+      max-width: 450px;
     }
   }
   & .sheet-content  {
@@ -19,14 +19,6 @@
         }
         & .date-button {
           width: 70%;
-          &.active {
-            &>div {
-              @include Variables.themeGradient;
-              &>time {
-                color: #fff;
-              }
-            }
-          }
         }
       }
     }

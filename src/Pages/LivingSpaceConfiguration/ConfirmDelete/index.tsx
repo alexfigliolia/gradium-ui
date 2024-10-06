@@ -1,6 +1,6 @@
 import { memo, useCallback } from "react";
+import { ActionButton } from "Components/ActionButton";
 import { Confirmation } from "Components/Confirmation";
-import { GradientTransitionButton } from "Components/GradientTransitionButton";
 import {
   LivingSpaces,
   selectDeletion,
@@ -24,7 +24,7 @@ export const ConfirmDelete = memo(
           Are you sure you wish to delete the living space{" "}
           <strong>{name}</strong>
         </p>
-        <GradientTransitionButton onClick={confirm} label="Confirm" />
+        <ActionButton onClick={confirm}>Confirm</ActionButton>
       </Confirmation>
     );
   },

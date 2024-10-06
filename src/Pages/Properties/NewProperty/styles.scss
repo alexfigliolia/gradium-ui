@@ -7,5 +7,9 @@
     margin: 0 auto;
     flex-direction: column;
     row-gap: 2em;
+    &>.action-button {
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 }
