@@ -51,7 +51,7 @@ export class ToastsModel extends BaseModel<IToasts> {
   }
 
   public success(message: string) {
-    return this.toast({ type: "info", message });
+    return this.toast({ type: "success", message });
   }
 
   public dismiss(ID: string) {
