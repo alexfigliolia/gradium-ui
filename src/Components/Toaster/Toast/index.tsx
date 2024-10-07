@@ -65,11 +65,12 @@ export const Toast = memo(function Toast({
   return (
     <div className={classes} style={{ "--height": pixelHeight }}>
       <div ref={node}>
-        <h4>
-          <Icon /> {heading}
-        </h4>
-        <p dangerouslySetInnerHTML={{ __html: message }} />
-        {children}
+        <Icon />
+        <div>
+          <h4>{heading}</h4>
+          <p dangerouslySetInnerHTML={{ __html: message }} />
+          {children}
+        </div>
       </div>
       <Closer onMouseDown={hide} {...listener.events} />
     </div>
