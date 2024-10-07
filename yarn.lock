@@ -915,21 +915,21 @@
   resolved "https://registry.yarnpkg.com/@figliolia/event-emitter/-/event-emitter-1.1.6.tgz#77657da153875904f959aa9efe040a5874623274"
   integrity sha512-v8wNRuqTnYAsw89dxbWKKJT0E4TWP2rP7BRTE5PC2kBleQl9urfancLTWie3QdjMBGbs/sY+5XdTYoHyG1117w==
 
-"@figliolia/galena-dark-mode@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@figliolia/galena-dark-mode/-/galena-dark-mode-1.0.6.tgz#f422205fd6b860d6fa141bf6b2ade21e06a5aac4"
-  integrity sha512-A+tQQvODi1FRHO9iGb0/5geMf0TNiTejKszHP4puD1h5Q68KsBFbGRAOUFc6lSO3cUSCRdqKUW6/ZzME9Dji2Q==
+"@figliolia/galena-dark-mode@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@figliolia/galena-dark-mode/-/galena-dark-mode-1.1.1.tgz#2dd0e9c039c332c30f7d503f90f94792bbc12047"
+  integrity sha512-H/T7uIYL9gKwTUp1wmLHa47VHoGP1MnfpL2Z6ifNzimvSfrK+ik3aGAsUJbIH8f5ucK+b0QbyEb1jBbGFp5p5A==
   dependencies:
-    "@figliolia/galena" "^2.3.2"
+    "@figliolia/galena" "^2.3.5"
 
-"@figliolia/galena-window@^1.0.0":
+"@figliolia/galena-window@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@figliolia/galena-window/-/galena-window-1.0.1.tgz#1a1f4344ec530097903ffe7bceb0ae38a7776ead"
   integrity sha512-00/vAFPZrOYRnA8ndBochQzv95ky+DCwLSMkaKky9GWzPjDaI0WoY4g0rAY99tkyGw6001ip9E8ugVEGwv8qFg==
   dependencies:
     "@figliolia/galena" "^2.3.5"
 
-"@figliolia/galena@^2.2.6", "@figliolia/galena@^2.3.2", "@figliolia/galena@^2.3.5":
+"@figliolia/galena@^2.3.5":
   version "2.3.5"
   resolved "https://registry.yarnpkg.com/@figliolia/galena/-/galena-2.3.5.tgz#aabf3bce90bc1e8ebdbf7a8c4e52d95f150c85c6"
   integrity sha512-gcNqM1ouUGBrB5aTd5JiwMfyadxAw1F5CdyUSpfj0qysZA6wEugdGWU8SdG1t6kC0QbIgM45KyZ+ws0oMuO/5g==
