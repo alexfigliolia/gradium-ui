@@ -9,6 +9,7 @@ import { AmenitiesConfiguration } from "./AmenitiesConfiguration";
 import { Dashboard } from "./Dashboard";
 import { Home } from "./Home";
 import { LivingSpaceConfiguration } from "./LivingSpaceConfiguration";
+import { Logout } from "./Logout";
 import { Manage } from "./Manage";
 import { Organization } from "./Organization";
 import { Properties } from "./Properties";
@@ -39,6 +40,7 @@ export const Core = {
     Home,
     Staff,
     Manage,
+    Logout,
     Account,
     Dashboard,
     Properties,

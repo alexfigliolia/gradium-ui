@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom";
 import { PersonRoleType } from "GraphQL/Types";
-import { Account } from "Icons/Account";
 import { Building } from "Icons/Building";
 import { BuildingsStroked } from "Icons/Buildings";
 import { MoneyStroked } from "Icons/Money";
@@ -9,6 +8,7 @@ import { Performance } from "Icons/Performance";
 import { RelativeLink } from "Layouts/Management/Link";
 import { PermissionBasedLink } from "Layouts/Management/Link/PermissionBasedLink";
 import type { IProperty } from "Models/Properties";
+import { UserRoutes } from "./UserRoutes";
 
 export class AdminRoutes {
   public static readonly PROPERTIES = (
@@ -54,14 +54,6 @@ export class AdminRoutes {
       permissions={[PersonRoleType.Owner, PersonRoleType.Manager]}
     />
   );
-  public static readonly ACCOUNT = (
-    <RelativeLink
-      key="account"
-      to="/app/account"
-      label="Account"
-      Icon={Account}
-    />
-  );
 
   public static propertyLinks(properties: IProperty[]) {
     return properties.map(({ slug, name }) => {
@@ -83,7 +75,7 @@ export class AdminRoutes {
       this.STAFF,
       this.FINANCES,
       this.ORGANIZATION,
-      this.ACCOUNT,
+      ...UserRoutes.links,
     ];
   }
 }
