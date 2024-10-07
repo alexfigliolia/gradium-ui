@@ -73,20 +73,18 @@ export class Controller {
   }
 
   private renderSlides(images: IImage[]) {
-    const { length } = images;
-    return images.map(({ type, content }, i) => {
-      return (
-        <div key={i} style={{ zIndex: length - i }}>
-          {type === "image" && typeof content === "string" ? (
+    return images.map(({ type, content }) => {
+      if (type === "image" && typeof content === "string") {
+        return (
+          <div key={content}>
             <picture>
               <source srcSet={content} />
               <img src={content} alt="" />
             </picture>
-          ) : (
-            content
-          )}
-        </div>
-      );
+          </div>
+        );
+      }
+      return content;
     });
   }
 

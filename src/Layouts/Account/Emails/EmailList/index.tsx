@@ -22,17 +22,17 @@ export const EmailList = memo(
         <ImageSlider
           options={OPTIONS}
           className="email-list"
-          images={emails.map(({ email }, i) => ({
+          images={emails.map(({ email }) => ({
             type: "child",
-            content: <RegisteredEmail key={i} email={email} />,
+            content: <RegisteredEmail key={email} email={email} />,
           }))}
         />
       );
     }
     return (
       <div className="email-list">
-        {emails.map(({ email }, i) => {
-          return <RegisteredEmail key={i} email={email} />;
+        {emails.map(({ email }) => {
+          return <RegisteredEmail key={email} email={email} />;
         })}
       </div>
     );
