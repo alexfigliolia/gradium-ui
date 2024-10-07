@@ -1,5 +1,9 @@
-import { memo, useCallback } from "react";
-import { useLoadingState, useTimeout } from "@figliolia/react-hooks";
+import { memo, useCallback, useRef } from "react";
+import {
+  useLoadingState,
+  useTimeout,
+  useUnmount,
+} from "@figliolia/react-hooks";
 import { ActionButton } from "Components/ActionButton";
 import { Confirmation } from "Components/Confirmation";
 import { deleteEmail as deleteEmailQuery } from "GraphQL/Mutations/deleteEmail.gql";
@@ -14,6 +18,7 @@ import type { Propless } from "Types/React";
 import "./styles.scss";
 
 export const DeleteEmail = memo(function DeleteEmail(_: Propless) {
+  const emailRef = useRef("");
   const timeout = useTimeout();
   const [open, email] = useModals(selectEmailDeletion);
   const { loading, error, success, setState } = useLoadingState();
@@ -40,6 +45,14 @@ export const DeleteEmail = memo(function DeleteEmail(_: Propless) {
       .catch(() => {});
   }, [email, setState, timeout]);
 
+  if (open && email) {
+    emailRef.current = email;
+  }
+
+  useUnmount(() => {
+    emailRef.current = email;
+  });
+
   return (
     <Confirmation
       open={open}
@@ -47,7 +60,8 @@ export const DeleteEmail = memo(function DeleteEmail(_: Propless) {
       close={Modals.deleteEmail.close}>
       <h2>Confirmation</h2>
       <p>
-        Are you sure you want to remove the email <strong>{email}</strong>?
+        Are you sure you want to remove the email{" "}
+        <strong>{emailRef.current}</strong>?
       </p>
       <ActionButton
         onClick={deleteEmail}
