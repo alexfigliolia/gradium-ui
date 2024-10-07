@@ -71,7 +71,7 @@ export class UIClient {
     }
     const message = this.parseErrorMessage(error);
     this.setState("error", message);
-    Toasts.toast(message);
+    Toasts.error(message);
   };
 
   private onComplete(callback?: Callback) {
@@ -101,7 +101,7 @@ export class UIClient {
     return current as unknown as string;
   }
 
-  private parseErrorMessage(error: any) {
+  private parseErrorMessage(error: any): string {
     if (this.errorMessage === "first") {
       return Errors.parseFirst(error);
     }

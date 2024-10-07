@@ -34,7 +34,6 @@ export const DeleteEmail = memo(function DeleteEmail(_: Propless) {
       .then(response => {
         Scope.updateBasicInfo(response.deleteEmail);
         timeout.execute(() => {
-          Modals.setEmail("");
           Modals.deleteEmail.close();
         }, 1000);
       })

@@ -27,8 +27,7 @@ export const RegisteredEmail = memo(function RegisteredEmail({ email }: Props) {
   }, []);
 
   const deleteEmail = useCallback(() => {
-    Modals.setEmail(email);
-    Modals.deleteEmail.open();
+    Modals.deleteEmail.open(email);
   }, [email]);
 
   const formAction = useCallback(
@@ -78,8 +77,8 @@ export const RegisteredEmail = memo(function RegisteredEmail({ email }: Props) {
       />
       <div>
         <GradientBorderButton
-          onClick={deleteEmail}
           type="button"
+          onClick={deleteEmail}
           disabled={totalEmails < 2}>
           Delete
         </GradientBorderButton>

@@ -25,12 +25,6 @@ export class ModalsModel extends BaseModel<IModals> {
     });
   }
 
-  public setEmail(email: string) {
-    this.update(state => {
-      state.emailToDelete = email;
-    });
-  }
-
   private toggleKey = <K extends keyof FilterKeys<IModals, boolean>>(
     key: K,
     nextValue: boolean,
@@ -43,11 +37,23 @@ export class ModalsModel extends BaseModel<IModals> {
     };
   };
 
+  private openDeleteEmail = (email: string) => {
+    this.update(state => {
+      state.emailToDelete = email;
+      state.deleteEmail = true;
+    });
+  };
+
+  private closeDeleteEmail = () => {
+    this.update(state => {
+      state.emailToDelete = "";
+      state.deleteEmail = false;
+    });
+  };
+
   /* TOGGLES */
   private openLinkEmail = this.toggleKey("linkEmail", true);
   private closeLinkEmail = this.toggleKey("linkEmail", false);
-  private openDeleteEmail = this.toggleKey("deleteEmail", true);
-  private closeDeleteEmail = this.toggleKey("deleteEmail", false);
   private openEmailInfo = this.toggleKey("emailInfo", true);
   private closeEmailInfo = this.toggleKey("emailInfo", false);
   private openResetPassword = this.toggleKey("resetPassword", true);

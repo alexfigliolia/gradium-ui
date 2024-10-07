@@ -23,7 +23,7 @@ export const DEFAULT_OPTIONS: FlickityOptions = {
 export const ImageSlider = memo(
   forwardRef(function ImageSlider(
     { images, children, className, options = DEFAULT_OPTIONS, ...rest }: Props,
-    ref: ForwardedRef<any>,
+    ref: ForwardedRef<Controller>,
   ) {
     const classes = useClassNames("image-slider", className);
     const [portal, setPortal] = useState<ReactPortal | null>(null);

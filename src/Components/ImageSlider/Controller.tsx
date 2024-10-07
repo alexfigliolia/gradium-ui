@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 
 export class Controller {
   public index = 0;
+  public length = 0;
   public initialRender = true;
   public flickity: Flickity | null = null;
   public slider: HTMLDivElement | null = null;
@@ -36,7 +37,13 @@ export class Controller {
     if (!this.slider) {
       return null;
     }
-    void this.reloadCells();
+    const { length } = images;
+    if (length < this.length) {
+      void this.reloadCells(Math.min(this.index, length - 1));
+    } else {
+      void this.reloadCells();
+    }
+    this.length = length;
     return createPortal(this.renderSlides(images), this.slider);
   }
 
@@ -52,7 +59,7 @@ export class Controller {
     this.clearTimer();
   }
 
-  private reloadCells() {
+  private reloadCells(select?: number) {
     return new Promise<void>(resolve => {
       if (this.timer) {
         return;
@@ -62,9 +69,8 @@ export class Controller {
           this.flickity.reloadCells();
           this.flickity.resize();
           this.flickity.reposition();
-          if (this.initialRender) {
-            this.initialRender = false;
-            this.flickity.select(this.index, false, true);
+          if (typeof select === "number") {
+            this.flickity.select(select);
           }
         }
         resolve(this.clearTimer());
