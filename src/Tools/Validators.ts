@@ -45,6 +45,14 @@ export class Validators {
     return false;
   };
 
+  public static validatePropertyName = (name: string) => {
+    const { length } = name.replace(/[^A-Za-z0-9]/g, "");
+    if (length < 3) {
+      return "Property names must be at least 3 characters";
+    }
+    return false;
+  };
+
   public static createParser(
     key: string,
     validator: Callback<[string], string | false>,
@@ -69,5 +77,9 @@ export class Validators {
   public static passwordParser = this.createParser(
     "password",
     this.validatePassword,
+  );
+  public static propertyNameParser = this.createParser(
+    "property-name",
+    this.validatePropertyName,
   );
 }

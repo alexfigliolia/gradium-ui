@@ -1,0 +1,33 @@
+@use "Styles/Variables";
+
+.no-properties {
+  width: 100%;
+  @include Variables.center;
+  --width: 50vw;
+  &>div {
+    height: auto;
+    width: 100%;
+    @include Variables.center;
+    flex-direction: column;
+    & p {
+      font-size: 1.5em;
+      margin-bottom: 0.5em;
+      text-align: center;
+      &>span {
+        @include Variables.gradientText;
+        font-weight: 600;
+      }
+      @media (min-width: 670px) {
+        font-size: 2em;
+      }
+    }
+    &>svg {
+      width: 90%;
+      height: 100%;
+      scale: 1.25;
+      translate: 0 -5%;
+      max-width: var(--width);
+      filter: drop-shadow(0em 0.15em 0.25em rgba(#000, 0.1));
+    }
+  }
+}

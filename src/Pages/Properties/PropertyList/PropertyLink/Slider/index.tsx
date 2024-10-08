@@ -2,6 +2,7 @@ import { memo, useMemo } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import type { IImage } from "Components/ImageSlider";
 import { ImageSlider } from "Components/ImageSlider";
+import type { PropertyImage } from "GraphQL/Types";
 import { ImagePlaceholder } from "Icons/ImagePlaceholder";
 import { LeftRight } from "Icons/LeftRight";
 import { Devices } from "Tools/Devices";
@@ -9,7 +10,7 @@ import "./styles.scss";
 
 export const Slider = memo(function Slider({ images }: Props) {
   const slides: IImage[] = useMemo(
-    () => images.map(content => ({ type: "image", content })),
+    () => images.map(({ url }) => ({ type: "image", content: url })),
     [images],
   );
 
@@ -33,5 +34,5 @@ export const Slider = memo(function Slider({ images }: Props) {
 });
 
 interface Props {
-  images: string[];
+  images: PropertyImage[];
 }

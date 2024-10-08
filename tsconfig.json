@@ -55,6 +55,9 @@
       "Icons/*": [
         "./Icons/*"
       ],
+      "Illustrations/*": [
+        "./Illustrations/*"
+      ],
       "Images/*": [
         "./Images/*"
       ],

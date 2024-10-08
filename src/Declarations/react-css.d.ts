@@ -6,8 +6,8 @@ declare module "react" {
     "--y"?: string;
     "--fill"?: string;
     "--height"?: string;
+    "--width"?: string;
     "--stroke"?: string;
-    "--height"?: number;
     "--maxHeight"?: number;
     "--translate"?: string;
     "--color1"?: string;

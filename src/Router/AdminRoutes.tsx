@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import type { BasicProperty } from "GraphQL/Types";
 import { PersonRoleType } from "GraphQL/Types";
 import { Building } from "Icons/Building";
 import { BuildingsStroked } from "Icons/Buildings";
@@ -7,7 +8,6 @@ import { Organization } from "Icons/Organization";
 import { Performance } from "Icons/Performance";
 import { RelativeLink } from "Layouts/Management/Link";
 import { PermissionBasedLink } from "Layouts/Management/Link/PermissionBasedLink";
-import type { IProperty } from "Models/Properties";
 import { UserRoutes } from "./UserRoutes";
 
 export class AdminRoutes {
@@ -55,7 +55,7 @@ export class AdminRoutes {
     />
   );
 
-  public static propertyLinks(properties: IProperty[]) {
+  public static propertyLinks(properties: BasicProperty[]) {
     return properties.map(({ slug, name }) => {
       const link = `/app/manage/${slug}`;
       return (
@@ -67,7 +67,7 @@ export class AdminRoutes {
     });
   }
 
-  public static links(properties: IProperty[]) {
+  public static links(properties: BasicProperty[]) {
     return [
       this.PROPERTIES,
       ...this.propertyLinks(properties),

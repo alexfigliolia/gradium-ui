@@ -1,7 +1,7 @@
 import { memo } from "react";
+import type { BasicProperty } from "GraphQL/Types";
 import { Building } from "Icons/Building";
 import { SettingsFilled } from "Icons/Settings";
-import type { IProperty } from "Models/Properties";
 import { Link } from "./Link";
 import { Slider } from "./Slider";
 import "./styles.scss";
@@ -15,7 +15,7 @@ export const PropertyLink = memo(function PropertyLink({
   zipCode,
   address1,
   address2,
-}: IProperty) {
+}: BasicProperty) {
   return (
     <div className="property-link">
       <Slider images={images} />
