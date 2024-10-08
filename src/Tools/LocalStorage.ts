@@ -1,6 +1,6 @@
 import type { IThemeName } from "@figliolia/galena-dark-mode";
-import { TypeSafeStorage } from "Generics/TypeSafeStorage";
+import { TypedStorage } from "@figliolia/typed-storage";
 
-export const LocalStorage = new TypeSafeStorage<{
+export const LocalStorage = new TypedStorage<{
   theme: IThemeName;
 }>(localStorage);
