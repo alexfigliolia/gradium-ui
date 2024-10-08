@@ -8,6 +8,7 @@ import {
   LinkEmail,
   Password,
   ResetPassword,
+  Theme,
 } from "Layouts/Account";
 import { residentPermission, useScope } from "State/Scope";
 import type { Propless } from "Types/React";
@@ -33,6 +34,7 @@ export default memo(
             )}
             <Emails />
             <Password />
+            <Theme />
           </div>
         </Page>
         <EmailInfo />

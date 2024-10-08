@@ -1,0 +1,16 @@
+@use "Styles/Variables";
+
+.tile.theme-tile {
+  display: flex;
+  flex-direction: column;
+  & p {
+    margin-bottom: 0;
+  }
+  &>div {
+    width: 100%;
+    @include Variables.center;
+    &>button {
+      box-shadow: inset 0px calc(var(--height) / 10) calc(var(--width) / 10) rgba(#000, 0.4);
+    }
+  }
+}
