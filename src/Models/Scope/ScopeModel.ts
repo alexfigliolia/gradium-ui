@@ -18,7 +18,7 @@ export class ScopeModel extends Accessor {
       affiliations: [],
       currentOrganizationId: -1,
       currentOrganizationName: "",
-      currentPermissions: new Set(),
+      currentPermissions: new Set<PersonRoleType>(),
     });
   }
 
