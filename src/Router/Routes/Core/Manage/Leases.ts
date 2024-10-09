@@ -1,6 +1,7 @@
 import { LazyLeasesPage } from "Pages/Leases/Lazy";
+import { AdminRoutes } from "Router/AdminRoutes";
 
 export const Leases = {
-  path: "/app/manage/:slug/leases",
+  path: AdminRoutes.slugRoute(":slug", "leases"),
   Component: LazyLeasesPage,
 };

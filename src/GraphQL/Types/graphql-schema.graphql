@@ -5,6 +5,7 @@ schema {
 type Query {
   userScope: LoggedInUser!
   verifySession: Boolean!
+  adminBasicProperties(organizationId: Int!): [AdminBasicProperty!]!
 }
 type LoggedInUser {
   id: Int!
@@ -26,24 +27,7 @@ type OrgAffiliation {
 type PersonRole {
   role: PersonRoleType!
 }
-type Mutation {
-  login(email: String!, password: String!): LoggedInUser!
-  logout: Boolean!
-  linkEmail(userId: Int!, email: String!): BasicUser!
-  deleteEmail(userId: Int!, email: String!): BasicUser!
-  updateEmail(userId: Int!, previous: String!, next: String!): BasicUser!
-  resetPassword(userId: Int!, previous: String!, next: String!): Boolean!
-  createAccount(name: String!, email: String!, password: String!): LoggedInUser!
-  forgotPassword(email: String!): String!
-  createProperty(name: String!, organizationId: Int!): BasicProperty!
-  inviteStaffMember(organizationId: Int!, email: String!): Boolean!
-  setOrganizationName(name: String!, organizationId: Int!): Boolean!
-}
-type BasicUser {
-  name: String!
-  emails: [LinkedEmail!]!
-}
-type BasicProperty {
+type AdminBasicProperty {
   id: Int!
   slug: String!
   name: String!
@@ -63,6 +47,23 @@ type PropertyImage {
 type PropertyAddon {
   id: Int!
   type: PropertyAddonType!
+}
+type Mutation {
+  login(email: String!, password: String!): LoggedInUser!
+  logout: Boolean!
+  linkEmail(userId: Int!, email: String!): BasicUser!
+  deleteEmail(userId: Int!, email: String!): BasicUser!
+  updateEmail(userId: Int!, previous: String!, next: String!): BasicUser!
+  resetPassword(userId: Int!, previous: String!, next: String!): Boolean!
+  createAccount(name: String!, email: String!, password: String!): LoggedInUser!
+  forgotPassword(email: String!): String!
+  createProperty(name: String!, organizationId: Int!): AdminBasicProperty!
+  inviteStaffMember(organizationId: Int!, email: String!): Boolean!
+  setOrganizationName(name: String!, organizationId: Int!): Boolean!
+}
+type BasicUser {
+  name: String!
+  emails: [LinkedEmail!]!
 }
 enum PersonRoleType {
   owner

@@ -7,6 +7,7 @@ import type {
   UserScopeQuery,
   UserScopeQueryVariables,
 } from "GraphQL/Types";
+import { Permissions } from "Tools/Permissions";
 import { Accessor } from "./Accessor";
 
 export class ScopeModel extends Accessor {
@@ -52,16 +53,10 @@ export class ScopeModel extends Accessor {
   }
 
   public hasPermissions(...permissions: PersonRoleType[]) {
-    const { currentPermissions } = this.getState();
-    if (!currentPermissions.size && permissions.length) {
-      return false;
-    }
-    for (const permission of permissions) {
-      if (currentPermissions.has(permission)) {
-        return true;
-      }
-    }
-    return false;
+    return Permissions.hasPermission(
+      this.getState().currentPermissions,
+      ...permissions,
+    );
   }
 
   public setState(scope: LoggedInUser) {

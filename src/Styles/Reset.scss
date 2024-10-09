@@ -22,6 +22,7 @@
   --theme-mid: #{Variables.$light-blue};
   --theme-text: #{Variables.$teal};
   --theme-gray: #{Variables.$light-gray};
+  --configure-theme: #{Variables.$configure-light};
   --leases-theme: #{Variables.$leases-light};
   --amenities-theme: #{Variables.$amenities-light};
   --maintenance-theme: #{Variables.$maintenance-light};
@@ -68,6 +69,7 @@ html[data-theme='dark'] {
   --theme-dark: #{Variables.$orange};
   --theme-mid: #{Variables.$light-orange};
   --theme-gray: #767676;
+  --configure-theme: #{Variables.$configure-dark};
   --leases-theme: #{Variables.$leases-dark};
   --amenities-theme: #{Variables.$amenities-dark};
   --maintenance-theme: #{Variables.$maintenance-dark};

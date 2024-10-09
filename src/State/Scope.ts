@@ -11,3 +11,6 @@ export const selectTotalEmails = (scope: IScope) => scope.emails.length;
 export const residentPermission = (scope: IScope) => {
   return scope.currentPermissions.has(PersonRoleType.Resident);
 };
+export const grants = (scope: IScope) => {
+  return scope.currentPermissions;
+};

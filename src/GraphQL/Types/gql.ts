@@ -13,10 +13,11 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "\n  fragment AdminBasicPropertyFragment on AdminBasicProperty {\n    id\n    name\n    slug\n    address1\n    address2\n    city\n    state\n    zipCode\n    mapsLink\n    images {\n      id\n      url\n    }\n    addons {\n      id\n      type\n    }\n  }\n": types.AdminBasicPropertyFragmentFragmentDoc,
     "\n  fragment BasicUserFragment on BasicUser {\n    name\n    emails {\n      email\n    }\n  }\n": types.BasicUserFragmentFragmentDoc,
     "\n  fragment LoggedInUserFragment on LoggedInUser {\n    id\n    name\n    emails {\n      email\n    }\n    affiliations {\n      organization {\n        id\n        name\n      }\n      roles {\n        role\n      }\n    }\n  }\n": types.LoggedInUserFragmentFragmentDoc,
     "\n  \n  mutation createAccount($name: String!, $email: String!, $password: String!) {\n    createAccount(name: $name, email: $email, password: $password) {\n      ...LoggedInUserFragment\n    }\n  }\n": types.CreateAccountDocument,
-    "\n  mutation createProperty($name: String!, $organizationId: Int!) {\n    createProperty(name: $name, organizationId: $organizationId) {\n      id\n      name\n      slug\n      address1\n      address2\n      city\n      state\n      zipCode\n      mapsLink\n      images {\n        id\n        url\n      }\n      addons {\n        id\n        type\n      }\n    }\n  }\n": types.CreatePropertyDocument,
+    "\n  \n  mutation createProperty($name: String!, $organizationId: Int!) {\n    createProperty(name: $name, organizationId: $organizationId) {\n      ...AdminBasicPropertyFragment\n    }\n  }\n": types.CreatePropertyDocument,
     "\n  \n  mutation deleteEmail($userId: Int!, $email: String!) {\n    deleteEmail(userId: $userId, email: $email) {\n      ...BasicUserFragment\n    }\n  }\n": types.DeleteEmailDocument,
     "\n  mutation forgotPassword($email: String!) {\n    forgotPassword(email: $email)\n  }\n": types.ForgotPasswordDocument,
     "\n  mutation inviteStaffMember($email: String!, $organizationId: Int!) {\n    inviteStaffMember(email: $email, organizationId: $organizationId)\n  }\n": types.InviteStaffMemberDocument,
@@ -26,6 +27,7 @@ const documents = {
     "\n  mutation resetPassword($userId: Int!, $previous: String!, $next: String!) {\n    resetPassword(userId: $userId, previous: $previous, next: $next)\n  }\n": types.ResetPasswordDocument,
     "\n  mutation setOrganizationName($name: String!, $organizationId: Int!) {\n    setOrganizationName(name: $name, organizationId: $organizationId)\n  }\n": types.SetOrganizationNameDocument,
     "\n  \n  mutation updateEmail($userId: Int!, $previous: String!, $next: String!) {\n    updateEmail(userId: $userId, previous: $previous, next: $next) {\n      ...BasicUserFragment\n    }\n  }\n": types.UpdateEmailDocument,
+    "\n  \n  query adminBasicProperties($organizationId: Int!) {\n    adminBasicProperties(organizationId: $organizationId) {\n      ...AdminBasicPropertyFragment\n    }\n  }\n": types.AdminBasicPropertiesDocument,
     "\n  \n  query userScope {\n    userScope {\n      ...LoggedInUserFragment\n    }\n  }\n": types.UserScopeDocument,
     "\n  query verifySession {\n    verifySession\n  }\n": types.VerifySessionDocument,
 };
@@ -47,6 +49,10 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function gql(source: "\n  fragment AdminBasicPropertyFragment on AdminBasicProperty {\n    id\n    name\n    slug\n    address1\n    address2\n    city\n    state\n    zipCode\n    mapsLink\n    images {\n      id\n      url\n    }\n    addons {\n      id\n      type\n    }\n  }\n"): (typeof documents)["\n  fragment AdminBasicPropertyFragment on AdminBasicProperty {\n    id\n    name\n    slug\n    address1\n    address2\n    city\n    state\n    zipCode\n    mapsLink\n    images {\n      id\n      url\n    }\n    addons {\n      id\n      type\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function gql(source: "\n  fragment BasicUserFragment on BasicUser {\n    name\n    emails {\n      email\n    }\n  }\n"): (typeof documents)["\n  fragment BasicUserFragment on BasicUser {\n    name\n    emails {\n      email\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -59,7 +65,7 @@ export function gql(source: "\n  \n  mutation createAccount($name: String!, $ema
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  mutation createProperty($name: String!, $organizationId: Int!) {\n    createProperty(name: $name, organizationId: $organizationId) {\n      id\n      name\n      slug\n      address1\n      address2\n      city\n      state\n      zipCode\n      mapsLink\n      images {\n        id\n        url\n      }\n      addons {\n        id\n        type\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation createProperty($name: String!, $organizationId: Int!) {\n    createProperty(name: $name, organizationId: $organizationId) {\n      id\n      name\n      slug\n      address1\n      address2\n      city\n      state\n      zipCode\n      mapsLink\n      images {\n        id\n        url\n      }\n      addons {\n        id\n        type\n      }\n    }\n  }\n"];
+export function gql(source: "\n  \n  mutation createProperty($name: String!, $organizationId: Int!) {\n    createProperty(name: $name, organizationId: $organizationId) {\n      ...AdminBasicPropertyFragment\n    }\n  }\n"): (typeof documents)["\n  \n  mutation createProperty($name: String!, $organizationId: Int!) {\n    createProperty(name: $name, organizationId: $organizationId) {\n      ...AdminBasicPropertyFragment\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -96,6 +102,10 @@ export function gql(source: "\n  mutation setOrganizationName($name: String!, $o
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  \n  mutation updateEmail($userId: Int!, $previous: String!, $next: String!) {\n    updateEmail(userId: $userId, previous: $previous, next: $next) {\n      ...BasicUserFragment\n    }\n  }\n"): (typeof documents)["\n  \n  mutation updateEmail($userId: Int!, $previous: String!, $next: String!) {\n    updateEmail(userId: $userId, previous: $previous, next: $next) {\n      ...BasicUserFragment\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  \n  query adminBasicProperties($organizationId: Int!) {\n    adminBasicProperties(organizationId: $organizationId) {\n      ...AdminBasicPropertyFragment\n    }\n  }\n"): (typeof documents)["\n  \n  query adminBasicProperties($organizationId: Int!) {\n    adminBasicProperties(organizationId: $organizationId) {\n      ...AdminBasicPropertyFragment\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

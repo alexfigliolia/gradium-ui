@@ -2,11 +2,12 @@ import { memo, useCallback, useMemo } from "react";
 import { ImageGrid } from "Components/ImageGrid";
 import { Tile } from "Components/Tile";
 import { UploaderWithPlaceholder } from "Components/UploaderWithPlaceholder";
+import type { PropertyImage } from "GraphQL/Types";
 import { ImagePlaceholder } from "Icons/ImagePlaceholder";
 
 export const PropertyImages = memo(function PropertyImages({ images }: Props) {
   const imageList = useMemo(
-    () => Array.from({ length: 6 }, (_, i) => images[i] ?? ""),
+    () => Array.from({ length: 6 }, (_, i) => images?.[i]?.url ?? ""),
     [images],
   );
 
@@ -36,5 +37,5 @@ export const PropertyImages = memo(function PropertyImages({ images }: Props) {
 });
 
 interface Props {
-  images: string[];
+  images: PropertyImage[];
 }

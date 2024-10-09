@@ -2,27 +2,36 @@
 
 .tabs {
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  @media (min-width: Variables.$small-vertical-tablet) {
-    column-gap: 1em;
-    justify-content: flex-start;
-  }
+  max-width: 100%;
+  overflow-x: scroll;
   &>a {
+    display: inline-block;
     color: #fff;
     font-size: 0.9em;
     text-decoration: none;
     padding: 0.5em 0.8em;
     border-radius: 2em;
     font-weight: 600;
-    @include Variables.center;
     @media (min-width: Variables.$small-vertical-tablet) {
       font-size: 1em;
       padding: 0.6em 1em;
     }
     &:visited {
       color: #fff;
+    }
+    &:not(:last-of-type) {
+      margin-right: 1em;
+    }
+    &.configure-link {
+      border: 2px solid var(--configure-theme);
+      color: var(--configure-theme);
+      &.active {
+        color: #fff;
+        background: var(--configure-theme);
+      }
+      &:focus-visible {
+        outline: 0.1em solid var(--configure-theme);
+      }
     }
     &.leases-link {
       border: 2px solid var(--leases-theme);

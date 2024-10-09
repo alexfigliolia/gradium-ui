@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import type { BasicProperty } from "GraphQL/Types";
+import type { AdminBasicProperty } from "GraphQL/Types";
 import { PersonRoleType } from "GraphQL/Types";
 import { Building } from "Icons/Building";
 import { BuildingsStroked } from "Icons/Buildings";
@@ -33,7 +33,7 @@ export class AdminRoutes {
       to="/app/staff"
       label="Staff"
       Icon={Organization}
-      permissions={[PersonRoleType.Owner, PersonRoleType.Manager]}
+      permissions={[PersonRoleType.Manager]}
     />
   );
   public static readonly FINANCES = (
@@ -51,13 +51,13 @@ export class AdminRoutes {
       Icon={BuildingsStroked}
       label="Organization"
       to="/app/organization"
-      permissions={[PersonRoleType.Owner, PersonRoleType.Manager]}
+      permissions={[PersonRoleType.Owner]}
     />
   );
 
-  public static propertyLinks(properties: BasicProperty[]) {
+  public static propertyLinks(properties: AdminBasicProperty[]) {
     return properties.map(({ slug, name }) => {
-      const link = `/app/manage/${slug}`;
+      const link = this.slugRoute(slug);
       return (
         <NavLink key={slug} to={link} className="is-property">
           <span aria-hidden />
@@ -67,7 +67,11 @@ export class AdminRoutes {
     });
   }
 
-  public static links(properties: BasicProperty[]) {
+  public static slugRoute(slug: string, ...rest: string[]) {
+    return ["/app", "manage", slug, ...rest].join("/");
+  }
+
+  public static links(properties: AdminBasicProperty[]) {
     return [
       this.PROPERTIES,
       ...this.propertyLinks(properties),

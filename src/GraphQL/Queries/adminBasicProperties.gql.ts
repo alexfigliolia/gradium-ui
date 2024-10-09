@@ -1,10 +1,10 @@
 import { gql } from "graphql-request";
 import { AdminBasicPropertyFragment } from "GraphQL/Fragments/adminBasicProperty.gql";
 
-export const createProperty = gql`
+export const adminBasicProperties = gql`
   ${AdminBasicPropertyFragment}
-  mutation createProperty($name: String!, $organizationId: Int!) {
-    createProperty(name: $name, organizationId: $organizationId) {
+  query adminBasicProperties($organizationId: Int!) {
+    adminBasicProperties(organizationId: $organizationId) {
       ...AdminBasicPropertyFragment
     }
   }

@@ -1,5 +1,5 @@
-import type { BasicProperty } from "GraphQL/Types";
+import type { AdminBasicProperty } from "GraphQL/Types";
 
 export interface IProperties {
-  properties: Record<number, BasicProperty>;
+  properties: Record<number, AdminBasicProperty>;
 }

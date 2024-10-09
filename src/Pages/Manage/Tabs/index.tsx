@@ -1,30 +1,30 @@
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import { NavLink } from "react-router-dom";
 import { useCurrentProperty } from "Hooks/useCurrentProperty";
+import { AdminRoutes } from "Router/AdminRoutes";
 import type { Propless } from "Types/React";
+import { AmenitiesLink } from "./AmenitiesLink";
+import { ConfigureLink } from "./ConfigurationLink";
+import { FinancesLink } from "./FinancesLink";
+import { LeasesLink } from "./LeasesLink";
 import "./styles.scss";
 
 export const Tabs = memo(
   function Tabs(_: Propless) {
     const { slug } = useCurrentProperty();
+    const maintentance = useMemo(
+      () => AdminRoutes.slugRoute(slug, "maintenance"),
+      [slug],
+    );
     return (
       <div className="tabs">
-        <NavLink to={`/app/manage/${slug}/leases`} className="leases-link">
-          Leases
-        </NavLink>
-        <NavLink
-          to={`/app/manage/${slug}/amenities`}
-          className="amenities-link">
-          Amenities
-        </NavLink>
-        <NavLink
-          to={`/app/manage/${slug}/maintenance`}
-          className="maintenance-link">
+        <ConfigureLink />
+        <LeasesLink />
+        <AmenitiesLink />
+        <NavLink to={maintentance} className="maintenance-link">
           Maintenance
         </NavLink>
-        <NavLink to={`/app/manage/${slug}/finances`} className="finances-link">
-          Finances
-        </NavLink>
+        <FinancesLink />
       </div>
     );
   },
