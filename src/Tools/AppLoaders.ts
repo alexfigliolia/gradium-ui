@@ -19,11 +19,11 @@ export class AppLoaders {
     }
   }
 
-  public static Auth = new DataLoader(async () => {
+  public static Auth = this.create(async () => {
     return Authentication.isAuthenticated();
   });
 
-  public static Scope = new DataLoader(async () => {
+  public static Scope = this.create(async () => {
     const authenticated = await this.Auth.get();
     if (!authenticated) {
       throw new Error("Redirect");
@@ -41,7 +41,7 @@ export class AppLoaders {
     throw new Error("Redirect");
   });
 
-  public static Properties = new DataLoader(async () => {
+  public static Properties = this.create(async () => {
     const scope = await this.Scope.get();
     return Properties.initialize(
       scope.currentOrganizationId,
