@@ -1,16 +1,72 @@
 import { NavLink } from "react-router-dom";
 import type { AdminBasicProperty } from "GraphQL/Types";
-import { PersonRoleType } from "GraphQL/Types";
+import { PersonRoleType, PropertyAddonType } from "GraphQL/Types";
 import { Building } from "Icons/Building";
 import { BuildingsStroked } from "Icons/Buildings";
 import { MoneyStroked } from "Icons/Money";
 import { Organization } from "Icons/Organization";
 import { Performance } from "Icons/Performance";
-import { RelativeLink } from "Layouts/Management/Link";
-import { PermissionBasedLink } from "Layouts/Management/Link/PermissionBasedLink";
+import { PermissedLink, RelativeLink } from "Layouts/Management";
 import { UserRoutes } from "./UserRoutes";
 
 export class AdminRoutes {
+  public static readonly ACCESS_CONTROL = {
+    PROPERTY_PERFORMANCE: {
+      permissions: [PersonRoleType.Manager],
+      addons: [],
+    },
+    ORGANIZATION_STAFF: {
+      permissions: [PersonRoleType.Manager],
+      addons: [],
+    },
+    ORGANIZATION_FINANCES: {
+      permissions: [PersonRoleType.Owner],
+      addons: [],
+    },
+    ORGANIZATION_CONFIGURATION: {
+      permissions: [PersonRoleType.Owner],
+      addons: [],
+    },
+    PROPERTY_CONFIGURATION: {
+      permissions: [PersonRoleType.Manager],
+      addons: [],
+    },
+    PROPERTY_LEASES: {
+      permissions: [PersonRoleType.Manager],
+      addons: [PropertyAddonType.LeaseManagement],
+    },
+    PROPERTY_AMENITIES: {
+      permissions: [PersonRoleType.Manager],
+      addons: [PropertyAddonType.AmenityReservations],
+    },
+    PROPERTY_MAINTENACE: {
+      permissions: [PersonRoleType.Maintenance],
+      addons: [],
+    },
+    PROPERTY_FINANCES: {
+      permissions: [PersonRoleType.Owner],
+      addons: [],
+    },
+  };
+
+  public static access<K extends keyof typeof AdminRoutes.ACCESS_CONTROL>(
+    key: K,
+  ) {
+    return this.ACCESS_CONTROL[key];
+  }
+
+  public static permissions<K extends keyof typeof AdminRoutes.ACCESS_CONTROL>(
+    key: K,
+  ) {
+    return this.access(key).permissions;
+  }
+
+  public static addons<K extends keyof typeof AdminRoutes.ACCESS_CONTROL>(
+    key: K,
+  ) {
+    return this.access(key).addons;
+  }
+
   public static readonly PROPERTIES = (
     <RelativeLink
       key="properties"
@@ -20,38 +76,39 @@ export class AdminRoutes {
     />
   );
   public static readonly PERFORMANCE = (
-    <RelativeLink
+    <PermissedLink
       key="performance"
       to="/app/performance"
       label="Performance"
       Icon={Performance}
+      requirements={this.permissions("PROPERTY_PERFORMANCE")}
     />
   );
   public static readonly STAFF = (
-    <PermissionBasedLink
+    <PermissedLink
       key="staff"
       to="/app/staff"
       label="Staff"
       Icon={Organization}
-      permissions={[PersonRoleType.Manager]}
+      requirements={this.permissions("ORGANIZATION_STAFF")}
     />
   );
   public static readonly FINANCES = (
-    <PermissionBasedLink
+    <PermissedLink
       key="finances"
       to="/app/finances"
       label="Finances"
       Icon={MoneyStroked}
-      permissions={[PersonRoleType.Owner]}
+      requirements={this.permissions("ORGANIZATION_FINANCES")}
     />
   );
   public static readonly ORGANIZATION = (
-    <PermissionBasedLink
+    <PermissedLink
       key="organization"
       Icon={BuildingsStroked}
       label="Organization"
       to="/app/organization"
-      permissions={[PersonRoleType.Owner]}
+      requirements={this.permissions("ORGANIZATION_CONFIGURATION")}
     />
   );
 

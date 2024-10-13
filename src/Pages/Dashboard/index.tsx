@@ -1,9 +1,11 @@
-import { Fragment, memo, useMemo } from "react";
+import { memo, useMemo } from "react";
 import { GradientButton } from "Components/GradientButton";
 import { Page } from "Components/Page";
-import { useCurrentProperty } from "Hooks/useCurrentProperty";
+import { PermissedRoute } from "Components/PermissedRoute";
 import { Clock } from "Icons/Clock";
+import { AdminRoutes } from "Router/AdminRoutes";
 import { Modals } from "State/Modals";
+import { currentProperty, useProperties } from "State/Properties";
 import type { Propless } from "Types/React";
 import { Filters } from "./Filters";
 import { Financials } from "./Financials";
@@ -13,7 +15,7 @@ import "./styles.scss";
 
 export default memo(
   function Dashboard(_: Propless) {
-    const property = useCurrentProperty();
+    const property = useProperties(currentProperty);
     const name = useMemo(
       () =>
         property.name.endsWith("s")
@@ -22,7 +24,9 @@ export default memo(
       [property.name],
     );
     return (
-      <Fragment>
+      <PermissedRoute
+        fallback="/app"
+        requirements={AdminRoutes.permissions("ORGANIZATION_FINANCES")}>
         <Page
           className="dashboard"
           label={`${name} Dashboard`}
@@ -40,7 +44,7 @@ export default memo(
           </div>
         </Page>
         <Filters />
-      </Fragment>
+      </PermissedRoute>
     );
   },
   () => true,

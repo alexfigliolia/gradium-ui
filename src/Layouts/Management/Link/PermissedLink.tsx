@@ -4,13 +4,13 @@ import { Scope } from "State/Scope";
 import type { Props as RelativeLinkProps } from "./RelativeLink";
 import { RelativeLink } from "./RelativeLink";
 
-export const PermissionBasedLink = memo(function PermissionBasedLink({
-  permissions,
+export const PermissedLink = memo(function PermissedLink({
+  requirements,
   ...rest
 }: Props) {
   const accepted = useMemo(
-    () => Scope.hasPermissions(...permissions),
-    [permissions],
+    () => Scope.hasPermissions(...requirements),
+    [requirements],
   );
   if (!accepted) {
     return null;
@@ -19,5 +19,5 @@ export const PermissionBasedLink = memo(function PermissionBasedLink({
 });
 
 interface Props extends RelativeLinkProps {
-  permissions: PersonRoleType[];
+  requirements: PersonRoleType[];
 }

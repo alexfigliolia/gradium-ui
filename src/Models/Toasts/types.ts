@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { RenderableMap } from "Tools/RenderableMap";
+import type { RenderableMap } from "Generics/RenderableMap";
 import type { Callback } from "Types/Generics";
 
 export type IToastType = "success" | "error" | "info";

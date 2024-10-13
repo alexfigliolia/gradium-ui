@@ -1,4 +1,3 @@
-"use client";
 import { Fragment, memo, useLayoutEffect } from "react";
 import { useMount } from "@figliolia/react-hooks";
 import {

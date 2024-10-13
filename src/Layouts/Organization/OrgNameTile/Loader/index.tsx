@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { useClassNames } from "@figliolia/classnames";
-import { TriangeLoader } from "Components/TriangleLoader";
+import { TriangleLoader } from "Components/TriangleLoader";
 import { Check } from "Icons/Check";
 import { Error } from "Icons/Error";
 import type { ActionState } from "Types/React";
@@ -19,7 +19,7 @@ export const Loader = memo(function Loader({
   });
   return (
     <div className={classes}>
-      <TriangeLoader />
+      <TriangleLoader />
       <Check />
       <Error />
     </div>

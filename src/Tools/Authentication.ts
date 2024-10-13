@@ -7,7 +7,6 @@ import type {
   VerifySessionQuery,
   VerifySessionQueryVariables,
 } from "GraphQL/Types";
-import { BaseModel } from "Models/BaseModel";
 
 export class Authentication {
   public static async isAuthenticated() {
@@ -25,7 +24,6 @@ export class Authentication {
   public static async logout() {
     try {
       await graphQLRequest<LogoutMutation, LogoutMutationVariables>(logout, {});
-      BaseModel.resetAll();
     } catch (error) {
       // silence :)
     }

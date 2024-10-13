@@ -1,6 +1,6 @@
 import type { ChangeEvent } from "react";
+import { CRUDModel } from "Generics/CRUDModel";
 import type { ILease, ILessee } from "Models/Leases";
-import { CRUDModel } from "Tools/CRUDModel";
 import { Dates } from "Tools/Dates";
 import type { ILeaseCRUD } from "./types";
 

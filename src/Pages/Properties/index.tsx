@@ -3,7 +3,7 @@ import { GradientButton } from "Components/GradientButton";
 import { Page } from "Components/Page";
 import { Modals } from "State/Modals";
 import type { Propless } from "Types/React";
-import { NewProperty } from "./NewProperty";
+import { LazyNewProperty } from "./NewProperty/Lazy";
 import { PropertyList } from "./PropertyList";
 import "./styles.scss";
 
@@ -23,7 +23,7 @@ export default memo(
           }>
           <PropertyList />
         </Page>
-        <NewProperty />
+        <LazyNewProperty />
       </Fragment>
     );
   },

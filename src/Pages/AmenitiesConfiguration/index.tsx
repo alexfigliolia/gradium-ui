@@ -1,6 +1,8 @@
 import { Fragment, memo, useCallback } from "react";
 import { AmenitiesTile } from "Components/AmenitiesTile";
+import { PermissedPropertyRoute } from "Components/PermissedPropertyRoute";
 import { PropertyConfigurationPage } from "Layouts/PropertyConfiguration";
+import { AdminRoutes } from "Router/AdminRoutes";
 import { selectAmenities, useAmenities } from "State/Amenities";
 import type { Propless } from "Types/React";
 import { AmenityForm } from "./AmenityForm";
@@ -14,19 +16,23 @@ export default memo(
     );
     const amenities = useAmenities(selectAmenities);
     return (
-      <PropertyConfigurationPage labelFN={labelFN}>
-        <AmenitiesTile>
-          <NewAmenityButton />
-        </AmenitiesTile>
-        {!!amenities.length && (
-          <Fragment>
-            {amenities.map((amenity, i) => {
-              return <AmenityForm key={i} index={i} {...amenity} />;
-            })}
+      <PermissedPropertyRoute
+        fallback=".."
+        requirements={AdminRoutes.access("PROPERTY_AMENITIES")}>
+        <PropertyConfigurationPage labelFN={labelFN}>
+          <AmenitiesTile>
             <NewAmenityButton />
-          </Fragment>
-        )}
-      </PropertyConfigurationPage>
+          </AmenitiesTile>
+          {!!amenities.length && (
+            <Fragment>
+              {amenities.map((amenity, i) => {
+                return <AmenityForm key={i} index={i} {...amenity} />;
+              })}
+              <NewAmenityButton />
+            </Fragment>
+          )}
+        </PropertyConfigurationPage>
+      </PermissedPropertyRoute>
     );
   },
   () => true,

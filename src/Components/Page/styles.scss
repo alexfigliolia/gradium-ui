@@ -28,5 +28,19 @@
         font-size: 1.75em;
       }
     }
+    &>div {
+      margin-left: 1em;
+      position: relative;
+      &>div {
+        position: absolute;
+        white-space: nowrap;
+        top: -50%;
+        left: -50%;
+        translate: -100% -50%;
+        @media (min-width: Variables.$small-vertical-tablet) {
+          translate: 0 -50%;
+        }
+      }
+    }
   }
 }

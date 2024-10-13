@@ -13,6 +13,8 @@ import type { IProperties } from "./types";
 export class PropertiesModel extends BaseModel<IProperties> {
   constructor() {
     super("Properties", {
+      current: -1,
+      loading: false,
       properties: {},
     });
   }
@@ -23,28 +25,56 @@ export class PropertiesModel extends BaseModel<IProperties> {
     });
   }
 
-  public initialize(organizationId: number, grants: Set<PersonRoleType>) {
+  public async initialize(organizationId: number, grants: Set<PersonRoleType>) {
     const permissions = new Permissions(grants);
     if (permissions.hasPermission(PersonRoleType.Maintenance)) {
-      void this.fetchAdminScope(organizationId);
-    } else if (permissions.hasPermission(PersonRoleType.Resident)) {
+      return this.fetchAdminScope(organizationId);
+    }
+    if (permissions.hasPermission(PersonRoleType.Resident)) {
       // Get residence properties
     }
+    return null;
   }
 
   private async fetchAdminScope(organizationId: number) {
+    this.loading();
     const response = await graphQLRequest<
       AdminBasicPropertiesQuery,
       AdminBasicPropertiesQueryVariables
     >(adminBasicProperties, {
       organizationId,
     });
+    const map: Record<number, AdminBasicProperty> = {};
+    for (const property of response.adminBasicProperties) {
+      map[property.id] = property;
+    }
     this.update(state => {
-      state.properties = response.adminBasicProperties;
+      state.properties = map;
+      state.loading = false;
     });
+    return map;
   }
 
   public toList() {
     return Object.values(this.getState().properties);
+  }
+
+  public setActiveProperty(nextSlug: string) {
+    const { properties } = this.getState();
+    for (const key in properties) {
+      const { slug, id } = properties[key];
+      if (slug === nextSlug) {
+        return this.update(state => {
+          state.current = id;
+        });
+      }
+    }
+    throw new Error("Property not found");
+  }
+
+  public loading(nextState = true) {
+    this.update(state => {
+      state.loading = nextState;
+    });
   }
 }

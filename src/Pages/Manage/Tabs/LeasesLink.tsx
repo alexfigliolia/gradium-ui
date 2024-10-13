@@ -1,23 +1,23 @@
 import { memo, useMemo } from "react";
 import { NavLink } from "react-router-dom";
-import { PersonRoleType, PropertyAddonType } from "GraphQL/Types";
-import { useCurrentProperty } from "Hooks/useCurrentProperty";
+import { usePropertyAccess } from "Hooks/usePropertyAccess";
 import { AdminRoutes } from "Router/AdminRoutes";
+import { currentProperty, useProperties } from "State/Properties";
 import { grants, useScope } from "State/Scope";
 import { Permissions } from "Tools/Permissions";
 import type { Propless } from "Types/React";
 
+const { addons, permissions } = AdminRoutes.access("PROPERTY_LEASES");
+
 export const LeasesLink = memo(
   function LeasesLink(_: Propless) {
     const userGrants = useScope(grants);
-    const { slug, addons } = useCurrentProperty();
+    const { slug } = useProperties(currentProperty);
+    const hasAddon = usePropertyAccess(...addons);
 
     const accessible = useMemo(() => {
-      return (
-        addons.some(a => a.type === PropertyAddonType.LeaseManagement) &&
-        Permissions.hasPermission(userGrants, PersonRoleType.Manager)
-      );
-    }, [userGrants, addons]);
+      return hasAddon && Permissions.hasPermission(userGrants, ...permissions);
+    }, [userGrants, hasAddon]);
 
     const route = useMemo(() => AdminRoutes.slugRoute(slug, "leases"), [slug]);
 

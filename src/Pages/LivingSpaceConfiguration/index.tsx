@@ -1,6 +1,8 @@
 import { Fragment, memo, useCallback } from "react";
 import { LivingSpaceTile } from "Components/LivingSpaceTile";
+import { PermissedRoute } from "Components/PermissedRoute";
 import { PropertyConfigurationPage } from "Layouts/PropertyConfiguration";
+import { AdminRoutes } from "Router/AdminRoutes";
 import { selectUnits, useLivingSpaces } from "State/LivingSpaces";
 import type { Propless } from "Types/React";
 import { ConfirmDelete } from "./ConfirmDelete";
@@ -15,7 +17,9 @@ export default memo(
     );
     const spaces = useLivingSpaces(selectUnits);
     return (
-      <Fragment>
+      <PermissedRoute
+        fallback=".."
+        requirements={AdminRoutes.permissions("PROPERTY_CONFIGURATION")}>
         <PropertyConfigurationPage labelFN={labelFN}>
           <LivingSpaceTile>
             <NewSpaceButton />
@@ -30,7 +34,7 @@ export default memo(
           )}
         </PropertyConfigurationPage>
         <ConfirmDelete />
-      </Fragment>
+      </PermissedRoute>
     );
   },
   () => true,

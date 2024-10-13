@@ -6,10 +6,13 @@ import { login } from "GraphQL/Mutations/login.gql";
 import type {
   CreateAccountMutation,
   CreateAccountMutationVariables,
+  LoggedInUser,
   LoginMutation,
   LoginMutationVariables,
 } from "GraphQL/Types";
 import { UIClient } from "GraphQL/UIClient";
+import { Scope } from "State/Scope";
+import { AppLoaders } from "Tools/AppLoaders";
 import { Validators } from "Tools/Validators";
 import type { Callback } from "Types/Generics";
 
@@ -46,7 +49,10 @@ export class Controller {
 
   public async login(data: FormData, signUp: boolean) {
     const email = Validators.emailParser(data);
-    await this.getClient().executeQuery<LoginMutation, LoginMutationVariables>(
+    const response = await this.getClient().executeQuery<
+      LoginMutation,
+      LoginMutationVariables
+    >(
       login,
       {
         email,
@@ -54,16 +60,23 @@ export class Controller {
       },
       this.navigateToApp(signUp),
     );
+    this.push(response.login);
   }
 
   public async signUP(data: FormData, signUP: boolean) {
     const name = Validators.nameParser(data);
     const email = Validators.emailParser(data);
     const password = Validators.passwordParser(data);
-    await this.getClient().executeQuery<
+    const response = await this.getClient().executeQuery<
       CreateAccountMutation,
       CreateAccountMutationVariables
     >(createAccount, { name, email, password }, this.navigateToApp(signUP));
+    this.push(response.createAccount);
+  }
+
+  private push(scope: LoggedInUser) {
+    Scope.populate(scope);
+    AppLoaders.Scope.populate(Scope.getState());
   }
 
   private getClient() {
@@ -81,8 +94,8 @@ export class Controller {
   }
 
   private navigateToApp(signUp: boolean) {
+    const route = signUp ? "/app/organization" : "/app";
     return () => {
-      const route = signUp ? "/app/organization" : "/app";
       if (this.fadeOut.current) {
         this.fadeOut.current(() => this.navigate(route));
       } else {

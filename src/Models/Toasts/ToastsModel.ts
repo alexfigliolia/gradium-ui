@@ -1,6 +1,6 @@
 import { AutoIncrementingID, EventEmitter } from "@figliolia/event-emitter";
+import { RenderableMap } from "Generics/RenderableMap";
 import { BaseModel } from "Models/BaseModel";
-import { RenderableMap } from "Tools/RenderableMap";
 import type { IndexedToast, IToast, IToasts } from "./types";
 
 export class ToastsModel extends BaseModel<IToasts> {

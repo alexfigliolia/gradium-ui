@@ -1,7 +1,7 @@
 import { memo, useMemo } from "react";
 import { NavLink } from "react-router-dom";
-import { useCurrentProperty } from "Hooks/useCurrentProperty";
 import { AdminRoutes } from "Router/AdminRoutes";
+import { currentProperty, useProperties } from "State/Properties";
 import type { Propless } from "Types/React";
 import { AmenitiesLink } from "./AmenitiesLink";
 import { ConfigureLink } from "./ConfigurationLink";
@@ -11,7 +11,7 @@ import "./styles.scss";
 
 export const Tabs = memo(
   function Tabs(_: Propless) {
-    const { slug } = useCurrentProperty();
+    const { slug } = useProperties(currentProperty);
     const maintentance = useMemo(
       () => AdminRoutes.slugRoute(slug, "maintenance"),
       [slug],

@@ -1,4 +1,4 @@
-import { CRUDModel } from "Tools/CRUDModel";
+import { CRUDModel } from "Generics/CRUDModel";
 import { Dates } from "Tools/Dates";
 import type { IAmenityReservation } from "./types";
 

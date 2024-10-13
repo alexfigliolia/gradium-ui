@@ -80,4 +80,13 @@ export class ScopeModel extends Accessor {
     }
     this.setCurrentAffiliation(affiliation);
   }
+
+  public populate(scope: LoggedInUser) {
+    this.setState(scope);
+    const affiliation = scope.affiliations[0];
+    if (!affiliation) {
+      return;
+    }
+    this.setCurrentAffiliation(affiliation);
+  }
 }

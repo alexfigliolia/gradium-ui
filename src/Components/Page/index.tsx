@@ -15,7 +15,11 @@ export const Page = memo(
       <section {...rest} className={classes}>
         <div className="title-area">
           <h1>{label}</h1>
-          {titleArea}
+          {titleArea && (
+            <div>
+              <div>{titleArea}</div>
+            </div>
+          )}
         </div>
         {children}
       </section>

@@ -1,9 +1,8 @@
-import { BaseModel } from "Models/BaseModel";
+import { StackModel } from "Generics/StackModel";
 import { ModalStack } from "Tools/ModalStack";
-import type { FilterKeys } from "Types/Generics";
 import type { IModals } from "./types";
 
-export class ModalsModel extends BaseModel<IModals> {
+export class ModalsModel extends StackModel<IModals> {
   constructor() {
     super("Modals", {
       emailInfo: false,
@@ -24,18 +23,6 @@ export class ModalsModel extends BaseModel<IModals> {
       marketingMobileMenu: false,
     });
   }
-
-  private toggleKey = <K extends keyof FilterKeys<IModals, boolean>>(
-    key: K,
-    nextValue: boolean,
-  ) => {
-    return () => {
-      this.update(state => {
-        // @ts-ignore
-        state[key] = nextValue;
-      });
-    };
-  };
 
   private openDeleteEmail = (email: string) => {
     this.update(state => {

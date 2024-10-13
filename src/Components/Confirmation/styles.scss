@@ -4,6 +4,9 @@
   z-index: 10000;
   --button-margins: 0.25em auto 0;
   --button-max-width: 350px;
+  &>div {
+    box-shadow: var(--shadow-level-3-dark);
+  }
   &.mobile .sheet-content {
     padding-bottom: 1.5em;
   }

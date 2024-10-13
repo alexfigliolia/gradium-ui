@@ -2,7 +2,7 @@ import { memo } from "react";
 import type { Propless } from "Types/React";
 import "./styles.scss";
 
-export const TriangeLoader = memo(function TriangeLoader(_: Propless) {
+export const TriangleLoader = memo(function TriangleLoader(_: Propless) {
   return (
     <div
       className="triangle-loader"

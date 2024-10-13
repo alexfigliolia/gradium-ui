@@ -28,6 +28,9 @@ export class Permissions {
     grants: Set<PersonRoleType>,
     ...required: PersonRoleType[]
   ) {
+    if (!required.length) {
+      return true;
+    }
     for (const grant of grants) {
       const access = this.permissions[grant];
       if (!access) {
