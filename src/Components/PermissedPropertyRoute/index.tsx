@@ -4,9 +4,9 @@ import { Navigate } from "react-router-dom";
 import { useAccessControlCallback } from "Hooks/useAccessControlCallback";
 import { usePropertyAccess } from "Hooks/usePropertyAccess";
 import { grants, useScope } from "State/Scope";
-import { Permissions } from "Tools/Permissions";
+import { Permission } from "Tools/Permission";
 import type { Callback } from "Types/Generics";
-import type { AccessControl } from "Types/Permissions";
+import type { AccessControl } from "Types/Permission";
 import type { OptionalChildren } from "Types/React";
 
 export const PermissedPropertyRoute = memo(function PermissedPropertyRoute({
@@ -20,9 +20,9 @@ export const PermissedPropertyRoute = memo(function PermissedPropertyRoute({
   const granted = useMemo(() => {
     return (
       hasAddon &&
-      Permissions.hasPermission(userGrants, ...requirements.permissions)
+      Permission.hasPermission(userGrants, ...requirements.permissions)
     );
-  }, [userGrants, requirements, hasAddon]);
+  }, [userGrants, requirements.permissions, hasAddon]);
 
   useAccessControlCallback({
     granted,

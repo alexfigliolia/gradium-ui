@@ -1,0 +1,31 @@
+@use "Styles/Variables";
+
+.tile.addon-selection {
+  & h2 > svg {
+    margin-right: 0.4em;
+  }
+  & .checkbox-group {
+    &>legend {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      &>.action-button {
+        width: 40px;
+        height: 40px;
+        background: transparent;
+        box-shadow: none;
+        margin-left: 0.5em;
+        &>.triangle-loader {
+          --path: url(#themeGradient);
+          --dot: linear-gradient(to right, var(--theme-light), var(--theme-dark));
+        }
+        &>.check-icon path {
+          stroke: url(#successGradient)
+        }
+        &>.error-icon path {
+          fill: url(#errorGradient);
+        }
+      }
+    }
+  }
+}

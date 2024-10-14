@@ -4,7 +4,7 @@ import { usePropertyAccess } from "Hooks/usePropertyAccess";
 import { AdminRoutes } from "Router/AdminRoutes";
 import { currentProperty, useProperties } from "State/Properties";
 import { grants, useScope } from "State/Scope";
-import { Permissions } from "Tools/Permissions";
+import { Permission } from "Tools/Permission";
 import type { Propless } from "Types/React";
 
 const { permissions, addons } = AdminRoutes.access("PROPERTY_AMENITIES");
@@ -17,7 +17,7 @@ export const AmenitiesLink = memo(
     const hasAddon = usePropertyAccess(...addons);
 
     const accessible = useMemo(() => {
-      return hasAddon && Permissions.hasPermission(userGrants, ...permissions);
+      return hasAddon && Permission.hasPermission(userGrants, ...permissions);
     }, [userGrants, hasAddon]);
 
     const route = useMemo(

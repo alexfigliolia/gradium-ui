@@ -1,7 +1,9 @@
 import { Fragment, memo, useCallback } from "react";
-import { AmenitiesTile } from "Components/AmenitiesTile";
 import { PermissedPropertyRoute } from "Components/PermissedPropertyRoute";
-import { PropertyConfigurationPage } from "Layouts/PropertyConfiguration";
+import {
+  AmenitiesTile,
+  PropertyConfigurationPage,
+} from "Layouts/PropertyConfiguration";
 import { AdminRoutes } from "Router/AdminRoutes";
 import { selectAmenities, useAmenities } from "State/Amenities";
 import type { Propless } from "Types/React";

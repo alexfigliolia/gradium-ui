@@ -60,6 +60,7 @@ type Mutation {
   createProperty(name: String!, organizationId: Int!): AdminBasicProperty!
   inviteStaffMember(organizationId: Int!, email: String!): Boolean!
   setOrganizationName(name: String!, organizationId: Int!): Boolean!
+  modifyPropertyAddons(propertyId: Int!, organizationId: Int!, additions: [PropertyAddonType!]!, deletions: [Int!]!): [PropertyAddon!]!
 }
 type BasicUser {
   name: String!

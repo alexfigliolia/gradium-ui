@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { AdminRoutes } from "Router/AdminRoutes";
 import { currentProperty, useProperties } from "State/Properties";
 import { grants, useScope } from "State/Scope";
-import { Permissions } from "Tools/Permissions";
+import { Permission } from "Tools/Permission";
 import type { Propless } from "Types/React";
 
 const permissions = AdminRoutes.permissions("PROPERTY_CONFIGURATION");
@@ -14,7 +14,7 @@ export const ConfigureLink = memo(
     const { slug } = useProperties(currentProperty);
 
     const accessible = useMemo(() => {
-      return Permissions.hasPermission(userGrants, ...permissions);
+      return Permission.hasPermission(userGrants, ...permissions);
     }, [userGrants]);
 
     const route = useMemo(

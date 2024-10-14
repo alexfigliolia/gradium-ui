@@ -7,7 +7,7 @@ import type {
   UserScopeQuery,
   UserScopeQueryVariables,
 } from "GraphQL/Types";
-import { Permissions } from "Tools/Permissions";
+import { Permission } from "Tools/Permission";
 import { Accessor } from "./Accessor";
 
 export class ScopeModel extends Accessor {
@@ -52,8 +52,8 @@ export class ScopeModel extends Accessor {
     });
   }
 
-  public hasPermissions(...permissions: PersonRoleType[]) {
-    return Permissions.hasPermission(
+  public hasPermission(...permissions: PersonRoleType[]) {
+    return Permission.hasPermission(
       this.getState().currentPermissions,
       ...permissions,
     );

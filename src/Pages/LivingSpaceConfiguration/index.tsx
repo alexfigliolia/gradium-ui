@@ -1,7 +1,9 @@
 import { Fragment, memo, useCallback } from "react";
-import { LivingSpaceTile } from "Components/LivingSpaceTile";
 import { PermissedRoute } from "Components/PermissedRoute";
-import { PropertyConfigurationPage } from "Layouts/PropertyConfiguration";
+import {
+  LivingSpaceTile,
+  PropertyConfigurationPage,
+} from "Layouts/PropertyConfiguration";
 import { AdminRoutes } from "Router/AdminRoutes";
 import { selectUnits, useLivingSpaces } from "State/LivingSpaces";
 import type { Propless } from "Types/React";

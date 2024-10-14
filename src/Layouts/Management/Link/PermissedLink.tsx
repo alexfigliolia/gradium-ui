@@ -9,7 +9,7 @@ export const PermissedLink = memo(function PermissedLink({
   ...rest
 }: Props) {
   const accepted = useMemo(
-    () => Scope.hasPermissions(...requirements),
+    () => Scope.hasPermission(...requirements),
     [requirements],
   );
   if (!accepted) {

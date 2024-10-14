@@ -1,13 +1,13 @@
 import { PersonRoleType } from "GraphQL/Types";
 
-export class Permissions {
+export class Permission {
   grants: Set<PersonRoleType>;
   constructor(grants: Set<PersonRoleType>) {
     this.grants = grants;
   }
 
   public hasPermission(...required: PersonRoleType[]) {
-    return Permissions.hasPermission(this.grants, ...required);
+    return Permission.hasPermission(this.grants, ...required);
   }
 
   private static readonly permissions: Record<

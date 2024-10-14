@@ -1,4 +1,4 @@
-import { Logger, Profiler, State } from "@figliolia/galena";
+import { State } from "@figliolia/galena";
 
 export class BaseModel<T> extends State<T> {
   private static instances = new Map<string, State<any>>();
@@ -10,9 +10,9 @@ export class BaseModel<T> extends State<T> {
   }
 
   private applyDefaultMiddleware() {
-    if (import.meta.env.DEV) {
-      this.registerMiddleware(new Logger(), new Profiler());
-    }
+    // if (import.meta.env.DEV) {
+    //   this.registerMiddleware(new Logger(), new Profiler());
+    // }
   }
 
   public static resetAll() {

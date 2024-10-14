@@ -2,6 +2,7 @@ import type { ChangeEvent } from "react";
 import { memo, useCallback, useRef } from "react";
 import { useFocusedKeyListener } from "@figliolia/react-hooks";
 import type { Callback } from "Types/Generics";
+import type { IOption } from "Types/React";
 import "./style.scss";
 
 export const Radio = memo(function Radio({
@@ -35,12 +36,7 @@ export const Radio = memo(function Radio({
   );
 });
 
-interface Props extends RadioOption {
+interface Props extends IOption {
   selected: boolean;
   onChange: Callback<[ChangeEvent<HTMLInputElement>]>;
-}
-
-export interface RadioOption {
-  label?: string;
-  value: string;
 }

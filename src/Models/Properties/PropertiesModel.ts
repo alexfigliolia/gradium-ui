@@ -4,10 +4,11 @@ import type {
   AdminBasicPropertiesQuery,
   AdminBasicPropertiesQueryVariables,
   AdminBasicProperty,
+  PropertyAddon,
 } from "GraphQL/Types";
 import { PersonRoleType } from "GraphQL/Types";
 import { BaseModel } from "Models/BaseModel";
-import { Permissions } from "Tools/Permissions";
+import { Permission } from "Tools/Permission";
 import type { IProperties } from "./types";
 
 export class PropertiesModel extends BaseModel<IProperties> {
@@ -16,6 +17,7 @@ export class PropertiesModel extends BaseModel<IProperties> {
       current: -1,
       loading: false,
       properties: {},
+      currentAddons: new Set(),
     });
   }
 
@@ -26,7 +28,7 @@ export class PropertiesModel extends BaseModel<IProperties> {
   }
 
   public async initialize(organizationId: number, grants: Set<PersonRoleType>) {
-    const permissions = new Permissions(grants);
+    const permissions = new Permission(grants);
     if (permissions.hasPermission(PersonRoleType.Maintenance)) {
       return this.fetchAdminScope(organizationId);
     }
@@ -62,8 +64,9 @@ export class PropertiesModel extends BaseModel<IProperties> {
   public setActiveProperty(nextSlug: string) {
     const { properties } = this.getState();
     for (const key in properties) {
-      const { slug, id } = properties[key];
+      const { slug, id, addons } = properties[key];
       if (slug === nextSlug) {
+        this.hashAddons(addons);
         return this.update(state => {
           state.current = id;
         });
@@ -75,6 +78,26 @@ export class PropertiesModel extends BaseModel<IProperties> {
   public loading(nextState = true) {
     this.update(state => {
       state.loading = nextState;
+    });
+  }
+
+  public updateCurrentAddons(propertyId: number, addons: PropertyAddon[]) {
+    this.update(state => {
+      const property = state.properties[propertyId];
+      state.properties = {
+        ...state.properties,
+        [propertyId]: {
+          ...property,
+          addons,
+        },
+      };
+    });
+    this.hashAddons(addons);
+  }
+
+  private hashAddons(addons: PropertyAddon[]) {
+    this.update(state => {
+      state.currentAddons = new Set(addons.map(a => a.type));
     });
   }
 }

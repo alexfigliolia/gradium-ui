@@ -3,19 +3,19 @@ import { memo, useCallback, useMemo, useState } from "react";
 import { GradientTransitionButton } from "Components/GradientTransitionButton";
 import { Input } from "Components/Input";
 import { Tile } from "Components/Tile";
-import { useCurrentProperty } from "Hooks/useCurrentProperty";
 import { Building } from "Icons/Building";
 import { City } from "Icons/City";
 import { Hash } from "Icons/Hash";
 import { Location } from "Icons/Location";
 import { MapArrow } from "Icons/MapArrow";
 import { State } from "Icons/State";
+import { currentProperty, useProperties } from "State/Properties";
 import type { Propless } from "Types/React";
 import "./styles.scss";
 
 export const NameAndLocation = memo(
   function NameAndLocation(_: Propless) {
-    const property = useCurrentProperty();
+    const property = useProperties(currentProperty);
     const [table, setTable] = useState(new Set<string>());
     const active = useMemo(() => table.size !== 0, [table.size]);
     const onKeyUp = useCallback(

@@ -1,9 +1,11 @@
 import { memo, useCallback, useMemo } from "react";
-import { AmenitiesTile } from "Components/AmenitiesTile";
 import { GradientTransitionLink } from "Components/GradientTransitionButton";
-import { LivingSpaceTile } from "Components/LivingSpaceTile";
 import { PermissedRoute } from "Components/PermissedRoute";
-import { PropertyConfigurationPage } from "Layouts/PropertyConfiguration";
+import {
+  AmenitiesTile,
+  LivingSpaceTile,
+  PropertyConfigurationPage,
+} from "Layouts/PropertyConfiguration";
 import { AdminRoutes } from "Router/AdminRoutes";
 import { currentProperty, useProperties } from "State/Properties";
 import type { Propless } from "Types/React";
@@ -35,13 +37,13 @@ export default memo(
         <PropertyConfigurationPage labelFN={labelFN}>
           <PropertyImages images={images} />
           <NameAndLocation />
+          <AddonsTile />
           <LivingSpaceTile>
             <GradientTransitionLink
               label="Edit Living Spaces"
               to={livingSpaceRoute}
             />
           </LivingSpaceTile>
-          <AddonsTile />
           <AmenitiesTile>
             <GradientTransitionLink
               label="Edit Amenities"

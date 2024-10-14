@@ -4,6 +4,8 @@ export interface Propless {
   key?: string | number;
 }
 
+export type ExtendableProps = Record<string, any>;
+
 export interface OptionalChildren {
   children?: ReactNode;
 }
@@ -16,4 +18,9 @@ export interface ActionState {
   error?: boolean;
   loading?: boolean;
   success?: boolean;
+}
+
+export interface IOption {
+  label?: ReactNode;
+  value: string;
 }

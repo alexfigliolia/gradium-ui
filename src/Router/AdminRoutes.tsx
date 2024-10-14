@@ -124,8 +124,8 @@ export class AdminRoutes {
     });
   }
 
-  public static slugRoute(slug: string, ...rest: string[]) {
-    return ["/app", "manage", slug, ...rest].join("/");
+  public static slugRoute(...path: string[]) {
+    return ["/app", "manage", ...path].join("/");
   }
 
   public static links(properties: AdminBasicProperty[]) {
