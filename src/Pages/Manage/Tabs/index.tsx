@@ -1,30 +1,25 @@
 import { memo, useMemo } from "react";
-import { NavLink } from "react-router-dom";
-import { AdminRoutes } from "Router/AdminRoutes";
-import { currentProperty, useProperties } from "State/Properties";
+import { PropertyManagementRoutes } from "Layouts/Management/Routes";
+import { currentAddons, useProperties } from "State/Properties";
+import { grants, useScope } from "State/Scope";
 import type { Propless } from "Types/React";
-import { AmenitiesLink } from "./AmenitiesLink";
-import { ConfigureLink } from "./ConfigurationLink";
-import { FinancesLink } from "./FinancesLink";
-import { LeasesLink } from "./LeasesLink";
+import { TabLink } from "./TabLink";
 import "./styles.scss";
 
 export const Tabs = memo(
   function Tabs(_: Propless) {
-    const { slug } = useProperties(currentProperty);
-    const maintentance = useMemo(
-      () => AdminRoutes.slugRoute(slug, "maintenance"),
-      [slug],
-    );
+    const permissions = useScope(grants);
+    const addons = useProperties(currentAddons);
+    const routeList = useMemo(() => {
+      return PropertyManagementRoutes.routeList(
+        PropertyManagementRoutes.createAccessor(permissions, addons),
+      );
+    }, [addons, permissions]);
     return (
       <div className="tabs">
-        <ConfigureLink />
-        <LeasesLink />
-        <AmenitiesLink />
-        <NavLink to={maintentance} className="maintenance-link">
-          Maintenance
-        </NavLink>
-        <FinancesLink />
+        {routeList.map(route => {
+          return <TabLink key={route} route={route} />;
+        })}
       </div>
     );
   },

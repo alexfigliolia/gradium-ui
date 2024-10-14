@@ -1,9 +1,9 @@
 import { Fragment, memo } from "react";
 import { usePropertyAccess } from "Hooks/usePropertyAccess";
 import { BasketballCourt } from "Icons/BasketballCourt";
-import { PropertyConfigurationTile } from "Layouts/PropertyConfiguration";
 import { AdminRoutes } from "Router/AdminRoutes";
 import type { OptionalChildren } from "Types/React";
+import { PropertyConfigurationTile } from "../PropertyConfigurationTile";
 
 const access = AdminRoutes.addons("PROPERTY_AMENITIES");
 

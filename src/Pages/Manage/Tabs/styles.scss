@@ -4,7 +4,8 @@
   width: 100%;
   max-width: 100%;
   overflow-x: scroll;
-  &>a {
+  margin-bottom: 2em;
+  &>.tab-link {
     display: inline-block;
     color: #fff;
     font-size: 0.9em;
@@ -22,7 +23,7 @@
     &:not(:last-of-type) {
       margin-right: 1em;
     }
-    &.configure-link {
+    &.configure {
       border: 2px solid var(--configure-theme);
       color: var(--configure-theme);
       &.active {
@@ -33,7 +34,7 @@
         outline: 0.1em solid var(--configure-theme);
       }
     }
-    &.leases-link {
+    &.leases {
       border: 2px solid var(--leases-theme);
       color: var(--leases-theme);
       &.active {
@@ -44,7 +45,7 @@
         outline: 0.1em solid var(--leases-theme);
       }
     }
-    &.amenities-link {
+    &.amenities {
       border: 2px solid var(--amenities-theme);
       color: var(--amenities-theme);
       &.active {
@@ -55,7 +56,7 @@
         outline: 0.1em solid var(--amenities-theme);
       }
     }
-    &.maintenance-link {
+    &.maintenance {
       border: 2px solid var(--maintenance-theme);
       color: var(--maintenance-theme);
       &.active {
@@ -66,7 +67,7 @@
         outline: 0.1em solid var(--maintenance-theme);
       }
     }
-    &.finances-link {
+    &.finances {
       border: 2px solid var(--finances-theme);
       color: var(--finances-theme);
       &.active {

@@ -1,7 +1,7 @@
 import { Fragment, memo } from "react";
 import { LivingSpaceBed } from "Icons/LivingSpaceBed";
-import { PropertyConfigurationTile } from "Layouts/PropertyConfiguration";
 import type { OptionalChildren } from "Types/React";
+import { PropertyConfigurationTile } from "../PropertyConfigurationTile";
 
 export const LivingSpaceTile = memo(function LivingSpaceTile({
   children,
