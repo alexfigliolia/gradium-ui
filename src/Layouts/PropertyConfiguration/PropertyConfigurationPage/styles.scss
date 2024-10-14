@@ -73,11 +73,14 @@
           }
         }
       }
-      &>.gradient-transition-button {
+      &>.gradient-transition-button,
+      &>.action-button {
         margin: 0.5em auto;
-        @media (min-width: 760px) {
-          width: 50%;
-          max-width: 400px;
+      }
+      &>.action-button:not(.loading),
+      &>.gradient-transition-button {
+        @media (min-width: 670px) {
+          width: 400px;
         }
       }
     }

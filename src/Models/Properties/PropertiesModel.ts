@@ -1,8 +1,8 @@
 import { adminBasicPropertiesList } from "GraphQL/Queries/adminBasicPropertiesList.gql";
 import { graphQLRequest } from "GraphQL/request";
 import type {
-  adminBasicPropertiesListQuery,
-  adminBasicPropertiesListQueryVariables,
+  AdminBasicPropertiesListQuery,
+  AdminBasicPropertiesListQueryVariables,
   AdminBasicProperty,
   PropertyAddon,
 } from "GraphQL/Types";
@@ -41,8 +41,8 @@ export class PropertiesModel extends BaseModel<IProperties> {
   private async fetchAdminScope(organizationId: number) {
     this.loading();
     const response = await graphQLRequest<
-      adminBasicPropertiesListQuery,
-      adminBasicPropertiesListQueryVariables
+      AdminBasicPropertiesListQuery,
+      AdminBasicPropertiesListQueryVariables
     >(adminBasicPropertiesList, {
       organizationId,
     });
@@ -78,6 +78,15 @@ export class PropertiesModel extends BaseModel<IProperties> {
   public loading(nextState = true) {
     this.update(state => {
       state.loading = nextState;
+    });
+  }
+
+  public updateBasicInfo(property: AdminBasicProperty) {
+    this.update(state => {
+      state.properties = {
+        ...state.properties,
+        [state.current]: property,
+      };
     });
   }
 

@@ -11,6 +11,7 @@ import "./styles.scss";
 export const ActionButton = memo(function ActionButton({
   type,
   onClick,
+  disabled,
   children,
   className,
   tabIndex,
@@ -23,7 +24,7 @@ export const ActionButton = memo(function ActionButton({
       onClick={onClick}
       className={classes}
       tabIndex={tabIndex}
-      disabled={rest.loading}>
+      disabled={rest.loading || disabled}>
       <div>{children}</div>
       <TriangleLoader />
       <Check />
@@ -35,6 +36,7 @@ export const ActionButton = memo(function ActionButton({
 interface Props extends OptionalChildren, ActionState {
   className?: string;
   tabIndex?: number;
+  disabled?: boolean;
   type?: "submit" | "reset" | "button";
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }

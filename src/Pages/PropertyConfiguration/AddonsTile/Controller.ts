@@ -30,9 +30,12 @@ export class Controller {
     additions: Set<PropertyAddonType>,
     deletions: Set<PropertyAddonType>,
   ) {
-    const client = new UIClient({ setState: this.setState });
     try {
-      const { current } = Properties.getState();
+      const { current, properties } = Properties.getState();
+      const client = new UIClient({
+        setState: this.setState,
+        successMessage: `<strong>${this.formatName(properties[current].name)}</strong> addons have been updated!`,
+      });
       const response = await client.executeQuery<
         ModifyPropertyAddonsMutation,
         ModifyPropertyAddonsMutationVariables
@@ -80,5 +83,12 @@ export class Controller {
       }
     }
     return ids;
+  }
+
+  private formatName(name: string) {
+    if (name.endsWith("s")) {
+      return `${name}'`;
+    }
+    return `${name}'s`;
   }
 }
