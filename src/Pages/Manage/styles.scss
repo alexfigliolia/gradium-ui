@@ -1,4 +1,13 @@
-.manage-property > .outlet {
-  width: 100%;
-  margin-top: 1.5em;
+@use "Styles/Variables";
+
+.page.manage-property {
+  &>.title-area {
+    margin-bottom: 0em;
+    @media (min-width: Variables.$small-vertical-tablet) {
+      margin-bottom: 1em;
+    }
+  }
+  &> .outlet {
+    width: 100%;
+  }
 }

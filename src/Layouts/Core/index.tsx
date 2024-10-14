@@ -1,5 +1,5 @@
 import { Fragment, memo } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, ScrollRestoration } from "react-router-dom";
 import type { Propless } from "Types/React";
 import { MobileMenu } from "./MobileMenu";
 import { NavBar } from "./NavBar";
@@ -14,6 +14,7 @@ export default memo(
         <div className="core">
           <Outlet />
         </div>
+        <ScrollRestoration />
       </Fragment>
     );
   },

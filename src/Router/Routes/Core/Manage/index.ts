@@ -1,4 +1,4 @@
-import type { LoaderFunctionArgs } from "react-router-dom";
+import type { LoaderFunctionArgs, NonIndexRouteObject } from "react-router-dom";
 import { redirect } from "react-router-dom";
 import { LazyManagePage } from "Pages/Manage/Lazy";
 import { AdminRoutes } from "Router/AdminRoutes";
@@ -11,7 +11,7 @@ import { Leases } from "./Leases";
 import { LivingSpaceConfiguration } from "./LivingSpaceConfiguration";
 import { PropertyConfiguration } from "./PropertyConfiguration";
 
-export const Manage = {
+export const Manage: NonIndexRouteObject = {
   path: AdminRoutes.slugRoute(":slug"),
   Component: LazyManagePage,
   loader: async ({ params }: LoaderFunctionArgs) => {

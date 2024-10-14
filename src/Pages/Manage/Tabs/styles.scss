@@ -1,82 +1,46 @@
 @use "Styles/Variables";
 
 .tabs {
-  width: 100%;
-  max-width: 100%;
+  min-width: calc(100% + (var(--core-padding) * 2));
+  position: relative;
+  left: calc(var(--core-padding) * -1);
+  white-space: nowrap;
   overflow-x: scroll;
-  margin-bottom: 2em;
-  &>.tab-link {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  margin-bottom: 0.25em;
+  &>.gradient-border-link {
+    --padding: 0.5em 0.8em;
+    --border-radius: 2em;
     display: inline-block;
-    color: #fff;
     font-size: 0.9em;
     text-decoration: none;
-    padding: 0.5em 0.8em;
-    border-radius: 2em;
     font-weight: 600;
+    outline: none;
+    text-transform: capitalize;
     @media (min-width: Variables.$small-vertical-tablet) {
       font-size: 1em;
-      padding: 0.6em 1em;
+      --padding: 0.6em 1em;
     }
-    &:visited {
-      color: #fff;
+    &:first-of-type {
+      margin-left: var(--core-padding);
+    }
+    &:last-of-type {
+      margin-right: var(--core-padding);
     }
     &:not(:last-of-type) {
       margin-right: 1em;
     }
-    &.configure {
-      border: 2px solid var(--configure-theme);
-      color: var(--configure-theme);
-      &.active {
-        color: #fff;
-        background: var(--configure-theme);
-      }
-      &:focus-visible {
-        outline: 0.1em solid var(--configure-theme);
-      }
+    &.active {
+      color: #fff;
+      --background: transparent;
+      box-shadow: 0em 0.1em 0.5em var(--theme-mid);
     }
-    &.leases {
-      border: 2px solid var(--leases-theme);
-      color: var(--leases-theme);
-      &.active {
-        color: #fff;
-        background: var(--leases-theme);
-      }
-      &:focus-visible {
-        outline: 0.1em solid var(--leases-theme);
-      }
+    &:not(:disabled).active:focus-visible {
+      outline: none;
     }
-    &.amenities {
-      border: 2px solid var(--amenities-theme);
-      color: var(--amenities-theme);
-      &.active {
-        color: #fff;
-        background: var(--amenities-theme);
-      }
-      &:focus-visible {
-        outline: 0.1em solid var(--amenities-theme);
-      }
-    }
-    &.maintenance {
-      border: 2px solid var(--maintenance-theme);
-      color: var(--maintenance-theme);
-      &.active {
-        color: #fff;
-        background: var(--maintenance-theme);
-      }
-      &:focus-visible {
-        outline: 0.1em solid var(--maintenance-theme);
-      }
-    }
-    &.finances {
-      border: 2px solid var(--finances-theme);
-      color: var(--finances-theme);
-      &.active {
-        color: #fff;
-        background: var(--finances-theme);
-      }
-      &:focus-visible {
-        outline: 0.1em solid var(--finances-theme);
-      }
+    &>div {
+      transition: background-color 0.3s, color 0.3s;
     }
   }
 }

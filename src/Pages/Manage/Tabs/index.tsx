@@ -15,6 +15,7 @@ export const Tabs = memo(
         PropertyManagementRoutes.createAccessor(permissions, addons),
       );
     }, [addons, permissions]);
+
     return (
       <div className="tabs">
         {routeList.map(route => {
