@@ -5,7 +5,7 @@ schema {
 type Query {
   userScope: LoggedInUser!
   verifySession: Boolean!
-  adminBasicProperties(organizationId: Int!): [AdminBasicProperty!]!
+  adminBasicPropertiesList(organizationId: Int!): [AdminBasicProperty!]!
 }
 type LoggedInUser {
   id: Int!

@@ -1,8 +1,8 @@
-import { adminBasicProperties } from "GraphQL/Queries/adminBasicProperties.gql";
+import { adminBasicPropertiesList } from "GraphQL/Queries/adminBasicPropertiesList.gql";
 import { graphQLRequest } from "GraphQL/request";
 import type {
-  AdminBasicPropertiesQuery,
-  AdminBasicPropertiesQueryVariables,
+  adminBasicPropertiesListQuery,
+  adminBasicPropertiesListQueryVariables,
   AdminBasicProperty,
   PropertyAddon,
 } from "GraphQL/Types";
@@ -41,13 +41,13 @@ export class PropertiesModel extends BaseModel<IProperties> {
   private async fetchAdminScope(organizationId: number) {
     this.loading();
     const response = await graphQLRequest<
-      AdminBasicPropertiesQuery,
-      AdminBasicPropertiesQueryVariables
-    >(adminBasicProperties, {
+      adminBasicPropertiesListQuery,
+      adminBasicPropertiesListQueryVariables
+    >(adminBasicPropertiesList, {
       organizationId,
     });
     const map: Record<number, AdminBasicProperty> = {};
-    for (const property of response.adminBasicProperties) {
+    for (const property of response.adminBasicPropertiesList) {
       map[property.id] = property;
     }
     this.update(state => {

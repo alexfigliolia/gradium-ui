@@ -1,10 +1,10 @@
 import { gql } from "graphql-request";
 import { AdminBasicPropertyFragment } from "GraphQL/Fragments/adminBasicProperty.gql";
 
-export const adminBasicProperties = gql`
+export const adminBasicPropertiesList = gql`
   ${AdminBasicPropertyFragment}
-  query adminBasicProperties($organizationId: Int!) {
-    adminBasicProperties(organizationId: $organizationId) {
+  query adminBasicPropertiesList($organizationId: Int!) {
+    adminBasicPropertiesList(organizationId: $organizationId) {
       ...AdminBasicPropertyFragment
     }
   }
