@@ -5,6 +5,7 @@ import type {
   AdminBasicPropertiesListQueryVariables,
   AdminBasicProperty,
   PropertyAddon,
+  PropertyImage,
 } from "GraphQL/Types";
 import { PersonRoleType } from "GraphQL/Types";
 import { BaseModel } from "Models/BaseModel";
@@ -102,6 +103,39 @@ export class PropertiesModel extends BaseModel<IProperties> {
       };
     });
     this.hashAddons(addons);
+  }
+
+  public addTemporaryImage(url: string) {
+    let index = -1;
+    this.update(state => {
+      const property = state.properties[state.current];
+      index = property.images.length;
+      const images = [...property.images, { id: -1, url }];
+      state.properties = {
+        ...state.properties,
+        [state.current]: { ...property, images },
+      };
+    });
+    return index;
+  }
+
+  public replaceImage(index: number, image: PropertyImage) {
+    this.update(state => {
+      const property = state.properties[state.current];
+      const { images } = property;
+      state.properties = {
+        ...state.properties,
+        [state.current]: {
+          ...property,
+          images: images.map((img, i) => {
+            if (i === index) {
+              return image;
+            }
+            return img;
+          }),
+        },
+      };
+    });
   }
 
   private hashAddons(addons: PropertyAddon[]) {

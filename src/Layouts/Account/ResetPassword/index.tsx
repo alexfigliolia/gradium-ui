@@ -34,9 +34,10 @@ export const ResetPassword = memo(function ResetPassword(_: Propless) {
         )(data);
         const previous = Validators.parseForm(data, "current-password");
         if (next === previous) {
-          return Toasts.error(
+          Toasts.error(
             "Your new password can not be the same as your current password",
           );
+          return;
         }
         await client.executeQuery<
           ResetPasswordMutation,

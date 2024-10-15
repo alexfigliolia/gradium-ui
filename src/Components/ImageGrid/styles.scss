@@ -26,9 +26,15 @@
     @media (min-width: 1200px) {
       height: 200px;
       width: calc(33.3333% - 1.35em);
+      & p {
+        font-size: 1.1em;
+      }
     }
     @media (min-width: 1400px) {
       width: calc(16.66665% - 0.85em);
+      & p {
+        font-size: 1em;
+      }
     }
   }
   &>.grid-image {
