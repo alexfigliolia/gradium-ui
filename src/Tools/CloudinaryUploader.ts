@@ -87,6 +87,7 @@ export class CloudinaryUploader {
       });
       Properties.addImage(response.createPropertyImage);
       Toasts.success(`<strong>${file.name}</strong> uploaded successfully`);
+      return response.createPropertyImage;
     } catch (error) {
       Toasts.error(
         `Something went wrong while uploading <strong>${file.name}</strong>. Please try again`,
@@ -124,9 +125,7 @@ export class CloudinaryUploader {
 
   private validateFile(file: File) {
     if (file.size > CloudinaryUploader.MAX_SIZE) {
-      Toasts.error(
-        `<strong><strong>${file.name}<</strong>/strong> cannot exceed 2 megabytes`,
-      );
+      Toasts.error(`<strong>${file.name}</strong> cannot exceed 2 megabytes`);
       return;
     }
     this.setTemporaryImage(file);
