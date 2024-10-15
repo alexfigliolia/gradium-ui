@@ -8,14 +8,14 @@
   background-color: var(--background-dark);
   border-radius: 0.5em;
   transition: box-shadow 0.5s;
-  &:hover {
+  &:hover,
+  &:focus-within {
     box-shadow: var(--shadow-level-2-mid);
     &>.closer-button {
       scale: 1;
       opacity: 1;
       rotate: 0deg;
-      visibility: visible;
-      transition: scale 0.3s, opacity 0.3s, rotate 0.6s, visibility 0s;
+      transition: scale 0.3s, opacity 0.3s, rotate 0.6s;
     }
   }
   &>.closer-button {
@@ -26,17 +26,23 @@
     scale: 0.5;
     rotate: 90deg;
     opacity: 0;
-    visibility: hidden;
     translate: 30% -30%;
-    background-color: var(--background);
+    background-color: var(--drop-down-background);
     box-shadow: 0em 0.1em 0.3em var(--shadow-color-dark);
-    transition: scale 0.3s, opacity 0.3s, rotate 0.6s, visibility 0s 0.3s;
+    transition: scale 0.3s, opacity 0.3s, rotate 0.6s;
     &>div {
       width: 60%;
       height: 60%;
       & svg path {
         stroke-width: 2.5;
       }
+      &::after {
+        border: 1px solid var(--theme-mid);
+      }
+    }
+    &:focus-visible > div::after {
+      opacity: 1;
+      scale: 2;
     }
   }
 }
