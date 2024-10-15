@@ -45,7 +45,7 @@ export class Controller {
         additions: Array.from(additions),
         deletions: this.gatherIds(deletions),
       });
-      Properties.updateCurrentAddons(current, response.modifyPropertyAddons);
+      Properties.updateCurrentAddons(response.modifyPropertyAddons);
     } catch (error) {
       // silence
     }

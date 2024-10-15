@@ -1,0 +1,11 @@
+.fading-loader {
+  opacity: 0;
+  &.reveal {
+    opacity: 0;
+    animation: show 0.5s 0s forwards;
+  }
+  &.hide {
+    opacity: 1;
+    animation: hide 0.5s 0s forwards;
+  }
+}

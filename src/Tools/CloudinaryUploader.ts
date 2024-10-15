@@ -1,37 +1,51 @@
 import type { ChangeEvent } from "react";
 import { createPropertyImage } from "GraphQL/Mutations/createPropertyImage.gql";
+import { generateUploadSignature } from "GraphQL/Queries/generateUploadSignature";
 import { graphQLRequest } from "GraphQL/request";
-import type {
-  CloudinarySignature,
-  CreatePropertyImageMutation,
-  CreatePropertyImageMutationVariables,
+import {
+  type CreatePropertyImageMutation,
+  type CreatePropertyImageMutationVariables,
+  PropertyImageType,
+  type QueryGenerateUploadSignatureArgs,
+  type UploadSignature,
 } from "GraphQL/Types";
 import { Properties } from "State/Properties";
 import { Scope } from "State/Scope";
 import { Toasts } from "State/Toasts";
+import type { Callback } from "Types/Generics";
 
-export class Uploader {
+export class CloudinaryUploader {
   private static MAX_SIZE = 2 * 1024 * 1024;
-  private sign: () => Promise<CloudinarySignature>;
-  constructor(sign: () => Promise<CloudinarySignature>) {
-    this.sign = sign;
+  private onObjectURL?: Callback<[string]>;
+  constructor(onObjectURL: Callback<[string]>) {
+    this.onObjectURL = onObjectURL;
   }
 
   public onUpload = async (e: ChangeEvent<HTMLInputElement>) => {
-    const uploads = this.validateEvent(e);
-    if (!uploads) {
+    const file = await this.runValidations(e);
+    if (!file) {
+      return;
+    }
+    return this.upload(...file);
+  };
+
+  private async runValidations(
+    e: ChangeEvent<HTMLInputElement>,
+  ): Promise<undefined | [File, UploadSignature]> {
+    const upload = this.validateEvent(e);
+    if (!upload) {
       return;
     }
     const destination = await this.signUpload();
     if (!destination) {
       return;
     }
-    const [files, previews] = this.validateFiles(uploads);
-    files.forEach((file, i) => {
-      const landingIndex = Properties.addTemporaryImage(previews[i]);
-      void this.upload(landingIndex, file, destination);
-    });
-  };
+    const file = this.validateFile(upload);
+    if (!file) {
+      return;
+    }
+    return [file, destination];
+  }
 
   private async signUpload() {
     try {
@@ -42,16 +56,23 @@ export class Uploader {
     }
   }
 
-  private async upload(
-    index: number,
-    file: File,
-    destination: CloudinarySignature,
-  ) {
+  private async sign() {
+    const response = await graphQLRequest<
+      any,
+      QueryGenerateUploadSignatureArgs
+    >(generateUploadSignature, {
+      type: PropertyImageType.PropertyImage,
+      organizationId: Scope.getState().currentOrganizationId,
+    });
+    return response.generateUploadSignature as UploadSignature;
+  }
+
+  private async upload(file: File, destination: UploadSignature) {
     const { name, __typename: _, ...rest } = destination;
     const data = new FormData();
     data.append("file", file);
     for (const K in rest) {
-      const key = K as keyof Omit<CloudinarySignature, "__typename" | "name">;
+      const key = K as keyof Omit<UploadSignature, "__typename" | "name">;
       data.append(key, rest[key].toString());
     }
     try {
@@ -64,7 +85,7 @@ export class Uploader {
         propertyId: Properties.getState().current,
         organizationId: Scope.getState().currentOrganizationId,
       });
-      Properties.replaceImage(index, response.createPropertyImage);
+      Properties.addImage(response.createPropertyImage);
       Toasts.success(`<strong>${file.name}</strong> uploaded successfully`);
     } catch (error) {
       Toasts.error(
@@ -85,7 +106,6 @@ export class Uploader {
     if (!("secure_url" in json)) {
       throw json;
     }
-    console.log("cloudinary", json);
     return json.secure_url as string;
   }
 
@@ -99,22 +119,23 @@ export class Uploader {
     if (!files || !files.length) {
       return false;
     }
-    return files;
+    return files[0];
   }
 
-  private validateFiles(fileList: FileList): [File[], string[]] {
-    const previews: string[] = [];
-    const validFiles: File[] = [];
-    for (const file of fileList) {
-      if (file.size > Uploader.MAX_SIZE) {
-        Toasts.error(
-          `<strong><strong>${file.name}<</strong>/strong> cannot exceed 2 megabytes`,
-        );
-        continue;
-      }
-      validFiles.push(file);
-      previews.push(URL.createObjectURL(file));
+  private validateFile(file: File) {
+    if (file.size > CloudinaryUploader.MAX_SIZE) {
+      Toasts.error(
+        `<strong><strong>${file.name}<</strong>/strong> cannot exceed 2 megabytes`,
+      );
+      return;
     }
-    return [validFiles, previews];
+    this.setTemporaryImage(file);
+    return file;
+  }
+
+  private setTemporaryImage(file: File) {
+    if (this.onObjectURL) {
+      this.onObjectURL(URL.createObjectURL(file));
+    }
   }
 }

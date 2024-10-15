@@ -5,7 +5,8 @@ schema {
 type Query {
   userScope: LoggedInUser!
   verifySession: Boolean!
-  generateCloudinarySignature(organizationId: Int!, type: PropertyImageType!): CloudinarySignature!
+  generateUploadSignature(organizationId: Int!, type: PropertyImageType!): UploadSignature!
+  generateDestroySignature(organizationId: Int!, publicId: String!, type: PropertyImageType!): DestroySignature!
   adminBasicPropertiesList(organizationId: Int!): [AdminBasicProperty!]!
 }
 type LoggedInUser {
@@ -28,12 +29,22 @@ type OrgAffiliation {
 type PersonRole {
   role: PersonRoleType!
 }
-type CloudinarySignature {
+type UploadSignature {
   api_key: String!
   name: String!
   folder: String!
   timestamp: Int!
   signature: String!
+}
+type DestroySignature {
+  api_key: String!
+  name: String!
+  folder: String!
+  timestamp: Int!
+  signature: String!
+  invalidate: Boolean!
+  resource_type: String!
+  public_id: String!
 }
 type AdminBasicProperty {
   id: Int!
@@ -68,7 +79,7 @@ type Mutation {
   createProperty(name: String!, organizationId: Int!): AdminBasicProperty!
   inviteStaffMember(organizationId: Int!, email: String!): Boolean!
   createPropertyImage(propertyId: Int!, organizationId: Int!, url: String!): PropertyImage!
-  deletePropertyImage(organizationId: Int!, id: Int!): [PropertyImage!]!
+  deletePropertyImage(organizationId: Int!, id: Int!): PropertyImage!
   setOrganizationName(name: String!, organizationId: Int!): Boolean!
   modifyPropertyAddons(propertyId: Int!, organizationId: Int!, additions: [PropertyAddonType!]!, deletions: [Int!]!): [PropertyAddon!]!
   updateBasicPropertyInfo(propertyId: Int!, organizationId: Int!, name: String!, address1: String!, address2: String!, city: String!, state: String!, zipCode: String!): AdminBasicProperty!

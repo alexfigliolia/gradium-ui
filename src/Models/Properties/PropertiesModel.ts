@@ -91,56 +91,46 @@ export class PropertiesModel extends BaseModel<IProperties> {
     });
   }
 
-  public updateCurrentAddons(propertyId: number, addons: PropertyAddon[]) {
-    this.update(state => {
-      const property = state.properties[propertyId];
-      state.properties = {
-        ...state.properties,
-        [propertyId]: {
-          ...property,
-          addons,
-        },
-      };
-    });
+  public updateCurrentAddons(addons: PropertyAddon[]) {
+    this.setCurrentPropertyKey("addons", addons);
     this.hashAddons(addons);
   }
 
-  public addTemporaryImage(url: string) {
-    let index = -1;
-    this.update(state => {
-      const property = state.properties[state.current];
-      index = property.images.length;
-      const images = [...property.images, { id: -1, url }];
-      state.properties = {
-        ...state.properties,
-        [state.current]: { ...property, images },
-      };
-    });
-    return index;
+  public addImage(image: PropertyImage) {
+    const { current, properties } = this.getState();
+    this.setCurrentPropertyKey("images", [
+      ...properties[current].images,
+      image,
+    ]);
   }
 
-  public replaceImage(index: number, image: PropertyImage) {
-    this.update(state => {
-      const property = state.properties[state.current];
-      const { images } = property;
-      state.properties = {
-        ...state.properties,
-        [state.current]: {
-          ...property,
-          images: images.map((img, i) => {
-            if (i === index) {
-              return image;
-            }
-            return img;
-          }),
-        },
-      };
-    });
+  public deleteImage(image: PropertyImage) {
+    const { current, properties } = this.getState();
+    this.setCurrentPropertyKey(
+      "images",
+      properties[current].images.filter(pic => pic.id !== image.id),
+    );
   }
 
   private hashAddons(addons: PropertyAddon[]) {
     this.update(state => {
       state.currentAddons = new Set(addons.map(a => a.type));
+    });
+  }
+
+  private setCurrentPropertyKey<K extends keyof AdminBasicProperty>(
+    key: K,
+    value: AdminBasicProperty[K],
+  ) {
+    this.update(state => {
+      const property = state.properties[state.current];
+      state.properties = {
+        ...state.properties,
+        [state.current]: {
+          ...property,
+          [key]: value,
+        },
+      };
     });
   }
 }
