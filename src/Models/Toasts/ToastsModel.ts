@@ -28,9 +28,9 @@ export class ToastsModel extends BaseModel<IToasts> {
   }
 
   public toast(toast: IToast) {
+    const ID = this.IDs.get();
     this.update(state => {
       const stack = new RenderableMap(state.toasts);
-      const ID = this.IDs.get();
       stack.set(ID, {
         id: ID,
         ...toast,
@@ -38,6 +38,19 @@ export class ToastsModel extends BaseModel<IToasts> {
           this.dismiss(ID);
         },
       });
+      state.toasts = stack;
+    });
+    return ID;
+  }
+
+  public updateToast(ID: string, update: Partial<IToast>) {
+    this.update(state => {
+      const stack = new RenderableMap(state.toasts);
+      const current = stack.get(ID);
+      if (!current) {
+        return;
+      }
+      stack.set(ID, { ...current, ...update });
       state.toasts = stack;
     });
   }
@@ -54,7 +67,11 @@ export class ToastsModel extends BaseModel<IToasts> {
     return this.toast({ type: "success", message });
   }
 
-  public dismiss(ID: string) {
+  public dismissToast(ID: string) {
+    this.Emitter.emit(ID, undefined);
+  }
+
+  private dismiss(ID: string) {
     this.update(state => {
       const stack = new RenderableMap(state.toasts);
       stack.delete(ID);
