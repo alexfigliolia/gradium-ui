@@ -1,10 +1,10 @@
 import { memo, useCallback } from "react";
 import { GradientButton } from "Components/GradientButton";
-import { LeaseRemaining } from "Components/LeaseRemaining";
 import { PermissedPropertyRoute } from "Components/PermissedPropertyRoute";
 import { SearchBar } from "Components/SearchBar";
 import { Add } from "Icons/Add";
 import { Search } from "Icons/Search";
+import { LeaseRemaining } from "Layouts/Leases";
 import { Page, PageTitle } from "Layouts/Management";
 import type { ILease } from "Models/Leases";
 import { AdminRoutes } from "Router/AdminRoutes";

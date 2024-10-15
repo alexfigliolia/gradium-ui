@@ -1,8 +1,8 @@
 import { memo, useCallback, useMemo } from "react";
 import { Card } from "Components/Card";
 import { GradientBorderButton } from "Components/GradientBorderButton";
-import { LeaseRemaining } from "Components/LeaseRemaining";
 import { useLeaseProgress } from "Hooks/useLeaseProgress";
+import { LeaseRemaining } from "Layouts/Leases";
 import type { ILease } from "Models/Leases";
 import { EditLease } from "State/LeaseCRUD";
 import { Leases } from "State/Leases";

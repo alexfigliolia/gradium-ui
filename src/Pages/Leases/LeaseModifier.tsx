@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { LazyLeaseSheet } from "Components/LeaseSheet/LazyLeaseSheet";
+import { LazyLeaseSheet } from "Layouts/Leases/LeaseSheet/LazyLeaseSheet";
 import { EditLease } from "State/LeaseCRUD";
 import { Modals, useModals } from "State/Modals";
 import type { Propless } from "Types/React";
