@@ -1,8 +1,13 @@
 import type { ChangeEvent } from "react";
 import { memo, useCallback, useMemo, useState } from "react";
-import { useController } from "@figliolia/react-hooks";
+import {
+  useController,
+  useLoadingState,
+  useUnmount,
+} from "@figliolia/react-hooks";
 import { Input } from "Components/Input";
 import { Tile } from "Components/Tile";
+import type { LivingSpace } from "GraphQL/Types";
 import { Area } from "Icons/Area";
 import { Bath } from "Icons/Bath";
 import { Bed } from "Icons/Bed";
@@ -13,27 +18,29 @@ import {
   PropertyConfigurationDropdown,
   PropertySpaceInputs,
 } from "Layouts/PropertyConfiguration";
-import type { IUnit } from "Models/LivingSpaces";
 import { LivingSpaces } from "State/LivingSpaces";
 import { DropDownOptions } from "Tools/DropDownOptions";
 import "./styles.scss";
 
-export const LivingSpaceForm = memo(function LivingSpaceForm({
-  index,
-  ...space
-}: Props) {
-  const controller = useController(new Controller(LivingSpaces, index));
-  controller.register(index);
-  const { name, type, beds, baths, footage, images, floorPlans } = space;
+export const LivingSpaceForm = memo(function LivingSpaceForm(
+  space: LivingSpace,
+) {
+  const { id, name, type, beds, baths, footage, images, floorPlans } = space;
+  const { setState, resetState: _, ...actionState } = useLoadingState();
+  const controller = useController(
+    new Controller<LivingSpace, typeof LivingSpaces>(LivingSpaces, id),
+  );
+  controller.register(id, setState);
   const [editing, setEditing] = useState(!LivingSpaces.validate(space));
+
+  const toggleEdit = useCallback(() => {
+    setEditing(editing => !editing);
+  }, []);
+
   const photos = useMemo(
     () => [...images, ...floorPlans],
     [images, floorPlans],
   );
-
-  const edit = useCallback(() => {
-    setEditing(editing => !editing);
-  }, []);
 
   const onTrashClick = useCallback(() => {
     controller.onTrashClick(space);
@@ -48,17 +55,22 @@ export const LivingSpaceForm = memo(function LivingSpaceForm({
 
   const onChangeFootage = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      controller.update("footage", e.target.value);
+      controller.update("footage", parseFloat(e.target.value ?? "0"));
     },
     [controller],
   );
 
+  useUnmount(() => {
+    controller.destroy();
+  });
+
   return (
-    <Tile TagName="form" className="spaces">
+    <Tile TagName="div" className="spaces">
       <PropertySpaceInputs
         name={name}
+        {...actionState}
         editing={editing}
-        onEditClick={edit}
+        toggleEdit={toggleEdit}
         photosAndFloorPlans={photos}
         onDeleteClick={onTrashClick}
         className="living-space-inputs"
@@ -72,9 +84,9 @@ export const LivingSpaceForm = memo(function LivingSpaceForm({
           disabled={!editing}
           className="name-input"
           onChange={onChangeName}
-          name={controller.createKey("name")}
+          name={controller.createKey("name", "living-space")}
         />
-        <PropertyConfigurationDropdown<IUnit>
+        <PropertyConfigurationDropdown<LivingSpace>
           value={type}
           label="Type"
           icon={<Area />}
@@ -83,7 +95,7 @@ export const LivingSpaceForm = memo(function LivingSpaceForm({
           disabled={!editing}
           className="type-dropdown"
           list={DropDownOptions.SPACE_TYPE}
-          name={controller.createKey("type")}
+          name={controller.createKey("type", "living-space")}
           onSelected={controller.update}
         />
         <Input
@@ -95,10 +107,10 @@ export const LivingSpaceForm = memo(function LivingSpaceForm({
           className="number-input"
           value={footage.toString()}
           onChange={onChangeFootage}
-          name={controller.createKey("footage")}>
+          name={controller.createKey("footage", "living-space")}>
           <div className="postfix">sqft</div>
         </Input>
-        <PropertyConfigurationDropdown<IUnit>
+        <PropertyConfigurationDropdown<LivingSpace>
           label="Beds"
           fallback={0}
           value={beds}
@@ -106,10 +118,10 @@ export const LivingSpaceForm = memo(function LivingSpaceForm({
           property="beds"
           disabled={!editing}
           list={DropDownOptions.BEDS_BATHS}
-          name={controller.createKey("beds")}
+          name={controller.createKey("beds", "living-space")}
           onSelected={controller.update}
         />
-        <PropertyConfigurationDropdown<IUnit>
+        <PropertyConfigurationDropdown<LivingSpace>
           fallback={0}
           label="Baths"
           value={baths}
@@ -118,13 +130,9 @@ export const LivingSpaceForm = memo(function LivingSpaceForm({
           disabled={!editing}
           list={DropDownOptions.BEDS_BATHS}
           onSelected={controller.update}
-          name={controller.createKey("baths")}
+          name={controller.createKey("baths", "living-space")}
         />
       </PropertySpaceInputs>
     </Tile>
   );
 });
-
-interface Props extends IUnit {
-  index: number;
-}

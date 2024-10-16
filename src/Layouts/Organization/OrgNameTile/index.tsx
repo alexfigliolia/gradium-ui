@@ -1,13 +1,13 @@
 import type { ChangeEvent } from "react";
 import { memo, useCallback, useState } from "react";
 import { useController, useLoadingState } from "@figliolia/react-hooks";
+import { ColoredActionButton } from "Components/ColoredActionButton";
 import { Input } from "Components/Input";
 import { Tile } from "Components/Tile";
 import { Team } from "Icons/Team";
 import { Scope } from "State/Scope";
 import type { Propless } from "Types/React";
 import { Controller } from "./Controller";
-import { Loader } from "./Loader";
 import "./styles.scss";
 
 export const OrgNameTile = memo(
@@ -44,7 +44,11 @@ export const OrgNameTile = memo(
           value={organization}
           onChange={updateName}
           name="organization-name">
-          <Loader loading={loading} error={!!error} success={success} />
+          <ColoredActionButton
+            loading={loading}
+            success={success}
+            error={!!error}
+          />
         </Input>
       </Tile>
     );

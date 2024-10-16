@@ -6,7 +6,7 @@
   height: 50px;
   outline: none;
   font-size: 1.1em;
-  transition: color 0.15s 0.9s, width 0.5s 0.4s;
+  transition: color 0.15s 0.4s, width 0.5s 0.4s;
   &>div:not(.triangle-loader) {
     color: inherit;
     transition: inherit;

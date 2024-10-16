@@ -1,49 +1,77 @@
+import type { ILoadingStateSetter } from "@figliolia/react-hooks";
 import { BaseModel } from "Models/BaseModel";
+import type { Callback } from "Types/Generics";
 
-export interface IListCRUDState<T> {
-  list: T[];
-  deleteItemName: string;
-  deleteItemIndex: number;
-}
-
-export abstract class BaseListCRUDModel<
-  T extends Record<string, any>,
-> extends BaseModel<IListCRUDState<T>> {
+export abstract class BaseListCRUDModel<T extends IListItem> extends BaseModel<
+  IListCRUDState<T>
+> {
   constructor(name: string) {
     super(name, {
-      list: [],
+      list: {},
+      loading: false,
+      deleteItemId: -1,
       deleteItemName: "",
-      deleteItemIndex: -1,
     });
   }
 
+  public abstract save(
+    id: number,
+    setState: ILoadingStateSetter,
+  ): Promise<void>;
+
+  public abstract saveBeforeUnmount(id: number): Promise<void>;
+
+  public abstract fetch(): Promise<void>;
+
+  public abstract deleteItem(
+    id: number,
+    setState: ILoadingStateSetter,
+    callback?: Callback,
+  ): Promise<void>;
+
   public create = () => {
-    this.setList([...this.getState().list, this.blank]);
+    this.setList({
+      ...this.getState().list,
+      [-1]: this.blank,
+    });
   };
 
-  public updateList = <K extends Extract<keyof T, string>>(
-    index: number,
+  public loading(loading: boolean) {
+    this.update(state => {
+      state.loading = loading;
+    });
+  }
+
+  public updateByIdentifier(id: number, value: T) {
+    const { list } = this.getState();
+    this.setList({ ...list, [id]: value });
+  }
+
+  public updateListItem = <K extends Extract<keyof T, string>>(
+    id: number,
     key: K,
     value: T[K],
   ) => {
-    this.setList(
-      this.getState().list.map((item, i) => {
-        if (i === index) {
-          return {
-            ...item,
-            [key]: value,
-          };
-        }
-        return item;
-      }),
-    );
+    const { list } = this.getState();
+    this.setList({ ...list, [id]: { ...list[id], [key]: value } });
   };
 
-  public delete = (index: number) => {
-    this.setList(this.getState().list.filter((_, i) => i !== index));
+  public delete = (id: number) => {
+    const { list } = this.getState();
+    const copy = { ...list };
+    delete copy[id];
+    this.setList(copy);
   };
 
-  public setList(list: T[]) {
+  public hashList(list: T[]) {
+    const hash: Record<number, T> = {};
+    for (const item of list) {
+      hash[item.id] = item;
+    }
+    this.setList(hash);
+  }
+
+  public setList(list: Record<number, T>) {
     this.update(state => {
       state.list = list;
     });
@@ -54,14 +82,42 @@ export abstract class BaseListCRUDModel<
   public abstract validate(amenity?: T): boolean;
 
   public confirmDelete() {
-    this.delete(this.getState().deleteItemIndex);
-    this.setDeletionScope("", -1);
+    this.delete(this.getState().deleteItemId);
+    this.resetDeletionScope();
   }
 
-  public setDeletionScope(name: string, index: number) {
+  public setDeletionScope<P extends IListItem>(item: P) {
     this.update(state => {
-      state.deleteItemName = name;
-      state.deleteItemIndex = index;
+      state.deleteItemId = item.id;
+      state.deleteItemName = item.name;
     });
   }
+
+  public resetDeletionScope() {
+    this.update(state => {
+      state.deleteItemId = -1;
+      state.deleteItemName = "";
+    });
+  }
+
+  public map<R>(callback: (item: T) => R) {
+    const result: R[] = [];
+    const { list } = this.getState();
+    for (const key in list) {
+      result.push(callback(list[key]));
+    }
+    return result;
+  }
+}
+
+export interface IListItem {
+  id: number;
+  name: string;
+}
+
+export interface IListCRUDState<T extends Record<string, any>> {
+  loading: boolean;
+  deleteItemId: number;
+  deleteItemName: string;
+  list: Record<number, T>;
 }

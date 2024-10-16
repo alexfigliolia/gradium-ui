@@ -45,10 +45,6 @@
         @media (min-width: 1200px) {
           scale: 1.5;
         }
-        &>.triangle-loader {
-          --path: url(#themeGradient);
-          --dot: linear-gradient(to right, var(--theme-light), var(--theme-dark));
-        }
       }
     }
     &>p {

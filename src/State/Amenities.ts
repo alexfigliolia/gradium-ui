@@ -7,5 +7,5 @@ export const useAmenities = createUseState(Amenities);
 export const selectAmenities = (state: IAmenities) => state.list;
 export const selectDeletion = (state: IAmenities): [string, number] => [
   state.deleteItemName,
-  state.deleteItemIndex,
+  state.deleteItemId,
 ];

@@ -13,7 +13,7 @@
   @include Variables.themeGradient(bottom);
   position: relative;
   transition-duration: 0.3s;
-  box-shadow: var(--shadow-level-2-dark);
+  box-shadow: var(--shadow-level-2-light);
   &:hover {
     box-shadow: #{Variables.$shadow-level-2} var(--theme-dark);
   }

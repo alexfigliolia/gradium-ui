@@ -1,31 +1,45 @@
+import type { ILoadingStateSetter } from "@figliolia/react-hooks";
+import { Debouncer } from "@figliolia/react-hooks";
 import { Modals } from "State/Modals";
-import type { BaseListCRUDModel } from "Tools/BaseListCrudModel";
+import type { BaseListCRUDModel, IListItem } from "Tools/BaseListCrudModel";
+import type { Callback } from "Types/Generics";
 
-export class Controller<T extends Record<string, any>> {
-  index: number;
-  model: BaseListCRUDModel<T>;
-  constructor(model: BaseListCRUDModel<T>, index: number) {
+export class Controller<T extends IListItem, M extends BaseListCRUDModel<T>> {
+  model: M;
+  ID: number;
+  setState!: ILoadingStateSetter;
+  private debouncer: Debouncer<Callback>;
+  constructor(model: M, ID: number) {
+    this.ID = ID;
     this.model = model;
-    this.index = index;
+    this.debouncer = new Debouncer(() => {
+      void this.model.save(this.ID, this.setState);
+    }, 1000);
   }
 
-  public register(index: number) {
-    this.index = index;
+  public register(ID: number, setState: ILoadingStateSetter) {
+    this.ID = ID;
+    this.setState = setState;
   }
 
   public update = <K extends Extract<keyof T, string>>(key: K, value: T[K]) => {
-    this.model.updateList(this.index, key, value);
+    this.model.updateListItem(this.ID, key, value);
+    this.debouncer.execute();
   };
 
-  public createKey<K extends Extract<keyof T, string>>(name: K) {
-    return `${name}-amenity-${this.index + 1}`;
+  public destroy() {
+    if (this.debouncer.hasActionPending) {
+      this.debouncer.cancel();
+      void this.model.saveBeforeUnmount(this.ID);
+    }
   }
 
-  public onTrashClick = (amenity: T) => {
-    if (this.model.validate(amenity)) {
-      this.model.setDeletionScope(amenity.name, this.index);
-      return Modals.deleteSpace.open();
-    }
-    this.model.delete(this.index);
+  public createKey<K extends Extract<keyof T, string>>(name: K, base: string) {
+    return `${name}-${base}-${this.ID}`;
+  }
+
+  public onTrashClick = (item: T) => {
+    this.model.setDeletionScope(item);
+    return Modals.deleteSpace.open();
   };
 }

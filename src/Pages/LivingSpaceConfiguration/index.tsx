@@ -1,15 +1,14 @@
-import { Fragment, memo, useCallback } from "react";
+import { memo, useCallback } from "react";
 import { PermissedRoute } from "Components/PermissedRoute";
 import {
   LivingSpaceTile,
   PropertyConfigurationPage,
 } from "Layouts/PropertyConfiguration";
 import { AdminRoutes } from "Router/AdminRoutes";
-import { selectUnits, useLivingSpaces } from "State/LivingSpaces";
 import type { Propless } from "Types/React";
 import { ConfirmDelete } from "./ConfirmDelete";
-import { LivingSpaceForm } from "./LivingSpaceForm";
 import { NewSpaceButton } from "./NewSpaceButton";
+import { SpacesList } from "./SpacesList";
 
 export default memo(
   function LivingSpaceConfiguration(_: Propless) {
@@ -17,7 +16,6 @@ export default memo(
       (property: string) => `Living Spaces at ${property}`,
       [],
     );
-    const spaces = useLivingSpaces(selectUnits);
     return (
       <PermissedRoute
         fallback=".."
@@ -26,14 +24,7 @@ export default memo(
           <LivingSpaceTile>
             <NewSpaceButton />
           </LivingSpaceTile>
-          {!!spaces.length && (
-            <Fragment>
-              {spaces.map((space, i) => {
-                return <LivingSpaceForm key={i} index={i} {...space} />;
-              })}
-              <NewSpaceButton />
-            </Fragment>
-          )}
+          <SpacesList />
         </PropertyConfigurationPage>
         <ConfirmDelete />
       </PermissedRoute>

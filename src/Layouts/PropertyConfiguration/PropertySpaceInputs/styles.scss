@@ -6,7 +6,7 @@
     display: flex;
     row-gap: 1em;
     flex-direction: column;
-    &>form.spaces {
+    &>.spaces {
       overflow: hidden;
       &>.space-title {
         width: 100%;
@@ -21,12 +21,45 @@
           opacity: 0;
           visibility: hidden;
           scale: 0.5;
+          position: relative;
           transition: box-shadow 0.3s, opacity 0.3s, scale 0.3s, visibility 0s 0.3s;
+          &>svg {
+            transition: all 0.4s 0.4s;
+          }
           &.editing {
             opacity: 1;
             scale: 1;
             visibility: visible;
             transition: box-shadow 0.3s, opacity 0.3s, scale 0.3s, visibility 0s;
+            &>svg {
+              transition: all 0.4s 0.4s;
+            }
+            &.loading > svg {
+              scale: 0;
+              opacity: 0;
+              transition: all 0.4s;
+            }
+          }
+          &>.action-button {
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            &.loading {
+              width: 100%;
+              height: 100%;
+              &>.triangle-loader {
+                scale: 0.5;
+                translate: -50% -52.5%;
+              }
+              &.success > .triangle-loader,
+              &.error > .triangle-loader {
+                scale: 0;
+              }
+            }
           }
         }
       }

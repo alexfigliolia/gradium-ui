@@ -4,12 +4,12 @@ import { SpaceUploader } from "./SpaceUploader";
 import "./styles.scss";
 
 export const SpaceActions = memo(function SpaceActions({
-  edit,
   editing,
+  toggleEdit,
 }: Props) {
   return (
     <div className="space-actions">
-      <button type="button" onClick={edit}>
+      <button type="button" onClick={toggleEdit}>
         {editing ? "Lock" : "Edit"}
       </button>
       <SpaceUploader editing={editing}>Upload Photos</SpaceUploader>
@@ -19,6 +19,6 @@ export const SpaceActions = memo(function SpaceActions({
 });
 
 interface Props {
-  edit: Callback;
   editing: boolean;
+  toggleEdit: Callback;
 }

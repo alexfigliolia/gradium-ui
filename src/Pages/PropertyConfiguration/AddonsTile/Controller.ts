@@ -31,16 +31,16 @@ export class Controller {
     deletions: Set<PropertyAddonType>,
   ) {
     try {
-      const { current, properties } = Properties.getState();
+      const name = Properties.getCurrent("name");
       const client = new UIClient({
         setState: this.setState,
-        successMessage: `<strong>${this.formatName(properties[current].name)}</strong> addons have been updated!`,
+        successMessage: `<strong>${this.formatName(name)}</strong> addons have been updated!`,
       });
       const response = await client.executeQuery<
         ModifyPropertyAddonsMutation,
         ModifyPropertyAddonsMutationVariables
       >(modifyPropertyAddons, {
-        propertyId: current,
+        propertyId: Properties.getState().current,
         organizationId: Scope.getState().currentOrganizationId,
         additions: Array.from(additions),
         deletions: this.gatherIds(deletions),

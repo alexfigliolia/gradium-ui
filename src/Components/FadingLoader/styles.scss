@@ -7,5 +7,11 @@
   &.hide {
     opacity: 1;
     animation: hide 0.5s 0s forwards;
+    visibility: hidden;
+    transition: visibility 0s 0.5s;
+  }
+  &>.triangle-loader {
+    --path: url(#themeGradient);
+    --dot: linear-gradient(to right, var(--theme-light), var(--theme-dark));
   }
 }

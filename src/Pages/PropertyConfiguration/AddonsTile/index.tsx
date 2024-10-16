@@ -4,8 +4,8 @@ import {
   useDebouncer,
   useLoadingState,
 } from "@figliolia/react-hooks";
-import { ActionButton } from "Components/ActionButton";
 import { CheckBoxGroup } from "Components/CheckBoxGroup";
+import { ColoredActionButton } from "Components/ColoredActionButton";
 import { Tile } from "Components/Tile";
 import type { PropertyAddonType } from "GraphQL/Types";
 import { PuzzlePiece } from "Icons/PuzzlePiece";
@@ -59,12 +59,12 @@ export const AddonsTile = memo(function AddonsTile(_: Propless) {
         label={
           <Fragment>
             Select addons for {name}:{" "}
-            <ActionButton
+            <ColoredActionButton
               aria-hidden
               tabIndex={-1}
+              error={!!error}
               loading={loading}
               success={success}
-              error={!!error}
             />
           </Fragment>
         }

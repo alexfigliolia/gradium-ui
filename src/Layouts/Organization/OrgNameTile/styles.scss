@@ -23,5 +23,31 @@
         }
       }
     }
+    &>.colored-action-button {
+      width: 50px;
+      height: calc(100% - 0.25px);
+      background: #fff;
+      border-radius: 0;
+      padding: 0;
+      border-top-right-radius: calc(var(--border-radius)* 0.5);
+      border-bottom-right-radius: calc(var(--border-radius)* 0.5);
+      @include Variables.center;
+      position: relative;
+      font-size: 1em;
+      background-color: var(--tile-background);
+      &.loading {
+        width: 50px;
+        &>.triangle-loader {
+          scale: 0.5;
+        }
+        &.success,
+        &.error {
+          &>.triangle-loader {
+            scale: 0;
+            translate: -50% -50%;
+          }
+        }
+      }
+    }
   }
 }

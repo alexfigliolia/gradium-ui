@@ -1,30 +1,32 @@
-import type { MouseEvent } from "react";
+import type { ButtonHTMLAttributes } from "react";
 import { memo } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import { GradientButton } from "Components/GradientButton";
 import { TriangleLoader } from "Components/TriangleLoader";
 import { Check } from "Icons/Check";
 import { Error } from "Icons/Error";
-import type { ActionState, OptionalChildren } from "Types/React";
+import type { ActionState } from "Types/React";
 import "./styles.scss";
 
 export const ActionButton = memo(function ActionButton({
-  type,
-  onClick,
   disabled,
   children,
   className,
-  tabIndex,
+  loading,
+  error,
+  success,
   ...rest
-}: Props) {
-  const classes = useClassNames("action-button", className, rest);
+}: ActionButtonProps) {
+  const classes = useClassNames("action-button", className, {
+    loading: !!loading,
+    success: !!success,
+    error: !!error,
+  });
   return (
     <GradientButton
-      type={type}
-      onClick={onClick}
       className={classes}
-      tabIndex={tabIndex}
-      disabled={rest.loading || disabled}>
+      disabled={loading || disabled}
+      {...rest}>
       <div>{children}</div>
       <TriangleLoader />
       <Check />
@@ -33,10 +35,6 @@ export const ActionButton = memo(function ActionButton({
   );
 });
 
-interface Props extends OptionalChildren, ActionState {
-  className?: string;
-  tabIndex?: number;
-  disabled?: boolean;
-  type?: "submit" | "reset" | "button";
-  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-}
+export interface ActionButtonProps
+  extends ButtonHTMLAttributes<HTMLButtonElement>,
+    ActionState {}

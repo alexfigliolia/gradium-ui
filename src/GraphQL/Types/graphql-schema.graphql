@@ -5,6 +5,7 @@ schema {
 type Query {
   userScope: LoggedInUser!
   verifySession: Boolean!
+  getLivingSpaces(propertyId: Int!, organizationId: Int!): [LivingSpace!]!
   generateUploadSignature(organizationId: Int!, type: PropertyImageType!): UploadSignature!
   generateDestroySignature(organizationId: Int!, publicId: String!, type: PropertyImageType!): DestroySignature!
   adminBasicPropertiesList(organizationId: Int!): [AdminBasicProperty!]!
@@ -28,6 +29,17 @@ type OrgAffiliation {
 }
 type PersonRole {
   role: PersonRoleType!
+}
+type LivingSpace {
+  id: Int!
+  name: String!
+  type: LivingSpaceType!
+  beds: Int!
+  baths: Float!
+  footage: Float!
+  propertyId: Int!
+  images: [PropertyImageType!]!
+  floorPlans: [PropertyImageType!]!
 }
 type UploadSignature {
   api_key: String!
@@ -78,11 +90,13 @@ type Mutation {
   forgotPassword(email: String!): String!
   createProperty(name: String!, organizationId: Int!): AdminBasicProperty!
   inviteStaffMember(organizationId: Int!, email: String!): Boolean!
+  deleteLivingSpace(organizationId: Int!, propertyId: Int!, id: Int!): LivingSpace!
   createPropertyImage(propertyId: Int!, organizationId: Int!, url: String!): PropertyImage!
   deletePropertyImage(organizationId: Int!, id: Int!): PropertyImage!
   setOrganizationName(name: String!, organizationId: Int!): Boolean!
   modifyPropertyAddons(propertyId: Int!, organizationId: Int!, additions: [PropertyAddonType!]!, deletions: [Int!]!): [PropertyAddon!]!
   updateBasicPropertyInfo(propertyId: Int!, organizationId: Int!, name: String!, address1: String!, address2: String!, city: String!, state: String!, zipCode: String!): AdminBasicProperty!
+  createOrUpdateLivingSpace(organizationId: Int!, propertyId: Int!, id: Int, name: String!, type: LivingSpaceType!, beds: Int!, baths: Float!, footage: Float!): LivingSpace!
 }
 type BasicUser {
   name: String!
@@ -93,6 +107,10 @@ enum PersonRoleType {
   manager
   maintenance
   resident
+}
+enum LivingSpaceType {
+  unit
+  dwelling
 }
 enum PropertyImageType {
   propertyImage

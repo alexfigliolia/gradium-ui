@@ -97,19 +97,22 @@ export class PropertiesModel extends BaseModel<IProperties> {
   }
 
   public addImage(image: PropertyImage) {
-    const { current, properties } = this.getState();
-    this.setCurrentPropertyKey("images", [
-      ...properties[current].images,
-      image,
-    ]);
+    this.setCurrentPropertyKey("images", [...this.getCurrent("images"), image]);
   }
 
   public deleteImage(image: PropertyImage) {
-    const { current, properties } = this.getState();
+    const images = this.getCurrent("images");
     this.setCurrentPropertyKey(
       "images",
-      properties[current].images.filter(pic => pic.id !== image.id),
+      images.filter(pic => pic.id !== image.id),
     );
+  }
+
+  public getCurrent<K extends Extract<keyof AdminBasicProperty, string>>(
+    key: K,
+  ) {
+    const { current, properties } = this.getState();
+    return properties[current][key];
   }
 
   private hashAddons(addons: PropertyAddon[]) {

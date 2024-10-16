@@ -1,13 +1,16 @@
 import { Fragment, memo } from "react";
 import { LivingSpaceBed } from "Icons/LivingSpaceBed";
+import { selectLoading, useLivingSpaces } from "State/LivingSpaces";
 import type { OptionalChildren } from "Types/React";
 import { PropertyConfigurationTile } from "../PropertyConfigurationTile";
 
 export const LivingSpaceTile = memo(function LivingSpaceTile({
   children,
 }: OptionalChildren) {
+  const loading = useLivingSpaces(selectLoading);
   return (
     <PropertyConfigurationTile
+      loading={loading}
       title={
         <Fragment>
           <LivingSpaceBed /> Living Spaces

@@ -78,7 +78,7 @@ export const AmenityForm = memo(function AmenityForm({
           autoComplete="off"
           disabled={!editing}
           onChange={onChangeName}
-          name={controller.createKey("name")}
+          name={controller.createKey("name", "amenity")}
         />
         <Input
           type="number"
@@ -89,7 +89,7 @@ export const AmenityForm = memo(function AmenityForm({
           value={footage.toString()}
           onChange={onChangeFootage}
           className="number-input size-input"
-          name={controller.createKey("footage")}>
+          name={controller.createKey("footage" ,"amenity")}>
           <div className="postfix">sqft</div>
         </Input>
         <h4>Hours of Operation</h4>
@@ -102,7 +102,7 @@ export const AmenityForm = memo(function AmenityForm({
           disabled={!editing}
           list={DropDownOptions.HOURS}
           onSelected={controller.update}
-          name={controller.createKey("open")}
+          name={controller.createKey("open", "amenity")}
         />
         <PropertyConfigurationDropdown<IAmenity>
           fallback="12am"
@@ -113,7 +113,7 @@ export const AmenityForm = memo(function AmenityForm({
           disabled={!editing}
           list={DropDownOptions.HOURS}
           onSelected={controller.update}
-          name={controller.createKey("close")}
+          name={controller.createKey("close", "amenity")}
         />
         <h4>Reservation Pricing</h4>
         <Input
@@ -125,7 +125,7 @@ export const AmenityForm = memo(function AmenityForm({
           value={price.toString()}
           onChange={onChangePrice}
           className="number-input price-input"
-          name={controller.createKey("price")}
+          name={controller.createKey("price", "amenity")}
         />
         <PropertyConfigurationDropdown<IAmenity>
           fallback="hour"
@@ -136,7 +136,7 @@ export const AmenityForm = memo(function AmenityForm({
           disabled={!editing}
           list={DropDownOptions.BILLED_BY}
           onSelected={controller.update}
-          name={controller.createKey("billed")}
+          name={controller.createKey("billed", "amenity")}
         />
       </PropertySpaceInputs>
     </Tile>

@@ -1,7 +1,7 @@
 .file-uploader {
   position: relative;
   border-radius: 0.25em;
-  transition: all 0.3s;
+  transition: opacity 0.3s;
   &:has(:focus-visible) {
     outline-offset: 0.3em;
     outline: 0.2em solid var(--theme-mid);

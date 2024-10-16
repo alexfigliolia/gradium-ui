@@ -1,7 +1,7 @@
 import { addYears, subYears } from "date-fns";
 import type { ChangeEvent } from "react";
+import { LivingSpaceType } from "GraphQL/Types";
 import { BaseModel } from "Models/BaseModel";
-import type { IUnitType } from "Models/LivingSpaces";
 import type { ILease, ILeases, ILeaseStatus } from "./types";
 
 export class LeasesModel extends BaseModel<ILeases> {
@@ -67,7 +67,7 @@ export class LeasesModel extends BaseModel<ILeases> {
       id: -1,
       space: {
         name: "",
-        type: "" as IUnitType,
+        type: "" as LivingSpaceType,
       },
       end: "",
       start: "",
@@ -82,7 +82,7 @@ export class LeasesModel extends BaseModel<ILeases> {
       id: 0,
       space: {
         name: "201",
-        type: "unit",
+        type: LivingSpaceType.Unit,
       },
       end: addYears(new Date(), 0.5).toISOString(),
       start: addYears(new Date(), 1.5).toISOString(),
@@ -94,7 +94,7 @@ export class LeasesModel extends BaseModel<ILeases> {
       id: 1,
       space: {
         name: "202",
-        type: "unit",
+        type: LivingSpaceType.Unit,
       },
       end: addYears(new Date(), 0.5).toISOString(),
       start: subYears(new Date(), 0.5).toISOString(),
@@ -106,7 +106,7 @@ export class LeasesModel extends BaseModel<ILeases> {
       id: 2,
       space: {
         name: "203",
-        type: "unit",
+        type: LivingSpaceType.Unit,
       },
       end: addYears(new Date(), 0.4).toISOString(),
       start: subYears(new Date(), 0.6).toISOString(),
@@ -118,7 +118,7 @@ export class LeasesModel extends BaseModel<ILeases> {
       id: 3,
       space: {
         name: "204",
-        type: "unit",
+        type: LivingSpaceType.Unit,
       },
       end: addYears(new Date(), 0.3).toISOString(),
       start: subYears(new Date(), 0.7).toISOString(),
@@ -130,7 +130,7 @@ export class LeasesModel extends BaseModel<ILeases> {
       id: 4,
       space: {
         name: "205",
-        type: "unit",
+        type: LivingSpaceType.Unit,
       },
       end: addYears(new Date(), 0.7).toISOString(),
       start: subYears(new Date(), 0.3).toISOString(),

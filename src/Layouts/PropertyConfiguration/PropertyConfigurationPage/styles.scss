@@ -9,7 +9,8 @@
     @media (min-width: Variables.$small-vertical-tablet) {
       row-gap: 2em;
     }
-    &>form {
+    &>form,
+    &>div {
       & > h2 > svg {
         &.map-arrow {
           rotate: 45deg;

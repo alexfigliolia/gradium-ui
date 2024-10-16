@@ -1,4 +1,4 @@
-import type { IUnit } from "Models/LivingSpaces";
+import type { LivingSpace } from "GraphQL/Types";
 
 export type ILeaseStatus =
   | "complete"
@@ -18,7 +18,7 @@ export interface ILease {
   start: string;
   rate: number;
   status: ILeaseStatus;
-  space: Pick<IUnit, "name" | "type">;
+  space: Pick<LivingSpace, "name" | "type">;
   lessees: ILessee[];
 }
 

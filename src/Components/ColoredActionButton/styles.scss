@@ -1,0 +1,18 @@
+.action-button.colored-action-button {
+  background: transparent;
+  box-shadow: none;
+  &>.triangle-loader {
+    --path: url(#themeGradient);
+    --dot: linear-gradient(to right, var(--theme-light), var(--theme-dark));
+  }
+  &>.check-icon {
+    height: 110%;
+    width: 110%;
+    & path {
+      stroke: url(#successGradient);
+    }
+  }
+  &>.error-icon path {
+    fill: url(#errorGradient);
+  }
+}
