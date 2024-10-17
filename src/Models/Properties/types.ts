@@ -1,8 +1,17 @@
-import type { AdminBasicProperty, PropertyAddonType } from "GraphQL/Types";
+import type {
+  AdminBasicProperty,
+  GradiumImage,
+  PropertyAddonType,
+} from "GraphQL/Types";
 
 export interface IProperties {
   current: number;
   loading: boolean;
   currentAddons: Set<PropertyAddonType>;
-  properties: Record<number, AdminBasicProperty>;
+  properties: Record<number, PropertyWithNullImages>;
+}
+
+export interface PropertyWithNullImages
+  extends Omit<AdminBasicProperty, "images"> {
+  images: (GradiumImage | undefined)[];
 }

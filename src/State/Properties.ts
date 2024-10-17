@@ -27,3 +27,5 @@ export const propertyNames = (state: IProperties) => {
   }
   return names;
 };
+
+export const currentId = (state: IProperties) => state.current;

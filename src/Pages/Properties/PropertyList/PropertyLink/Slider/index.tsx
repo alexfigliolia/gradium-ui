@@ -2,17 +2,22 @@ import { memo, useMemo } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import type { IImage } from "Components/ImageSlider";
 import { ImageSlider } from "Components/ImageSlider";
-import type { PropertyImage } from "GraphQL/Types";
+import type { GradiumImage } from "GraphQL/Types";
 import { ImagePlaceholder } from "Icons/ImagePlaceholder";
 import { LeftRight } from "Icons/LeftRight";
 import { Devices } from "Tools/Devices";
 import "./styles.scss";
 
 export const Slider = memo(function Slider({ images }: Props) {
-  const slides: IImage[] = useMemo(
-    () => images.map(({ url }) => ({ type: "image", content: url })),
-    [images],
-  );
+  const slides = useMemo(() => {
+    const imageList: IImage[] = [];
+    for (const image of images) {
+      if (image) {
+        imageList.push({ type: "image", content: image.url });
+      }
+    }
+    return imageList;
+  }, [images]);
 
   const classes = useClassNames("p-link-slider", {
     "is-desktop": !Devices.IS_MOBILE_BROWSER,
@@ -34,5 +39,5 @@ export const Slider = memo(function Slider({ images }: Props) {
 });
 
 interface Props {
-  images: PropertyImage[];
+  images: (GradiumImage | undefined)[];
 }

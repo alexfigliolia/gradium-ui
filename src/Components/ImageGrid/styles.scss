@@ -14,9 +14,7 @@
   @media (min-width: 1400px) {
     gap: 1em;
   }
-  &>.cloudinary-image-interface,
-  &>.grid-image,
-  &>.fallback {
+  & .cloudinary-image-interface {
     height: 150px;
     width: calc(50% - 0.5em);
     border-radius: 0.5em;
@@ -35,15 +33,6 @@
       & p {
         font-size: 1em;
       }
-    }
-  }
-  &>.grid-image {
-    & img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      aspect-ratio: 1 / 1;
-      border-radius: 0.5em;
     }
   }
 }

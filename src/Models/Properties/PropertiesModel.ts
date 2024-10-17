@@ -3,14 +3,13 @@ import { graphQLRequest } from "GraphQL/request";
 import type {
   AdminBasicPropertiesListQuery,
   AdminBasicPropertiesListQueryVariables,
-  AdminBasicProperty,
+  GradiumImage,
   PropertyAddon,
-  PropertyImage,
 } from "GraphQL/Types";
 import { PersonRoleType } from "GraphQL/Types";
 import { BaseModel } from "Models/BaseModel";
 import { Permission } from "Tools/Permission";
-import type { IProperties } from "./types";
+import type { IProperties, PropertyWithNullImages } from "./types";
 
 export class PropertiesModel extends BaseModel<IProperties> {
   constructor() {
@@ -22,7 +21,7 @@ export class PropertiesModel extends BaseModel<IProperties> {
     });
   }
 
-  public addProperty(property: AdminBasicProperty) {
+  public addProperty(property: PropertyWithNullImages) {
     this.update(state => {
       state.properties = { ...state.properties, [property.id]: property };
     });
@@ -47,7 +46,7 @@ export class PropertiesModel extends BaseModel<IProperties> {
     >(adminBasicPropertiesList, {
       organizationId,
     });
-    const map: Record<number, AdminBasicProperty> = {};
+    const map: Record<number, PropertyWithNullImages> = {};
     for (const property of response.adminBasicPropertiesList) {
       map[property.id] = property;
     }
@@ -82,7 +81,7 @@ export class PropertiesModel extends BaseModel<IProperties> {
     });
   }
 
-  public updateBasicInfo(property: AdminBasicProperty) {
+  public updateBasicInfo(property: PropertyWithNullImages) {
     this.update(state => {
       state.properties = {
         ...state.properties,
@@ -96,19 +95,37 @@ export class PropertiesModel extends BaseModel<IProperties> {
     this.hashAddons(addons);
   }
 
-  public addImage(image: PropertyImage) {
-    this.setCurrentPropertyKey("images", [...this.getCurrent("images"), image]);
-  }
-
-  public deleteImage(image: PropertyImage) {
+  public addImage(image: GradiumImage, index?: number) {
     const images = this.getCurrent("images");
-    this.setCurrentPropertyKey(
-      "images",
-      images.filter(pic => pic.id !== image.id),
-    );
+    if (typeof index === "undefined") {
+      return this.setCurrentPropertyKey("images", [...images, image]);
+    }
+    const copy = [...images];
+    const N = copy.length - 1;
+    if (index < N) {
+      copy.splice(index, 1, image);
+    } else {
+      for (let i = N + 1; i <= index; i++) {
+        copy.push(i === index ? image : undefined);
+      }
+    }
+    this.setCurrentPropertyKey("images", copy);
   }
 
-  public getCurrent<K extends Extract<keyof AdminBasicProperty, string>>(
+  public deleteImage(image: GradiumImage, index?: number) {
+    const images = this.getCurrent("images");
+    if (typeof index === "undefined") {
+      return this.setCurrentPropertyKey(
+        "images",
+        images.filter(pic => pic?.id !== image.id),
+      );
+    }
+    const copy = [...images];
+    copy[index] = undefined;
+    return this.setCurrentPropertyKey("images", copy);
+  }
+
+  public getCurrent<K extends Extract<keyof PropertyWithNullImages, string>>(
     key: K,
   ) {
     const { current, properties } = this.getState();
@@ -121,9 +138,9 @@ export class PropertiesModel extends BaseModel<IProperties> {
     });
   }
 
-  private setCurrentPropertyKey<K extends keyof AdminBasicProperty>(
+  private setCurrentPropertyKey<K extends keyof PropertyWithNullImages>(
     key: K,
-    value: AdminBasicProperty[K],
+    value: PropertyWithNullImages[K],
   ) {
     this.update(state => {
       const property = state.properties[state.current];

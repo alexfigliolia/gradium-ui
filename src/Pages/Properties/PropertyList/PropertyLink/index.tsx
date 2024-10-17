@@ -1,7 +1,7 @@
 import { memo, useMemo } from "react";
-import type { AdminBasicProperty } from "GraphQL/Types";
 import { Building } from "Icons/Building";
 import { SettingsFilled } from "Icons/Settings";
+import type { PropertyWithNullImages } from "Models/Properties";
 import { AdminRoutes } from "Router/AdminRoutes";
 import { Link } from "./Link";
 import { Slider } from "./Slider";
@@ -16,7 +16,7 @@ export const PropertyLink = memo(function PropertyLink({
   zipCode,
   address1,
   address2,
-}: AdminBasicProperty) {
+}: PropertyWithNullImages) {
   const baseRoute = useMemo(() => AdminRoutes.slugRoute(slug), [slug]);
   const configure = useMemo(
     () => AdminRoutes.slugRoute(slug, "configure"),
