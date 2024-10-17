@@ -1,12 +1,16 @@
 import { gql } from "graphql-request";
 
-export const createPropertyImage = gql`
-  mutation createPropertyImage(
+export const saveImage = gql`
+  mutation saveImage(
     $propertyId: Int!
     $organizationId: Int!
+    $entityId: Int!
     $url: String!
+    $type: GradiumImageType!
   ) {
-    createPropertyImage(
+    saveImage(
+      type: $type
+      entityId: $entityId
       propertyId: $propertyId
       organizationId: $organizationId
       url: $url

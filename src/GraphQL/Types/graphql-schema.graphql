@@ -6,8 +6,8 @@ type Query {
   userScope: LoggedInUser!
   verifySession: Boolean!
   getLivingSpaces(propertyId: Int!, organizationId: Int!): [LivingSpace!]!
-  generateUploadSignature(organizationId: Int!, type: PropertyImageType!): UploadSignature!
-  generateDestroySignature(organizationId: Int!, publicId: String!, type: PropertyImageType!): DestroySignature!
+  generateUploadSignature(organizationId: Int!, type: GradiumImageType!): UploadSignature!
+  generateDestroySignature(organizationId: Int!, publicId: String!, type: GradiumImageType!): DestroySignature!
   adminBasicPropertiesList(organizationId: Int!): [AdminBasicProperty!]!
 }
 type LoggedInUser {
@@ -38,8 +38,12 @@ type LivingSpace {
   baths: Float!
   footage: Float!
   propertyId: Int!
-  images: [PropertyImageType!]!
-  floorPlans: [PropertyImageType!]!
+  images: [GradiumImage!]!
+  floorPlans: [GradiumImage!]!
+}
+type GradiumImage {
+  id: Int!
+  url: String!
 }
 type UploadSignature {
   api_key: String!
@@ -68,12 +72,8 @@ type AdminBasicProperty {
   state: String!
   zipCode: String!
   mapsLink: String!
-  images: [PropertyImage!]!
+  images: [GradiumImage!]!
   addons: [PropertyAddon!]!
-}
-type PropertyImage {
-  id: Int!
-  url: String!
 }
 type PropertyAddon {
   id: Int!
@@ -83,6 +83,8 @@ type Mutation {
   login(email: String!, password: String!): LoggedInUser!
   logout: Boolean!
   linkEmail(userId: Int!, email: String!): BasicUser!
+  saveImage(propertyId: Int!, organizationId: Int!, entityId: Int!, url: String!, type: GradiumImageType!): GradiumImage!
+  deleteImage(organizationId: Int!, propertyId: Int!, id: Int!, type: GradiumImageType!): GradiumImage!
   deleteEmail(userId: Int!, email: String!): BasicUser!
   updateEmail(userId: Int!, previous: String!, next: String!): BasicUser!
   resetPassword(userId: Int!, previous: String!, next: String!): Boolean!
@@ -91,8 +93,6 @@ type Mutation {
   createProperty(name: String!, organizationId: Int!): AdminBasicProperty!
   inviteStaffMember(organizationId: Int!, email: String!): Boolean!
   deleteLivingSpace(organizationId: Int!, propertyId: Int!, id: Int!): LivingSpace!
-  createPropertyImage(propertyId: Int!, organizationId: Int!, url: String!): PropertyImage!
-  deletePropertyImage(organizationId: Int!, id: Int!): PropertyImage!
   setOrganizationName(name: String!, organizationId: Int!): Boolean!
   modifyPropertyAddons(propertyId: Int!, organizationId: Int!, additions: [PropertyAddonType!]!, deletions: [Int!]!): [PropertyAddon!]!
   updateBasicPropertyInfo(propertyId: Int!, organizationId: Int!, name: String!, address1: String!, address2: String!, city: String!, state: String!, zipCode: String!): AdminBasicProperty!
@@ -112,10 +112,13 @@ enum LivingSpaceType {
   unit
   dwelling
 }
-enum PropertyImageType {
+enum GradiumImageType {
   propertyImage
   livingSpaceImage
   livingSpaceFloorPlan
+  amenityImage
+  amenityFloorPlan
+  taskImage
 }
 enum PropertyAddonType {
   packageManagement

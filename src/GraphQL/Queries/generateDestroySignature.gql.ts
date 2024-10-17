@@ -4,7 +4,7 @@ export const generateDestroySignature = gql`
   query generateDestroySignature(
     $organizationId: Int!
     $publicId: String!
-    $type: PropertyImageType!
+    $type: GradiumImageType!
   ) {
     generateDestroySignature(
       organizationId: $organizationId

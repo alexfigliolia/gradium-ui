@@ -9,7 +9,13 @@ export const LivingSpaceFragment = gql`
     baths
     footage
     propertyId
-    images
-    floorPlans
+    images {
+      id
+      url
+    }
+    floorPlans {
+      id
+      url
+    }
   }
 `;
