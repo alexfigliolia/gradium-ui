@@ -1,40 +1,32 @@
-import type { ButtonHTMLAttributes } from "react";
 import { memo } from "react";
 import { useClassNames } from "@figliolia/classnames";
-import { GradientButton } from "Components/GradientButton";
 import { TriangleLoader } from "Components/TriangleLoader";
 import { Check } from "Icons/Check";
 import { Error } from "Icons/Error";
 import type { ActionState } from "Types/React";
-import "./styles.scss";
+import "Components/ActionButton/styles.scss";
 
-export const ActionButton = memo(function ActionButton({
-  disabled,
-  children,
+export const LoadingState = memo(function LoadingState({
   className,
   loading,
   error,
   success,
   ...rest
-}: ActionButtonProps) {
+}: ILoadingState) {
   const classes = useClassNames("loading-action", className, {
     loading: !!loading,
     success: !!success,
     error: !!error,
   });
   return (
-    <GradientButton
-      className={classes}
-      disabled={loading || disabled}
-      {...rest}>
-      <div>{children}</div>
+    <div className={classes} {...rest}>
       <TriangleLoader />
       <Check />
       <Error />
-    </GradientButton>
+    </div>
   );
 });
 
-export interface ActionButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
-    ActionState {}
+export interface ILoadingState extends ActionState {
+  className?: string;
+}

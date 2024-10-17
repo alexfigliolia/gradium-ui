@@ -41,12 +41,17 @@ export const RegisteredEmail = memo(function RegisteredEmail({ email }: Props) {
         const response = await client.executeQuery<
           UpdateEmailMutation,
           UpdateEmailMutationVariables
-        >(updateEmail, {
-          next,
-          previous: email,
-          userId: Scope.getState().id,
-        });
-        Scope.updateBasicInfo(response.updateEmail);
+        >(
+          updateEmail,
+          {
+            next,
+            previous: email,
+            userId: Scope.getState().id,
+          },
+          () => {
+            Scope.updateBasicInfo(response.updateEmail);
+          },
+        );
       } catch (error) {
         // Silence
       }

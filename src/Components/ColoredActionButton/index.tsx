@@ -6,5 +6,5 @@ import "./styles.scss";
 export const ColoredActionButton = memo(function ColoredActionButton(
   props: ActionButtonProps,
 ) {
-  return <ActionButton {...props} className="colored-action-button" />;
+  return <ActionButton {...props} className="colored-loading-action" />;
 });

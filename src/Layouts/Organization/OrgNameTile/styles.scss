@@ -23,7 +23,7 @@
         }
       }
     }
-    &>.colored-action-button {
+    &>.colored-loading-action {
       width: 50px;
       height: calc(100% - 0.25px);
       background: #fff;
@@ -39,6 +39,7 @@
         width: 50px;
         &>.triangle-loader {
           scale: 0.5;
+          translate: -50% -52.5%;
         }
         &.success,
         &.error {

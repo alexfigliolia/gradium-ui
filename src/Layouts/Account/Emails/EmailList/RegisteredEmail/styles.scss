@@ -32,10 +32,11 @@
         color: var(--text-color-lightest);
       }
     }
-    &>.action-button {
-      box-shadow: none;
-      height: auto;
+    &>.loading-action {
       width: auto;
+      height: auto;
+      box-shadow: none;
+      padding: 0;
       text-transform: capitalize;
       transition: color 0.15s 0.3s, background-color 0.3s 0.3s;
       &.disabled {
