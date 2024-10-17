@@ -1,52 +1,93 @@
-import { deletePropertyImage } from "GraphQL/Mutations/deletePropertyImage.gql";
+import { deleteImage } from "GraphQL/Mutations/deleteImage.gql";
+import { saveImage } from "GraphQL/Mutations/saveImage.gql";
 import { generateDestroySignature } from "GraphQL/Queries/generateDestroySignature.gql";
 import { graphQLRequest } from "GraphQL/request";
-import {
-  type DeletePropertyImageMutation,
-  type DeletePropertyImageMutationVariables,
-  type DestroySignature,
-  type GenerateDestroySignatureQuery,
-  type GenerateDestroySignatureQueryVariables,
-  type PropertyImage,
-  PropertyImageType,
+import type {
+  DeleteImageMutation,
+  DeleteImageMutationVariables,
+  DestroySignature,
+  GenerateDestroySignatureQuery,
+  GenerateDestroySignatureQueryVariables,
+  GradiumImage,
+  GradiumImageType,
+  SaveImageMutation,
+  SaveImageMutationVariables,
 } from "GraphQL/Types";
 import { Properties } from "State/Properties";
 import { Scope } from "State/Scope";
 import { Toasts } from "State/Toasts";
+import type { CloudinaryAssetScope } from "Types/Gradium";
 
 export class CloudinaryDeleter {
-  public static async delete(image: PropertyImage) {
+  public static async delete(image: GradiumImage, scope: CloudinaryAssetScope) {
     const { id, url } = image;
     if (!id) {
       return;
     }
-    const destination = await this.generateSignature(this.toPublicID(url));
-    if (!destination) {
-      return;
-    }
+    let resolvedImage: GradiumImage | undefined;
     try {
+      resolvedImage = await this.deleteReference(id, scope.type);
+      const destination = await this.sign(this.toPublicID(url), scope.type);
       await this.deleteFromCloudinary(destination);
-      await graphQLRequest<
-        DeletePropertyImageMutation,
-        DeletePropertyImageMutationVariables
-      >(deletePropertyImage, {
-        id,
-        organizationId: Scope.getState().currentOrganizationId,
-      });
-      Properties.deleteImage(image);
-      Toasts.success("Your property image has been deleted");
+      Toasts.success("Your image has been deleted");
+      return image;
     } catch (error) {
+      if (resolvedImage) {
+        void this.restoreReference(resolvedImage.url, scope);
+      }
       this.toastError();
     }
   }
 
-  private static async sign(publicId: string) {
+  public static async rollBack(url: string, type: GradiumImageType) {
+    const destination = await this.sign(this.toPublicID(url), type);
+    if (!destination) {
+      return;
+    }
+    return this.deleteFromCloudinary(destination);
+  }
+
+  private static async deleteReference(id: number, type: GradiumImageType) {
+    const response = await graphQLRequest<
+      DeleteImageMutation,
+      DeleteImageMutationVariables
+    >(deleteImage, {
+      id,
+      type,
+      propertyId: Properties.getState().current,
+      organizationId: Scope.getState().currentOrganizationId,
+    });
+    return response.deleteImage;
+  }
+
+  private static async restoreReference(
+    url: string,
+    scope: CloudinaryAssetScope,
+  ) {
+    try {
+      const response = await graphQLRequest<
+        SaveImageMutation,
+        SaveImageMutationVariables
+      >(saveImage, {
+        url,
+        ...scope,
+        propertyId: Properties.getState().current,
+        organizationId: Scope.getState().currentOrganizationId,
+      });
+      Properties.addImage(response.saveImage);
+      return response.saveImage;
+    } catch (error) {
+      // silence
+    }
+  }
+
+  private static async sign(publicId: string, type: GradiumImageType) {
     const response = await graphQLRequest<
       GenerateDestroySignatureQuery,
       GenerateDestroySignatureQueryVariables
     >(generateDestroySignature, {
+      type,
       publicId,
-      type: PropertyImageType.PropertyImage,
       organizationId: Scope.getState().currentOrganizationId,
     });
     return response.generateDestroySignature;
@@ -75,9 +116,9 @@ export class CloudinaryDeleter {
     }
   }
 
-  private static async generateSignature(publicId: string) {
+  private static async safeSign(publicId: string, type: GradiumImageType) {
     try {
-      const destination = await this.sign(publicId);
+      const destination = await this.sign(publicId, type);
       return destination;
     } catch (error) {
       this.toastError();

@@ -2,10 +2,11 @@ import type { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { Timeout } from "@figliolia/react-hooks";
 import type { RefObject } from "@fullcalendar/core/preact.js";
 import { ImagePreloader } from "Generics/ImagePreloader";
-import type { PropertyImage } from "GraphQL/Types";
+import type { GradiumImage } from "GraphQL/Types";
 import { CloudinaryDeleter } from "Tools/CloudinaryDeleter";
 import { CloudinaryUploader } from "Tools/CloudinaryUploader";
 import type { Callback } from "Types/Generics";
+import type { CloudinaryAssetScope } from "Types/Gradium";
 import type { IImageUploader } from "./ImageUploader";
 
 export interface IState {
@@ -16,35 +17,54 @@ export interface IState {
 type StateSetter = Dispatch<SetStateAction<IState>>;
 
 export class Controller {
-  private Timeout = new Timeout();
   private setState: StateSetter;
+  private Timeout = new Timeout();
   private ImageUploader: RefObject<IImageUploader>;
   constructor(setState: StateSetter, uploader: RefObject<IImageUploader>) {
     this.setState = setState;
     this.ImageUploader = uploader;
   }
 
-  public onUpload = (e: ChangeEvent<HTMLInputElement>) => {
+  public static DEV_WARN(
+    args: Partial<CloudinaryAssetScope>,
+  ): args is CloudinaryAssetScope {
+    const { type, entityId } = args;
+    if (!type || !entityId) {
+      if (import.meta.env.DEV) {
+        console.warn(
+          "Cloudinary Image Interface: Attempted to upload without an entity id or type",
+          { type, entityId },
+        );
+      }
+      return false;
+    }
+    return true;
+  }
+
+  public onUpload = async (
+    e: ChangeEvent<HTMLInputElement>,
+    scope: CloudinaryAssetScope,
+  ) => {
     this.activateLoader();
     const uploader = new CloudinaryUploader(url => {
-      this.setState(state => ({
-        ...state,
-        temporaryImage: url,
-      }));
+      this.setTemporaryImage(url);
     });
-    void uploader.onUpload(e).then(img => {
-      if (!img) {
-        this.fadeLoader();
-        this.ImageUploader.current?.clearInput.current?.();
-      }
-    });
+    const image = await uploader.onUpload(e, scope);
+    if (image) {
+      return image;
+    }
+    this.fadeLoader();
+    this.setTemporaryImage(null);
+    this.ImageUploader.current?.clearInput.current?.();
   };
 
-  public deleteImage(image: PropertyImage) {
+  public deleteImage(image: GradiumImage, scope: CloudinaryAssetScope) {
     this.activateLoader();
-    void CloudinaryDeleter.delete(image).finally(() => {
-      this.fadeLoader();
-    });
+    return CloudinaryDeleter.delete(image, scope)
+      .then(img => img)
+      .finally(() => {
+        this.fadeLoader();
+      });
   }
 
   public preloadImage(url: string) {
@@ -79,6 +99,13 @@ export class Controller {
     this.setState(state => ({
       ...state,
       loading,
+    }));
+  }
+
+  private setTemporaryImage(url: string | null) {
+    this.setState(state => ({
+      ...state,
+      temporaryImage: url,
     }));
   }
 }

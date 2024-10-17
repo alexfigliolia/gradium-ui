@@ -1,7 +1,9 @@
+import type { ChangeEvent } from "react";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { useController } from "@figliolia/react-hooks";
 import { Closer } from "Components/Closer";
-import type { PropertyImage } from "GraphQL/Types";
+import type { GradiumImage, GradiumImageType } from "GraphQL/Types";
+import type { Callback } from "Types/Generics";
 import { Controller, type IState } from "./Controller";
 import { ImageFader } from "./ImageFader";
 import type { IImageUploader } from "./ImageUploader";
@@ -9,7 +11,11 @@ import { ImageUploader } from "./ImageUploader";
 import "./styles.scss";
 
 export const CloudinaryImageInterface = memo(function CloudinaryImageInterface({
+  type,
   image,
+  entityId,
+  onUpload,
+  onDelete,
 }: Props) {
   const [state, setState] = useState<IState>({
     loading: false,
@@ -18,12 +24,32 @@ export const CloudinaryImageInterface = memo(function CloudinaryImageInterface({
   const uploader = useRef<IImageUploader>(null);
   const controller = useController(new Controller(setState, uploader));
 
+  const onChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const requirements = { type, entityId };
+      if (!Controller.DEV_WARN(requirements)) {
+        return;
+      }
+      void controller.onUpload(e, requirements).then(img => {
+        if (img && onUpload) {
+          onUpload(img);
+        }
+      });
+    },
+    [controller, type, entityId, onUpload],
+  );
+
   const deleteImage = useCallback(() => {
-    if (!image) {
+    const requirements = { type, entityId };
+    if (!image || !Controller.DEV_WARN(requirements)) {
       return;
     }
-    controller.deleteImage(image);
-  }, [image, controller]);
+    void controller.deleteImage(image, requirements).then(img => {
+      if (img && onDelete) {
+        onDelete(img);
+      }
+    });
+  }, [type, image, controller, onDelete, entityId]);
 
   useEffect(() => {
     if (!image || !state.temporaryImage) {
@@ -44,8 +70,8 @@ export const CloudinaryImageInterface = memo(function CloudinaryImageInterface({
       ) : (
         <ImageUploader
           ref={uploader}
+          onChange={onChange}
           loading={state.loading}
-          onUpload={controller.onUpload}
         />
       )}
     </div>
@@ -53,5 +79,9 @@ export const CloudinaryImageInterface = memo(function CloudinaryImageInterface({
 });
 
 interface Props {
-  image?: PropertyImage;
+  entityId?: number;
+  image?: GradiumImage;
+  type?: GradiumImageType;
+  onUpload?: Callback<[GradiumImage]>;
+  onDelete?: Callback<[GradiumImage]>;
 }
