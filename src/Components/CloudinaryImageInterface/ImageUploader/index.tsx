@@ -14,7 +14,7 @@ export interface IImageUploader {
 
 export const ImageUploader = memo(
   forwardRef(function ImageUploader(
-    { onChange, loading }: Props,
+    { onChange, loading, disabled }: Props,
     ref: ForwardedRef<IImageUploader>,
   ) {
     const clearInput = useRef<Callback>(null);
@@ -28,7 +28,11 @@ export const ImageUploader = memo(
     );
     useImperativeHandle(ref, () => publicInterface, [publicInterface]);
     return (
-      <Uploader ref={clearInput} onChange={onChange} accept="image/*">
+      <Uploader
+        ref={clearInput}
+        accept="image/*"
+        disabled={disabled}
+        onChange={onChange}>
         <div>
           <div>
             {loading ? (
@@ -46,5 +50,6 @@ export const ImageUploader = memo(
 
 interface Props {
   loading: boolean;
+  disabled?: boolean;
   onChange: ChangeEventHandler<HTMLInputElement>;
 }

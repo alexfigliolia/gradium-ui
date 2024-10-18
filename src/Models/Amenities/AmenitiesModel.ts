@@ -8,12 +8,13 @@ export class AmenitiesModel extends BaseListCRUDModel<IAmenity> {
 
   public get blank(): IAmenity {
     return {
+      id: -1,
       name: "",
       open: "12am",
       close: "12am",
       images: [],
       floorPlans: [],
-      footage: "",
+      footage: 0,
       price: "",
       billed: "hour",
     };
@@ -23,10 +24,6 @@ export class AmenitiesModel extends BaseListCRUDModel<IAmenity> {
     if (!amenity) {
       return false;
     }
-    return (
-      amenity.name.length !== 0 &&
-      amenity.footage.length !== 0 &&
-      amenity.price.length !== 0
-    );
+    return amenity.name.length !== 0 && amenity.price.length !== 0;
   }
 }

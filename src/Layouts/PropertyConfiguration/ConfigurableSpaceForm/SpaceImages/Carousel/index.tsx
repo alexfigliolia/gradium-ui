@@ -1,14 +1,15 @@
 import { memo, useMemo } from "react";
 import type { FlickityOptions } from "Components/ImageSlider";
 import { DEFAULT_OPTIONS, ImageSlider } from "Components/ImageSlider";
+import type { GradiumImage } from "GraphQL/Types";
 import { selectWidth, useScreen } from "State/Screen";
 import { Controller } from "../Controller";
 import "./styles.scss";
 
 const OPTIONS: FlickityOptions = {
   ...DEFAULT_OPTIONS,
-  cellAlign: "left",
   contain: true,
+  cellAlign: "left",
   setGallerySize: true,
   adaptiveHeight: true,
   percentPosition: true,
@@ -18,7 +19,7 @@ export const SpaceCarousel = memo(function SpaceCarousel({ images }: Props) {
   const width = useScreen(selectWidth);
   const slides = useMemo(
     () => [
-      ...Controller.transform(images),
+      ...Controller.toRenderableList(images),
       ...Controller.fillCarousel(width, images.length),
     ],
     [width, images],
@@ -29,5 +30,5 @@ export const SpaceCarousel = memo(function SpaceCarousel({ images }: Props) {
 });
 
 interface Props {
-  images: string[];
+  images: GradiumImage[];
 }

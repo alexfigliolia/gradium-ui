@@ -5,17 +5,41 @@
     @media (min-width: 1500px) {
       width: calc(50% - 0.65em);
     }
-  }
-  & label.input.number-input.size-input {
-    width: 100%;
-    @media (min-width: Variables.$small-vertical-tablet) {
-      width: calc(50% - 0.65em);
+    &.number-input.size-input {
+      width: 100%;
+      @media (min-width: Variables.$small-vertical-tablet) {
+        width: calc(50% - 0.65em);
+      }
     }
-  }
-  & label.input.dropdown,
-  & label.input.number-input.price-input {
-    @media (min-width: Variables.$small-vertical-tablet) {
-      width: calc(50% - 0.65em);
+    &.dropdown,
+    &.number-input.price-input {
+      @media (min-width: Variables.$small-vertical-tablet) {
+        width: calc(50% - 0.65em);
+      }
+    }
+    &> .input-positioner > button > svg {
+      &.clock-icon path,
+      &.clock-icon circle {
+        stroke-width: 2;
+      }
+      &.price-icon {
+        &:first-of-type {
+          stroke: none;
+          fill: var(--text-color-light);
+          &> path {
+            stroke: none;
+          }
+        }
+        &:last-of-type {
+          height: 80%;
+          width: 80%;
+          top: 10%;
+          left: 0%;
+          stroke: none;
+          fill: url(#themeGradient);
+        }
+      }
     }
   }
 }
+

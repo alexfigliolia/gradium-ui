@@ -1,11 +1,9 @@
+import { ImageFader } from "Components/CloudinaryImageInterface/ImageFader";
+import { ImagePlaceholder } from "Components/ImagePlaceholder";
 import type { IImage } from "Components/ImageSlider";
-import { Fallback } from "./Fallback";
+import { type GradiumImage } from "GraphQL/Types";
 
 export class Controller {
-  public static transform(images: string[]): IImage[] {
-    return images.map(content => ({ type: "image", content }));
-  }
-
   public static getFill(width: number, length: number) {
     if (width < 670 && length < 2) {
       return 2 - length;
@@ -28,7 +26,18 @@ export class Controller {
     const N = this.getFill(width, length);
     return Array.from({ length: N }, () => ({
       type: "child",
-      content: <Fallback />,
+      content: <ImagePlaceholder />,
+    }));
+  }
+
+  public static toRenderableList(list: GradiumImage[]): IImage[] {
+    return list.map(image => ({
+      type: "child",
+      content: (
+        <div>
+          <ImageFader image={image.url} />
+        </div>
+      ),
     }));
   }
 }

@@ -116,15 +116,6 @@ export class CloudinaryDeleter {
     }
   }
 
-  private static async safeSign(publicId: string, type: GradiumImageType) {
-    try {
-      const destination = await this.sign(publicId, type);
-      return destination;
-    } catch (error) {
-      this.toastError();
-    }
-  }
-
   private static toastError() {
     Toasts.error(
       "Something went wrong while deleting your image. Please try again",

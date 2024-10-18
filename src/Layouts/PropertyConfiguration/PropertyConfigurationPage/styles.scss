@@ -11,31 +11,6 @@
     }
     &>form,
     &>div {
-      & > h2 > svg {
-        &.map-arrow {
-          rotate: 45deg;
-          translate: 0 -0.15em;
-          fill: url(#themeGradient);
-        }
-        &.image-placeholder {
-          margin-right: 0.6em;
-          &> g > g {
-            fill: url(#themeGradient);
-          }
-        }
-        &.living-space-bed,
-        &.basketball-court {
-          width: 2em;
-          height: 2em;
-          margin-right: 0.5em;
-          fill: url(#themeGradient);
-        }
-        &.basketball-court {
-          & > g > path {
-            fill: var(--tile-background);
-          }
-        }
-      }
       & .input-group {
         width: 100%;
         display: inherit;
@@ -55,30 +30,13 @@
           @media (min-width: 1500px) {
             width: calc(33.333% - 1.3em);
           }
-          &>.input-positioner > button > .price-icon {
-            &:first-of-type {
-              stroke: none;
-              fill: var(--text-color-light);
-              &> path {
-                stroke: none;
-              }
-            }
-            &:last-of-type {
-              height: 80%;
-              width: 80%;
-              top: 10%;
-              left: 0%;
-              stroke: none;
-              fill: url(#themeGradient);
-            }
-          }
         }
       }
       &>.gradient-transition-button,
-      &>.action-button {
+      &>.loading-action {
         margin: 0.5em auto;
       }
-      &>.action-button:not(.loading),
+      &>.loading-action:not(.loading),
       &>.gradient-transition-button {
         @media (min-width: 670px) {
           width: 400px;
@@ -87,7 +45,7 @@
     }
     &>.gradient-transition-button {
       margin-top: 2em;
-      max-width: 500px;
+      max-width: 400px;
       align-self: center;
       &::after {
         background-color: var(--background-dark);

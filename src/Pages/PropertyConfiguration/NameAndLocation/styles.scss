@@ -19,7 +19,7 @@
     }
   }
   &.disabled {
-    &>.action-button {
+    &>.loading-action {
       box-shadow: none;
       pointer-events: none;
       &>div:not(.triangle-loader) {
@@ -29,7 +29,7 @@
       }
     }
   }
-  &>.action-button {
+  &>.loading-action {
     &>div:not(.triangle-loader) {
       height: 100%;
       width: 100%;

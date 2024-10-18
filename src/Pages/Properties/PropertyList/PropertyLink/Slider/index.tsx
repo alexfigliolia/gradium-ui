@@ -1,9 +1,9 @@
 import { memo, useMemo } from "react";
 import { useClassNames } from "@figliolia/classnames";
+import { ImagePlaceholder } from "Components/ImagePlaceholder";
 import type { IImage } from "Components/ImageSlider";
 import { ImageSlider } from "Components/ImageSlider";
 import type { GradiumImage } from "GraphQL/Types";
-import { ImagePlaceholder } from "Icons/ImagePlaceholder";
 import { LeftRight } from "Icons/LeftRight";
 import { Devices } from "Tools/Devices";
 import "./styles.scss";
@@ -31,11 +31,7 @@ export const Slider = memo(function Slider({ images }: Props) {
     );
   }
 
-  return (
-    <div className="placeholder">
-      <ImagePlaceholder />
-    </div>
-  );
+  return <ImagePlaceholder />;
 });
 
 interface Props {

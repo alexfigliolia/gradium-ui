@@ -1,17 +1,34 @@
 @use "Styles/Variables";
 
-.page.property-configuration .forms > .spaces {
-  opacity: 0;
-  animation: show 0.5s forwards;
-  & .input-group.living-space-inputs {
-    & label.input.name-input {
+.page.property-configuration .forms > .spaces .input-group.living-space-form {
+  & label.input {
+    &.name-input,
+    &.dropdown.type-dropdown {
       @media (min-width: 1500px) {
         width: calc(50% - 0.65em);
       }
     }
-    & label.input.dropdown.type-dropdown {
-      @media (min-width: Variables.$small-vertical-tablet) {
-        width: calc(50% - 0.65em);
+    &.number-input.size-input,
+    &.dropdown.beds-dropdown,
+    &.dropdown.baths-dropdown {
+      @media(min-width: Variables.$small-vertical-tablet) {
+        width: calc(33% - 0.7em);
+      }
+      @media(min-width: Variables.$small-desktop) {
+        width: calc(33% - 0.75em);
+      }
+    }
+    &> .input-positioner > button > svg {
+      &.bath-icon,
+      &.ruler-icon {
+        &:first-of-type path:last-of-type {
+          stroke: none;
+          fill: var(--text-color-light);
+        }
+        &:last-of-type path:last-of-type {
+          stroke: none;
+          fill: url(#themeGradient);
+        }
       }
     }
   }

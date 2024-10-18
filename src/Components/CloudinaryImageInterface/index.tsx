@@ -13,6 +13,7 @@ import "./styles.scss";
 export const CloudinaryImageInterface = memo(function CloudinaryImageInterface({
   type,
   image,
+  disabled,
   entityId,
   onUpload,
   onDelete,
@@ -70,6 +71,7 @@ export const CloudinaryImageInterface = memo(function CloudinaryImageInterface({
       ) : (
         <ImageUploader
           ref={uploader}
+          disabled={disabled}
           onChange={onChange}
           loading={state.loading}
         />
@@ -79,6 +81,7 @@ export const CloudinaryImageInterface = memo(function CloudinaryImageInterface({
 });
 
 interface Props {
+  disabled?: boolean;
   entityId?: number;
   image?: GradiumImage;
   type?: GradiumImageType;

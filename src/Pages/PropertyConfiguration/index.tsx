@@ -1,4 +1,5 @@
 import { memo, useCallback, useMemo } from "react";
+import { useParams } from "react-router-dom";
 import { GradientTransitionLink } from "Components/GradientTransitionButton";
 import { PermissedRoute } from "Components/PermissedRoute";
 import {
@@ -7,7 +8,6 @@ import {
   PropertyConfigurationPage,
 } from "Layouts/PropertyConfiguration";
 import { AdminRoutes } from "Router/AdminRoutes";
-import { currentProperty, useProperties } from "State/Properties";
 import type { Propless } from "Types/React";
 import { AddonsTile } from "./AddonsTile";
 import { LazyInfoModals } from "./InfoModals/Lazy";
@@ -17,7 +17,7 @@ import "./styles.scss";
 
 export default memo(
   function PropertyConfiguration(_: Propless) {
-    const { images, slug } = useProperties(currentProperty);
+    const { slug = "" } = useParams();
     const labelFN = useCallback(
       (property: string) => `Welcome to ${property}`,
       [],
@@ -34,8 +34,8 @@ export default memo(
       <PermissedRoute
         fallback=".."
         requirements={AdminRoutes.permissions("PROPERTY_CONFIGURATION")}>
-        <PropertyConfigurationPage labelFN={labelFN}>
-          <PropertyImages images={images} />
+        <PropertyConfigurationPage labelFN={labelFN} className="base-property">
+          <PropertyImages />
           <NameAndLocation />
           <AddonsTile />
           <LivingSpaceTile>

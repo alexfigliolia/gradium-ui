@@ -28,7 +28,7 @@ export default memo(
           {!!amenities.length && (
             <Fragment>
               {amenities.map((amenity, i) => {
-                return <AmenityForm key={i} index={i} {...amenity} />;
+                return <AmenityForm key={i} {...amenity} />;
               })}
               <NewAmenityButton />
             </Fragment>

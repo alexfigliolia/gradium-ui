@@ -1,11 +1,16 @@
 @use "Styles/Variables";
 
 .space-carousel {
-  margin: 0.5em 0;
+  margin-top: 0.5em;
+  padding-bottom: 0.5em;
   & .flickity-cell {
     margin-right: 1em;
     height: 150px;
     width: calc(50% - 0.5em);
+    border-radius: 0.5em;
+    &.image-placeholder {
+      overflow: hidden;
+    }
     @media (min-width: Variables.$small-vertical-tablet) {
       margin-right: 1.75em;
       width: calc(33.3333% - 1.2em);
@@ -18,14 +23,6 @@
     @media (min-width: 1400px) {
       margin-right: 1em;
       width: calc(16.66665% - 0.85em);
-    }
-    & img {
-      border-radius: 0.5em;
-    }
-    & .fallback {
-      width: 100%;
-      height: 100%;
-      border-radius: 0.5em;
     }
   }
 }

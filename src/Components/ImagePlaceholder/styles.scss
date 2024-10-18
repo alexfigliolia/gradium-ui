@@ -1,0 +1,15 @@
+@use "Styles/Variables";
+
+.image-placeholder {
+  width: 100px;
+  height: 100px;
+  background-color: var(--background);
+  @include Variables.center;
+  &>.image-placeholder-icon {
+    width: 50%;
+    height: 50%;
+    & path {
+      fill: var(--text-color-light);
+    }
+  }
+}

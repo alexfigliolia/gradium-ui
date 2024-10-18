@@ -7,7 +7,7 @@ export const ImagePlaceholder = memo(function ImagePlaceholder({
   children,
   ...rest
 }: SVGProps<SVGSVGElement>) {
-  const classes = useClassNames("image-placeholder", className);
+  const classes = useClassNames("image-placeholder-icon", className);
   return (
     <svg
       viewBox="0 0 32 32"

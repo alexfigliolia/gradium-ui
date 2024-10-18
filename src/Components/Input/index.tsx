@@ -11,7 +11,15 @@ import "./styles.scss";
 
 export const Input = memo(
   forwardRef(function Input(
-    { icon, label, children, className, placeholder, ...rest }: InputProps,
+    {
+      icon,
+      label,
+      children,
+      className,
+      placeholder,
+      type,
+      ...rest
+    }: InputProps,
     ref: ForwardedRef<InputRef>,
   ) {
     const input = useRef<HTMLInputElement>(null);
@@ -19,7 +27,9 @@ export const Input = memo(
     const focus = useCallback(() => {
       input.current?.focus?.();
     }, []);
-    const classes = useClassNames("input", className);
+    const classes = useClassNames("input", className, {
+      "number-input": type === "number",
+    });
 
     useImperativeHandle(
       ref,
@@ -43,7 +53,12 @@ export const Input = memo(
               {icon}
             </button>
           )}
-          <input {...rest} ref={input} placeholder={placeholder || " "} />
+          <input
+            type={type}
+            {...rest}
+            ref={input}
+            placeholder={placeholder || " "}
+          />
         </div>
         {children}
       </label>
