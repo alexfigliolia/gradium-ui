@@ -1,5 +1,6 @@
 import type { ChangeEventHandler, ForwardedRef } from "react";
 import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from "react";
+import { useClassNames } from "@figliolia/classnames";
 import type { RefObject } from "@fullcalendar/core/preact.js";
 import { FadingLoader } from "Components/FadingLoader";
 import { Uploader } from "Components/Uploader";
@@ -19,6 +20,7 @@ export const ImageUploader = memo(
   ) {
     const clearInput = useRef<Callback>(null);
     const fader = useRef<Callback<[boolean]>>(null);
+
     const publicInterface = useMemo(
       () => ({
         fader,
@@ -27,6 +29,9 @@ export const ImageUploader = memo(
       [],
     );
     useImperativeHandle(ref, () => publicInterface, [publicInterface]);
+
+    const hidden = useMemo(() => !!loading || !!disabled, [loading, disabled]);
+    const pClasses = useClassNames({ hidden });
     return (
       <Uploader
         ref={clearInput}
@@ -41,7 +46,9 @@ export const ImageUploader = memo(
               <ImagePlaceholder aria-hidden />
             )}
           </div>
-          {!loading && <p>Click to upload</p>}
+          <p className={pClasses} aria-hidden={hidden}>
+            Click to upload
+          </p>
         </div>
       </Uploader>
     );

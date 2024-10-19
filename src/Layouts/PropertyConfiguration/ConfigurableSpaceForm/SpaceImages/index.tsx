@@ -1,22 +1,43 @@
-import { memo } from "react";
-import type { IScreen } from "@figliolia/galena-window";
-import type { GradiumImage } from "GraphQL/Types";
-import { useScreen } from "State/Screen";
-import { SpaceCarousel } from "./Carousel";
-import { Grid } from "./Grid";
+import { memo, useContext, useMemo } from "react";
+import { ImageGrid } from "Components/ImageGrid";
+import { selectWidth, useScreen } from "State/Screen";
+import type { Propless } from "Types/React";
+import { CSFContext } from "../Context";
+import { Controller } from "./Controller";
+import { Image } from "./Image";
+import "./styles.scss";
 
-const renderCarousel = (state: IScreen) => state.width < 670;
+export const SpaceImages = memo(
+  function SpaceImages(_: Propless) {
+    const width = useScreen(selectWidth);
+    const {
+      model,
+      item: { images, floorPlans },
+    } = useContext(CSFContext);
 
-export const SpaceImages = memo(function SpaceImages(props: Props) {
-  const carousel = useScreen(renderCarousel);
+    const total = useMemo(
+      () => images.length + floorPlans.length,
+      [images.length, floorPlans.length],
+    );
 
-  if (carousel) {
-    return <SpaceCarousel {...props} />;
-  }
+    const fill = useMemo(
+      () => Controller.fillGrid(width, total),
+      [width, total],
+    );
 
-  return <Grid {...props} />;
-});
-
-interface Props {
-  images: GradiumImage[];
-}
+    return (
+      <ImageGrid className="space-grid">
+        {images.map((image, i) => {
+          return <Image key={i} image={image} type={model.IMAGE_TYPE} />;
+        })}
+        {floorPlans.map((image, i) => {
+          return <Image key={i} image={image} type={model.FLOOR_PLAN_TYPE} />;
+        })}
+        {fill.map((_, i) => {
+          return <Image key={i} image={undefined} type={model.IMAGE_TYPE} />;
+        })}
+      </ImageGrid>
+    );
+  },
+  () => true,
+);

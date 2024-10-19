@@ -8,8 +8,9 @@
   &>.image-placeholder-icon {
     width: 50%;
     height: 50%;
+    opacity: 0.75;
     & path {
-      fill: var(--text-color-light);
+      fill: var(--text-color-lightest);
     }
   }
 }

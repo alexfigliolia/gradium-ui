@@ -46,8 +46,10 @@ export class Controller {
     scope: CloudinaryAssetScope,
   ) => {
     this.activateLoader();
-    const uploader = new CloudinaryUploader(url => {
-      this.setTemporaryImage(url);
+    const uploader = new CloudinaryUploader(urls => {
+      if (urls[0]) {
+        this.setTemporaryImage(urls[0]);
+      }
     });
     const image = await uploader.onUpload(e, scope);
     if (image) {
@@ -73,16 +75,13 @@ export class Controller {
     return preloader;
   }
 
-  private onLoad = () => {
+  public onLoad = () => {
     this.fadeLoader(() => {
-      this.setState(state => ({
-        ...state,
-        temporaryImage: null,
-      }));
+      this.setTemporaryImage(null);
     });
   };
 
-  private fadeLoader(onFade?: Callback) {
+  public fadeLoader(onFade?: Callback) {
     this.ImageUploader.current?.fader?.current?.(true);
     this.Timeout.execute(() => {
       this.setLoading(false);
@@ -90,7 +89,7 @@ export class Controller {
     }, 500);
   }
 
-  private activateLoader() {
+  public activateLoader() {
     this.ImageUploader.current?.fader?.current?.(false);
     this.setLoading(true);
   }
@@ -102,7 +101,7 @@ export class Controller {
     }));
   }
 
-  private setTemporaryImage(url: string | null) {
+  public setTemporaryImage(url: string | null) {
     this.setState(state => ({
       ...state,
       temporaryImage: url,

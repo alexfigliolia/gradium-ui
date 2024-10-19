@@ -3,6 +3,9 @@
 .cloudinary-image-interface > .file-uploader {
   height: 100%;
   width: 100%;
+  &:has(> input[type=file]:disabled) {
+    opacity: 1;
+  }
   &>div {
     height: 100%;
     width: 100%;
@@ -38,8 +41,14 @@
       line-height: 1;
       text-align: center;
       margin-bottom: -0.25em;
-      opacity: 0;
-      animation: show 0.5s forwards;
+      opacity: 1;
+      max-height: 1em;
+      transition: opacity 0.4s, max-height 0.4s, visibility 0s 0.4s;
+      &.hidden {
+        opacity: 0;
+        max-height: 0;
+        transition: opacity 0.4s, max-height 0.4s, visibility 0.4s;
+      }
     }
   }
 }

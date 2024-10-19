@@ -1,7 +1,7 @@
-import { BaseListCRUDModel } from "Tools/BaseListCrudModel";
+import { HashedListModel } from "Generics/HashedListModel";
 import type { IAmenity } from "./types";
 
-export class AmenitiesModel extends BaseListCRUDModel<IAmenity> {
+export class AmenitiesModel extends HashedListModel<IAmenity> {
   constructor() {
     super("Amenity Spaces");
   }

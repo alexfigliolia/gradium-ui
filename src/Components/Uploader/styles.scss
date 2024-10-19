@@ -7,7 +7,7 @@
     outline: 0.2em solid var(--theme-mid);
   }
   &:has(>input[type="file"]:disabled) {
-    opacity: 0.25;
+    opacity: 0.35;
   }
   &>input[type="file"] {
     top: 0;

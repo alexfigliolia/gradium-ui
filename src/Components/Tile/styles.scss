@@ -2,15 +2,16 @@
 
 .tile {
   width: 100%;
-  padding: 1.25em;
+  --tile-padding: 1.25em;
   display: flex;
   flex-wrap: wrap;
   border-radius: 0.35em;
   gap: 1.25em;
   background-color: var(--tile-background);
   box-shadow: var(--shadow-level-3-mid);
+  padding: var(--tile-padding);
   @media (min-width: 800px) {
-    padding: 2em;
+    --tile-padding: 2em;
   }
   &>h2 {
     width: 100%;

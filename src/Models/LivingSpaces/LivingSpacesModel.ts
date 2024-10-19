@@ -1,4 +1,5 @@
 import type { ILoadingStateSetter } from "@figliolia/react-hooks";
+import { ConfigurableSpaceModel } from "Generics/ConfigurableSpaceModel";
 import { createOrUpdateLivingSpace } from "GraphQL/Mutations/createOrUpdateLivingSpace.gql";
 import { deleteLivingSpace } from "GraphQL/Mutations/deleteLivingSpace.gql";
 import { getLivingSpaces } from "GraphQL/Queries/getLivingSpaces.gql";
@@ -12,15 +13,16 @@ import type {
   GetLivingSpacesQueryVariables,
   LivingSpace,
 } from "GraphQL/Types";
-import { LivingSpaceType } from "GraphQL/Types";
+import { GradiumImageType, LivingSpaceType } from "GraphQL/Types";
 import { UIClient } from "GraphQL/UIClient";
 import { Properties } from "State/Properties";
 import { Scope } from "State/Scope";
 import { Toasts } from "State/Toasts";
-import { BaseListCRUDModel } from "Tools/BaseListCrudModel";
 import type { Callback } from "Types/Generics";
 
-export class LivingSpacesModel extends BaseListCRUDModel<LivingSpace> {
+export class LivingSpacesModel extends ConfigurableSpaceModel<LivingSpace> {
+  public IMAGE_TYPE = GradiumImageType.LivingSpaceImage;
+  public FLOOR_PLAN_TYPE = GradiumImageType.LivingSpaceFloorPlan;
   constructor() {
     super("Living Spaces");
   }

@@ -1,5 +1,5 @@
 import type { GradiumImage } from "GraphQL/Types";
-import type { IListCRUDState } from "Tools/BaseListCrudModel";
+import type { IHashedListState } from "Tools/BaseListCrudModel";
 
 export type IBillFrequency = "hour" | "day";
 
@@ -15,4 +15,4 @@ export interface IAmenity {
   footage: number;
 }
 
-export type IAmenities = IListCRUDState<IAmenity>;
+export type IAmenities = IHashedListState<IAmenity>;

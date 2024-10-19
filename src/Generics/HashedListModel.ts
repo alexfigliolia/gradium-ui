@@ -1,9 +1,7 @@
-import type { ILoadingStateSetter } from "@figliolia/react-hooks";
 import { BaseModel } from "Models/BaseModel";
-import type { Callback } from "Types/Generics";
 
-export abstract class BaseListCRUDModel<T extends IListItem> extends BaseModel<
-  IListCRUDState<T>
+export abstract class HashedListModel<T extends IListItem> extends BaseModel<
+  IHashedListState<T>
 > {
   constructor(name: string) {
     super(name, {
@@ -13,21 +11,6 @@ export abstract class BaseListCRUDModel<T extends IListItem> extends BaseModel<
       deleteItemName: "",
     });
   }
-
-  public abstract save(
-    id: number,
-    setState: ILoadingStateSetter,
-  ): Promise<void>;
-
-  public abstract saveBeforeUnmount(id: number): Promise<void>;
-
-  public abstract fetch(): Promise<void>;
-
-  public abstract deleteItem(
-    id: number,
-    setState: ILoadingStateSetter,
-    callback?: Callback,
-  ): Promise<void>;
 
   public create = () => {
     this.setList({
@@ -42,12 +25,16 @@ export abstract class BaseListCRUDModel<T extends IListItem> extends BaseModel<
     });
   }
 
+  public getById(id: number) {
+    return this.getState().list[id];
+  }
+
   public updateByIdentifier(id: number, value: T) {
     const { list } = this.getState();
     this.setList({ ...list, [id]: value });
   }
 
-  public updateListItem = <K extends Extract<keyof T, string>>(
+  public updateListItem = <K extends keyof T>(
     id: number,
     key: K,
     value: T[K],
@@ -79,7 +66,7 @@ export abstract class BaseListCRUDModel<T extends IListItem> extends BaseModel<
 
   public abstract get blank(): T;
 
-  public abstract validate(amenity?: T): boolean;
+  public abstract validate(item?: T): boolean;
 
   public confirmDelete() {
     this.delete(this.getState().deleteItemId);
@@ -115,7 +102,7 @@ export interface IListItem {
   name: string;
 }
 
-export interface IListCRUDState<T extends Record<string, any>> {
+export interface IHashedListState<T extends Record<string, any>> {
   loading: boolean;
   deleteItemId: number;
   deleteItemName: string;

@@ -12,7 +12,7 @@
     &.dropdown.beds-dropdown,
     &.dropdown.baths-dropdown {
       @media(min-width: Variables.$small-vertical-tablet) {
-        width: calc(33% - 0.7em);
+        width: calc(33% - 0.75em);
       }
       @media(min-width: Variables.$small-desktop) {
         width: calc(33% - 0.75em);

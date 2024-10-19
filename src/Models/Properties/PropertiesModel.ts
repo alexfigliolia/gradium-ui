@@ -8,6 +8,7 @@ import type {
 } from "GraphQL/Types";
 import { PersonRoleType } from "GraphQL/Types";
 import { BaseModel } from "Models/BaseModel";
+import { forceAtIndex } from "Tools/Arrays";
 import { Permission } from "Tools/Permission";
 import type { IProperties, PropertyWithNullImages } from "./types";
 
@@ -100,16 +101,7 @@ export class PropertiesModel extends BaseModel<IProperties> {
     if (typeof index === "undefined") {
       return this.setCurrentPropertyKey("images", [...images, image]);
     }
-    const copy = [...images];
-    const N = copy.length - 1;
-    if (index < N) {
-      copy.splice(index, 1, image);
-    } else {
-      for (let i = N + 1; i <= index; i++) {
-        copy.push(i === index ? image : undefined);
-      }
-    }
-    this.setCurrentPropertyKey("images", copy);
+    this.setCurrentPropertyKey("images", forceAtIndex(images, index, image));
   }
 
   public deleteImage(image: GradiumImage, index?: number) {

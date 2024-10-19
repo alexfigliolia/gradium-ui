@@ -1,0 +1,23 @@
+@use "Styles/Variables";
+
+.si-placeholder {
+  position: relative;
+  @include Variables.center;
+  background-color: var(--background-dark);
+  &>svg {
+    width: 50%;
+    height: 50%;
+    & > g > g {
+      fill: var(--tile-background);
+    }
+  }
+  &>.fading-loader {
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    @include Variables.center;
+    position: absolute;
+    background-color: var(--background);
+  }
+}

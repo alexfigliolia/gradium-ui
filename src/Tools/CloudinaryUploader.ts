@@ -19,8 +19,8 @@ import { CloudinaryDeleter } from "./CloudinaryDeleter";
 
 export class CloudinaryUploader {
   private static MAX_SIZE = 2 * 1024 * 1024;
-  private onObjectURL?: Callback<[string]>;
-  constructor(onObjectUrl: Callback<[string]>) {
+  private onObjectURL?: Callback<[string[]]>;
+  constructor(onObjectUrl: Callback<[string[]]>) {
     this.onObjectURL = onObjectUrl;
   }
 
@@ -28,15 +28,26 @@ export class CloudinaryUploader {
     e: ChangeEvent<HTMLInputElement>,
     scope: CloudinaryAssetScope,
   ) => {
-    const file = this.runValidations(e);
-    if (!file) {
-      return;
+    const files = this.runValidations(e);
+    if (!files) {
+      return [];
     }
     const destination = await this.signUpload(scope.type);
     if (!destination) {
-      return;
+      return [];
     }
-    this.setTemporaryImage(file);
+    this.setTemporaryImages(files);
+    const results = await Promise.all(
+      files.map(file => this.upload(file, scope, destination)),
+    );
+    return results.filter(image => !!image);
+  };
+
+  private async upload(
+    file: File,
+    scope: CloudinaryAssetScope,
+    destination: UploadSignature,
+  ) {
     try {
       const url = await this.toCloudinary(file, destination);
       const image = await this.saveImage(url, scope);
@@ -47,18 +58,18 @@ export class CloudinaryUploader {
         `Something went wrong while uploading <strong>${file.name}</strong>. Please try again`,
       );
     }
-  };
+  }
 
   private runValidations(e: ChangeEvent<HTMLInputElement>) {
-    const upload = this.validateEvent(e);
-    if (!upload) {
+    const files = this.validateEvent(e);
+    if (!files) {
       return;
     }
-    const file = this.validateFile(upload);
-    if (!file) {
+    const filtered = this.validateFile(files);
+    if (!filtered.length) {
       return;
     }
-    return file;
+    return filtered;
   }
 
   private async signUpload(type: GradiumImageType) {
@@ -126,20 +137,24 @@ export class CloudinaryUploader {
     if (!files || !files.length) {
       return false;
     }
-    return files[0];
+    return files;
   }
 
-  private validateFile(file: File) {
-    if (file.size > CloudinaryUploader.MAX_SIZE) {
-      Toasts.error(`<strong>${file.name}</strong> cannot exceed 2 megabytes`);
-      return;
+  private validateFile(files: FileList) {
+    const validFiles: File[] = [];
+    for (const file of files) {
+      if (file.size > CloudinaryUploader.MAX_SIZE) {
+        Toasts.error(`<strong>${file.name}</strong> cannot exceed 2 megabytes`);
+      } else {
+        validFiles.push(file);
+      }
     }
-    return file;
+    return validFiles;
   }
 
-  private setTemporaryImage(file: File) {
+  private setTemporaryImages(files: File[]) {
     if (this.onObjectURL) {
-      this.onObjectURL(URL.createObjectURL(file));
+      this.onObjectURL(files.map(file => URL.createObjectURL(file)));
     }
   }
 }
