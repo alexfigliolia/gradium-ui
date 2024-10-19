@@ -2,11 +2,12 @@ import { memo, useCallback } from "react";
 import { useLoadingState, useUnmount } from "@figliolia/react-hooks";
 import { ActionButton } from "Components/ActionButton";
 import { Confirmation } from "Components/Confirmation";
+import type { ConfigurableSpaceModel } from "Generics/ConfigurableSpaceModel";
 import { Modals, useModals } from "State/Modals";
-import type { HashedListModel, IListItem } from "Tools/BaseListCrudModel";
+import type { IConfigurableSpace } from "Types/Gradium";
 
 export const ConfirmDeleteConfigurableSpace = memo(
-  function ConfirmDeleteConfigurableSpace<T extends IListItem>({
+  function ConfirmDeleteConfigurableSpace<T extends IConfigurableSpace>({
     id,
     name,
     type,
@@ -47,9 +48,9 @@ export const ConfirmDeleteConfigurableSpace = memo(
   },
 );
 
-interface Props<T extends IListItem> {
+interface Props<T extends IConfigurableSpace> {
   id: number;
   name: string;
   type: string;
-  model: HashedListModel<T>;
+  model: ConfigurableSpaceModel<T>;
 }

@@ -97,6 +97,18 @@ export abstract class ConfigurableSpaceModel<
     }
   }
 
+  public dispatchTemporaryURL(
+    id: number,
+    type: GradiumImageType,
+    ...URLS: string[]
+  ) {
+    this.dispatchImage(
+      id,
+      type,
+      ...URLS.map(url => ({ id: this.IDs.get(), url })),
+    );
+  }
+
   public deleteImage(
     id: number,
     type: GradiumImageType,

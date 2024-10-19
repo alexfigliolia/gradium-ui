@@ -2,7 +2,7 @@ import type { ChangeEvent } from "react";
 import type { ILoadingStateSetter } from "@figliolia/react-hooks";
 import { Debouncer } from "@figliolia/react-hooks";
 import type { ConfigurableSpaceModel } from "Generics/ConfigurableSpaceModel";
-import type { GradiumImage, GradiumImageType } from "GraphQL/Types";
+import type { GradiumImageType } from "GraphQL/Types";
 import { Modals } from "State/Modals";
 import { CloudinaryUploader } from "Tools/CloudinaryUploader";
 import type { Callback } from "Types/Generics";
@@ -54,23 +54,14 @@ export class Controller<
     return Modals.deleteSpace.open();
   };
 
-  public createUploader(
-    type: GradiumImageType,
-    dispatcher = this.createDispatcher(type),
-  ) {
+  public createUploader(type: GradiumImageType) {
     return (e: ChangeEvent<HTMLInputElement>) => {
       const uploader = new CloudinaryUploader(urls => {
-        dispatcher(...urls.map(url => ({ id: -1, url })));
+        this.model.dispatchTemporaryURL(this.ID, type, ...urls);
       });
       void uploader.onUpload(e, { entityId: this.ID, type }).then(images => {
-        dispatcher(...images);
+        this.model.dispatchImage(this.ID, type, ...images);
       });
-    };
-  }
-
-  public createDispatcher(type: GradiumImageType) {
-    return (...images: GradiumImage[]) => {
-      this.model.dispatchImage(this.ID, type, ...images);
     };
   }
 }

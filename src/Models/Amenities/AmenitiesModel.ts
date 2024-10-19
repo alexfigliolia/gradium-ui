@@ -92,8 +92,8 @@ export class AmenitiesModel extends ConfigurableSpaceModel<Amenity> {
   protected blankItem() {
     return {
       name: "",
-      open: "12am",
-      close: "12am",
+      open: "9am",
+      close: "9pm",
       images: [],
       floorPlans: [],
       footage: 0,

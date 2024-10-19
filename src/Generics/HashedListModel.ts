@@ -1,10 +1,10 @@
-import { AutoIncrementingID } from "@figliolia/event-emitter";
 import { BaseModel } from "Models/BaseModel";
+import { NegativeIncrementIDs } from "Tools/NegativeIncrementingIDs";
 
 export abstract class HashedListModel<T extends IListItem> extends BaseModel<
   IHashedListState<T>
 > {
-  private IDs = new AutoIncrementingID();
+  protected IDs = new NegativeIncrementIDs();
   constructor(name: string) {
     super(name, {
       list: {},
@@ -75,7 +75,7 @@ export abstract class HashedListModel<T extends IListItem> extends BaseModel<
     return {
       ...this.blankItem(),
       id: this.IDs.get(),
-    } as unknown as T;
+    } as T;
   }
 
   public confirmDelete() {

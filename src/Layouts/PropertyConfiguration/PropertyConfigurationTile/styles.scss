@@ -1,6 +1,22 @@
 .spaces {
-  &>h2 > .fading-loader {
-    scale: 0.75;
-    margin-left: 0.25em;
+  &>h2 {
+    &>svg {
+      &.living-space-bed,
+      &.basketball-court {
+        width: 2em;
+        height: 2em;
+        margin-right: 0.5em;
+        fill: url(#themeGradient);
+      }
+      &.basketball-court {
+        & > g > path {
+          fill: var(--tile-background);
+        }
+      }
+    }
+    &> .fading-loader {
+      scale: 0.75;
+      margin-left: 0.25em;
+    }
   }
 }
