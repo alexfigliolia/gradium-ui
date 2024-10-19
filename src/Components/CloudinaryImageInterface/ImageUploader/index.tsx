@@ -1,9 +1,17 @@
 import type { ChangeEventHandler, ForwardedRef } from "react";
-import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from "react";
+import {
+  forwardRef,
+  Fragment,
+  memo,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+} from "react";
 import { useClassNames } from "@figliolia/classnames";
 import type { RefObject } from "@fullcalendar/core/preact.js";
 import { FadingLoader } from "Components/FadingLoader";
 import { Uploader } from "Components/Uploader";
+import type { GradiumImage } from "GraphQL/Types";
 import { ImagePlaceholder } from "Icons/ImagePlaceholder";
 import type { Callback } from "Types/Generics";
 import "./styles.scss";
@@ -15,7 +23,7 @@ export interface IImageUploader {
 
 export const ImageUploader = memo(
   forwardRef(function ImageUploader(
-    { onChange, loading, disabled }: Props,
+    { image, onChange, loading, disabled }: Props,
     ref: ForwardedRef<IImageUploader>,
   ) {
     const clearInput = useRef<Callback>(null);
@@ -30,23 +38,26 @@ export const ImageUploader = memo(
     );
     useImperativeHandle(ref, () => publicInterface, [publicInterface]);
 
-    const hidden = useMemo(() => !!loading || !!disabled, [loading, disabled]);
-    const pClasses = useClassNames({ hidden });
+    const disableUpload = useMemo(
+      () => !!disabled || loading,
+      [disabled, loading],
+    );
+    const pClasses = useClassNames({ hidden: disableUpload });
     return (
       <Uploader
         ref={clearInput}
         accept="image/*"
-        disabled={disabled}
+        disabled={disableUpload}
         onChange={onChange}>
         <div>
           <div>
             {loading ? (
               <FadingLoader ref={fader} />
             ) : (
-              <ImagePlaceholder aria-hidden />
+              <Fragment>{!image && <ImagePlaceholder aria-hidden />}</Fragment>
             )}
           </div>
-          <p className={pClasses} aria-hidden={hidden}>
+          <p className={pClasses} aria-hidden={disableUpload}>
             Click to upload
           </p>
         </div>
@@ -58,5 +69,6 @@ export const ImageUploader = memo(
 interface Props {
   loading: boolean;
   disabled?: boolean;
+  image?: GradiumImage;
   onChange: ChangeEventHandler<HTMLInputElement>;
 }

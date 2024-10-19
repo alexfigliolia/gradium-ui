@@ -4,11 +4,11 @@ export const forceAtIndex = <T>(
   insertion: T | undefined,
 ) => {
   const copy = [...array];
-  const N = copy.length - 1;
+  const N = copy.length;
   if (index < N) {
     copy.splice(index, 1, insertion);
   } else {
-    for (let i = N + 1; i <= index; i++) {
+    for (let i = N; i <= index; i++) {
       copy.push(i === index ? insertion : undefined);
     }
   }

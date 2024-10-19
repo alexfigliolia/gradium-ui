@@ -18,8 +18,9 @@ import type { Propless } from "Types/React";
 
 export const Inputs = memo(
   function Inputs(_: Propless) {
-    const { item, controller, editing } =
-      useContext<ICSForm<LivingSpace, LivingSpacesModel>>(CSFContext);
+    const { item, controller, editing } = useContext(
+      CSFContext,
+    ) as unknown as ICSForm<LivingSpace, LivingSpacesModel>;
 
     const { name, type, beds, baths, footage } = item;
 

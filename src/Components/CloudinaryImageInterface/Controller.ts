@@ -51,9 +51,9 @@ export class Controller {
         this.setTemporaryImage(urls[0]);
       }
     });
-    const image = await uploader.onUpload(e, scope);
-    if (image) {
-      return image;
+    const images = await uploader.onUpload(e, scope);
+    if (images.length) {
+      return images;
     }
     this.fadeLoader();
     this.setTemporaryImage(null);

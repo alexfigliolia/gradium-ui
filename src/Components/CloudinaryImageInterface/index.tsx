@@ -5,6 +5,7 @@ import {
   useCallback,
   useEffect,
   useImperativeHandle,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -69,6 +70,11 @@ export const CloudinaryImageInterface = memo(
       };
     }, [image, state.temporaryImage, controller]);
 
+    const disableUpload = useMemo(
+      () => disabled || !onUpload,
+      [disabled, onUpload],
+    );
+
     return (
       <div className="cloudinary-image-interface">
         {state.temporaryImage && <ImageFader image={state.temporaryImage} />}
@@ -77,10 +83,11 @@ export const CloudinaryImageInterface = memo(
           <Closer type="button" onClick={deleteImage} />
         ) : (
           <ImageUploader
+            image={image}
             ref={uploader}
             onChange={onChange}
             loading={state.loading}
-            disabled={disabled || !onUpload}
+            disabled={disableUpload}
           />
         )}
       </div>

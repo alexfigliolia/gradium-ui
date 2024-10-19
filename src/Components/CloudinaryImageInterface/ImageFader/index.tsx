@@ -4,7 +4,7 @@ import "./styles.scss";
 export const ImageFader = memo(function ImageFader({ image }: Props) {
   return (
     <div
-      className="fader"
+      className="image-fader"
       style={{
         background: `url(${image}) no-repeat center / cover`,
       }}
