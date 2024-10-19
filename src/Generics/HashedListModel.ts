@@ -1,21 +1,28 @@
+import { AutoIncrementingID } from "@figliolia/event-emitter";
 import { BaseModel } from "Models/BaseModel";
 
 export abstract class HashedListModel<T extends IListItem> extends BaseModel<
   IHashedListState<T>
 > {
+  private IDs = new AutoIncrementingID();
   constructor(name: string) {
     super(name, {
       list: {},
       loading: false,
-      deleteItemId: -1,
       deleteItemName: "",
+      deleteItemId: Infinity,
     });
   }
 
+  public abstract validate(item?: T): boolean;
+
+  protected abstract blankItem(): Omit<T, "id">;
+
   public create = () => {
+    const item = this.getBlank();
     this.setList({
       ...this.getState().list,
-      [-1]: this.blank,
+      [item.id]: item,
     });
   };
 
@@ -64,9 +71,12 @@ export abstract class HashedListModel<T extends IListItem> extends BaseModel<
     });
   }
 
-  public abstract get blank(): T;
-
-  public abstract validate(item?: T): boolean;
+  private getBlank() {
+    return {
+      ...this.blankItem(),
+      id: this.IDs.get(),
+    } as unknown as T;
+  }
 
   public confirmDelete() {
     this.delete(this.getState().deleteItemId);
@@ -82,8 +92,8 @@ export abstract class HashedListModel<T extends IListItem> extends BaseModel<
 
   public resetDeletionScope() {
     this.update(state => {
-      state.deleteItemId = -1;
       state.deleteItemName = "";
+      state.deleteItemId = Infinity;
     });
   }
 

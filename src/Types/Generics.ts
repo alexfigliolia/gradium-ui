@@ -11,7 +11,6 @@ export type FilterKeys<T, V> = {
 
 export type KeysOfType<T, V> = Extract<keyof FilterKeys<T, V>, string>;
 
-export interface Identity {
-  id: number;
-  name: string;
-}
+export type Shift<T extends any[]> = T extends [infer _, ...infer R]
+  ? R
+  : never;

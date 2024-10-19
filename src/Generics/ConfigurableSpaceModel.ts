@@ -1,5 +1,9 @@
 import { LinkedList } from "@figliolia/data-structures";
+import type { ILoadingStateSetter } from "@figliolia/react-hooks";
 import type { GradiumImage, GradiumImageType } from "GraphQL/Types";
+import { Properties } from "State/Properties";
+import { Toasts } from "State/Toasts";
+import type { Callback } from "Types/Generics";
 import type { IConfigurableSpace } from "Types/Gradium";
 import { HashedListModel } from "./HashedListModel";
 
@@ -9,13 +13,72 @@ export abstract class ConfigurableSpaceModel<
   public abstract readonly IMAGE_TYPE: GradiumImageType;
   public abstract readonly FLOOR_PLAN_TYPE: GradiumImageType;
 
-  public abstract fetch(): Promise<void>;
+  protected abstract saveSpace(
+    space: T | Omit<T, "id">,
+    setState: ILoadingStateSetter,
+  ): Promise<T>;
 
-  public abstract save(...args: any[]): Promise<void>;
+  protected abstract fetchSpaces(): Promise<T[]>;
 
-  public abstract saveBeforeUnmount(...args: any[]): Promise<void>;
+  protected abstract saveSilent(space: T | Omit<T, "id">): Promise<T>;
 
-  public abstract deleteItem(...args: any[]): Promise<void>;
+  protected abstract deleteTransaction(
+    id: number,
+    callback: Callback,
+    setState: ILoadingStateSetter,
+  ): Promise<T>;
+
+  public async fetch() {
+    this.loading(true);
+    try {
+      this.hashList(await this.fetchSpaces());
+    } catch (error) {
+      const name = Properties.getCurrent("name");
+      Toasts.error(
+        `Something went wrong while fetching the ${this.name} for <strong>${name}</strong>. Please refresh the page or contact support`,
+      );
+    }
+    this.loading(false);
+  }
+
+  public async save(id: number, setState: ILoadingStateSetter) {
+    const item = this.getState().list[id];
+    const { id: identifer, ...rest } = item;
+    const saved = await this.saveSpace(identifer <= 0 ? rest : item, setState);
+    this.updateByIdentifier(saved.id, saved);
+    if (saved.id !== item.id) {
+      this.delete(item.id);
+    }
+  }
+
+  public async saveBeforeUnmount(id: number) {
+    const item = this.getState().list[id];
+    try {
+      const { id: identifier, ...rest } = item;
+      const saved = await this.saveSilent(identifier <= 0 ? rest : item);
+      this.updateByIdentifier(saved.id, saved);
+      if (saved.id !== item.id) {
+        this.delete(item.id);
+      }
+    } catch (error) {
+      Toasts.error(
+        `<strong>${item.name}</strong> did not save before leaving. Please try again`,
+      );
+    }
+  }
+
+  public async deleteItem(
+    id: number,
+    callback: Callback,
+    setState: ILoadingStateSetter,
+  ) {
+    if (id <= 0) {
+      this.delete(id);
+      return callback?.();
+    }
+    const item = await this.deleteTransaction(id, callback, setState);
+    this.delete(item.id);
+  }
 
   public dispatchImage(
     id: number,
@@ -84,5 +147,12 @@ export abstract class ConfigurableSpaceModel<
       LL.push(image);
     }
     return LL;
+  }
+
+  protected getSaveError(name: string, itemDisplayName: string) {
+    if (name) {
+      return `<strong>${name}</strong> didn't save properly. Please check your inputs and try again.`;
+    }
+    return `Your ${itemDisplayName} didn't save property. Please check your inputs and try again.`;
   }
 }

@@ -17,90 +17,62 @@ import { GradiumImageType, LivingSpaceType } from "GraphQL/Types";
 import { UIClient } from "GraphQL/UIClient";
 import { Properties } from "State/Properties";
 import { Scope } from "State/Scope";
-import { Toasts } from "State/Toasts";
 import type { Callback } from "Types/Generics";
 
 export class LivingSpacesModel extends ConfigurableSpaceModel<LivingSpace> {
-  public IMAGE_TYPE = GradiumImageType.LivingSpaceImage;
-  public FLOOR_PLAN_TYPE = GradiumImageType.LivingSpaceFloorPlan;
+  public readonly IMAGE_TYPE = GradiumImageType.LivingSpaceImage;
+  public readonly FLOOR_PLAN_TYPE = GradiumImageType.LivingSpaceFloorPlan;
   constructor() {
     super("Living Spaces");
   }
 
-  public async fetch() {
-    this.loading(true);
-    const name = Properties.getCurrent("name");
-    try {
-      const response = await graphQLRequest<
-        GetLivingSpacesQuery,
-        GetLivingSpacesQueryVariables
-      >(getLivingSpaces, {
-        propertyId: Properties.getState().current,
-        organizationId: Scope.getState().currentOrganizationId,
-      });
-      this.hashList(response.getLivingSpaces);
-    } catch (error) {
-      Toasts.error(
-        `Something went wrong while fetching the living spaces for <strong>${name}</strong>.`,
-      );
-    }
-    this.loading(false);
+  protected async fetchSpaces() {
+    const response = await graphQLRequest<
+      GetLivingSpacesQuery,
+      GetLivingSpacesQueryVariables
+    >(getLivingSpaces, {
+      propertyId: Properties.getState().current,
+      organizationId: Scope.getState().currentOrganizationId,
+    });
+    return response.getLivingSpaces;
   }
 
-  public async save(id: number, setState: ILoadingStateSetter) {
-    const livingSpace = this.getState().list[id];
-    const { name } = livingSpace;
+  protected async saveSpace(
+    space: LivingSpace | Omit<LivingSpace, "id">,
+    setState: ILoadingStateSetter,
+  ) {
     const client = new UIClient({
       setState,
-      errorMessage: this.getError(name),
+      errorMessage: this.getSaveError(space.name, "living space"),
     });
     const response = await client.executeQuery<
       CreateOrUpdateLivingSpaceMutation,
       CreateOrUpdateLivingSpaceMutationVariables
     >(createOrUpdateLivingSpace, {
-      ...livingSpace,
+      ...space,
       propertyId: Properties.getState().current,
       organizationId: Scope.getState().currentOrganizationId,
     });
-    const space = response.createOrUpdateLivingSpace;
-    this.updateByIdentifier(space.id, space);
-    if (space.id !== livingSpace.id) {
-      this.delete(livingSpace.id);
-    }
+    return response.createOrUpdateLivingSpace;
   }
 
-  public async saveBeforeUnmount(id: number) {
-    const livingSpace = this.getState().list[id];
-    try {
-      const response = await graphQLRequest<
-        CreateOrUpdateLivingSpaceMutation,
-        CreateOrUpdateLivingSpaceMutationVariables
-      >(createOrUpdateLivingSpace, {
-        ...livingSpace,
-        propertyId: Properties.getState().current,
-        organizationId: Scope.getState().currentOrganizationId,
-      });
-      const space = response.createOrUpdateLivingSpace;
-      this.updateByIdentifier(space.id, space);
-      if (space.id !== livingSpace.id) {
-        this.delete(livingSpace.id);
-      }
-    } catch (error) {
-      Toasts.error(
-        `<strong>${livingSpace.name}</strong> did not save before leaving. Please try again`,
-      );
-    }
+  protected async saveSilent(space: LivingSpace | Omit<LivingSpace, "id">) {
+    const response = await graphQLRequest<
+      CreateOrUpdateLivingSpaceMutation,
+      CreateOrUpdateLivingSpaceMutationVariables
+    >(createOrUpdateLivingSpace, {
+      ...space,
+      propertyId: Properties.getState().current,
+      organizationId: Scope.getState().currentOrganizationId,
+    });
+    return response.createOrUpdateLivingSpace;
   }
 
-  public async deleteItem(
+  protected async deleteTransaction(
     id: number,
+    callback: Callback,
     setState: ILoadingStateSetter,
-    callback?: Callback,
   ) {
-    if (id === -1) {
-      this.delete(id);
-      return callback?.();
-    }
     const client = new UIClient({ setState });
     const response = await client.executeQuery<
       DeleteLivingSpaceMutation,
@@ -114,19 +86,11 @@ export class LivingSpacesModel extends ConfigurableSpaceModel<LivingSpace> {
       },
       callback,
     );
-    this.delete(response.deleteLivingSpace.id);
+    return response.deleteLivingSpace;
   }
 
-  private getError(name: string) {
-    if (name) {
-      return `<strong>${name}</strong> didn't save properly. Please check your inputs and try again.`;
-    }
-    return "Your living space didn't save property. Please check your inputs and try again.";
-  }
-
-  public get blank() {
+  protected blankItem() {
     return {
-      id: -1,
       name: "",
       type: LivingSpaceType.Unit,
       beds: 0,
