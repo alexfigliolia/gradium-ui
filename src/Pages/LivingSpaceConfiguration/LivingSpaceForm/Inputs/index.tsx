@@ -32,7 +32,7 @@ export const Inputs = memo(
 
     const onChangeFootage = useCallback(
       (e: ChangeEvent<HTMLInputElement>) => {
-        controller.update("footage", parseFloat(e.target.value ?? "0"));
+        controller.update("footage", parseFloat(e.target.value || "0"));
       },
       [controller],
     );

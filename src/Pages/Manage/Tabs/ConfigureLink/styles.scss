@@ -6,10 +6,10 @@
   &>.sublink {
     width: 0;
     opacity: 0;
-    color: #fff;
+    color: inherit;
     visibility: hidden;
     @include Variables.center;
-    transition: width 1s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.5s, visibility 0s 1s;
+    transition: width 1s cubic-bezier(0.76, 0, 0.24, 1), color 0.3s, opacity 0.5s, visibility 0s 1s;
     &>svg {
       width: 1.5em;
       height: 1.5em;
@@ -20,12 +20,13 @@
     }
     &>div {
       color: inherit;
+      transition: color 0.3s;
     }
     &.active {
       opacity: 1;
       width: var(--width);
       visibility: visible;
-      transition: width 1s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.75s 0.5s, visibility 0s;
+      transition: width 1s cubic-bezier(0.76, 0, 0.24, 1), color 0.3s, opacity 0.75s 0.5s, visibility 0s;
     }
   }
 }
