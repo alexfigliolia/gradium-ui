@@ -26,17 +26,13 @@ export class CodeGen {
   private static fixEntryPoint() {
     writeFileSync(
       this.typesEntrypoint,
-      [
-        // 'export * from "./fragment-masking";',
-        'export * from "./gql";',
-        'export * from "./graphql";',
-      ].join("\n"),
+      ['export * from "./gql";', 'export * from "./graphql";'].join("\n"),
     );
   }
 
   private static lint() {
     return new ChildProcess(
-      `npx eslint --fix --ext .ts ${this.TYPES_DIRECTORY}`,
+      `yarn eslint --fix --ext .ts ${this.TYPES_DIRECTORY}`,
     ).handler;
   }
 
