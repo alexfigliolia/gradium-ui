@@ -4,6 +4,7 @@ schema {
 }
 type Query {
   userScope: LoggedInUser!
+  getAmenities(propertyId: Int!, organizationId: Int!): [Amenity!]!
   verifySession: Boolean!
   getLivingSpaces(propertyId: Int!, organizationId: Int!): [LivingSpace!]!
   generateUploadSignature(organizationId: Int!, type: GradiumImageType!): UploadSignature!
@@ -30,6 +31,22 @@ type OrgAffiliation {
 type PersonRole {
   role: PersonRoleType!
 }
+type Amenity {
+  id: Int!
+  name: String!
+  price: Float!
+  billed: BillFrequency!
+  open: String!
+  close: String!
+  footage: Float!
+  propertyId: Int!
+  images: [GradiumImage!]!
+  floorPlans: [GradiumImage!]!
+}
+type GradiumImage {
+  id: Int!
+  url: String!
+}
 type LivingSpace {
   id: Int!
   name: String!
@@ -40,10 +57,6 @@ type LivingSpace {
   propertyId: Int!
   images: [GradiumImage!]!
   floorPlans: [GradiumImage!]!
-}
-type GradiumImage {
-  id: Int!
-  url: String!
 }
 type UploadSignature {
   api_key: String!
@@ -90,11 +103,13 @@ type Mutation {
   resetPassword(userId: Int!, previous: String!, next: String!): Boolean!
   createAccount(name: String!, email: String!, password: String!): LoggedInUser!
   forgotPassword(email: String!): String!
+  deleteAmenity(organizationId: Int!, propertyId: Int!, id: Int!): Amenity!
   createProperty(name: String!, organizationId: Int!): AdminBasicProperty!
   inviteStaffMember(organizationId: Int!, email: String!): Boolean!
   deleteLivingSpace(organizationId: Int!, propertyId: Int!, id: Int!): LivingSpace!
   setOrganizationName(name: String!, organizationId: Int!): Boolean!
   modifyPropertyAddons(propertyId: Int!, organizationId: Int!, additions: [PropertyAddonType!]!, deletions: [Int!]!): [PropertyAddon!]!
+  createOrUpdateAmenity(organizationId: Int!, propertyId: Int!, id: Int, name: String!, billed: BillFrequency!, open: String!, close: String!, price: Float!, footage: Float!): Amenity!
   updateBasicPropertyInfo(propertyId: Int!, organizationId: Int!, name: String!, address1: String!, address2: String!, city: String!, state: String!, zipCode: String!): AdminBasicProperty!
   createOrUpdateLivingSpace(organizationId: Int!, propertyId: Int!, id: Int, name: String!, type: LivingSpaceType!, beds: Int!, baths: Float!, footage: Float!): LivingSpace!
 }
@@ -107,6 +122,10 @@ enum PersonRoleType {
   manager
   maintenance
   resident
+}
+enum BillFrequency {
+  hour
+  day
 }
 enum LivingSpaceType {
   unit

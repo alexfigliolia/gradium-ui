@@ -1,26 +1,45 @@
+import type { ILoadingStateSetter } from "@figliolia/react-hooks";
 import { ConfigurableSpaceModel } from "Generics/ConfigurableSpaceModel";
 import { GradiumImageType } from "GraphQL/Types";
 import type { IConfigurableSpace } from "Types/Gradium";
 
 export class NullConfigurableSpaceModel extends ConfigurableSpaceModel<IConfigurableSpace> {
-  public IMAGE_TYPE = GradiumImageType.LivingSpaceImage;
-  public FLOOR_PLAN_TYPE = GradiumImageType.LivingSpaceFloorPlan;
+  private readonly NULL_ITEM = {
+    id: Infinity,
+    ...this.blankItem(),
+  };
+  public readonly IMAGE_TYPE = GradiumImageType.LivingSpaceImage;
+  public readonly FLOOR_PLAN_TYPE = GradiumImageType.LivingSpaceFloorPlan;
 
-  public async fetch() {}
+  protected fetchSpaces() {
+    return Promise.resolve().then(() => [this.NULL_ITEM]);
+  }
 
-  public async save(..._args: any[]) {}
+  public async saveSpace(
+    _space: IConfigurableSpace | Omit<IConfigurableSpace, "id">,
+    _setState: ILoadingStateSetter,
+  ) {
+    return Promise.resolve().then(() => this.NULL_ITEM);
+  }
 
-  public async saveBeforeUnmount(..._args: any[]) {}
+  public async saveSilent(
+    _space: IConfigurableSpace | Omit<IConfigurableSpace, "id">,
+  ) {
+    return Promise.resolve().then(() => this.NULL_ITEM);
+  }
 
-  public async deleteItem(..._args: any[]) {}
+  public async deleteTransaction(
+    ..._args: Parameters<ConfigurableSpaceModel["deleteTransaction"]>
+  ) {
+    return Promise.resolve().then(() => this.NULL_ITEM);
+  }
 
   public validate(_item?: IConfigurableSpace) {
     return false;
   }
 
-  public get blank() {
+  public blankItem(): Omit<IConfigurableSpace, "id"> {
     return {
-      id: -1,
       name: "",
       images: [],
       floorPlans: [],

@@ -15,7 +15,7 @@ export const CSFContext = createContext<
   ICSForm<IConfigurableSpace, ConfigurableSpaceModel>
 >({
   item: {
-    id: -1,
+    id: Infinity,
     name: "",
     images: [],
     floorPlans: [],
@@ -23,7 +23,7 @@ export const CSFContext = createContext<
   editing: false,
   toggleEdit: () => {},
   model: NullModel,
-  controller: new Controller(NullModel, -1),
+  controller: new Controller(NullModel, Infinity),
 });
 
 export interface ICSForm<

@@ -1,18 +1,4 @@
-import type { GradiumImage } from "GraphQL/Types";
-import type { IHashedListState } from "Tools/BaseListCrudModel";
+import type { IHashedListState } from "Generics/HashedListModel";
+import type { Amenity } from "GraphQL/Types";
 
-export type IBillFrequency = "hour" | "day";
-
-export interface IAmenity {
-  id: number;
-  name: string;
-  price: string;
-  open: string;
-  close: string;
-  billed: IBillFrequency;
-  images: GradiumImage[];
-  floorPlans: GradiumImage[];
-  footage: number;
-}
-
-export type IAmenities = IHashedListState<IAmenity>;
+export type IAmenities = IHashedListState<Amenity>;

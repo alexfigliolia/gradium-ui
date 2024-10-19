@@ -14,12 +14,15 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  fragment AdminBasicPropertyFragment on AdminBasicProperty {\n    id\n    name\n    slug\n    address1\n    address2\n    city\n    state\n    zipCode\n    mapsLink\n    images {\n      id\n      url\n    }\n    addons {\n      id\n      type\n    }\n  }\n": types.AdminBasicPropertyFragmentFragmentDoc,
+    "\n  fragment AmenityFragment on Amenity {\n    id\n    name\n    open\n    price\n    billed\n    close\n    footage\n    propertyId\n    images {\n      id\n      url\n    }\n    floorPlans {\n      id\n      url\n    }\n  }\n": types.AmenityFragmentFragmentDoc,
     "\n  fragment BasicUserFragment on BasicUser {\n    name\n    emails {\n      email\n    }\n  }\n": types.BasicUserFragmentFragmentDoc,
     "\n  fragment LivingSpaceFragment on LivingSpace {\n    id\n    name\n    type\n    beds\n    baths\n    footage\n    propertyId\n    images {\n      id\n      url\n    }\n    floorPlans {\n      id\n      url\n    }\n  }\n": types.LivingSpaceFragmentFragmentDoc,
     "\n  fragment LoggedInUserFragment on LoggedInUser {\n    id\n    name\n    emails {\n      email\n    }\n    affiliations {\n      organization {\n        id\n        name\n      }\n      roles {\n        role\n      }\n    }\n  }\n": types.LoggedInUserFragmentFragmentDoc,
     "\n  \n  mutation createAccount($name: String!, $email: String!, $password: String!) {\n    createAccount(name: $name, email: $email, password: $password) {\n      ...LoggedInUserFragment\n    }\n  }\n": types.CreateAccountDocument,
+    "\n  \n  mutation createOrUpdateAmenity(\n    $id: Int\n    $propertyId: Int!\n    $organizationId: Int!\n    $name: String!\n    $billed: BillFrequency!\n    $open: String!\n    $close: String!\n    $footage: Float!\n    $price: Float!\n  ) {\n    createOrUpdateAmenity(\n      id: $id\n      propertyId: $propertyId\n      organizationId: $organizationId\n      name: $name\n      billed: $billed\n      open: $open\n      close: $close\n      footage: $footage\n      price: $price\n    ) {\n      ...AmenityFragment\n    }\n  }\n": types.CreateOrUpdateAmenityDocument,
     "\n  \n  mutation createOrUpdateLivingSpace(\n    $id: Int\n    $propertyId: Int!\n    $organizationId: Int!\n    $name: String!\n    $type: LivingSpaceType!\n    $beds: Int!\n    $baths: Float!\n    $footage: Float!\n  ) {\n    createOrUpdateLivingSpace(\n      id: $id\n      propertyId: $propertyId\n      organizationId: $organizationId\n      name: $name\n      type: $type\n      beds: $beds\n      baths: $baths\n      footage: $footage\n    ) {\n      ...LivingSpaceFragment\n    }\n  }\n": types.CreateOrUpdateLivingSpaceDocument,
     "\n  \n  mutation createProperty($name: String!, $organizationId: Int!) {\n    createProperty(name: $name, organizationId: $organizationId) {\n      ...AdminBasicPropertyFragment\n    }\n  }\n": types.CreatePropertyDocument,
+    "\n  \n  mutation deleteAmenity($organizationId: Int!, $propertyId: Int!, $id: Int!) {\n    deleteAmenity(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      id: $id\n    ) {\n      ...AmenityFragment\n    }\n  }\n": types.DeleteAmenityDocument,
     "\n  \n  mutation deleteEmail($userId: Int!, $email: String!) {\n    deleteEmail(userId: $userId, email: $email) {\n      ...BasicUserFragment\n    }\n  }\n": types.DeleteEmailDocument,
     "\n  mutation deleteImage(\n    $propertyId: Int!\n    $organizationId: Int!\n    $id: Int!\n    $type: GradiumImageType!\n  ) {\n    deleteImage(\n      id: $id\n      type: $type\n      propertyId: $propertyId\n      organizationId: $organizationId\n    ) {\n      id\n      url\n    }\n  }\n": types.DeleteImageDocument,
     "\n  \n  mutation deleteLivingSpace(\n    $organizationId: Int!\n    $propertyId: Int!\n    $id: Int!\n  ) {\n    deleteLivingSpace(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      id: $id\n    ) {\n      ...LivingSpaceFragment\n    }\n  }\n": types.DeleteLivingSpaceDocument,
@@ -37,6 +40,7 @@ const documents = {
     "\n  \n  query adminBasicPropertiesList($organizationId: Int!) {\n    adminBasicPropertiesList(organizationId: $organizationId) {\n      ...AdminBasicPropertyFragment\n    }\n  }\n": types.AdminBasicPropertiesListDocument,
     "\n  query generateDestroySignature(\n    $organizationId: Int!\n    $publicId: String!\n    $type: GradiumImageType!\n  ) {\n    generateDestroySignature(\n      organizationId: $organizationId\n      publicId: $publicId\n      type: $type\n    ) {\n      name\n      folder\n      api_key\n      public_id\n      timestamp\n      signature\n      invalidate\n      resource_type\n    }\n  }\n": types.GenerateDestroySignatureDocument,
     "\n  query generateUploadSignature(\n    $organizationId: Int!\n    $type: GradiumImageType!\n  ) {\n    generateUploadSignature(organizationId: $organizationId, type: $type) {\n      api_key\n      name\n      folder\n      timestamp\n      signature\n    }\n  }\n": types.GenerateUploadSignatureDocument,
+    "\n  \n  query getAmenities($propertyId: Int!, $organizationId: Int!) {\n    getAmenities(propertyId: $propertyId, organizationId: $organizationId) {\n      ...AmenityFragment\n    }\n  }\n": types.GetAmenitiesDocument,
     "\n  \n  query getLivingSpaces($propertyId: Int!, $organizationId: Int!) {\n    getLivingSpaces(propertyId: $propertyId, organizationId: $organizationId) {\n      ...LivingSpaceFragment\n    }\n  }\n": types.GetLivingSpacesDocument,
     "\n  \n  query userScope {\n    userScope {\n      ...LoggedInUserFragment\n    }\n  }\n": types.UserScopeDocument,
     "\n  query verifySession {\n    verifySession\n  }\n": types.VerifySessionDocument,
@@ -63,6 +67,10 @@ export function gql(source: "\n  fragment AdminBasicPropertyFragment on AdminBas
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function gql(source: "\n  fragment AmenityFragment on Amenity {\n    id\n    name\n    open\n    price\n    billed\n    close\n    footage\n    propertyId\n    images {\n      id\n      url\n    }\n    floorPlans {\n      id\n      url\n    }\n  }\n"): (typeof documents)["\n  fragment AmenityFragment on Amenity {\n    id\n    name\n    open\n    price\n    billed\n    close\n    footage\n    propertyId\n    images {\n      id\n      url\n    }\n    floorPlans {\n      id\n      url\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function gql(source: "\n  fragment BasicUserFragment on BasicUser {\n    name\n    emails {\n      email\n    }\n  }\n"): (typeof documents)["\n  fragment BasicUserFragment on BasicUser {\n    name\n    emails {\n      email\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -79,11 +87,19 @@ export function gql(source: "\n  \n  mutation createAccount($name: String!, $ema
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function gql(source: "\n  \n  mutation createOrUpdateAmenity(\n    $id: Int\n    $propertyId: Int!\n    $organizationId: Int!\n    $name: String!\n    $billed: BillFrequency!\n    $open: String!\n    $close: String!\n    $footage: Float!\n    $price: Float!\n  ) {\n    createOrUpdateAmenity(\n      id: $id\n      propertyId: $propertyId\n      organizationId: $organizationId\n      name: $name\n      billed: $billed\n      open: $open\n      close: $close\n      footage: $footage\n      price: $price\n    ) {\n      ...AmenityFragment\n    }\n  }\n"): (typeof documents)["\n  \n  mutation createOrUpdateAmenity(\n    $id: Int\n    $propertyId: Int!\n    $organizationId: Int!\n    $name: String!\n    $billed: BillFrequency!\n    $open: String!\n    $close: String!\n    $footage: Float!\n    $price: Float!\n  ) {\n    createOrUpdateAmenity(\n      id: $id\n      propertyId: $propertyId\n      organizationId: $organizationId\n      name: $name\n      billed: $billed\n      open: $open\n      close: $close\n      footage: $footage\n      price: $price\n    ) {\n      ...AmenityFragment\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function gql(source: "\n  \n  mutation createOrUpdateLivingSpace(\n    $id: Int\n    $propertyId: Int!\n    $organizationId: Int!\n    $name: String!\n    $type: LivingSpaceType!\n    $beds: Int!\n    $baths: Float!\n    $footage: Float!\n  ) {\n    createOrUpdateLivingSpace(\n      id: $id\n      propertyId: $propertyId\n      organizationId: $organizationId\n      name: $name\n      type: $type\n      beds: $beds\n      baths: $baths\n      footage: $footage\n    ) {\n      ...LivingSpaceFragment\n    }\n  }\n"): (typeof documents)["\n  \n  mutation createOrUpdateLivingSpace(\n    $id: Int\n    $propertyId: Int!\n    $organizationId: Int!\n    $name: String!\n    $type: LivingSpaceType!\n    $beds: Int!\n    $baths: Float!\n    $footage: Float!\n  ) {\n    createOrUpdateLivingSpace(\n      id: $id\n      propertyId: $propertyId\n      organizationId: $organizationId\n      name: $name\n      type: $type\n      beds: $beds\n      baths: $baths\n      footage: $footage\n    ) {\n      ...LivingSpaceFragment\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  \n  mutation createProperty($name: String!, $organizationId: Int!) {\n    createProperty(name: $name, organizationId: $organizationId) {\n      ...AdminBasicPropertyFragment\n    }\n  }\n"): (typeof documents)["\n  \n  mutation createProperty($name: String!, $organizationId: Int!) {\n    createProperty(name: $name, organizationId: $organizationId) {\n      ...AdminBasicPropertyFragment\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  \n  mutation deleteAmenity($organizationId: Int!, $propertyId: Int!, $id: Int!) {\n    deleteAmenity(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      id: $id\n    ) {\n      ...AmenityFragment\n    }\n  }\n"): (typeof documents)["\n  \n  mutation deleteAmenity($organizationId: Int!, $propertyId: Int!, $id: Int!) {\n    deleteAmenity(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      id: $id\n    ) {\n      ...AmenityFragment\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -152,6 +168,10 @@ export function gql(source: "\n  query generateDestroySignature(\n    $organizat
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query generateUploadSignature(\n    $organizationId: Int!\n    $type: GradiumImageType!\n  ) {\n    generateUploadSignature(organizationId: $organizationId, type: $type) {\n      api_key\n      name\n      folder\n      timestamp\n      signature\n    }\n  }\n"): (typeof documents)["\n  query generateUploadSignature(\n    $organizationId: Int!\n    $type: GradiumImageType!\n  ) {\n    generateUploadSignature(organizationId: $organizationId, type: $type) {\n      api_key\n      name\n      folder\n      timestamp\n      signature\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  \n  query getAmenities($propertyId: Int!, $organizationId: Int!) {\n    getAmenities(propertyId: $propertyId, organizationId: $organizationId) {\n      ...AmenityFragment\n    }\n  }\n"): (typeof documents)["\n  \n  query getAmenities($propertyId: Int!, $organizationId: Int!) {\n    getAmenities(propertyId: $propertyId, organizationId: $organizationId) {\n      ...AmenityFragment\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
