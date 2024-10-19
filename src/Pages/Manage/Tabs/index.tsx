@@ -3,6 +3,7 @@ import { PropertyManagementRoutes } from "Layouts/Management/Routes";
 import { currentAddons, useProperties } from "State/Properties";
 import { grants, useScope } from "State/Scope";
 import type { Propless } from "Types/React";
+import { ConfigureLink } from "./ConfigureLink";
 import { TabLink } from "./TabLink";
 import "./styles.scss";
 
@@ -19,6 +20,9 @@ export const Tabs = memo(
     return (
       <div className="tabs">
         {routeList.map(route => {
+          if (route === "configure") {
+            return <ConfigureLink key={route} />;
+          }
           return <TabLink key={route} route={route} />;
         })}
       </div>

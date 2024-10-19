@@ -1,0 +1,27 @@
+@use "Styles/Variables";
+
+.gradient-border-link.configure-link > div {
+  @include Variables.center;
+  overflow: hidden;
+  &>.sublink {
+    width: 0;
+    opacity: 0;
+    visibility: hidden;
+    @include Variables.center;
+    transition: width 1s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.5s, visibility 0s 1s;
+    &>svg {
+      width: 1.5em;
+      height: 1.5em;
+      margin: 0 0.5em;
+      & path {
+        fill: #fff;
+      }
+    }
+    &.active {
+      opacity: 1;
+      width: var(--width);
+      visibility: visible;
+      transition: width 1s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.75s 0.5s, visibility 0s;
+    }
+  }
+}
