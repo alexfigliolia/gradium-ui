@@ -70,10 +70,14 @@ export class LivingSpacesModel extends ConfigurableSpaceModel<LivingSpace> {
 
   protected async deleteTransaction(
     id: number,
-    callback: Callback,
     setState: ILoadingStateSetter,
+    callback: Callback,
   ) {
-    const client = new UIClient({ setState });
+    const { name } = this.getById(id);
+    const client = new UIClient({
+      setState,
+      errorMessage: `Something went wrong while deleting ${name ? `the living space ${name}` : "your living space"}. Please try again.`,
+    });
     const response = await client.executeQuery<
       DeleteLivingSpaceMutation,
       DeleteLivingSpaceMutationVariables

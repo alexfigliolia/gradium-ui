@@ -137,10 +137,12 @@ export class CloudinaryUploader {
     if (!files || !files.length) {
       return false;
     }
-    return files;
+    const clone = Array.from(files);
+    target.value = "";
+    return clone;
   }
 
-  private validateFile(files: FileList) {
+  private validateFile(files: File[]) {
     const validFiles: File[] = [];
     for (const file of files) {
       if (file.size > CloudinaryUploader.MAX_SIZE) {

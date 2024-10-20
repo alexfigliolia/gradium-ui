@@ -27,7 +27,7 @@
       scale: 1.25;
       translate: 0 -5%;
       max-width: var(--width);
-      filter: drop-shadow(0em 0.15em 0.25em rgba(#000, 0.1));
+      filter: drop-shadow(0em 0.15em 0.25em var(--shadow-color-light));
     }
   }
 }

@@ -28,7 +28,6 @@ export const ForgotPassword = memo(
       (data, setState) => {
         client.current = new UIClient({
           setState,
-          errorMessage: "first",
           successMessage: ["forgotPassword"],
         });
         void client.current.executeQuery<

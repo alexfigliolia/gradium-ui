@@ -24,8 +24,8 @@ export abstract class ConfigurableSpaceModel<
 
   protected abstract deleteTransaction(
     id: number,
-    callback: Callback,
     setState: ILoadingStateSetter,
+    callback: Callback,
   ): Promise<T>;
 
   public async fetch() {
@@ -43,8 +43,11 @@ export abstract class ConfigurableSpaceModel<
 
   public async save(id: number, setState: ILoadingStateSetter) {
     const item = this.getState().list[id];
-    const { id: identifer, ...rest } = item;
-    const saved = await this.saveSpace(identifer <= 0 ? rest : item, setState);
+    const { id: _, ...rest } = item;
+    const saved = await this.saveSpace(
+      this.isClient(item) ? rest : item,
+      setState,
+    );
     this.updateByIdentifier(saved.id, saved);
     if (saved.id !== item.id) {
       this.delete(item.id);
@@ -54,8 +57,8 @@ export abstract class ConfigurableSpaceModel<
   public async saveBeforeUnmount(id: number) {
     const item = this.getState().list[id];
     try {
-      const { id: identifier, ...rest } = item;
-      const saved = await this.saveSilent(identifier <= 0 ? rest : item);
+      const { id: _, ...rest } = item;
+      const saved = await this.saveSilent(this.isClient(item) ? rest : item);
       this.updateByIdentifier(saved.id, saved);
       if (saved.id !== item.id) {
         this.delete(item.id);
@@ -69,14 +72,14 @@ export abstract class ConfigurableSpaceModel<
 
   public async deleteItem(
     id: number,
-    callback: Callback,
     setState: ILoadingStateSetter,
+    callback: Callback,
   ) {
-    if (id <= 0) {
+    if (this.isClient({ id })) {
       this.delete(id);
       return callback?.();
     }
-    const item = await this.deleteTransaction(id, callback, setState);
+    const item = await this.deleteTransaction(id, setState, callback);
     this.delete(item.id);
   }
 
@@ -136,14 +139,13 @@ export abstract class ConfigurableSpaceModel<
       return images;
     }
     const list = this.toLinkedList(newImages);
-    if (length === 1 && (list.peekLeft()?.id ?? 0) < 0) {
+    if (length === 1 && this.isClient(list.peekLeft())) {
       return [...images, ...newImages];
     }
     const copy = [...images];
     const { length: N } = copy;
     for (let i = 0; i < N && list.size; i++) {
-      const next = list.peekLeft()?.id ?? 0;
-      if (copy[i].id < 0 && next > -1) {
+      if (this.isClient(copy[i]) && !this.isClient(list.peekLeft())) {
         copy[i] = list.shift()!;
       }
     }
@@ -151,6 +153,10 @@ export abstract class ConfigurableSpaceModel<
       copy.push(item);
     }
     return copy;
+  }
+
+  public isClient<T extends { id: number }>(data?: T) {
+    return (data?.id ?? 0) < 0;
   }
 
   private toLinkedList(images: GradiumImage[]) {

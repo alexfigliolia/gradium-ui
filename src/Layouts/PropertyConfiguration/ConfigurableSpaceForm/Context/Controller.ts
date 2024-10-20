@@ -34,6 +34,7 @@ export class Controller<
   }
 
   public update = <K extends Extract<keyof T, string>>(key: K, value: T[K]) => {
+    this.setState("loading", true);
     this.model.updateListItem(this.ID, key, value);
     this.debouncer.execute();
   };

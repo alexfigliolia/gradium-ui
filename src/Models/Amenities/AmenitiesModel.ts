@@ -70,10 +70,14 @@ export class AmenitiesModel extends ConfigurableSpaceModel<Amenity> {
 
   protected async deleteTransaction(
     id: number,
-    callback: Callback,
     setState: ILoadingStateSetter,
+    callback: Callback,
   ) {
-    const client = new UIClient({ setState });
+    const { name } = this.getById(id);
+    const client = new UIClient({
+      setState,
+      errorMessage: `Something went wrong while deleting ${name ? `the amenity ${name}` : "your amenity"}. Please try again.`,
+    });
     const response = await client.executeQuery<
       DeleteAmenityMutation,
       DeleteAmenityMutationVariables

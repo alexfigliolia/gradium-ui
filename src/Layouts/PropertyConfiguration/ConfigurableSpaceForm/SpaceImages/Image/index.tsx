@@ -16,25 +16,26 @@ export const Image = memo(function Image({ type, image }: Props) {
   const loading = useRef(false);
   const controller = useRef<Controller>(null);
   const {
-    item: { id },
-    editing,
     model,
+    editing,
+    item: { id },
   } = useContext(CSFContext);
 
-  const isPlaceholder = useMemo(() => (image?.id ?? 0) < 0, [image?.id]);
+  const isClient = useMemo(() => model.isClient(image), [model, image]);
 
   useLayoutEffect(() => {
     if (!controller.current) {
       return;
     }
-    if (isPlaceholder) {
+    if (isClient) {
       loading.current = true;
       controller.current.activateLoader();
       controller.current.setTemporaryImage(image?.url ?? null);
     } else if (loading.current) {
-      controller.current.onLoad();
+      controller.current.preloadImage(image?.url ?? "");
+      loading.current = false;
     }
-  }, [isPlaceholder, image?.url]);
+  }, [isClient, image?.url]);
 
   const onDelete = useCallback(
     (img?: GradiumImage) => {
@@ -52,7 +53,7 @@ export const Image = memo(function Image({ type, image }: Props) {
       ref={controller}
       disabled={!editing}
       onDelete={onDelete}
-      image={isPlaceholder ? undefined : image}
+      image={isClient ? undefined : image}
     />
   );
 });

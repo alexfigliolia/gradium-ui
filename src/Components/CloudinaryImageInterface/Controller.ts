@@ -57,7 +57,6 @@ export class Controller {
     }
     this.fadeLoader();
     this.setTemporaryImage(null);
-    this.ImageUploader.current?.clearInput.current?.();
   };
 
   public deleteImage(image: GradiumImage, scope: CloudinaryAssetScope) {
