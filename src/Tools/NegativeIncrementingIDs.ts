@@ -1,5 +1,6 @@
 export class NegativeIncrementIDs {
   private incrementor = 0;
+
   public get() {
     return --this.incrementor;
   }
