@@ -1,65 +1,29 @@
 import type { ChangeEvent } from "react";
 import { memo, useCallback, useMemo, useState } from "react";
 import { useClassNames } from "@figliolia/classnames";
-import type { ILoadingStateSetter } from "@figliolia/react-hooks";
-import { useFormState } from "@figliolia/react-hooks";
+import { useController, useFormState } from "@figliolia/react-hooks";
 import { ActionButton } from "Components/ActionButton";
 import { GradientBorderButton } from "Components/GradientBorderButton";
 import { Input } from "Components/Input";
-import { updateEmail } from "GraphQL/Mutations/updateEmail.gql";
-import type {
-  UpdateEmailMutation,
-  UpdateEmailMutationVariables,
-} from "GraphQL/Types";
-import { UIClient } from "GraphQL/UIClient";
 import { At } from "Icons/At";
-import { Modals } from "State/Modals";
-import { Scope, selectTotalEmails, useScope } from "State/Scope";
-import { Validators } from "Tools/Validators";
+import { selectTotalEmails, useScope } from "State/Scope";
+import { Controller } from "./Controller";
 import "./styles.scss";
 
 export const RegisteredEmail = memo(function RegisteredEmail({ email }: Props) {
   const [update, setUpdate] = useState(email);
   const totalEmails = useScope(selectTotalEmails);
 
+  const controller = useController(new Controller());
+  controller.register(email);
+
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setUpdate(e.target.value);
   }, []);
 
-  const deleteEmail = useCallback(() => {
-    Modals.deleteEmail.open(email);
-  }, [email]);
-
-  const formAction = useCallback(
-    async (data: FormData, setState: ILoadingStateSetter) => {
-      try {
-        const next = Validators.emailParser(data);
-        const client = new UIClient({
-          setState,
-          successMessage: "Your email has been updated!",
-        });
-        const response = await client.executeQuery<
-          UpdateEmailMutation,
-          UpdateEmailMutationVariables
-        >(
-          updateEmail,
-          {
-            next,
-            previous: email,
-            userId: Scope.getState().id,
-          },
-          () => {
-            Scope.updateBasicInfo(response.updateEmail);
-          },
-        );
-      } catch (error) {
-        // Silence
-      }
-    },
-    [email],
+  const { loading, error, success, onSubmit } = useFormState(
+    controller.onSubmit,
   );
-
-  const { loading, error, success, onSubmit } = useFormState(formAction);
 
   const saveDisabled = useMemo(
     () => email === update && !loading,
@@ -83,8 +47,8 @@ export const RegisteredEmail = memo(function RegisteredEmail({ email }: Props) {
       <div>
         <GradientBorderButton
           type="button"
-          onClick={deleteEmail}
-          disabled={totalEmails < 2}>
+          disabled={totalEmails < 2}
+          onClick={controller.deleteEmail}>
           Delete
         </GradientBorderButton>
         <ActionButton

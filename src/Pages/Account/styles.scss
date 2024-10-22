@@ -3,4 +3,15 @@
   display: flex;
   flex-direction: column;
   row-gap: var(--core-padding);
+  @media (min-width: 1200px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--core-padding);
+    &>.tile {
+      width: calc(50% - (var(--core-padding) / 2));
+      &.link-payment-account {
+        flex-direction: column;
+      }
+    }
+  }
 }

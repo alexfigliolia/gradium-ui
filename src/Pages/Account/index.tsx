@@ -21,6 +21,8 @@ export default memo(
       <Fragment>
         <Page className="account" label="Welcome to Your Account">
           <div className="tiles">
+            <Emails />
+            <Password />
             {isResident && (
               <LinkPaymentAccount
                 title="Payments"
@@ -32,8 +34,6 @@ export default memo(
                 }
               />
             )}
-            <Emails />
-            <Password />
             <Theme />
           </div>
         </Page>
