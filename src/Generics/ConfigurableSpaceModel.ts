@@ -12,6 +12,9 @@ export abstract class ConfigurableSpaceModel<
 > extends HashedListModel<T> {
   public abstract readonly IMAGE_TYPE: GradiumImageType;
   public abstract readonly FLOOR_PLAN_TYPE: GradiumImageType;
+  constructor(name: string) {
+    super(name, true);
+  }
 
   protected abstract saveSpace(
     space: T | Omit<T, "id">,
@@ -29,7 +32,6 @@ export abstract class ConfigurableSpaceModel<
   ): Promise<T>;
 
   public async fetch() {
-    this.loading(true);
     try {
       this.hashList(await this.fetchSpaces());
     } catch (error) {

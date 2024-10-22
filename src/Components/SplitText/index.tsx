@@ -1,6 +1,7 @@
 import type { CSSProperties, HTMLAttributes } from "react";
 import { memo, useMemo } from "react";
 import type { Callback } from "Types/Generics";
+import type { HeaderTags } from "Types/React";
 
 export const SplitText = memo(function SplitText({
   Tag,
@@ -26,6 +27,6 @@ export const SplitText = memo(function SplitText({
 interface Props extends HTMLAttributes<HTMLHeadingElement> {
   text: string;
   splitter?: string;
-  Tag: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  Tag: HeaderTags;
   styleFn?: Callback<[number, string], CSSProperties | undefined>;
 }

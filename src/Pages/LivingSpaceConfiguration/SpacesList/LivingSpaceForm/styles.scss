@@ -1,7 +1,7 @@
 @use "Styles/Variables";
 
 .page.property-configuration .forms > .spaces .input-group.living-space-form {
-  & label.input {
+  & .input {
     &.name-input,
     &.dropdown.type-dropdown {
       @media (min-width: 1500px) {

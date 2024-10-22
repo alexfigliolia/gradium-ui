@@ -101,7 +101,7 @@ export class LivingSpacesModel extends ConfigurableSpaceModel<LivingSpace> {
       baths: 0,
       images: [],
       floorPlans: [],
-      footage: 0,
+      size: "0",
       propertyId: Properties.getState().current,
     };
   }
@@ -114,7 +114,9 @@ export class LivingSpacesModel extends ConfigurableSpaceModel<LivingSpace> {
       space.name.length !== 0 &&
       space.type.length >= 4 &&
       !isNaN(space.beds) &&
-      !isNaN(space.baths)
+      !isNaN(space.baths) &&
+      // @ts-ignore
+      parseFloat(space.size) == space.size
     );
   }
 }

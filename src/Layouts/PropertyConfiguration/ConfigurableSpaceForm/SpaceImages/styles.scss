@@ -16,6 +16,9 @@
     @media (min-width: Variables.$small-vertical-tablet) {
       width: calc(33.3333% - (var(--tile-padding)) * 1.2);
     }
+    @media (min-width: Variables.$large-vertical-tablet) {
+      width: calc(33.3333% - (var(--tile-padding)));
+    }
     @media (min-width: 1200px) {
       margin-right: 1.25em;
       width: calc(33.3333% - (var(--tile-padding)) * 1.1);

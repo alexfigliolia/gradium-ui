@@ -8,8 +8,10 @@ import { PropertyConfigurationTile } from "../PropertyConfigurationTile";
 const access = AdminRoutes.addons("PROPERTY_AMENITIES");
 
 export const AmenitiesTile = memo(function AmenitiesTile({
+  loading,
   children,
-}: OptionalChildren) {
+  fetchingIndicator,
+}: Props) {
   const accessible = usePropertyAccess(...access);
   if (!accessible) {
     return null;
@@ -21,8 +23,15 @@ export const AmenitiesTile = memo(function AmenitiesTile({
           <BasketballCourt /> Amenity Spaces
         </Fragment>
       }
+      loading={loading}
+      fetchingIndicator={fetchingIndicator}
       subtitle="Add an entry for each amenity that can be reserved by your residents">
       {children}
     </PropertyConfigurationTile>
   );
 });
+
+interface Props extends OptionalChildren {
+  loading?: boolean;
+  fetchingIndicator?: boolean;
+}

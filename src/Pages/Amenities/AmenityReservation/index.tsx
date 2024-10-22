@@ -13,7 +13,7 @@ const amenities = [
     billed: "hour",
     images: [],
     floorPlans: [],
-    footage: "1234",
+    size: "1234",
   },
   {
     id: 2,
@@ -24,7 +24,7 @@ const amenities = [
     billed: "hour",
     images: [],
     floorPlans: [],
-    footage: "1234",
+    size: "1234",
   },
   {
     id: 3,
@@ -35,7 +35,7 @@ const amenities = [
     billed: "hour",
     images: [],
     floorPlans: [],
-    footage: "1234",
+    size: "1234",
   },
   {
     id: 4,
@@ -46,7 +46,7 @@ const amenities = [
     billed: "hour",
     images: [],
     floorPlans: [],
-    footage: "1234",
+    size: "1234",
   },
 ];
 

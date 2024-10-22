@@ -7,7 +7,7 @@
     max-width: 400px;
     margin: auto;
     --background: var(--tile-background);
-    @media (min-width: 957px) {
+    @media (min-width: Variables.$small-desktop) {
       margin: 0;
     }
     &> .input-positioner {

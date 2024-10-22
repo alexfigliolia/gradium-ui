@@ -11,7 +11,7 @@ export const createOrUpdateLivingSpace = gql`
     $type: LivingSpaceType!
     $beds: Int!
     $baths: Float!
-    $footage: Float!
+    $size: String!
   ) {
     createOrUpdateLivingSpace(
       id: $id
@@ -21,7 +21,7 @@ export const createOrUpdateLivingSpace = gql`
       type: $type
       beds: $beds
       baths: $baths
-      footage: $footage
+      size: $size
     ) {
       ...LivingSpaceFragment
     }

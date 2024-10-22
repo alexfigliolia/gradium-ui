@@ -30,6 +30,7 @@ export const YearInput = memo(function YearInput({
         required
         type="number"
         label="Year"
+        step={1}
         minLength={4}
         maxLength={4}
         pattern=""

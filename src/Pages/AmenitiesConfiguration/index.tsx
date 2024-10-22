@@ -1,13 +1,14 @@
-import { Fragment, memo, useCallback } from "react";
+import { memo, useCallback } from "react";
 import { PermissedPropertyRoute } from "Components/PermissedPropertyRoute";
 import {
   AmenitiesTile,
   PropertyConfigurationPage,
 } from "Layouts/PropertyConfiguration";
 import { AdminRoutes } from "Router/AdminRoutes";
-import { selectAmenities, useAmenities } from "State/Amenities";
+import { fetching, useAmenities } from "State/Amenities";
 import type { Propless } from "Types/React";
-import { AmenityForm } from "./AmenityForm";
+import { AmenityList } from "./AmenityList";
+import { ConfirmDelete } from "./ConfirmDelete";
 import { NewAmenityButton } from "./NewAmenityButton";
 
 export default memo(
@@ -16,24 +17,18 @@ export default memo(
       (property: string) => `Amenities at ${property}`,
       [],
     );
-    const amenities = useAmenities(selectAmenities);
+    const loading = useAmenities(fetching);
     return (
       <PermissedPropertyRoute
         fallback=".."
         requirements={AdminRoutes.access("PROPERTY_AMENITIES")}>
         <PropertyConfigurationPage labelFN={labelFN}>
-          <AmenitiesTile>
+          <AmenitiesTile loading={loading} fetchingIndicator>
             <NewAmenityButton />
           </AmenitiesTile>
-          {!!amenities.length && (
-            <Fragment>
-              {amenities.map((amenity, i) => {
-                return <AmenityForm key={i} {...amenity} />;
-              })}
-              <NewAmenityButton />
-            </Fragment>
-          )}
+          <AmenityList />
         </PropertyConfigurationPage>
+        <ConfirmDelete />
       </PermissedPropertyRoute>
     );
   },

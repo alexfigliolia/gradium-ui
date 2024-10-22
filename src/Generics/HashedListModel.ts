@@ -5,10 +5,10 @@ export abstract class HashedListModel<T extends IListItem> extends BaseModel<
   IHashedListState<T>
 > {
   protected IDs = new NegativeIncrementIDs();
-  constructor(name: string) {
+  constructor(name: string, loading = false) {
     super(name, {
       list: {},
-      loading: false,
+      loading,
       deleteItemName: "",
       deleteItemId: Infinity,
     });
@@ -71,7 +71,7 @@ export abstract class HashedListModel<T extends IListItem> extends BaseModel<
     });
   }
 
-  private getBlank() {
+  public getBlank() {
     return {
       ...this.blankItem(),
       id: this.IDs.get(),

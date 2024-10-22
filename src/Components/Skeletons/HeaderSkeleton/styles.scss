@@ -1,0 +1,7 @@
+@use "Styles/Variables";
+
+.header-skeleton >span {
+  color: transparent;
+  border-radius: 0.5em;
+  @include Variables.skeleton;
+}

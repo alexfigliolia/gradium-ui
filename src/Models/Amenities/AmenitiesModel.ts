@@ -100,8 +100,8 @@ export class AmenitiesModel extends ConfigurableSpaceModel<Amenity> {
       close: "9pm",
       images: [],
       floorPlans: [],
-      footage: 0,
-      price: 0,
+      size: "0",
+      price: "0",
       billed: BillFrequency.Hour,
       propertyId: Properties.getState().current,
     };
@@ -111,6 +111,10 @@ export class AmenitiesModel extends ConfigurableSpaceModel<Amenity> {
     if (!amenity) {
       return false;
     }
-    return amenity.name.length !== 0;
+    return (
+      amenity.name.length !== 0 &&
+      // @ts-ignore
+      parseFloat(amenity.size) == amenity.size
+    );
   }
 }

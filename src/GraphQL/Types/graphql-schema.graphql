@@ -34,11 +34,11 @@ type PersonRole {
 type Amenity {
   id: Int!
   name: String!
-  price: Float!
+  price: String!
   billed: BillFrequency!
   open: String!
   close: String!
-  footage: Float!
+  size: String!
   propertyId: Int!
   images: [GradiumImage!]!
   floorPlans: [GradiumImage!]!
@@ -53,7 +53,7 @@ type LivingSpace {
   type: LivingSpaceType!
   beds: Int!
   baths: Float!
-  footage: Float!
+  size: String!
   propertyId: Int!
   images: [GradiumImage!]!
   floorPlans: [GradiumImage!]!
@@ -109,9 +109,9 @@ type Mutation {
   deleteLivingSpace(organizationId: Int!, propertyId: Int!, id: Int!): LivingSpace!
   setOrganizationName(name: String!, organizationId: Int!): Boolean!
   modifyPropertyAddons(propertyId: Int!, organizationId: Int!, additions: [PropertyAddonType!]!, deletions: [Int!]!): [PropertyAddon!]!
-  createOrUpdateAmenity(organizationId: Int!, propertyId: Int!, id: Int, name: String!, billed: BillFrequency!, open: String!, close: String!, price: Float!, footage: Float!): Amenity!
+  createOrUpdateAmenity(organizationId: Int!, propertyId: Int!, id: Int, name: String!, billed: BillFrequency!, open: String!, close: String!, price: String!, size: String!): Amenity!
   updateBasicPropertyInfo(propertyId: Int!, organizationId: Int!, name: String!, address1: String!, address2: String!, city: String!, state: String!, zipCode: String!): AdminBasicProperty!
-  createOrUpdateLivingSpace(organizationId: Int!, propertyId: Int!, id: Int, name: String!, type: LivingSpaceType!, beds: Int!, baths: Float!, footage: Float!): LivingSpace!
+  createOrUpdateLivingSpace(organizationId: Int!, propertyId: Int!, id: Int, name: String!, type: LivingSpaceType!, beds: Int!, baths: Float!, size: String!): LivingSpace!
 }
 type BasicUser {
   name: String!

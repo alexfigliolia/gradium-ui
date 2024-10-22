@@ -97,5 +97,6 @@ export interface IConfigurableSpaceForm<
   spaceDisplayName: string;
 }
 
+export { FormSkeleton } from "./Skeleton";
 export type { Controller, ICSForm } from "./Context";
 export { CSFContext } from "./Context";

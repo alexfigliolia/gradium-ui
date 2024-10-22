@@ -5,6 +5,7 @@ import {
   PropertyConfigurationPage,
 } from "Layouts/PropertyConfiguration";
 import { AdminRoutes } from "Router/AdminRoutes";
+import { fetching, useLivingSpaces } from "State/LivingSpaces";
 import type { Propless } from "Types/React";
 import { ConfirmDelete } from "./ConfirmDelete";
 import { NewSpaceButton } from "./NewSpaceButton";
@@ -16,12 +17,13 @@ export default memo(
       (property: string) => `Living Spaces at ${property}`,
       [],
     );
+    const loading = useLivingSpaces(fetching);
     return (
       <PermissedRoute
         fallback=".."
         requirements={AdminRoutes.permissions("PROPERTY_CONFIGURATION")}>
         <PropertyConfigurationPage labelFN={labelFN}>
-          <LivingSpaceTile>
+          <LivingSpaceTile loading={loading} fetchingIndicator>
             <NewSpaceButton />
           </LivingSpaceTile>
           <SpacesList />

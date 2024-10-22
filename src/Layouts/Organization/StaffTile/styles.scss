@@ -24,7 +24,7 @@
   &>.invite-staff-member {
     max-width: 400px;
     margin: auto;
-    @media (min-width: 957px) {
+    @media (min-width: Variables.$small-desktop) {
       margin: 0;
     }
   }

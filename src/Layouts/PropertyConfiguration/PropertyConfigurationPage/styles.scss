@@ -2,6 +2,10 @@
 
 .page.property-configuration {
   width: 100%;
+  margin-top: 0.5em;
+  @media (min-width: Variables.$small-vertical-tablet) {
+    margin-top: 1em;
+  }
   & .forms {
     display: flex;
     row-gap: 1em;
@@ -22,7 +26,7 @@
           font-weight: 600;
           margin-bottom: 0.1em;
         }
-        & label.input {
+        & .input {
           --background: var(--tile-background);
           @media (min-width: Variables.$small-vertical-tablet) {
             width: calc(50% - 0.65em);

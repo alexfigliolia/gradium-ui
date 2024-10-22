@@ -1,6 +1,4 @@
-import type { ChangeEvent } from "react";
-import { Fragment, memo, useCallback, useContext } from "react";
-import { Input } from "Components/Input";
+import { Fragment, memo, useContext } from "react";
 import type { Amenity } from "GraphQL/Types";
 import { Clock } from "Icons/Clock";
 import { Key } from "Icons/Key";
@@ -8,8 +6,9 @@ import { Price } from "Icons/Price";
 import { Ruler } from "Icons/Ruler";
 import type { ICSForm } from "Layouts/PropertyConfiguration";
 import {
+  ConfigurableSpaceDropDown,
+  ConfigurableSpaceInput,
   CSFContext,
-  PropertyConfigurationDropdown,
 } from "Layouts/PropertyConfiguration";
 import type { AmenitiesModel } from "Models/Amenities";
 import { DropDownOptions } from "Tools/DropDownOptions";
@@ -20,54 +19,35 @@ export const Inputs = memo(
     const { item, editing, controller } = useContext(
       CSFContext,
     ) as unknown as ICSForm<Amenity, AmenitiesModel>;
-
-    const onChangeName = useCallback(
-      (e: ChangeEvent<HTMLInputElement>) => {
-        controller.update("name", e.target.value);
-      },
-      [controller],
-    );
-
-    const onChangeFootage = useCallback(
-      (e: ChangeEvent<HTMLInputElement>) => {
-        controller.update("footage", parseFloat(e.target.value || "0"));
-      },
-      [controller],
-    );
-
-    const onChangePrice = useCallback(
-      (e: ChangeEvent<HTMLInputElement>) => {
-        controller.update("price", parseFloat(e.target.value ?? "0"));
-      },
-      [controller],
-    );
-
     return (
       <Fragment>
-        <Input
+        <ConfigurableSpaceInput<Amenity>
           type="text"
           label="Name"
+          property="name"
           value={item.name}
           icon={<Key />}
           autoComplete="off"
           disabled={!editing}
-          onChange={onChangeName}
+          onChange={controller.update}
           name={controller.createKey("name", "amenity")}
         />
-        <Input
+        <ConfigurableSpaceInput<Amenity>
           type="number"
           label="Size"
+          step="any"
+          property="size"
           icon={<Ruler />}
+          value={item.size}
           autoComplete="off"
           disabled={!editing}
-          value={item.footage.toString()}
-          onChange={onChangeFootage}
+          onChange={controller.update}
           className="number-input size-input"
-          name={controller.createKey("footage", "amenity")}>
+          name={controller.createKey("size", "amenity")}>
           <div className="postfix">sqft</div>
-        </Input>
+        </ConfigurableSpaceInput>
         <h4>Hours of Operation</h4>
-        <PropertyConfigurationDropdown<Amenity>
+        <ConfigurableSpaceDropDown<Amenity>
           fallback="12am"
           label="Open From"
           value={item.open}
@@ -78,7 +58,7 @@ export const Inputs = memo(
           onSelected={controller.update}
           name={controller.createKey("open", "amenity")}
         />
-        <PropertyConfigurationDropdown<Amenity>
+        <ConfigurableSpaceDropDown<Amenity>
           fallback="12am"
           label="Closes At"
           value={item.close}
@@ -90,18 +70,20 @@ export const Inputs = memo(
           name={controller.createKey("close", "amenity")}
         />
         <h4>Reservation Pricing</h4>
-        <Input
+        <ConfigurableSpaceInput<Amenity>
           type="number"
           label="Price"
+          step={0.01}
+          property="price"
           icon={<Price />}
           autoComplete="off"
+          value={item.price}
           disabled={!editing}
-          value={item.price.toString()}
-          onChange={onChangePrice}
+          onChange={controller.update}
           className="number-input price-input"
           name={controller.createKey("price", "amenity")}
         />
-        <PropertyConfigurationDropdown<Amenity>
+        <ConfigurableSpaceDropDown<Amenity>
           fallback="hour"
           label="Billed By"
           value={item.billed}

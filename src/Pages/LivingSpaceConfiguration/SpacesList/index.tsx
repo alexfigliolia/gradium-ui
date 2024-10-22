@@ -1,12 +1,17 @@
 import { Fragment, memo } from "react";
-import { selectUnits, useLivingSpaces } from "State/LivingSpaces";
+import { fetching, selectUnits, useLivingSpaces } from "State/LivingSpaces";
 import type { Propless } from "Types/React";
+import { NewSpaceButton } from "../NewSpaceButton";
 import { LivingSpaceForm } from "./LivingSpaceForm";
-import { NewSpaceButton } from "./NewSpaceButton";
+import { LivingSpaceSkeleton } from "./LivingSpaceSkeleton";
 
 export const SpacesList = memo(
   function SpacesList(_: Propless) {
+    const loading = useLivingSpaces(fetching);
     const spaces = useLivingSpaces(selectUnits);
+    if (loading) {
+      return <LivingSpaceSkeleton />;
+    }
     if (!spaces.length) {
       return null;
     }

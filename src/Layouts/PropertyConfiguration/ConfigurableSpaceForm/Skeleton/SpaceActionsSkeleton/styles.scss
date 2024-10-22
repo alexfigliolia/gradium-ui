@@ -1,0 +1,7 @@
+@use "Styles/Variables";
+
+.space-actions.skeleton > div {
+  color: transparent;
+  border-radius: 0.5em;
+  @include Variables.skeleton;
+}

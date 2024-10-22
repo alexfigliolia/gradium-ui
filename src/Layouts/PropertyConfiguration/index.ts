@@ -1,5 +1,6 @@
 export { PropertyConfigurationPage } from "./PropertyConfigurationPage";
-export { PropertyConfigurationDropdown } from "./PropertyConfigurationDropdown";
+export { ConfigurableSpaceDropDown } from "./ConfigurableSpaceDropDown";
+export { ConfigurableSpaceInput } from "./ConfigurableSpaceInput";
 export * from "./AmenitiesTile";
 export * from "./LivingSpaceTile";
 export * from "./ConfirmDeleteConfigurableSpace";

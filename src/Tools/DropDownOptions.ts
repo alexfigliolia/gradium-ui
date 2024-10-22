@@ -1,22 +1,8 @@
 export class DropDownOptions {
-  public static BEDS_BATHS = [
-    { value: "0", label: "Zero" },
-    { value: "1", label: "One" },
-    { value: "2", label: "Two" },
-    { value: "3", label: "Three" },
-    { value: "4", label: "Four" },
-    { value: "5", label: "Five" },
-    { value: "6", label: "Six" },
-    { value: "7", label: "Seven" },
-    { value: "8", label: "Eight" },
-    { value: "9", label: "Nine" },
-    { value: "10", label: "Ten" },
-    { value: "11", label: "Eleven" },
-    { value: "12", label: "Twelve" },
-    { value: "13", label: "Thirteen" },
-    { value: "14", label: "Forteen" },
-    { value: "15", label: "Fifteen" },
-  ];
+  public static BEDS = Array.from({ length: 21 }, (_, i) => ({
+    value: i.toString(),
+  }));
+  public static BATHS = this._baths();
 
   public static YES_NO = [
     { value: "no", label: "No" },
@@ -66,4 +52,12 @@ export class DropDownOptions {
     { value: "10pm", label: "10 PM" },
     { value: "11pm", label: "11 PM" },
   ];
+
+  private static _baths() {
+    let value = -0.5;
+    return Array.from({ length: 41 }, () => {
+      value += 0.5;
+      return { value: value.toString() };
+    });
+  }
 }

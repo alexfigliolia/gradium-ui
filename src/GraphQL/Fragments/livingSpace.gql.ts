@@ -7,7 +7,7 @@ export const LivingSpaceFragment = gql`
     type
     beds
     baths
-    footage
+    size
     propertyId
     images {
       id

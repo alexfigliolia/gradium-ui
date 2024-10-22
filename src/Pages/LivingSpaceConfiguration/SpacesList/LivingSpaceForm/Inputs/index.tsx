@@ -1,6 +1,4 @@
-import type { ChangeEvent } from "react";
-import { Fragment, memo, useCallback, useContext } from "react";
-import { Input } from "Components/Input";
+import { Fragment, memo, useContext } from "react";
 import type { LivingSpace } from "GraphQL/Types";
 import { Area } from "Icons/Area";
 import { Bath } from "Icons/Bath";
@@ -9,8 +7,9 @@ import { Key } from "Icons/Key";
 import { Ruler } from "Icons/Ruler";
 import type { ICSForm } from "Layouts/PropertyConfiguration";
 import {
+  ConfigurableSpaceDropDown,
+  ConfigurableSpaceInput,
   CSFContext,
-  PropertyConfigurationDropdown,
 } from "Layouts/PropertyConfiguration";
 import type { LivingSpacesModel } from "Models/LivingSpaces";
 import { DropDownOptions } from "Tools/DropDownOptions";
@@ -22,36 +21,23 @@ export const Inputs = memo(
       CSFContext,
     ) as unknown as ICSForm<LivingSpace, LivingSpacesModel>;
 
-    const { name, type, beds, baths, footage } = item;
-
-    const onChangeName = useCallback(
-      (e: ChangeEvent<HTMLInputElement>) => {
-        controller.update("name", e.target.value);
-      },
-      [controller],
-    );
-
-    const onChangeFootage = useCallback(
-      (e: ChangeEvent<HTMLInputElement>) => {
-        controller.update("footage", parseFloat(e.target.value || "0"));
-      },
-      [controller],
-    );
+    const { name, type, beds, baths, size } = item;
 
     return (
       <Fragment>
-        <Input
+        <ConfigurableSpaceInput<LivingSpace>
           type="text"
           label="Name"
           value={name}
           icon={<Key />}
+          property="name"
           autoComplete="off"
           disabled={!editing}
           className="name-input"
-          onChange={onChangeName}
+          onChange={controller.update}
           name={controller.createKey("name", "living-space")}
         />
-        <PropertyConfigurationDropdown<LivingSpace>
+        <ConfigurableSpaceDropDown<LivingSpace>
           value={type}
           label="Type"
           icon={<Area />}
@@ -63,19 +49,21 @@ export const Inputs = memo(
           name={controller.createKey("type", "living-space")}
           onSelected={controller.update}
         />
-        <Input
+        <ConfigurableSpaceInput<LivingSpace>
           type="number"
           label="Size"
+          step="any"
+          value={size}
+          property="size"
           icon={<Ruler />}
           autoComplete="off"
           disabled={!editing}
           className="size-input"
-          value={footage.toString()}
-          onChange={onChangeFootage}
-          name={controller.createKey("footage", "living-space")}>
+          onChange={controller.update}
+          name={controller.createKey("size", "living-space")}>
           <div className="postfix">sqft</div>
-        </Input>
-        <PropertyConfigurationDropdown<LivingSpace>
+        </ConfigurableSpaceInput>
+        <ConfigurableSpaceDropDown<LivingSpace>
           label="Beds"
           fallback={0}
           value={beds}
@@ -83,19 +71,19 @@ export const Inputs = memo(
           property="beds"
           disabled={!editing}
           className="beds-dropdown"
-          list={DropDownOptions.BEDS_BATHS}
+          list={DropDownOptions.BEDS}
           name={controller.createKey("beds", "living-space")}
           onSelected={controller.update}
         />
-        <PropertyConfigurationDropdown<LivingSpace>
+        <ConfigurableSpaceDropDown<LivingSpace>
           fallback={0}
           label="Baths"
-          value={baths}
           icon={<Bath />}
           property="baths"
           disabled={!editing}
+          value={baths.toString()}
           className="baths-dropdown"
-          list={DropDownOptions.BEDS_BATHS}
+          list={DropDownOptions.BATHS}
           onSelected={controller.update}
           name={controller.createKey("baths", "living-space")}
         />

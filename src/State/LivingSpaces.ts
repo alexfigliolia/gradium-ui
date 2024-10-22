@@ -4,6 +4,7 @@ import { LivingSpacesModel } from "Models/LivingSpaces";
 
 export const LivingSpaces = new LivingSpacesModel();
 export const useLivingSpaces = createUseState(LivingSpaces);
+export const fetching = (state: ILivingSpaces) => state.loading;
 export const selectUnits = (state: ILivingSpaces) => Object.values(state.list);
 export const selectDeletion = (state: ILivingSpaces): [number, string] => [
   state.deleteItemId,

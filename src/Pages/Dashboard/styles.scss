@@ -27,7 +27,7 @@
     &>.progress-tile {
       padding-bottom: 1.75em;
       width: calc(50% - 0.5em);
-      @media (min-width: 800px) {
+      @media (min-width: Variables.$large-vertical-tablet) {
         padding-bottom: 2.25em;
       }
     }

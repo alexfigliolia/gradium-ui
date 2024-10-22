@@ -1,7 +1,7 @@
 @use "Styles/Variables";
 
 .page.property-configuration .forms > .spaces .input-group.amenity-inputs {
-  & label.input {
+  & .input {
     @media (min-width: 1500px) {
       width: calc(50% - 0.65em);
     }
@@ -18,6 +18,16 @@
       }
     }
     &> .input-positioner > button > svg {
+      &.ruler-icon {
+        &:first-of-type {
+          stroke: none;
+          fill: var(--text-color-light);
+        }
+        &:last-of-type {
+          stroke: none;
+          fill: url(#themeGradient);
+        }
+      }
       &.clock-icon path,
       &.clock-icon circle {
         stroke-width: 2;

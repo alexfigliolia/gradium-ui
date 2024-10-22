@@ -10,7 +10,7 @@
   background-color: var(--tile-background);
   box-shadow: var(--shadow-level-3-mid);
   padding: var(--tile-padding);
-  @media (min-width: 800px) {
+  @media (min-width: Variables.$large-vertical-tablet) {
     --tile-padding: 2em;
   }
   &>h2 {

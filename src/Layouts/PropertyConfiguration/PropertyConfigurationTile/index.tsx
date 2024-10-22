@@ -12,6 +12,7 @@ export const PropertyConfigurationTile = memo(
     subtitle,
     children,
     loading,
+    fetchingIndicator,
   }: Props) {
     const fade = useRef<Callback<[boolean]>>(null);
 
@@ -23,7 +24,7 @@ export const PropertyConfigurationTile = memo(
       <Tile className="spaces">
         <h2>
           {title}
-          <FadingLoader ref={fade} />
+          {fetchingIndicator && <FadingLoader ref={fade} />}
         </h2>
         <p>{subtitle}</p>
         {children}
@@ -36,4 +37,5 @@ interface Props extends OptionalChildren {
   title: ReactNode;
   loading?: boolean;
   subtitle: ReactNode;
+  fetchingIndicator?: boolean;
 }

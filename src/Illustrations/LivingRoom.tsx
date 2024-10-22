@@ -1,9 +1,16 @@
 import { memo } from "react";
-import type { Propless } from "Types/React";
+import { useClassNames } from "@figliolia/classnames";
+import type { OptionalClassName } from "Types/React";
 
-export const LivingRoom = memo(function LivingRoom(_: Propless) {
+export const LivingRoom = memo(function LivingRoom({
+  className,
+}: OptionalClassName) {
+  const classes = useClassNames("living-room-illustration", className);
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 500 500"
+      className={classes}>
       <g>
         <polygon
           points="250 483.08 494.59 341.86 250 200.65 5.41 341.86 250 483.08"

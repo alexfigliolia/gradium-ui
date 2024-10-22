@@ -23,7 +23,7 @@
       }
       & .number-animation {
         font-size: 30px;
-        @media (min-width: 800px) {
+        @media (min-width: Variables.$large-vertical-tablet) {
           font-size: 40px;
         } 
       }

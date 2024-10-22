@@ -1,0 +1,5 @@
+@use "Styles/Variables";
+
+.cloudinary-image-interface.skeleton {
+  @include Variables.skeleton;
+}

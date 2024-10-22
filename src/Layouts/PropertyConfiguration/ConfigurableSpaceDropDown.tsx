@@ -2,7 +2,7 @@ import { memo, useCallback, useMemo } from "react";
 import type { DropDownProps } from "Components/DropDown";
 import { DropDown } from "Components/DropDown";
 
-function IPropertyConfigurationDropdown<
+function ConfigurableSpaceDropDownComponent<
   T extends Record<string, any>,
   K extends Extract<keyof T, string> = Extract<keyof T, string>,
 >({ value, property, fallback, onSelected, ...rest }: Props<T, K>) {
@@ -14,7 +14,7 @@ function IPropertyConfigurationDropdown<
       if (current === undefined) {
         onSelected(property, fallback);
       } else if (typeof fallback === "number") {
-        onSelected(property, parseInt(current) as T[K]);
+        onSelected(property, parseFloat(current) as T[K]);
       } else {
         onSelected(property, current as T[K]);
       }
@@ -25,9 +25,9 @@ function IPropertyConfigurationDropdown<
   return <DropDown required {...rest} value={DDValue} onChange={onChange} />;
 }
 
-export const PropertyConfigurationDropdown = memo(
-  IPropertyConfigurationDropdown,
-) as unknown as typeof IPropertyConfigurationDropdown;
+export const ConfigurableSpaceDropDown = memo(
+  ConfigurableSpaceDropDownComponent,
+) as unknown as typeof ConfigurableSpaceDropDownComponent;
 
 interface Props<
   T extends Record<string, any>,

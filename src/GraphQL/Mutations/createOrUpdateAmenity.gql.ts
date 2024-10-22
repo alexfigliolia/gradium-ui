@@ -11,8 +11,8 @@ export const createOrUpdateAmenity = gql`
     $billed: BillFrequency!
     $open: String!
     $close: String!
-    $footage: Float!
-    $price: Float!
+    $size: String!
+    $price: String!
   ) {
     createOrUpdateAmenity(
       id: $id
@@ -22,7 +22,7 @@ export const createOrUpdateAmenity = gql`
       billed: $billed
       open: $open
       close: $close
-      footage: $footage
+      size: $size
       price: $price
     ) {
       ...AmenityFragment

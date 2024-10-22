@@ -55,8 +55,8 @@ div.tile.spaces {
       }
     }
   }
-  & label.input.dropdown,
-  & label.input.number-input {
+  & .input.dropdown,
+  & .input.number-input {
     @media (max-width: Variables.$small-vertical-tablet) {
       width: calc(50% - 0.65em);
     }
@@ -64,10 +64,10 @@ div.tile.spaces {
       width: calc(33.333% - 0.85em);
     }
   }
-  & label.input.dropdown > .dd-selector {
-    max-width: 200px;
+  & .input.dropdown > .dd-selector {
+    max-width: 150px;
   }
-  & label.input.number-input {
+  & .input.number-input {
     &>.input-positioner {
       &:has(~.postfix) {
         border-radius: 0;
