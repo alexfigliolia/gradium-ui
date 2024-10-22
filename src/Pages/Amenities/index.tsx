@@ -32,7 +32,7 @@ export default memo(
         fallback=".."
         requirements={AdminRoutes.access("PROPERTY_AMENITIES")}>
         <Page className="amenities-section">
-          <PageTitle title="Reservation Schedule" />
+          <PageTitle title="Amenity Reservations" />
           <Tile className="schedule">
             <div className="calendar">
               <div className="title">
