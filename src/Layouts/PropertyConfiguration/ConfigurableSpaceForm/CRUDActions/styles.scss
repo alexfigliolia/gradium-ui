@@ -49,15 +49,15 @@
       transition: translate 0.5s, scale 0.5s;
       &.thin-lock-closed {
         & path {
-          stroke: url(#themeGradient);
-          &:nth-of-type(2) {
-            stroke: var(--theme-mid);
-          }
+          stroke: var(--text-color-light);
         }
       }
       &.thin-lock-open {
         translate: 0 -150%;
-        stroke: var(--text-color-light);
+        stroke: url(#themeGradient);
+        & path:last-of-type {
+          stroke: var(--theme-mid);
+        }
       }
       &.trash-thin {
         fill: var(--text-color-light);

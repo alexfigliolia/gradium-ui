@@ -1,12 +1,15 @@
 @use "Styles/Variables";
 
 .image-grid.space-grid {
-  padding: 1em 0;
+  padding-bottom: 0.5em;
+  margin-bottom: -0.5em;
+  padding-top: 0.75em;
+  margin-top: -0.75em;
   min-width: calc(100% + (var(--tile-padding) * 2));
   position: relative;
   left: calc(var(--tile-padding) * -1);
   overflow-x: scroll;
-  display: block;
+  display: flex;
   gap: unset;
   white-space: nowrap;
   &>div {

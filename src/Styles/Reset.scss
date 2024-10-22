@@ -41,6 +41,7 @@
   --shadow-level-1-dark: #{Variables.$shadow-level-1} var(--shadow-color-dark);
   --shadow-level-2-dark: #{Variables.$shadow-level-2} var(--shadow-color-dark);
   --shadow-level-3-dark: #{Variables.$shadow-level-3} var(--shadow-color-dark);
+  --skeleton-gradient: linear-gradient(90deg, #eee 25%, #e7e7e7 50%, #eee 75%);
   @media (min-width: Variables.$small-vertical-tablet) {
     --core-padding: 1.5em;
   }
@@ -88,6 +89,7 @@ html[data-theme='dark'] {
   --shadow-level-1-dark: #{Variables.$shadow-level-1} var(--shadow-color-dark);
   --shadow-level-2-dark: #{Variables.$shadow-level-2} var(--shadow-color-dark);
   --shadow-level-3-dark: #{Variables.$shadow-level-3} var(--shadow-color-dark);
+  --skeleton-gradient: linear-gradient(90deg, #2c2b2b 25%, #313131 50%, #2c2b2b 75%);
 }
 
 * {

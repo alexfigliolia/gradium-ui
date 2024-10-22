@@ -9,7 +9,6 @@
   &>div {
     height: 100%;
     width: 100%;
-    gap: 1em;
     pointer-events: none;
     @include Variables.center;
     flex-direction: column;
@@ -43,11 +42,13 @@
       margin-bottom: -0.25em;
       opacity: 1;
       max-height: 1em;
-      transition: opacity 0.4s, max-height 0.4s, visibility 0s 0.4s;
+      margin-top: 1em;
+      transition: opacity 0.4s, max-height 0.4s, margin-top 0.4s, visibility 0s 0.4s;
       &.hidden {
         opacity: 0;
         max-height: 0;
-        transition: opacity 0.4s, max-height 0.4s, visibility 0.4s;
+        margin-top: 0;
+        transition: opacity 0.4s, max-height 0.4s, margin-top 0.4s, visibility 0.4s;
       }
     }
   }

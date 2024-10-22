@@ -125,7 +125,7 @@ $shadow-color-mid: rgba(#000, 0.2);
 }
 
 @mixin skeleton {
-  background: linear-gradient(90deg, #eee 25%, #e7e7e7 50%, #eee 75%);
+  background: var(--skeleton-gradient);
   background-size: 200% 100%;
   animation: skeleton-animation 1.5s infinite ease-in-out;
 }
