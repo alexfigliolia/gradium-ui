@@ -5,7 +5,6 @@ import type {
   IConfigurableSpace,
   IConfigurableSpaceProps,
 } from "Types/Gradium";
-import type { OptionalChildren } from "Types/React";
 import { Controller } from "./Controller";
 import { NullConfigurableSpaceModel } from "./NullConfigurableSpaceModel";
 
@@ -21,18 +20,25 @@ export const CSFContext = createContext<
     floorPlans: [],
   },
   editing: false,
+  onDelete: () => {},
   toggleEdit: () => {},
   model: NullModel,
+  loading: false,
+  success: false,
+  error: false,
   controller: new Controller(NullModel, Infinity),
 });
 
 export interface ICSForm<
   T extends IConfigurableSpace,
   M extends ConfigurableSpaceModel<T>,
-> extends IConfigurableSpaceProps<T, M>,
-    OptionalChildren {
+> extends IConfigurableSpaceProps<T, M> {
   item: T;
+  loading: boolean;
+  success: boolean;
+  error: boolean;
   editing: boolean;
+  onDelete: Callback;
   toggleEdit: Callback;
   controller: Controller<T, M>;
 }
