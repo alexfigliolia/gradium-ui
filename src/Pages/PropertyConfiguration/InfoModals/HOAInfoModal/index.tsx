@@ -20,20 +20,22 @@ export const HOAInfoModal = memo(function HOAInfoModal(_: Propless) {
       </p>
       <p>Using this addon, your staff can manage:</p>
       <ul>
-        <li>HOA Dues</li>
+        <li>Setting HOA Dues for each living space</li>
         <li>Association meeting schedules</li>
       </ul>
       <p>
-        while <span>Gradium</span> handles issues such as:
+        while <span>Gradium</span> handles:
       </p>
       <ul>
-        <li>Outstanding Dues</li>
-        <li>Creating a ledger for monthly meeting agenda</li>
+        <li>Maintaining your ledger</li>
+        <li>Tracking maintenance and expenses</li>
+        <li>Creating visibility for owners</li>
       </ul>
       <p>
-        Residents with ownership will pay their <span>HOA</span> dues right in
-        the <span>Gradium</span> app. They&apos;ll also receive notification of
-        upcoming meetings and have access to the full history of meeting agenda.
+        In addition residents with ownership will pay their <span>HOA</span>{" "}
+        dues right in the <span>Gradium</span> app. They&apos;ll also receive
+        notification of upcoming meetings and have access to the full history of
+        meeting agenda.
       </p>
     </AddonInfoModal>
   );

@@ -23,13 +23,14 @@ export const PackageInfoModal = memo(function PackageInfoModal(_: Propless) {
         arrive at the building.
       </p>
       <p>
-        Your residents will receive a notification as soon as a package for
-        their residence is logged in.
+        Your residents will receive a notification as soon as their packages are
+        logged in.
       </p>
-      <p>
-        This feature provides a measure of safety for residents&apos; belongings
-        while tracking the rates at which packages go missing.
-      </p>
+      <p>This addon can help:</p>
+      <ul>
+        <li>Ensure that less build-up occurs in common areas</li>
+        <li>Provide a level of security over resident&apos;s belongings</li>
+      </ul>
     </AddonInfoModal>
   );
 });

@@ -21,7 +21,7 @@ export const AmenitiesInfoModal = memo(function AmenitiesInfoModal(
         residents.
       </p>
       <p>
-        Residents will be able to reserve an amenity space straight from their{" "}
+        Residents will be able to reserve an amenity space straight from the{" "}
         <span>Resident App</span>.
       </p>
       <p>
@@ -30,11 +30,11 @@ export const AmenitiesInfoModal = memo(function AmenitiesInfoModal(
       <ul>
         <li>The Property&apos;s amenity spaces</li>
         <li>Each amenity&apos;s hours of operation</li>
-        <li>Optional fees resident reservations</li>
+        <li>Optional fees for reservations</li>
       </ul>
       <p>
         Residents will pay their amenity-related dues along with their monthly
-        Residential Dues.
+        Residential Dues straight from the <span>Resident App</span>.
       </p>
     </AddonInfoModal>
   );

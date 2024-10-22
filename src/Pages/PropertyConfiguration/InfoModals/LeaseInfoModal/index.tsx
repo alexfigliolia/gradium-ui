@@ -21,8 +21,8 @@ export const LeaseInfoModal = memo(function LeaseInfoModal(_: Propless) {
         <span>Gradium</span>.
       </p>
       <p>
-        In addition, you&apos;ll be able to configure lease specifications such
-        as price, start date, and end date for each of your living spaces.
+        In addition, you&apos;ll be able to configure lease specifications for
+        each of your living spaces.
       </p>
       <p>
         <span>Gradium</span> will generate your accounting statements and assess
