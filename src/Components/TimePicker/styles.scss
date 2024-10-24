@@ -1,0 +1,42 @@
+@use "Styles/Variables";
+
+.time-picker {
+  width: auto;
+  display: flex;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  --font-size: 1em;
+  padding: 0 0.5em;
+  background-color: var(--background-dark);
+  &>.colon {
+    height: 100%;
+    width: auto;
+  }
+  &>.scroll-slot {
+    display: inline-block;
+    height: calc(var(--font-size) * 3);
+    width: auto;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    overscroll-behavior-y: contain;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    &>time {
+      display: block;
+      margin: auto;
+      line-height: inherit;
+      background-color: transparent;
+      padding: 0.5em 0.25em;
+      text-align: center;
+      scroll-snap-align: center;
+      &:first-of-type {
+        margin-top: var(--font-size);
+      }
+      &:last-of-type {
+        margin-bottom: var(--font-size);
+      }
+    }
+  }
+}
