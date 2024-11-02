@@ -14,17 +14,53 @@ import type { Callback, Maybe } from "Types/Generics";
 import type { IHTMLOption } from "Types/React";
 
 export class Controller {
-  public setEnd: Callback<[string]>;
-  public setStart: Callback<[string]>;
+  private hasSetEnd: boolean;
+  private cancellable: boolean;
   public setAmenity: Callback<[string]>;
   public setReserver: Callback<[string]>;
   private setState: Dispatch<SetStateAction<UIState>>;
-  constructor(setState: Dispatch<SetStateAction<UIState>>) {
+  constructor(
+    setState: Dispatch<SetStateAction<UIState>>,
+    cancellable: boolean,
+  ) {
     this.setState = setState;
-    this.setEnd = this.createSetter("end");
-    this.setStart = this.createSetter("start");
+    this.hasSetEnd = cancellable;
+    this.cancellable = cancellable;
     this.setAmenity = this.createSetter("amenityId");
     this.setReserver = this.createSetter("reserver");
+  }
+
+  public setStart = (start: string) => {
+    if (this.cancellable) {
+      return this.set("start", start);
+    }
+    if (!start) {
+      this.set("start", start);
+      this.set("end", start);
+      this.hasSetEnd = false;
+      return;
+    }
+    this.setState(ps => {
+      let end = ps.end;
+      if (!this.hasSetEnd) {
+        const [hours, minutes] = start.split(":");
+        if (hours === "23") {
+          end = start;
+        } else {
+          end = `${parseInt(hours) + 1}:${minutes}:00`;
+        }
+      }
+      return { ...ps, start, end };
+    });
+  };
+
+  public setEnd = (end: string) => {
+    this.hasSetEnd = true;
+    this.set("end", end);
+  };
+
+  public destroy() {
+    this.hasSetEnd = this.cancellable;
   }
 
   public set<K extends keyof UIState>(key: K, value: UIState[K]) {

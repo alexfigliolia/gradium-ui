@@ -21,12 +21,6 @@ export const TimePicker = memo(function TimePicker({
   const timeout = useTimeout();
   const [ready, setReady] = useState(false);
 
-  useEffect(() => {
-    timeout.execute(() => {
-      setReady(true);
-    }, 10);
-  }, [timeout]);
-
   const controller = useController(new Controller());
 
   const value = useMemo(() => (_value ? _value : Controller.now()), [_value]);
@@ -63,8 +57,18 @@ export const TimePicker = memo(function TimePicker({
   const debouncer = useDebouncer(onScroll, 100);
 
   useEffect(() => {
+    timeout.execute(() => {
+      setReady(true);
+    }, 10);
+  }, [timeout]);
+
+  useEffect(() => {
+    setReady(false);
     controller.initializePosition(hours, minutes, isPM);
-  }, [controller, hours, minutes, isPM]);
+    timeout.execute(() => {
+      setReady(true);
+    }, 100);
+  }, [controller, hours, minutes, isPM, timeout]);
 
   const captureScroll = useMemo(
     () => (ready ? debouncer.execute : undefined),

@@ -1,11 +1,5 @@
-import type { ChangeEvent, ForwardedRef, RefObject } from "react";
-import {
-  forwardRef,
-  memo,
-  useCallback,
-  useImperativeHandle,
-  useMemo,
-} from "react";
+import type { ChangeEvent } from "react";
+import { memo, useCallback, useEffect, useMemo } from "react";
 import {
   useController,
   useFormState,
@@ -37,23 +31,20 @@ import "./styles.scss";
 function ConfigureReservationComponent<
   QD extends Record<string, any>,
   QV extends Record<string, any>,
->(
-  {
-    id,
-    open,
-    close,
-    title,
-    subtitle,
-    deletable,
-    successMessage,
-    configureMutation,
-    defaultEnd = "",
-    defaultStart = "",
-    defaultAmenity = "",
-    defaultReserver = "",
-  }: Props<QD, QV>,
-  ref: ForwardedRef<Callback>,
-) {
+>({
+  id,
+  open,
+  close,
+  title,
+  subtitle,
+  successMessage,
+  configureMutation,
+  defaultEnd = "",
+  defaultStart = "",
+  defaultAmenity = "",
+  defaultReserver = "",
+  cancellable = false,
+}: Props<QD, QV>) {
   const timeout = useTimeout();
   const amenities = useAmenities(selectAmenities);
   const list = useMemo(() => Controller.toHTML(amenities), [amenities]);
@@ -75,7 +66,7 @@ function ConfigureReservationComponent<
 
   const [state, setState] = useEditableValue(initialState);
 
-  const controller = useController(new Controller(setState));
+  const controller = useController(new Controller(setState, cancellable));
 
   const [name, price, billed] = useMemo(
     () => Controller.getMeta(state.amenityId),
@@ -136,7 +127,12 @@ function ConfigureReservationComponent<
       .catch(() => {});
   });
 
-  useImperativeHandle(ref, () => resetForm, [resetForm]);
+  useEffect(() => {
+    if (!open) {
+      resetForm();
+      controller.destroy();
+    }
+  }, [open, resetForm, controller]);
 
   return (
     <Confirmation
@@ -207,7 +203,7 @@ function ConfigureReservationComponent<
           </div>
         )}
         <div className="submit-actions">
-          {deletable && typeof id === "number" && (
+          {cancellable && typeof id === "number" && (
             <div>
               <CancelButton id={id} closeAndReset={closeAndReset} />
             </div>
@@ -224,7 +220,7 @@ function ConfigureReservationComponent<
 }
 
 export const ConfigureReservation = memo(
-  forwardRef(ConfigureReservationComponent),
+  ConfigureReservationComponent,
 ) as unknown as typeof ConfigureReservationComponent;
 
 interface Props<
@@ -235,13 +231,12 @@ interface Props<
   open: boolean;
   close: Callback;
   title: string;
-  deletable?: boolean;
   subtitle?: string;
   defaultEnd?: string;
   defaultStart?: string;
+  cancellable?: boolean;
   defaultReserver?: string;
   defaultAmenity?: string;
-  ref?: RefObject<Callback>;
   successMessage: string;
   configureMutation: Callback<[CRFormData], IReservationMutation<QD, QV>>;
 }
@@ -256,7 +251,7 @@ export interface IReservationMutation<
 }
 
 export interface CRFormData {
-  deletable?: boolean;
+  cancellable?: boolean;
   amenityId: number;
   personId: number;
   start: string;

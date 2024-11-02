@@ -40,7 +40,7 @@ export const EditReservation = memo(
         UpdateAmenityReservationMutationVariables
       >
         id={id}
-        deletable
+        cancellable
         open={open}
         defaultEnd={end}
         defaultStart={start}
