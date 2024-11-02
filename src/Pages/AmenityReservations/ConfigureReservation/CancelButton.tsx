@@ -12,14 +12,17 @@ import { Properties } from "State/Properties";
 import { Scope } from "State/Scope";
 import type { Callback } from "Types/Generics";
 
-export const DeleteButton = memo(function DeleteButton({
+export const CancelButton = memo(function CancelButton({
   id,
   closeAndReset,
 }: Props) {
   const { loading, error, success, setState } = useLoadingState();
 
   const onClick = useCallback(() => {
-    const client = new UIClient({ setState });
+    const client = new UIClient({
+      setState,
+      successMessage: "Your reservation has been cancelled",
+    });
     void client
       .executeQuery<
         CancelAmenityReservationMutation,
@@ -45,7 +48,7 @@ export const DeleteButton = memo(function DeleteButton({
       error={!!error}
       success={success}
       type="button"
-      className="delete"
+      className="cancel"
       onClick={onClick}>
       Cancel Reservation
     </ActionButton>

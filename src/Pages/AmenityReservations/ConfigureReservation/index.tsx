@@ -30,8 +30,8 @@ import { Dates } from "Tools/Dates";
 import { Numbers } from "Tools/Numbers";
 import { PropertyOptions } from "Tools/PropertyOptions";
 import type { Callback } from "Types/Generics";
+import { CancelButton } from "./CancelButton";
 import { Controller } from "./Controller";
-import { DeleteButton } from "./DeleteButton";
 import "./styles.scss";
 
 function ConfigureReservationComponent<
@@ -138,8 +138,6 @@ function ConfigureReservationComponent<
 
   useImperativeHandle(ref, () => resetForm, [resetForm]);
 
-  console.log(state.reserver);
-
   return (
     <Confirmation
       open={open}
@@ -210,11 +208,15 @@ function ConfigureReservationComponent<
         )}
         <div className="submit-actions">
           {deletable && typeof id === "number" && (
-            <DeleteButton id={id} closeAndReset={closeAndReset} />
+            <div>
+              <CancelButton id={id} closeAndReset={closeAndReset} />
+            </div>
           )}
-          <ActionButton loading={loading} error={!!error} success={success}>
-            Confirm
-          </ActionButton>
+          <div>
+            <ActionButton loading={loading} error={!!error} success={success}>
+              Confirm
+            </ActionButton>
+          </div>
         </div>
       </form>
     </Confirmation>

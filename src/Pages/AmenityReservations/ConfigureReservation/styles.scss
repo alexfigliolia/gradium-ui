@@ -79,20 +79,27 @@
       @media (min-width: Variables.$small-vertical-tablet) {
         gap: 1em;
       }
-      &:has(.loading-action.delete) >.loading-action {
+      &>div {
+        width: 100%;
         margin: 0 auto;
+      }
+      &:has(>div>.loading-action.cancel) > div {
         @media (min-width: 390px) {
           width: calc(50% - 0.375em);
         }
         @media (min-width: Variables.$small-vertical-tablet) {
           width: calc(50% - 0.5em);
         }
-        &.loading {
-          width: 55px;
-          transition: color 0.15s 0s, width 0.5s 0.1s;
-        }
-        &.delete {
-          @include Variables.errorGradient;
+        &>.loading-action {
+          &.loading {
+            width: 55px;
+          }
+          &.cancel {
+            @include Variables.errorGradient;
+            &.loading {
+              transition: color 0.15s 0s, width 0.5s 0.1s;
+            }
+          }
         }
       }
     }
