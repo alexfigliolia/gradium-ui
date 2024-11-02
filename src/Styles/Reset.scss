@@ -16,6 +16,7 @@
   --tile-background: #fff;
   --drop-down-background: #fff;
   --drop-down-background-focus: #f0f0f0;
+  --elevated-layer-background: #fff;
   --faint: #d0cece;
   --theme-light: #{Variables.$teal};
   --theme-dark: #{Variables.$blue};
@@ -65,6 +66,7 @@ html[data-theme='dark'] {
   --tile-background: #424141;
   --drop-down-background: var(--background-dark);
   --drop-down-background-focus: #363636;
+  --elevated-layer-background: var(--background);
   --faint: #444343;
   --theme-light: #{Variables.$yellow};
   --theme-dark: #{Variables.$orange};
@@ -75,8 +77,8 @@ html[data-theme='dark'] {
   --amenities-theme: #{Variables.$amenities-dark};
   --maintenance-theme: #{Variables.$maintenance-dark};
   --finances-theme: #{Variables.$finances-dark};
-  --event-background: #{rgba(Variables.$light-orange, 0.7)};
-  --event-background-highlight: var(--theme-mid);
+  --event-background: var(--theme-mid);
+  --event-background-highlight: #{Variables.$lighter-orange};
   --shadow-color-light: #{rgba(#000, 0.35)};
   --shadow-color-mid: #{rgba(#000, 0.5)};
   --shadow-color-dark: #{rgba(#000, 0.75)};

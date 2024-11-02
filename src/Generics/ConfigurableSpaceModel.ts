@@ -18,12 +18,10 @@ export abstract class ConfigurableSpaceModel<
 
   protected abstract saveSpace(
     space: T | Omit<T, "id">,
-    setState: ILoadingStateSetter,
+    setState?: ILoadingStateSetter,
   ): Promise<T>;
 
   protected abstract fetchSpaces(): Promise<T[]>;
-
-  protected abstract saveSilent(space: T | Omit<T, "id">): Promise<T>;
 
   protected abstract deleteTransaction(
     id: number,
@@ -32,8 +30,10 @@ export abstract class ConfigurableSpaceModel<
   ): Promise<T>;
 
   public async fetch() {
+    let list: T[] = [];
     try {
-      this.hashList(await this.fetchSpaces());
+      list = await this.fetchSpaces();
+      this.hashList(list);
     } catch (error) {
       const name = Properties.getCurrent("name");
       Toasts.error(
@@ -41,9 +41,10 @@ export abstract class ConfigurableSpaceModel<
       );
     }
     this.loading(false);
+    return list;
   }
 
-  public async save(id: number, setState: ILoadingStateSetter) {
+  public async save(id: number, setState?: ILoadingStateSetter) {
     const item = this.getState().list[id];
     const { id: _, ...rest } = item;
     const saved = await this.saveSpace(
@@ -56,20 +57,8 @@ export abstract class ConfigurableSpaceModel<
     }
   }
 
-  public async saveBeforeUnmount(id: number) {
-    const item = this.getState().list[id];
-    try {
-      const { id: _, ...rest } = item;
-      const saved = await this.saveSilent(this.isClient(item) ? rest : item);
-      this.updateByIdentifier(saved.id, saved);
-      if (saved.id !== item.id) {
-        this.delete(item.id);
-      }
-    } catch (error) {
-      Toasts.error(
-        `<strong>${item.name}</strong> did not save before leaving. Please try again`,
-      );
-    }
+  public saveBeforeUnmount(id: number) {
+    return this.save(id);
   }
 
   public async deleteItem(
@@ -167,12 +156,5 @@ export abstract class ConfigurableSpaceModel<
       LL.push(image);
     }
     return LL;
-  }
-
-  protected getSaveError(name: string, itemDisplayName: string) {
-    if (name) {
-      return `<strong>${name}</strong> didn't save properly. Please check your inputs and try again.`;
-    }
-    return `Your ${itemDisplayName} didn't save property. Please check your inputs and try again.`;
   }
 }

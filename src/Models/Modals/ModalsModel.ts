@@ -14,7 +14,6 @@ export class ModalsModel extends StackModel<IModals> {
       newProperty: false,
       resetPassword: false,
       deleteSpace: false,
-      dateSelector: false,
       forgotPassword: false,
       leaseFilters: false,
       deleteProperty: false,
@@ -59,8 +58,6 @@ export class ModalsModel extends StackModel<IModals> {
   private closeCoreMobileMenu = this.toggleKey("coreMobileMenu", false);
   private openMobileMenu = this.toggleKey("marketingMobileMenu", true);
   private closeMobileMenu = this.toggleKey("marketingMobileMenu", false);
-  private openDateSelector = this.toggleKey("dateSelector", true);
-  private closeDateSelector = this.toggleKey("dateSelector", false);
   private openDeleteProperty = this.toggleKey("deleteProperty", true);
   private closeDeleteProperty = this.toggleKey("deleteProperty", false);
   private openLeaseFilters = this.toggleKey("leaseFilters", true);
@@ -95,10 +92,6 @@ export class ModalsModel extends StackModel<IModals> {
   leaseFilters = ModalStack.create(
     this.openLeaseFilters,
     this.closeLeaseFilters,
-  );
-  dateSelector = ModalStack.create(
-    this.openDateSelector,
-    this.closeDateSelector,
   );
   dashboardFilters = ModalStack.create(
     this.openDashboardFilters,

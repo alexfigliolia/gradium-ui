@@ -4,45 +4,47 @@
   z-index: 10000;
   --button-margins: 0.25em auto 0;
   --button-max-width: 350px;
-  &>div {
-    box-shadow: var(--shadow-level-3-dark);
-  }
-  &.mobile .sheet-content {
+  --sheet-background: var(--background);
+  &.mobile > .sheet > .sheet-scroll-view > .sheet-content {
     padding-bottom: 1.5em;
   }
-  &.tight .sheet-content {
+  &.tight > .sheet > .sheet-scroll-view > .sheet-content {
     width: 90%;
     max-width: 400px;
   }
   &>div {
+    box-shadow: var(--shadow-level-3-dark);
     @media (min-width: Variables.$small-vertical-tablet) {
       max-width: 600px;
     }
   }
-  & .sheet-content {
+  &>.sheet > .sheet-scroll-view > .sheet-content {
     margin: auto;
     width: 95%;
     max-width: 450px;
     padding-bottom: 1em;
+    & h2,
+    & p {
+      width: 100%;
+      text-align: center;
+    }
+    & h2 {
+      margin-top: 0.25em;
+      margin-bottom: 0.5em;
+    }
+    & p {
+      margin-bottom: 2em;
+      color: var(--text-color-light);
+    }
     &>.gradient-transition-button,
     &>.gradient-button,
     &>.gradient-border-button {
       margin: var(--button-margins);
       max-width: var(--button-max-width);
     }
-  }
-  & h2,
-  & p {
-    width: 100%;
-    text-align: center;
-  }
-  & h2 {
-    margin-top: 0.25em;
-    margin-bottom: 0.5em;
-  }
-  & p {
-    margin-bottom: 2em;
-    color: var(--text-color-light);
+    &>form .gradient-button {
+      margin: auto;
+    }
   }
   & .closer-button {
     top: 1em;

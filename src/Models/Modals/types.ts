@@ -11,7 +11,6 @@ export interface IModals {
   forgotPassword: boolean;
   dashboardFilters: boolean;
   deleteProperty: boolean;
-  dateSelector: boolean;
   coreMobileMenu: boolean;
   marketingMobileMenu: boolean;
   emailToDelete: string;

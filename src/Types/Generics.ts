@@ -14,3 +14,5 @@ export type KeysOfType<T, V> = Extract<keyof FilterKeys<T, V>, string>;
 export type Shift<T extends any[]> = T extends [infer _, ...infer R]
   ? R
   : never;
+
+export type Maybe<T> = null | undefined | T;

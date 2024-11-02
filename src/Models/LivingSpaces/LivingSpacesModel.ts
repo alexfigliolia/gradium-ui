@@ -39,25 +39,10 @@ export class LivingSpacesModel extends ConfigurableSpaceModel<LivingSpace> {
 
   protected async saveSpace(
     space: LivingSpace | Omit<LivingSpace, "id">,
-    setState: ILoadingStateSetter,
+    setState?: ILoadingStateSetter,
   ) {
-    const client = new UIClient({
-      setState,
-      errorMessage: this.getSaveError(space.name, "living space"),
-    });
+    const client = new UIClient({ setState });
     const response = await client.executeQuery<
-      CreateOrUpdateLivingSpaceMutation,
-      CreateOrUpdateLivingSpaceMutationVariables
-    >(createOrUpdateLivingSpace, {
-      ...space,
-      propertyId: Properties.getState().current,
-      organizationId: Scope.getState().currentOrganizationId,
-    });
-    return response.createOrUpdateLivingSpace;
-  }
-
-  protected async saveSilent(space: LivingSpace | Omit<LivingSpace, "id">) {
-    const response = await graphQLRequest<
       CreateOrUpdateLivingSpaceMutation,
       CreateOrUpdateLivingSpaceMutationVariables
     >(createOrUpdateLivingSpace, {

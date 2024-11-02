@@ -22,12 +22,6 @@ export class NullConfigurableSpaceModel extends ConfigurableSpaceModel<IConfigur
     return Promise.resolve().then(() => this.NULL_ITEM);
   }
 
-  public async saveSilent(
-    _space: IConfigurableSpace | Omit<IConfigurableSpace, "id">,
-  ) {
-    return Promise.resolve().then(() => this.NULL_ITEM);
-  }
-
   public async deleteTransaction(
     ..._args: Parameters<ConfigurableSpaceModel["deleteTransaction"]>
   ) {

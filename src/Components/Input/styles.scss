@@ -17,11 +17,11 @@
   &:has(>.input-positioner>input:is(:-webkit-autofill, :autofill)),
   &:has(>.input-positioner>input:focus),
   &:has(button:focus),
-  &:has(>.input-positioner>input:not([type="date"]):not(:placeholder-shown)) {
-    &>span {
+  &:has(>.input-positioner>input:not([type="date"]):not([type="time"]):not(:placeholder-shown)) {
+    & > span {
       scale: 0.9;
       transform: translateY(-1.5em) translateX(-0.25em);
-    }  
+    }
   }
   &:has(button:focus),
   &:has(>.input-positioner>input:focus),

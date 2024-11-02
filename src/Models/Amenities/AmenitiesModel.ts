@@ -39,29 +39,14 @@ export class AmenitiesModel extends ConfigurableSpaceModel<Amenity> {
 
   protected async saveSpace(
     newAmenity: Amenity,
-    setState: ILoadingStateSetter,
+    setState?: ILoadingStateSetter,
   ) {
-    const client = new UIClient({
-      setState,
-      errorMessage: this.getSaveError(newAmenity.name, "amenity"),
-    });
+    const client = new UIClient({ setState });
     const response = await client.executeQuery<
       CreateOrUpdateAmenityMutation,
       CreateOrUpdateAmenityMutationVariables
     >(createOrUpdateAmenity, {
       ...newAmenity,
-      propertyId: Properties.getState().current,
-      organizationId: Scope.getState().currentOrganizationId,
-    });
-    return response.createOrUpdateAmenity;
-  }
-
-  protected async saveSilent(space: Amenity | Omit<Amenity, "id">) {
-    const response = await graphQLRequest<
-      CreateOrUpdateAmenityMutation,
-      CreateOrUpdateAmenityMutationVariables
-    >(createOrUpdateAmenity, {
-      ...space,
       propertyId: Properties.getState().current,
       organizationId: Scope.getState().currentOrganizationId,
     });
@@ -96,8 +81,8 @@ export class AmenitiesModel extends ConfigurableSpaceModel<Amenity> {
   protected blankItem() {
     return {
       name: "",
-      open: "9am",
-      close: "9pm",
+      open: "09:00:00",
+      close: "21:00:00",
       images: [],
       floorPlans: [],
       size: "0",

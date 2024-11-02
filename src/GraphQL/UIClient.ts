@@ -10,7 +10,7 @@ import { graphQLRequest } from "./request";
 
 export class UIClient {
   errorMessage: string;
-  setState: ILoadingStateSetter;
+  setState?: ILoadingStateSetter;
   successMessage: string | string[];
   private Abort = new AbortController();
   private timer: ReturnType<typeof setTimeout> | null = null;
@@ -30,7 +30,7 @@ export class UIClient {
     onComplete?: Callback,
   ) {
     let success = false;
-    this.setState("loading", true);
+    this.setVisualState("loading", true);
     const promise = graphQLRequest<D, V>(query, variables, this.Abort.signal);
     void promise
       .then(res => {
@@ -58,7 +58,7 @@ export class UIClient {
   }
 
   private onSuccess = <T>(response: T) => {
-    this.setState("success", true);
+    this.setVisualState("success", true);
     if (this.successMessage) {
       Toasts.success(this.parseSuccessMessage<T>(response));
     }
@@ -70,17 +70,27 @@ export class UIClient {
       return;
     }
     const message = this.parseErrorMessage(error);
-    this.setState("error", message);
+    this.setVisualState("error", message);
     Toasts.error(message);
   };
 
   private onComplete(callback?: Callback) {
+    if (!this.setState) {
+      return callback?.();
+    }
     this.timer = setTimeout(() => {
-      this.setState("loading", false);
-      this.setState("error", false);
-      this.setState("success", false);
+      this.setVisualState("loading", false);
+      this.setVisualState("error", false);
+      this.setVisualState("success", false);
       callback?.();
     }, 2000);
+  }
+
+  private setVisualState<T extends ILoadingStateKey>(
+    state: T,
+    value: ILoadingStateValue<T>,
+  ) {
+    this.setState?.(state, value);
   }
 
   private parseSuccessMessage<T>(response: T) {
@@ -116,6 +126,6 @@ export class UIClient {
 
 interface IUIClient {
   errorMessage?: string;
-  setState: ILoadingStateSetter;
+  setState?: ILoadingStateSetter;
   successMessage?: string | string[];
 }

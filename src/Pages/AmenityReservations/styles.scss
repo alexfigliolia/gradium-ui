@@ -1,0 +1,11 @@
+@use "Styles/Variables";
+
+.management-section.amenities-section {
+  width: 100%;
+  &>.management-page-title {
+    @media (min-width: Variables.$large-vertical-tablet) {
+      justify-content: flex-start;
+      column-gap: 1.5em;
+    }
+  }
+}

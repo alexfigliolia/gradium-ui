@@ -1,7 +1,6 @@
 @use "Styles/Variables";
 
 div.tile.spaces {
-  opacity: 0;
   animation: show 0.5s forwards;
   &>.space-title {
     width: 100%;

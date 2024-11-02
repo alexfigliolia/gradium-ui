@@ -1,27 +1,34 @@
 import type { Callback } from "@figliolia/drag-detector";
 import type { ModalToggle } from "@figliolia/modal-stack";
 import { ModalStack } from "Tools/ModalStack";
-import type { IListItem } from "./types";
+import type { IHTMLOption } from "Types/React";
 
 export class Controller {
   Toggle: ModalToggle;
-  setOpen: Callback<[open: boolean]>;
+  private onOpen?: Callback;
+  private onClose?: Callback;
+  private setOpen: Callback<[open: boolean]>;
   node: HTMLInputElement | null = null;
   constructor(setOpen: Callback<[open: boolean]>) {
     this.setOpen = setOpen;
     this.Toggle = ModalStack.create(this.open, this.close);
   }
 
-  public register(node: HTMLInputElement | null) {
+  public registerNode(node: HTMLInputElement | null) {
     this.node = node;
   }
 
+  public registerProxies(onOpen?: Callback, onClose?: Callback) {
+    this.onOpen = onOpen;
+    this.onClose = onClose;
+  }
+
   public open = () => {
-    this.setOpen(true);
+    this.proxy(true);
   };
 
   public close = () => {
-    this.setOpen(false);
+    this.proxy(false);
     this.blurNode();
   };
 
@@ -32,14 +39,20 @@ export class Controller {
     this.node.blur();
   }
 
-  public static toTable<T extends IListItem>(list: T[]) {
+  public static toTable<T extends IHTMLOption>(list: T[]) {
     return list.reduce<Record<string, string>>((acc, { value, label }) => {
       acc[value] = label || value;
       return acc;
     }, {});
   }
 
-  public static parseValues(value: Set<string>, table: Record<string, string>) {
+  public static parseValues(
+    value: Set<string> | string,
+    table: Record<string, string>,
+  ) {
+    if (typeof value === "string") {
+      return table[value] ?? "";
+    }
     return Array.from(value)
       .map(v => table[v])
       .join(", ");
@@ -56,5 +69,14 @@ export class Controller {
       copy.add(value);
     }
     return copy;
+  }
+
+  private proxy(state: boolean) {
+    if (state) {
+      this.onOpen?.();
+    } else {
+      this.onClose?.();
+    }
+    this.setOpen(state);
   }
 }

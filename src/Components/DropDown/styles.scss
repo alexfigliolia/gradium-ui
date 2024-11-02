@@ -58,13 +58,25 @@
       display: flex;
       flex-direction: column;
       position: relative;
-      &>button {
+      &>button,
+      &>div {
         width: 100%;
         border: none;
-        padding: 0.65em 0.4em;
+        padding: 0.65em 0.25em 0.65em 1em;
         font-size: 0.95em;
         outline: none;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
         background: var(--drop-down-background);
+        &>.triangle-loader {
+          scale: 0.5;
+          --path: url(#themeGradient);
+          --dot: var(--theme-mid);
+        }
+      }
+      &>button {
         &:hover,
         &:focus {
           background-color: var(--drop-down-background-focus);

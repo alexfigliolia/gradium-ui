@@ -26,13 +26,14 @@ export const DateInput = memo(function DateInput({
   ...rest
 }: Props) {
   const [open, setOpen] = useState(false);
-  const focusManager = useFocusedKeyListener(
+
+  const focusListener = useFocusedKeyListener(
     () => onChange(""),
     "Delete",
     "Backspace",
   );
-  const controller = useController(new Controller(setOpen));
-  controller.register(focusManager);
+
+  const controller = useController(new Controller(setOpen, focusListener));
 
   const node = useClickOutside({
     open,
@@ -85,7 +86,7 @@ export const DateInput = memo(function DateInput({
       onChange={onSelect}
       className={inputClasses}
       onFocus={controller.onFocus}
-      onBlur={focusManager.onBlur}>
+      onBlur={focusListener.onBlur}>
       {!Devices.IS_MOBILE_BROWSER && (
         <div className={pickerClasses}>
           <div>

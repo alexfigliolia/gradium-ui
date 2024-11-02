@@ -5,7 +5,6 @@
   height: 100vh;
   overflow: hidden;
   position: relative;
-  opacity: 0;
   animation: show 0.5s forwards;
   @include Variables.center;
   &.fade {

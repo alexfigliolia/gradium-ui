@@ -1,0 +1,115 @@
+@use "Styles/Variables";
+
+.day-view {
+  width: 100%;
+}
+
+.fc {
+  animation: show 0.5s forwards;
+  --fc-today-bg-color: transparent;
+  cursor: pointer;
+  & .fc-header-toolbar {
+    display: none;
+  }
+  & table {
+    border: none;
+  }
+  & .fc-scroller-harness {
+    overflow: visible;
+  }
+  & .fc-scrollgrid-section > td[role="presentation"] {
+    border: none;
+  }
+  & .fc-view-harness {
+    & .fc-scrollgrid {
+      border: none;
+      &>thead {
+        display: none;
+      }
+      &>tbody {
+        &>tr {
+          &:first-of-type {
+            display: none;
+          }
+          &:nth-of-type(2) {
+            display: none;
+          }
+        }
+        & .fc-timegrid-slot {
+          background-color: transparent;
+          border: none;
+          &.fc-timegrid-slot-label {
+            border-bottom: none;
+          }
+          & .fc-timegrid-slot-label-frame {
+            text-align: left;
+          }
+        }
+        & .fc-timegrid-slot-label-cushion {
+          color: var(--text-color);
+          font-size: 0.9em;
+          translate: 0 -1em;
+          padding: 0 0.5em;
+          background: var(--tile-background);
+        }
+      }
+    }
+  }
+  & .fc-timegrid-slots {
+    &>table {
+      border-top: 1px solid transparent;
+      & tr {
+        &:nth-of-type(odd){
+          border-top: 1px solid var(--background-dark);
+        }
+      }
+    }
+  }
+  & .fc-event:focus::after {
+    display: none;
+  }
+  & .fc-timegrid-event-short .fc-event-main-frame {
+    align-items: center;
+  }
+  & .fc-v-event {
+    cursor: pointer;
+    background-color: var(--event-background);
+    box-shadow: var(--shadow-level-1-mid);
+    border: none;
+    transition: background-color 0.25s, box-shadow 0.5s, scale 0.5s;
+    &:hover {
+      scale: 1.005;
+      background-color: var(--event-background-highlight);
+      box-shadow: var(--shadow-level-3-mid);
+    }
+    & .fc-event-main {
+      padding: 0.25em;
+      @media (min-width: Variables.$small-vertical-tablet) {
+        padding: 0.5em;
+      }
+      &>.fc-event-main-frame {
+        overflow: visible;
+      }
+      & .fc-event-time, 
+      & .fc-event-title {
+        color: #fff;
+        overflow: visible;
+      }
+      & .fc-event-time {
+        font-weight: 700;
+        font-size: 0.9em;
+        display: flex;
+        align-items: center;
+        margin: 0;
+      }
+      & .fc-event-title {
+        font-size: 1.1em;
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+.fc-theme-standard td {
+  border: 1px solid var(--tile-background);
+}

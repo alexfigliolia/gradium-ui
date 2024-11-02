@@ -18,7 +18,6 @@
       &>.image-placeholder-icon {
         height: 100%;
         width: 100%;
-        opacity: 0;
         animation: show 0.5s forwards;
         & > g > g {
           fill: var(--tile-background);

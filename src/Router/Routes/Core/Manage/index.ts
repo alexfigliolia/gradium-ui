@@ -4,8 +4,8 @@ import { LazyManagePage } from "Pages/Manage/Lazy";
 import { AdminRoutes } from "Router/AdminRoutes";
 import { Properties } from "State/Properties";
 import { AppLoaders } from "Tools/AppLoaders";
-import { Amenities } from "./Amenities";
 import { AmenitiesConfiguration } from "./AmenitiesConfiguration";
+import { AmenityReservations } from "./AmenityReservations";
 import { Catch } from "./Catch";
 import { Leases } from "./Leases";
 import { LivingSpaceConfiguration } from "./LivingSpaceConfiguration";
@@ -25,7 +25,7 @@ export const Manage: NonIndexRouteObject = {
   },
   children: [
     Leases,
-    Amenities,
+    AmenityReservations,
     PropertyConfiguration,
     AmenitiesConfiguration,
     LivingSpaceConfiguration,

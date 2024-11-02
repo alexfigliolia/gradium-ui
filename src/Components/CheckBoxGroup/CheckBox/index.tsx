@@ -26,13 +26,12 @@ export const CheckBox = memo(function CheckBox({
 
   const listener = useFocusedKeyListener(trigger);
   return (
-    <label htmlFor={value}>
+    <label>
       <div>
         <div>
           <input
             ref={input}
             type="checkbox"
-            id={value}
             name={value}
             value={value}
             onChange={onSelect}

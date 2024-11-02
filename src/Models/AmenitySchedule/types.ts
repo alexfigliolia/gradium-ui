@@ -1,11 +1,14 @@
-export interface IReservation {
-  id: number;
-  end: string;
-  start: string;
-  amenity: { name: string; id: number; open: string; close: string };
-}
+import type { AmenityReservation } from "GraphQL/Types";
 
 export interface IAmenitySchedule {
+  open: string;
+  close: string;
   currentDate: Date;
-  events: Record<number, IReservation[]>;
+  loading: boolean;
+  openDatePicker: boolean;
+  openNewReservation: boolean;
+  openEditReservation: boolean;
+  amenityIds: number[];
+  reservations: AmenityReservation[];
+  currentReservation: Partial<AmenityReservation>;
 }

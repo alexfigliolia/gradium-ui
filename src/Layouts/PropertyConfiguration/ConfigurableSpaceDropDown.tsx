@@ -1,28 +1,29 @@
-import { memo, useCallback, useMemo } from "react";
+import { memo, useCallback } from "react";
 import type { DropDownProps } from "Components/DropDown";
 import { DropDown } from "Components/DropDown";
+import type { DDValue } from "Components/DropDown/types";
+import type { Callback } from "Types/Generics";
+import type { IHTMLOption } from "Types/React";
 
 function ConfigurableSpaceDropDownComponent<
   T extends Record<string, any>,
   K extends Extract<keyof T, string> = Extract<keyof T, string>,
->({ value, property, fallback, onSelected, ...rest }: Props<T, K>) {
-  const DDValue = useMemo(() => new Set([value.toString()]), [value]);
-
-  const onChange = useCallback(
-    (values: Set<string>) => {
-      const current = Array.from(values).pop();
-      if (current === undefined) {
-        onSelected(property, fallback);
-      } else if (typeof fallback === "number") {
-        onSelected(property, parseFloat(current) as T[K]);
-      } else {
-        onSelected(property, current as T[K]);
+  M extends boolean | undefined = undefined,
+>({ value, property, transform, fallback, onChange, ...rest }: Props<T, K, M>) {
+  const onSelected = useCallback(
+    (nextValue: DDValue<M>) => {
+      if (nextValue === "" && fallback) {
+        return onChange(property, fallback);
       }
+      if (transform) {
+        return onChange(property, transform(nextValue));
+      }
+      onChange(property, nextValue as T[K]);
     },
-    [onSelected, property, fallback],
+    [onChange, transform, property, fallback],
   );
 
-  return <DropDown required {...rest} value={DDValue} onChange={onChange} />;
+  return <DropDown required {...rest} value={value} onChange={onSelected} />;
 }
 
 export const ConfigurableSpaceDropDown = memo(
@@ -32,9 +33,10 @@ export const ConfigurableSpaceDropDown = memo(
 interface Props<
   T extends Record<string, any>,
   K extends Extract<keyof T, string> = Extract<keyof T, string>,
-> extends Omit<DropDownProps, "value"> {
+  M extends boolean | undefined = undefined,
+> extends Omit<DropDownProps<IHTMLOption, M>, "onChange"> {
   property: K;
-  fallback: T[K];
-  value: string | number;
-  onSelected: (key: K, value: T[K]) => void;
+  fallback?: T[K];
+  transform?: Callback<[DDValue<M>], T[K]>;
+  onChange: Callback<[key: K, value: T[K]]>;
 }

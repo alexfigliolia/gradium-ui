@@ -1,7 +1,6 @@
 @use "Styles/Variables";
 
 .nav-header.core-nav {
-  opacity: 0;
   animation: show 0.5s forwards;
   @media (min-width: Variables.$small-desktop) {
     top: 0;

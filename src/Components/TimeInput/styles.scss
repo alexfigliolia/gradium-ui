@@ -1,0 +1,43 @@
+.time-input {
+  &:has(>.input-positioner>input:valid) > span {
+    scale: 0.9;
+    transform: translateY(-1.5em) translateX(-0.25em);
+  }
+  &>.input-positioner > input::-webkit-date-and-time-value {
+    text-align: left;
+  }
+  &__picker {
+    top: calc(100% + 0.8em);
+    left: 5%;
+    position: absolute;
+    z-index: 10;
+    visibility: hidden;
+    opacity: 0;
+    translate: 0 20px;
+    transition: opacity 0.5s, translate 0.5s, visibility 0s 0.5s;
+    &.open {
+      visibility: visible;
+      opacity: 1;
+      translate: 0 0;
+      transition: opacity 0.5s, translate 0.5s, visibility 0s;
+    }
+    &>.time-picker {
+      padding: 0 0.5em;
+      border-radius: 0.25em;
+      box-shadow: var(--shadow-level-2-mid);
+      --multiplier: 3;
+      --font-size: 1.5em;
+      --background-color: var(--drop-down-background);
+    }
+    &>.triangle-icon {
+      height: 1em;
+      width: 1em;
+      position: absolute;
+      top: -0.8em;
+      left: 15%;
+      & path {
+        fill: var(--drop-down-background);
+      }
+    }
+  }
+}

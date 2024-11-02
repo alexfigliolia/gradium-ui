@@ -21,6 +21,7 @@ const spaces = Array.from({ length: 10 }, (_, i) => ({
   label: (202 + i).toString(),
   value: i.toString(),
 }));
+
 if (Devices.IS_MOBILE_BROWSER) {
   spaces.unshift({ label: "", value: "" });
 }
@@ -39,32 +40,28 @@ export default memo(function LeaseSheet({
   const hook = useMemo(() => createUseState(model), [model]);
   const [unit, rate, start, end, lessees] = hook(selectFormValues);
 
-  const onSelectUnit = useCallback(
-    (values: Set<string>) => {
-      model.setUnit(Array.from(values)[0] || "");
-    },
-    [model],
-  );
   const validate = useCallback(() => {
     if (!form.current) {
       return true;
     }
     return form.current.checkValidity();
   }, []);
+
   const classes = useClassNames("lease-sheet", className);
+
   return (
     <Confirmation className={classes} open={open} close={close}>
       <h2>{title}</h2>
       {subtitle && <p>{subtitle}</p>}
       <form ref={form} className="options" onSubmit={onSubmit}>
         <DropDown
-          required
+          value={unit}
           label="Space"
           list={spaces}
+          multiple={false}
           name="living-space"
           icon={<Building />}
-          value={new Set([unit])}
-          onChange={onSelectUnit}
+          onChange={model.setUnit}
         />
         <h3>Term</h3>
         <div className="split">

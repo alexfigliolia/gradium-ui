@@ -1,12 +1,31 @@
-import { addHours } from "date-fns";
-import { BaseModel } from "Models/BaseModel";
-import type { IAmenitySchedule, IReservation } from "./types";
+import { StackModel } from "Generics/StackModel";
+import { fetchAmenityReservations } from "GraphQL/Queries/fetchAmenityReservations.gql";
+import { graphQLRequest } from "GraphQL/request";
+import type {
+  Amenity,
+  AmenityReservation,
+  FetchAmenityReservationsQuery,
+  FetchAmenityReservationsQueryVariables,
+} from "GraphQL/Types";
+import { Properties } from "State/Properties";
+import { Scope } from "State/Scope";
+import { Toasts } from "State/Toasts";
+import { Dates } from "Tools/Dates";
+import type { IAmenitySchedule } from "./types";
 
-export class AmenityScheduleModel extends BaseModel<IAmenitySchedule> {
+export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
   constructor() {
     super("Amenity Schedule", {
+      open: "09:00:00",
+      close: "21:00:00",
+      loading: false,
+      amenityIds: [],
+      reservations: [],
+      openDatePicker: false,
       currentDate: new Date(),
-      events: AmenityScheduleModel.EVENTS(),
+      openNewReservation: false,
+      openEditReservation: false,
+      currentReservation: {},
     });
   }
 
@@ -14,68 +33,129 @@ export class AmenityScheduleModel extends BaseModel<IAmenitySchedule> {
     this.update(state => {
       state.currentDate = date;
     });
+    void this.fetchReservations();
   }
 
-  public getEvent(ID: number) {
-    const { currentDate, events } = this.getState();
-    return events[currentDate.getDate()].find(e => e.id === ID);
+  public async fetchReservations(date = this.getState().currentDate) {
+    this.loading(true);
+    const { amenityIds } = this.getState();
+    try {
+      const response = await graphQLRequest<
+        FetchAmenityReservationsQuery,
+        FetchAmenityReservationsQueryVariables
+      >(fetchAmenityReservations, {
+        date: Dates.toDayPreciseISOString(date),
+        propertyId: Properties.getState().current,
+        organizationId: Scope.getState().currentOrganizationId,
+        amenityIds: amenityIds.length ? amenityIds : undefined,
+      });
+      this.update(state => {
+        state.reservations = response.fetchAmenityReservations;
+      });
+    } catch (error) {
+      Toasts.error(
+        "Something went wrong when fetching this property's amenity reservations. Please refresh the page",
+      );
+    }
+    this.loading(false);
   }
 
-  private static EVENTS() {
-    const today = new Date().getDate();
-    return [today, today + 2, today + 4, today + 6].reduce<
-      Record<string, IReservation[]>
-    >((acc, next) => {
-      acc[next] = this.EVENTS_FOR_DAY(next);
-      return acc;
-    }, {});
+  public addReservation(reservation: AmenityReservation) {
+    this.update(state => {
+      state.reservations = [...state.reservations, reservation];
+    });
   }
 
-  private static EVENTS_FOR_DAY(day: number): IReservation[] {
-    const d1 = new Date();
-    const d2 = new Date();
-    d1.setDate(day);
-    d1.setHours(10);
-    d1.setMinutes(30);
-    d2.setDate(day);
-    d2.setHours(15);
-    d2.setMinutes(0);
-    let ID = 1;
-    return [
-      {
-        id: ID++,
-        start: d1.toISOString(),
-        end: addHours(d1, 2).toISOString(),
-        amenity: {
-          name: "Basketball Court",
-          id: 1,
-          open: "07:00",
-          close: "22:00",
-        },
-      },
-      {
-        id: ID++,
-        start: d2.toISOString(),
-        end: addHours(d2, 2).toISOString(),
-        amenity: { name: "Tennis Court", id: 2, open: "07:00", close: "22:00" },
-      },
-      {
-        id: ID++,
-        start: d1.toISOString(),
-        end: addHours(d1, 9).toISOString(),
-        amenity: {
-          name: "Basketball Court",
-          id: 1,
-          open: "07:00",
-          close: "22:00",
-        },
-      },
-      {
-        id: ID++,
-        start: d2.toISOString(),
-        end: addHours(d2, 2).toISOString(),
-        amenity: { name: "Tennis Court", id: 2, open: "07:00", close: "22:00" },
-      },
-    ];
+  public updateReservationByID(reservation: AmenityReservation) {
+    this.update(state => {
+      state.reservations = state.reservations.map(current => {
+        if (current.id === reservation.id) {
+          return reservation;
+        }
+        return current;
+      });
+    });
+  }
+
+  public deleteByID(id: number) {
+    this.update(state => {
+      state.reservations = state.reservations.filter(item => item.id !== id);
+    });
+  }
+
+  public resolveScope(amenities: Amenity[]) {
+    let minOpen = "";
+    let maxClose = "";
+    let minOpenInt = Infinity;
+    let maxCloseInt = -Infinity;
+    for (const { open, close } of amenities) {
+      const openInt = this.toTimeInt(open);
+      const closeInt = this.toTimeInt(close);
+      if (openInt < minOpenInt) {
+        minOpen = open;
+        minOpenInt = openInt;
+      }
+      if (closeInt > maxCloseInt) {
+        maxClose = close;
+        maxCloseInt = closeInt;
+      }
+    }
+    if (minOpen) {
+      this.update(state => {
+        state.open = minOpen;
+      });
+    }
+    if (maxClose) {
+      this.update(state => {
+        state.close = maxClose;
+      });
+    }
+  }
+
+  private toTimeInt(time: string) {
+    return parseInt(time.split(":").join(""));
+  }
+
+  private openDatePicker = this.toggleKey("openDatePicker", true);
+  private closeDatePicker = this.toggleKey("openDatePicker", false);
+  private openNewReservation = this.toggleKey("openNewReservation", true);
+  private closeNewReservation = this.toggleKey("openNewReservation", false);
+
+  private closeEditReservation = () => {
+    this.update(state => {
+      state.openEditReservation = false;
+    });
+    setTimeout(() => {
+      this.update(state => {
+        state.currentReservation = {};
+      });
+    }, 500);
+  };
+
+  private openEditReservation = (reservation: AmenityReservation) => {
+    this.update(state => {
+      state.openEditReservation = true;
+      state.currentReservation = reservation;
+    });
+  };
+
+  public datePicker = StackModel.createToggle(
+    this.openDatePicker,
+    this.closeDatePicker,
+  );
+  public newReservation = StackModel.createToggle(
+    this.openNewReservation,
+    this.closeNewReservation,
+  );
+
+  public editReservation = StackModel.createToggle(
+    this.openEditReservation,
+    this.closeEditReservation,
+  );
+
+  public loading(ns: boolean) {
+    this.update(state => {
+      state.loading = ns;
+    });
   }
 }

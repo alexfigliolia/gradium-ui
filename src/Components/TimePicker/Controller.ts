@@ -1,7 +1,38 @@
 import type { UIEvent } from "react";
 import { Numbers } from "Tools/Numbers";
+import type { Callback } from "Types/Generics";
 
 export class Controller {
+  public scrollTOD?: Callback<[number]>;
+  public scrollHours?: Callback<[number]>;
+  public scrollMinutes?: Callback<[number]>;
+
+  public registerScrollTOD = this.createRef("scrollTOD");
+  public registerScrollHours = this.createRef("scrollHours");
+  public registerScrollMinutes = this.createRef("scrollMinutes");
+
+  public createRef(key: "scrollTOD" | "scrollHours" | "scrollMinutes") {
+    return (ref: Callback<[number]>) => {
+      this[key] = ref;
+    };
+  }
+
+  public initializePosition(hours: number, minutes: number, isPM: boolean) {
+    if (this.scrollHours) {
+      if (hours === 0) {
+        this.scrollHours(11);
+      } else {
+        this.scrollHours((hours > 12 ? hours - 12 : hours) - 1);
+      }
+    }
+    if (this.scrollMinutes) {
+      this.scrollMinutes(minutes);
+    }
+    if (this.scrollTOD) {
+      this.scrollTOD(isPM ? 1 : 0);
+    }
+  }
+
   public static parse(input: string, start: number, end: number) {
     try {
       const value = input.slice(start, end);
@@ -87,11 +118,14 @@ export class Controller {
     }
     const { height } = first.getBoundingClientRect();
     const activeChild = children[Math.floor(scrollTop / height)];
+    if (!activeChild) {
+      return;
+    }
     const value = activeChild.getAttribute("datetime");
     return value;
   }
 
-  private static isScrollingDiv(target: EventTarget): target is HTMLDivElement {
+  public static isScrollingDiv(target: EventTarget): target is HTMLDivElement {
     if ("tagName" in target && target.tagName === "DIV") {
       return true;
     }
@@ -104,9 +138,4 @@ export class Controller {
   ) {
     return `${typeof hours === "number" ? Numbers.formatHoursOrMinutes(hours) : hours}:${typeof minutes === "number" ? Numbers.formatHoursOrMinutes(minutes) : minutes}:00`;
   }
-}
-
-export interface Entry {
-  value: string;
-  label: string;
 }

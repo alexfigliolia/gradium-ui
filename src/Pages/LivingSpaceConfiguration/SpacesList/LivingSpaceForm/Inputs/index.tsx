@@ -1,4 +1,4 @@
-import { Fragment, memo, useContext } from "react";
+import { Fragment, memo, useCallback, useContext } from "react";
 import type { LivingSpace } from "GraphQL/Types";
 import { Area } from "Icons/Area";
 import { Bath } from "Icons/Bath";
@@ -12,7 +12,7 @@ import {
   CSFContext,
 } from "Layouts/PropertyConfiguration";
 import type { LivingSpacesModel } from "Models/LivingSpaces";
-import { DropDownOptions } from "Tools/DropDownOptions";
+import { PropertyOptions } from "Tools/PropertyOptions";
 import type { Propless } from "Types/React";
 
 export const Inputs = memo(
@@ -22,6 +22,10 @@ export const Inputs = memo(
     ) as unknown as ICSForm<LivingSpace, LivingSpacesModel>;
 
     const { name, type, beds, baths, size } = item;
+
+    const toFloat = useCallback((value: string) => {
+      return parseFloat(value || "0");
+    }, []);
 
     return (
       <Fragment>
@@ -45,9 +49,9 @@ export const Inputs = memo(
           property="type"
           disabled={!editing}
           className="type-dropdown"
-          list={DropDownOptions.SPACE_TYPE}
+          list={PropertyOptions.SPACE_TYPE}
           name={controller.createKey("type", "living-space")}
-          onSelected={controller.update}
+          onChange={controller.update}
         />
         <ConfigurableSpaceInput<LivingSpace>
           type="number"
@@ -63,28 +67,28 @@ export const Inputs = memo(
           name={controller.createKey("size", "living-space")}>
           <div className="postfix">sqft</div>
         </ConfigurableSpaceInput>
-        <ConfigurableSpaceDropDown<LivingSpace>
+        <ConfigurableSpaceDropDown<LivingSpace, "beds", false>
           label="Beds"
-          fallback={0}
-          value={beds}
           icon={<Bed />}
           property="beds"
           disabled={!editing}
+          value={beds.toString()}
           className="beds-dropdown"
-          list={DropDownOptions.BEDS}
+          list={PropertyOptions.BEDS}
+          transform={toFloat}
           name={controller.createKey("beds", "living-space")}
-          onSelected={controller.update}
+          onChange={controller.update}
         />
-        <ConfigurableSpaceDropDown<LivingSpace>
-          fallback={0}
+        <ConfigurableSpaceDropDown<LivingSpace, "baths", false>
           label="Baths"
           icon={<Bath />}
           property="baths"
           disabled={!editing}
+          transform={toFloat}
           value={baths.toString()}
           className="baths-dropdown"
-          list={DropDownOptions.BATHS}
-          onSelected={controller.update}
+          list={PropertyOptions.BATHS}
+          onChange={controller.update}
           name={controller.createKey("baths", "living-space")}
         />
       </Fragment>

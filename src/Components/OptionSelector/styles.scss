@@ -1,0 +1,61 @@
+@use "Styles/Variables";
+
+.confirmation-sheet.option-selector {
+  z-index: 11000;
+  & .sheet-content {
+    & .loading-state {
+      @include Variables.center;
+      font-size: 1.1em;
+      padding: 0.1em 0.5em;
+      border-radius: 0.5em;
+      font-weight: 600;
+      @include Variables.skeleton;
+      & .triangle-loader {
+        scale: 0.5;
+        --path: url(#themeGradient);
+        --dot: var(--theme-mid);
+      }
+    }
+    & .fallback-message {
+      width: 100%;
+      font-size: 1.1em;
+      background-color: var(--background-dark);
+      border-radius: 0.5em;
+      margin: 0;
+      padding: 0.5em;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      & svg {
+        width: 1.3em;
+        height: 1.3em;
+        margin-right: 0.5em;
+        & path {
+          fill: url(#themeGradient);
+        }
+      }
+    }
+    & .radio-group,
+    & .checkbox-group {
+      margin: 0;
+      padding: 0;
+      &>div {
+        padding: 0;
+        row-gap: 0.5em;
+      }
+      & label {
+        width: 100%;
+        justify-content: flex-start;
+        font-size: 1.1em;
+        background-color: var(--background-dark);
+        border-radius: 0.5em;
+        margin: 0;
+        padding: 0.5em;
+        &>div {
+          margin-right: 1em;
+        }
+      }
+    }
+  }
+}

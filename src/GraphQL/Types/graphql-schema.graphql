@@ -4,9 +4,11 @@ schema {
 }
 type Query {
   userScope: LoggedInUser!
+  listPeople(organizationId: Int!, limit: Int, cursor: Int): PaginatedPeople!
   getAmenities(propertyId: Int!, organizationId: Int!): [Amenity!]!
   verifySession: Boolean!
   getLivingSpaces(propertyId: Int!, organizationId: Int!): [LivingSpace!]!
+  fetchAmenityReservations(propertyId: Int!, organizationId: Int!, date: String!, amenityIds: [Int!]): [AmenityReservation!]!
   generateUploadSignature(organizationId: Int!, type: GradiumImageType!): UploadSignature!
   generateDestroySignature(organizationId: Int!, publicId: String!, type: GradiumImageType!): DestroySignature!
   adminBasicPropertiesList(organizationId: Int!): [AdminBasicProperty!]!
@@ -30,6 +32,16 @@ type OrgAffiliation {
 }
 type PersonRole {
   role: PersonRoleType!
+}
+type PaginatedPeople {
+  cursor: Int!
+  list: [Person!]!
+}
+type Person {
+  id: Int!
+  organizationId: Int!
+  userId: Int!
+  name: String!
 }
 type Amenity {
   id: Int!
@@ -57,6 +69,18 @@ type LivingSpace {
   propertyId: Int!
   images: [GradiumImage!]!
   floorPlans: [GradiumImage!]!
+}
+type AmenityReservation {
+  id: Int!
+  date: String!
+  start: String!
+  end: String!
+  amenity: EntitySnapShot!
+  person: EntitySnapShot!
+}
+type EntitySnapShot {
+  id: Int!
+  name: String!
 }
 type UploadSignature {
   api_key: String!
@@ -97,21 +121,24 @@ type Mutation {
   logout: Boolean!
   linkEmail(userId: Int!, email: String!): BasicUser!
   saveImage(propertyId: Int!, organizationId: Int!, entityId: Int!, url: String!, type: GradiumImageType!): GradiumImage!
-  deleteImage(organizationId: Int!, propertyId: Int!, id: Int!, type: GradiumImageType!): GradiumImage!
+  deleteImage(propertyId: Int!, organizationId: Int!, id: Int!, type: GradiumImageType!): GradiumImage!
   deleteEmail(userId: Int!, email: String!): BasicUser!
   updateEmail(userId: Int!, previous: String!, next: String!): BasicUser!
   resetPassword(userId: Int!, previous: String!, next: String!): Boolean!
   createAccount(name: String!, email: String!, password: String!): LoggedInUser!
   forgotPassword(email: String!): String!
-  deleteAmenity(organizationId: Int!, propertyId: Int!, id: Int!): Amenity!
+  deleteAmenity(propertyId: Int!, organizationId: Int!, id: Int!): Amenity!
   createProperty(name: String!, organizationId: Int!): AdminBasicProperty!
   inviteStaffMember(organizationId: Int!, email: String!): Boolean!
-  deleteLivingSpace(organizationId: Int!, propertyId: Int!, id: Int!): LivingSpace!
+  deleteLivingSpace(propertyId: Int!, organizationId: Int!, id: Int!): LivingSpace!
   setOrganizationName(name: String!, organizationId: Int!): Boolean!
   modifyPropertyAddons(propertyId: Int!, organizationId: Int!, additions: [PropertyAddonType!]!, deletions: [Int!]!): [PropertyAddon!]!
-  createOrUpdateAmenity(organizationId: Int!, propertyId: Int!, id: Int, name: String!, billed: BillFrequency!, open: String!, close: String!, price: String!, size: String!): Amenity!
+  createOrUpdateAmenity(propertyId: Int!, organizationId: Int!, id: Int, name: String!, billed: BillFrequency!, open: String!, close: String!, price: String!, size: String!): Amenity!
   updateBasicPropertyInfo(propertyId: Int!, organizationId: Int!, name: String!, address1: String!, address2: String!, city: String!, state: String!, zipCode: String!): AdminBasicProperty!
-  createOrUpdateLivingSpace(organizationId: Int!, propertyId: Int!, id: Int, name: String!, type: LivingSpaceType!, beds: Int!, baths: Float!, size: String!): LivingSpace!
+  createAmenityReservation(propertyId: Int!, organizationId: Int!, amenityId: Int!, personId: Int!, date: String!, start: String!, end: String!, charge: Boolean): AmenityReservation!
+  cancelAmenityReservation(id: Int!, propertyId: Int!, organizationId: Int!): Int!
+  updateAmenityReservation(id: Int!, propertyId: Int!, organizationId: Int!, amenityId: Int!, personId: Int!, date: String!, start: String!, end: String!, charge: Boolean): AmenityReservation!
+  createOrUpdateLivingSpace(propertyId: Int!, organizationId: Int!, id: Int, name: String!, type: LivingSpaceType!, beds: Int!, baths: Float!, size: String!): LivingSpace!
 }
 type BasicUser {
   name: String!

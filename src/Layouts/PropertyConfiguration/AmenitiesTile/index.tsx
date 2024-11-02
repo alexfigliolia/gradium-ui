@@ -1,6 +1,6 @@
 import { Fragment, memo } from "react";
 import { usePropertyAccess } from "Hooks/usePropertyAccess";
-import { BasketballCourt } from "Icons/BasketballCourt";
+import { BasketballCourtFilled } from "Icons/BasketballCourt";
 import { AdminRoutes } from "Router/AdminRoutes";
 import type { OptionalChildren } from "Types/React";
 import { PropertyConfigurationTile } from "../PropertyConfigurationTile";
@@ -20,7 +20,7 @@ export const AmenitiesTile = memo(function AmenitiesTile({
     <PropertyConfigurationTile
       title={
         <Fragment>
-          <BasketballCourt /> Amenity Spaces
+          <BasketballCourtFilled /> Amenity Spaces
         </Fragment>
       }
       loading={loading}

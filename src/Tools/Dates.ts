@@ -3,7 +3,8 @@ import { LanguageHandler } from "./LanguageHandler";
 
 export class Dates {
   public static TODAY = this.today();
-  public static ONE_DAY = 1000 * 60 * 60 * 24;
+  public static ONE_HOUR = 1000 * 60 * 60;
+  public static ONE_DAY = this.ONE_HOUR * 24;
   public static ONE_MONTH = this.ONE_DAY * 30;
   public static ONE_YEAR = this.ONE_DAY * 365;
   public static DAY_FORMATTER = new Intl.DateTimeFormat(
@@ -49,6 +50,10 @@ export class Dates {
     preset: Extract<keyof (typeof Dates)["rangePresets"], string>,
   ) {
     return this.rangePresets[preset]();
+  }
+
+  public static toLocale(date: Date, options?: Intl.DateTimeFormatOptions) {
+    return date.toLocaleString(LanguageHandler.locale, options);
   }
 
   public static localizedMonths() {
@@ -198,5 +203,22 @@ export class Dates {
     }
     const days = Math.floor(diff / this.ONE_DAY);
     return `${days} ${days === 1 ? "day" : "days"} remaining`;
+  }
+
+  public static toDayPreciseISOString(date: Date) {
+    date.setHours(0);
+    date.setMinutes(0);
+    date.setSeconds(0);
+    date.setMilliseconds(0);
+    return date.toISOString();
+  }
+
+  public static timeToDate(time: string, date = new Date()) {
+    const [hours, minutes, seconds] = time.split(":");
+    date.setHours(parseInt(hours));
+    date.setMinutes(parseInt(minutes));
+    date.setSeconds(parseInt(seconds));
+    date.setMilliseconds(0);
+    return date;
   }
 }

@@ -18,12 +18,11 @@ export const Radio = memo(function Radio({
   }, [onChange]);
   const listener = useFocusedKeyListener(trigger);
   return (
-    <label htmlFor={value}>
+    <label>
       <div>
         <input
           ref={input}
           type="radio"
-          id={value}
           name={value}
           value={value}
           onChange={onChange}

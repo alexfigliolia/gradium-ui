@@ -58,7 +58,7 @@ export const ResetPassword = memo(function ResetPassword(_: Propless) {
   return (
     <Confirmation
       open={open}
-      className="reset-password"
+      className="reset-password tight"
       close={Modals.resetPassword.close}>
       <h2>Reset Password</h2>
       <p>Ah, wise decision!</p>

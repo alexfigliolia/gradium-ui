@@ -1,16 +1,10 @@
 .input.date-input {
-  &:has(>.input-positioner>input:valid) {
-    &>span {
-      scale: 0.9;
-      transform: translateY(-1.5em) translateX(-0.25em);
-    }  
+  &:has(>.input-positioner>input:valid) > span {
+    scale: 0.9;
+    transform: translateY(-1.5em) translateX(-0.25em); 
   }
-  &>.input-positioner {
-    &>input {
-      &::-webkit-date-and-time-value {
-        text-align: left;
-      }
-    }
+  &>.input-positioner > input::-webkit-date-and-time-value {
+    text-align: left;
   }
   &>.picker {
     position: absolute;

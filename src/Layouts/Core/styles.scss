@@ -2,7 +2,6 @@
 
 .core {
   width: 100%;
-  opacity: 0;
   animation: show 0.5s forwards;
   padding-top: calc(Variables.$nav-height-small + 2.5em);
   padding-left: var(--core-padding);

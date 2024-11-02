@@ -49,7 +49,7 @@ function CheckBoxGroupComponent<T extends IOption>({
 
 export const CheckBoxGroup = memo(CheckBoxGroupComponent);
 
-interface Props<T extends IOption> {
+export interface Props<T extends IOption> {
   label?: ReactNode;
   options: T[];
   horizontal?: boolean;

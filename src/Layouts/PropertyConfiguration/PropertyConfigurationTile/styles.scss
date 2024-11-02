@@ -2,13 +2,13 @@
   &>h2 {
     &>svg {
       &.living-space-bed,
-      &.basketball-court {
+      &.basketball-court-filled {
         width: 2em;
         height: 2em;
         margin-right: 0.5em;
         fill: url(#themeGradient);
       }
-      &.basketball-court {
+      &.basketball-court-filled {
         & > g > path {
           fill: var(--tile-background);
         }

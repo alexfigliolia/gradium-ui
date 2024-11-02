@@ -37,7 +37,7 @@ function RadioGroupComponent<T extends IOption>({
 
 export const RadioGroup = memo(RadioGroupComponent);
 
-interface Props<T extends IOption> {
+export interface Props<T extends IOption> {
   label?: string;
   options: T[];
   horizontal?: boolean;
