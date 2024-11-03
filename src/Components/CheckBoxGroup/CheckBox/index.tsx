@@ -1,6 +1,7 @@
 import type { ChangeEvent } from "react";
 import { memo, useCallback, useRef } from "react";
 import { useFocusedKeyListener } from "@figliolia/react-hooks";
+import { Checkable } from "Components/Checkable";
 import { Check } from "Icons/Check";
 import type { Callback } from "Types/Generics";
 import type { IOption } from "Types/React";
@@ -13,6 +14,7 @@ export const CheckBox = memo(function CheckBox({
   onChange,
 }: Props) {
   const input = useRef<HTMLInputElement>(null);
+
   const onSelect = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       onChange(e.target.value);
@@ -26,23 +28,20 @@ export const CheckBox = memo(function CheckBox({
 
   const listener = useFocusedKeyListener(trigger);
   return (
-    <label>
+    <Checkable label={label || value} selected={selected}>
       <div>
-        <div>
-          <input
-            ref={input}
-            type="checkbox"
-            name={value}
-            value={value}
-            onChange={onSelect}
-            checked={selected}
-            {...listener.events}
-          />
-          <Check aria-hidden />
-        </div>
+        <input
+          ref={input}
+          type="checkbox"
+          name={value}
+          value={value}
+          onChange={onSelect}
+          checked={selected}
+          {...listener.events}
+        />
+        <Check aria-hidden />
       </div>
-      {label || value}
-    </label>
+    </Checkable>
   );
 });
 

@@ -5,14 +5,14 @@
     @media (min-width: 1500px) {
       width: calc(50% - 0.65em);
     }
-    &.number-input.size-input {
+    &.number.size-input {
       width: 100%;
       @media (min-width: Variables.$small-vertical-tablet) {
         width: calc(50% - 0.65em);
       }
     }
     &.dropdown,
-    &.number-input.price-input {
+    &.number.price-input {
       @media (min-width: Variables.$small-vertical-tablet) {
         width: calc(50% - 0.65em);
       }

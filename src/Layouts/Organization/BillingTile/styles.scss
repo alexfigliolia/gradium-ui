@@ -7,9 +7,6 @@
   &>.loading-action {
     height: 45px;
     max-width: 400px;
-    margin: auto;
-    @media (min-width: Variables.$small-desktop) {
-      margin: 0;
-    }
+    margin: 0 auto;
   }
 }

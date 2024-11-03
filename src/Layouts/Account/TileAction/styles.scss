@@ -1,0 +1,12 @@
+button.gradient-button.tile-action {
+  height: auto;
+  margin: 0 auto;
+  padding: 0.75em 2em;
+  width: 100%;
+  max-width: 300px;
+  @media (min-width: 670px) {
+    width: auto;
+    max-width: none;
+    min-width: 300px;
+  }
+}

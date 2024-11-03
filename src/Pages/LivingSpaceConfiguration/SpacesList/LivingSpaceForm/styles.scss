@@ -8,7 +8,7 @@
         width: calc(50% - 0.65em);
       }
     }
-    &.number-input.size-input,
+    &.number.size-input,
     &.dropdown.beds-dropdown,
     &.dropdown.baths-dropdown {
       @media(min-width: Variables.$small-vertical-tablet) {

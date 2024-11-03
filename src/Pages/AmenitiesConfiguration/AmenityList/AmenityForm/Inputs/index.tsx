@@ -1,5 +1,4 @@
-import { Fragment, memo, useCallback, useContext, useMemo } from "react";
-import { TimeInput } from "Components/TimeInput";
+import { Fragment, memo, useContext, useMemo } from "react";
 import type { Amenity } from "GraphQL/Types";
 import { Clock } from "Icons/Clock";
 import { Key } from "Icons/Key";
@@ -46,20 +45,6 @@ export const Inputs = memo(
       [controller],
     );
 
-    const onChangeOpen = useCallback(
-      (value: string) => {
-        controller.update("open", value);
-      },
-      [controller],
-    );
-
-    const onChangeClose = useCallback(
-      (value: string) => {
-        controller.update("close", value);
-      },
-      [controller],
-    );
-
     return (
       <Fragment>
         <ConfigurableSpaceInput<Amenity>
@@ -84,27 +69,29 @@ export const Inputs = memo(
           autoComplete="off"
           disabled={!editing}
           onChange={controller.update}
-          className="number-input size-input">
+          className="size-input">
           <div className="postfix">sqft</div>
         </ConfigurableSpaceInput>
         <h4>Hours of Operation</h4>
-        <TimeInput
+        <ConfigurableSpaceInput<Amenity>
           name={openKey}
+          type="time"
           label="Open From"
           icon={<Clock />}
           property="open"
           disabled={!editing}
-          onChange={onChangeOpen}
-          value={item.open || "00:00:00"}
+          onChange={controller.update}
+          value={item.open}
         />
-        <TimeInput
+        <ConfigurableSpaceInput<Amenity>
           label="Closes At"
           icon={<Clock />}
+          type="time"
           property="close"
           name={closeKey}
           disabled={!editing}
-          onChange={onChangeClose}
-          value={item.close || "00:00:00"}
+          onChange={controller.update}
+          value={item.close}
         />
         <h4>Reservation Pricing</h4>
         <ConfigurableSpaceInput<Amenity>
@@ -118,7 +105,7 @@ export const Inputs = memo(
           value={item.price}
           disabled={!editing}
           onChange={controller.update}
-          className="number-input price-input"
+          className="price-input"
         />
         <ConfigurableSpaceDropDown<Amenity>
           fallback="hour"

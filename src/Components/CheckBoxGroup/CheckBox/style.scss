@@ -1,34 +1,14 @@
 @use "Styles/Variables";
 
-.checkbox-group > div > label {
-  @include Variables.center;
-  font-size: 1em;
-  position: relative;
-  transition: text-shadow 0.25s;
-  &:has(>div>div>input:focus-visible) {
-    text-shadow: #{Variables.$shadow-overhead-level-2} rgb(from var(--theme-mid) r g b / 50%);
-  }
-  &:hover {
-    &>div {
-      box-shadow: #{Variables.$shadow-overhead-level-2} var(--theme-mid);
-    }
+.checkbox-group > div > label.checkable {
+  &.selected > div > div > svg {
+    scale: 1;
   }
   &>div {
     margin-right: 0.75em;
-    width: var(--size);
-    height: var(--size);
     border-radius: calc(var(--size) / 5);
-    transition: box-shadow 0.4s;
     padding: 2px;
     @include Variables.themeGradient;
-    &:has(>div>input:checked) {
-      &>div>svg {
-        scale: 1;
-      }
-    }
-    &:has(>div>input:focus-visible) {
-      box-shadow: #{Variables.$shadow-overhead-level-2} var(--theme-mid);
-    }
     &>div {
       height: 100%;
       width: 100%;
@@ -36,17 +16,6 @@
       border-radius: calc(var(--size) / 7);
       background-color: var(--background);
       position: relative;
-      &>input {
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        margin: 0;
-        padding: 0;
-        position: absolute;
-        cursor: pointer;
-      }
       &>svg {
         overflow: visible;
         width: calc(var(--size) * 0.7);

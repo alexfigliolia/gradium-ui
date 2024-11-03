@@ -8,12 +8,12 @@ export const AmenitySkeleton = memo(
     return (
       <FormSkeleton title="New Amenity" inputGroupClassName="amenity-inputs">
         <InputSkeleton className="name-input" />
-        <InputSkeleton className="number-input size-input" />
+        <InputSkeleton className="number size-input" />
         <HeaderSkeleton Tag="h4">Hours of Operation</HeaderSkeleton>
         <InputSkeleton className="dropdown" />
         <InputSkeleton className="dropdown" />
         <HeaderSkeleton Tag="h4">Reservation Pricing</HeaderSkeleton>
-        <InputSkeleton className="number-input price-input" />
+        <InputSkeleton className="number price-input" />
         <InputSkeleton className="dropdown" />
       </FormSkeleton>
     );

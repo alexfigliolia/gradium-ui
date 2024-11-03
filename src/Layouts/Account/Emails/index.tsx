@@ -1,9 +1,9 @@
 import { memo } from "react";
-import { GradientButton } from "Components/GradientButton";
 import { Tile } from "Components/Tile";
 import { At } from "Icons/At";
 import { Modals } from "State/Modals";
 import type { Propless } from "Types/React";
+import { TileAction } from "../TileAction";
 import { EmailList } from "./EmailList";
 import "./styles.scss";
 
@@ -21,9 +21,9 @@ export const Emails = memo(
           emails at any time
         </p>
         <EmailList />
-        <GradientButton onClick={Modals.linkEmail.open}>
+        <TileAction onClick={Modals.linkEmail.open}>
           Link Additional Email Address
-        </GradientButton>
+        </TileAction>
       </Tile>
     );
   },

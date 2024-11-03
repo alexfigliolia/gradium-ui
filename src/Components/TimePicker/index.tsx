@@ -5,7 +5,7 @@ import {
   useController,
   useDebouncer,
   useLocale,
-  useTimeout,
+  useUnmount,
 } from "@figliolia/react-hooks";
 import type { Callback } from "Types/Generics";
 import { Controller } from "./Controller";
@@ -18,10 +18,9 @@ export const TimePicker = memo(function TimePicker({
   value: _value,
 }: Props) {
   const locale = useLocale();
-  const timeout = useTimeout();
-  const [ready, setReady] = useState(false);
 
-  const controller = useController(new Controller());
+  const [listenerEnabled, setListenForScrolls] = useState(false);
+  const controller = useController(new Controller(setListenForScrolls));
 
   const value = useMemo(() => (_value ? _value : Controller.now()), [_value]);
 
@@ -47,33 +46,27 @@ export const TimePicker = memo(function TimePicker({
   const onScroll = useCallback(
     (e: UIEvent<HTMLDivElement>) => {
       const value = Controller.onScroll(e);
-      if (value && ready) {
+      if (value) {
         onChange(value);
       }
     },
-    [onChange, ready],
+    [onChange],
   );
 
   const debouncer = useDebouncer(onScroll, 100);
 
-  useEffect(() => {
-    timeout.execute(() => {
-      setReady(true);
-    }, 10);
-  }, [timeout]);
-
-  useEffect(() => {
-    setReady(false);
-    controller.initializePosition(hours, minutes, isPM);
-    timeout.execute(() => {
-      setReady(true);
-    }, 100);
-  }, [controller, hours, minutes, isPM, timeout]);
-
-  const captureScroll = useMemo(
-    () => (ready ? debouncer.execute : undefined),
-    [ready, debouncer],
+  const scrollHandler = useMemo(
+    () => (listenerEnabled ? debouncer.execute : undefined),
+    [listenerEnabled, debouncer],
   );
+
+  useEffect(() => {
+    controller.initializePosition(hours, minutes, isPM);
+  }, [controller, hours, minutes, isPM]);
+
+  useUnmount(() => {
+    controller.abortAll();
+  });
 
   const classes = useClassNames("time-picker", className);
 
@@ -82,8 +75,8 @@ export const TimePicker = memo(function TimePicker({
       <Scroller
         tabIndex={0}
         dataList={hourList}
-        onScroll={captureScroll}
         aria-label="Select Hours"
+        onScroll={scrollHandler}
         ref={controller.registerScrollHours}
       />
       <div className="colon">:</div>
@@ -91,14 +84,14 @@ export const TimePicker = memo(function TimePicker({
         tabIndex={0}
         value={hours}
         dataList={minuteList}
-        onScroll={captureScroll}
         aria-label="Select Minutes"
+        onScroll={scrollHandler}
         ref={controller.registerScrollMinutes}
       />
       <Scroller
         tabIndex={0}
         dataList={TODList}
-        onScroll={captureScroll}
+        onScroll={scrollHandler}
         aria-label="Select AM or PM"
         ref={controller.registerScrollTOD}
       />

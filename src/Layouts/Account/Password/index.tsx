@@ -1,9 +1,9 @@
 import { memo } from "react";
-import { GradientButton } from "Components/GradientButton";
 import { Tile } from "Components/Tile";
 import { LockFilled } from "Icons/Lock";
 import { Modals } from "State/Modals";
 import type { Propless } from "Types/React";
+import { TileAction } from "../TileAction";
 import "./styles.scss";
 
 export const Password = memo(
@@ -22,9 +22,9 @@ export const Password = memo(
           To keep your account and personal information secure, we recommend
           using a strong password
         </p>
-        <GradientButton onClick={Modals.resetPassword.open}>
+        <TileAction onClick={Modals.resetPassword.open}>
           Reset Password
-        </GradientButton>
+        </TileAction>
       </Tile>
     );
   },

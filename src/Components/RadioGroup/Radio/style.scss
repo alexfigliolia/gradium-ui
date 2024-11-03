@@ -1,17 +1,8 @@
 @use "Styles/Variables";
 
-.radio-group > div > label {
-  @include Variables.center;
-  font-size: 1em;
-  position: relative;
-  transition: text-shadow 0.25s;
-  &:has(>div>input:focus-visible) {
-    text-shadow: #{Variables.$shadow-overhead-level-2} rgb(from var(--shadow-color) r g b / 50%);
-  }
-  &:hover {
-    &>div {
-      box-shadow: #{Variables.$shadow-overhead-level-2} var(--shadow-color);
-    }
+.radio-group > div > label.checkable {
+  &.selected > div::after {
+    scale: 1;
   }
   &>div {
     position: relative;
@@ -22,14 +13,6 @@
     border-radius: 50%;
     transition: box-shadow 0.4s;
     @include Variables.center;
-    &:has(>input:checked) {
-      &::after {
-        scale: 1;
-      }
-    }
-    &:has(>input:focus-visible) {
-      box-shadow: #{Variables.$shadow-overhead-level-2} var(--shadow-color);
-    }
     &::after {
       content: "";
       width: 50%;

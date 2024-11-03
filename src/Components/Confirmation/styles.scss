@@ -2,9 +2,13 @@
 
 .confirmation-sheet.bottom-sheet {
   z-index: 10000;
+  pointer-events: none;
   --button-margins: 0.25em auto 0;
   --button-max-width: 350px;
   --sheet-background: var(--background);
+  &.open {
+    pointer-events: auto;
+  }
   &.mobile > .sheet > .sheet-scroll-view > .sheet-content {
     padding-bottom: 1.5em;
   }

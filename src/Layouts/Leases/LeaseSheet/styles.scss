@@ -22,7 +22,7 @@
       stroke-width: 2;
     }
   }
-  & .number-input.rate-input > .input-positioner > button > svg {
+  & .input.number.rate-input > .input-positioner > button > svg {
     &:first-of-type {
       stroke: none;
       fill: var(--text-color-light);

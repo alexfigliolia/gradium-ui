@@ -3,33 +3,50 @@ import {
   forwardRef,
   memo,
   useCallback,
+  useEffect,
   useImperativeHandle,
+  useMemo,
   useRef,
+  useState,
 } from "react";
 import { useClassNames } from "@figliolia/classnames";
+import type { Callback } from "Types/Generics";
+import { Controller } from "./Controller";
 import "./styles.scss";
 
 export const Input = memo(
   forwardRef(function Input(
     {
       icon,
+      type,
       label,
+      value,
+      onBlur,
+      onFocus,
+      onChange,
       children,
       className,
       placeholder,
-      type,
+      onClickIcon,
+      readOnly = false,
+      disabled = false,
       ...rest
     }: InputProps,
     ref: ForwardedRef<InputRef>,
   ) {
+    const [valid, setValid] = useState(false);
+    const [focused, setFocused] = useState(false);
+    const [autofilled, setAutofilled] = useState(false);
+
     const input = useRef<HTMLInputElement>(null);
     const labelNode = useRef<HTMLLabelElement>(null);
-    const focus = useCallback(() => {
+
+    const onIconClick = useCallback(() => {
+      if (onClickIcon) {
+        return onClickIcon();
+      }
       input.current?.focus?.();
-    }, []);
-    const classes = useClassNames("input", className, {
-      "number-input": type === "number",
-    });
+    }, [onClickIcon]);
 
     useImperativeHandle(
       ref,
@@ -39,6 +56,53 @@ export const Input = memo(
       }),
       [input],
     );
+
+    const focusInterceptor = useMemo(
+      () => Controller.createInterceptor(onFocus)(setFocused, [true]),
+      [onFocus],
+    );
+
+    const blurInterceptor = useMemo(
+      () => Controller.createInterceptor(onBlur)(setFocused, [false]),
+      [onBlur],
+    );
+
+    const changeInterceptor = useMemo(
+      () =>
+        Controller.createInterceptor(onChange)(
+          (state: boolean) => {
+            setValid(state);
+            setAutofilled(state);
+          },
+          e => [e.target.validity.valid && !!e.target.value] as const,
+        ),
+      [onChange],
+    );
+
+    const classes = useClassNames("input", type, className, {
+      valid,
+      focused,
+      disabled,
+      readOnly,
+      autofilled,
+      hasIcon: !!icon,
+    });
+
+    useEffect(() => {
+      try {
+        setTimeout(() => {
+          setValid(!!input.current?.validity?.valid && !!input.current?.value);
+          setAutofilled(!!input.current?.matches?.(":autofill"));
+        }, 100);
+      } catch (error) {
+        // browser support
+      }
+    }, []);
+
+    useEffect(() => {
+      setValid(!!input.current?.validity?.valid && !!input.current?.value);
+    }, [value]);
+
     return (
       <label className={classes} ref={labelNode}>
         <span>{label}</span>
@@ -46,17 +110,23 @@ export const Input = memo(
           {icon && (
             <button
               type="button"
-              onClick={focus}
               tabIndex={-1}
-              disabled={rest.disabled || rest.readOnly}>
+              onClick={onIconClick}
+              disabled={disabled || readOnly}>
               {icon}
               {icon}
             </button>
           )}
           <input
-            type={type}
             {...rest}
+            type={type}
             ref={input}
+            value={value}
+            disabled={disabled}
+            readOnly={readOnly}
+            onBlur={blurInterceptor}
+            onFocus={focusInterceptor}
+            onChange={changeInterceptor}
             placeholder={placeholder || " "}
           />
         </div>
@@ -69,6 +139,7 @@ export const Input = memo(
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   icon?: ReactNode;
+  onClickIcon?: Callback;
 }
 
 export interface InputRef {

@@ -12,7 +12,8 @@ div.tile.spaces {
     }
   }
   & .input.dropdown,
-  & .input.number-input {
+  & .input.number,
+  & .input.time {
     @media (max-width: Variables.$small-vertical-tablet) {
       width: calc(50% - 0.65em);
     }
@@ -23,15 +24,13 @@ div.tile.spaces {
   & .input.dropdown > .dd-selector {
     max-width: 150px;
   }
-  & .input.number-input {
-    &>.input-positioner {
-      &:has(~.postfix) {
-        border-radius: 0;
-        border-top-left-radius: calc(var(--border-radius)* 0.925);
-        border-bottom-left-radius: calc(var(--border-radius)* 0.925);
-        &> input {
-          padding-right: 0;
-        }
+  & .input.number {
+    &:has(>.postfix) > .input-positioner {
+      border-radius: 0;
+      border-top-left-radius: calc(var(--border-radius)* 0.925);
+      border-bottom-left-radius: calc(var(--border-radius)* 0.925);
+      &> input {
+        padding-right: 0;
       }
     }
     &>.postfix {

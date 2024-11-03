@@ -1,15 +1,20 @@
-import type { UIEvent } from "react";
+import type { Dispatch, SetStateAction, UIEvent } from "react";
+import { Timeout } from "@figliolia/react-hooks";
 import { Numbers } from "Tools/Numbers";
 import type { Callback } from "Types/Generics";
 
-export class Controller {
-  public scrollTOD?: Callback<[number]>;
-  public scrollHours?: Callback<[number]>;
-  public scrollMinutes?: Callback<[number]>;
-
+export class Controller extends Timeout {
+  private scrollTOD?: Callback<[number]>;
+  private scrollHours?: Callback<[number]>;
+  private scrollMinutes?: Callback<[number]>;
   public registerScrollTOD = this.createRef("scrollTOD");
   public registerScrollHours = this.createRef("scrollHours");
   public registerScrollMinutes = this.createRef("scrollMinutes");
+  public enableScrollListener: Dispatch<SetStateAction<boolean>>;
+  constructor(enableScrollListener: Dispatch<SetStateAction<boolean>>) {
+    super();
+    this.enableScrollListener = enableScrollListener;
+  }
 
   public createRef(key: "scrollTOD" | "scrollHours" | "scrollMinutes") {
     return (ref: Callback<[number]>) => {
@@ -18,6 +23,7 @@ export class Controller {
   }
 
   public initializePosition(hours: number, minutes: number, isPM: boolean) {
+    this.enableScrollListener(false);
     if (this.scrollHours) {
       if (hours === 0) {
         this.scrollHours(11);
@@ -31,6 +37,9 @@ export class Controller {
     if (this.scrollTOD) {
       this.scrollTOD(isPM ? 1 : 0);
     }
+    this.execute(() => {
+      this.enableScrollListener(true);
+    }, 100);
   }
 
   public static parse(input: string, start: number, end: number) {
@@ -67,7 +76,7 @@ export class Controller {
   }
 
   public static generateLocalizedHours(
-    _: string,
+    _locale: string,
     minutes: number,
     isPM: boolean,
   ) {

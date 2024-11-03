@@ -14,39 +14,40 @@
   background-position: 0% 50%;
   transition: background-position 0.6s;
   background-image: linear-gradient(to right, var(--theme-gray), var(--theme-gray), var(--theme-light), var(--theme-dark));
-  &:has(>.input-positioner>input:is(:-webkit-autofill, :autofill)),
-  &:has(>.input-positioner>input:focus),
-  &:has(button:focus),
-  &:has(>.input-positioner>input:not([type="date"]):not([type="time"]):not(:placeholder-shown)) {
+  &.autofilled,
+  &.focused,
+  &.valid,
+  &:not(.date, .time, >.input-positioner>input:placeholder-shown) {
     & > span {
       scale: 0.9;
       transform: translateY(-1.5em) translateX(-0.25em);
     }
   }
-  &:has(button:focus),
-  &:has(>.input-positioner>input:focus),
-  &:has(select:focus) {
+  &.focused {
     background-position: 100% 50%;
     box-shadow: #{Variables.$shadow-level-2} rgb(from var(--theme-dark) r g b / 30%);
   }
-  &:has(>.input-positioner > input:disabled),
-  &:has(>.input-positioner > input:read-only) {
+  &.disabled,
+  &.readOnly,{
     & button {
       pointer-events: none;
     }
   }
-  &:has(>.input-positioner>input:valid:not(:disabled)) {
-    &>.input-positioner > button > svg {
-      &:first-of-type {
-        transform: translateX(150%) scale(0.5);
-      }
-      &:last-of-type {
-        transform: translateX(0%) scale(1);
-      }
+  &.valid:not(.disabled) > .input-positioner > button > svg {
+    &:first-of-type {
+      transform: translateX(150%) scale(0.5);
+    }
+    &:last-of-type {
+      transform: translateX(0%) scale(1);
     }
   }
-  &:has(div > button) > span {
-    left: 40px;
+  &.hasIcon {
+    &> span {
+      left: 40px;
+    }
+    &>.input-positioner > input {
+      padding: 0 10px 0 7.5px;
+    }
   }
   &>span {
     position: absolute;
@@ -69,9 +70,6 @@
     display: flex;
     position: relative;
     background-color: var(--background);
-    &:has(button) > input {
-      padding: 0 10px 0 7.5px;
-    }
     &>input {
       flex: 1;
       width: 100%;

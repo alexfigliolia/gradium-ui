@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction } from "react";
+import type { ChangeEvent, Dispatch, SetStateAction } from "react";
 import type { ILoadingStateSetter } from "@figliolia/react-hooks";
 import { listPeople } from "GraphQL/Queries/listPeople.gql";
 import type {
@@ -14,57 +14,31 @@ import type { Callback, Maybe } from "Types/Generics";
 import type { IHTMLOption } from "Types/React";
 
 export class Controller {
-  private hasSetEnd: boolean;
-  private cancellable: boolean;
   public setAmenity: Callback<[string]>;
   public setReserver: Callback<[string]>;
   private setState: Dispatch<SetStateAction<UIState>>;
-  constructor(
-    setState: Dispatch<SetStateAction<UIState>>,
-    cancellable: boolean,
-  ) {
+  public setEnd: Callback<[ChangeEvent<HTMLInputElement>]>;
+  public setStart: Callback<[ChangeEvent<HTMLInputElement>]>;
+  constructor(setState: Dispatch<SetStateAction<UIState>>) {
     this.setState = setState;
-    this.hasSetEnd = cancellable;
-    this.cancellable = cancellable;
+    this.setEnd = this.createTimeParser("end");
+    this.setStart = this.createTimeParser("start");
     this.setAmenity = this.createSetter("amenityId");
     this.setReserver = this.createSetter("reserver");
   }
 
-  public setStart = (start: string) => {
-    if (this.cancellable) {
-      return this.set("start", start);
-    }
-    if (!start) {
-      this.set("start", start);
-      this.set("end", start);
-      this.hasSetEnd = false;
-      return;
-    }
-    this.setState(ps => {
-      let end = ps.end;
-      if (!this.hasSetEnd) {
-        const [hours, minutes] = start.split(":");
-        if (hours === "23") {
-          end = start;
-        } else {
-          end = `${parseInt(hours) + 1}:${minutes}:00`;
-        }
-      }
-      return { ...ps, start, end };
-    });
-  };
-
-  public setEnd = (end: string) => {
-    this.hasSetEnd = true;
-    this.set("end", end);
-  };
-
-  public destroy() {
-    this.hasSetEnd = this.cancellable;
-  }
-
   public set<K extends keyof UIState>(key: K, value: UIState[K]) {
     this.setState(ps => ({ ...ps, [key]: value }));
+  }
+
+  public createTimeParser(key: "start" | "end") {
+    return (e: ChangeEvent<HTMLInputElement>) => {
+      let { value } = e.target;
+      if (value.length === 5) {
+        value = `${value}:00`;
+      }
+      this.setState(ps => ({ ...ps, [key]: value }));
+    };
   }
 
   public createSetter<K extends keyof UIState>(key: K) {

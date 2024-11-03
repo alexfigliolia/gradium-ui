@@ -1,7 +1,17 @@
 @use "Styles/Variables";
 
 .input.dropdown {
-  &>select,
+  &.isMobile input {
+    pointer-events: none;
+  }
+  &:focus-within {
+    background-position: 100% 50%;
+    box-shadow: #{Variables.$shadow-level-2} rgb(from var(--theme-dark) r g b / 30%);
+    & > span {
+      scale: 0.9;
+      transform: translateY(-1.5em) translateX(-0.25em);
+    }
+  }
   &>.dd-selector {
     top: 0;
     left: 0;

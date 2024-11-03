@@ -1,19 +1,28 @@
 import type { ChangeEvent } from "react";
 import { memo, useCallback } from "react";
 import { Input, type InputProps } from "Components/Input";
+import { TimeInput } from "Components/TimeInput";
 import type { Callback } from "Types/Generics";
 
 function ConfigurableSpaceInputComponent<
   T extends Record<string, any>,
   K extends keyof T = keyof T,
->({ property, onChange, ...rest }: Props<T, K>) {
+>({ property, onChange, type, ...rest }: Props<T, K>) {
   const onChangeText = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      onChange(property, e.target.value);
+      const { value } = e.target;
+      if (type === "time" && value.length === 5) {
+        return onChange(property, `${value}:00`);
+      }
+      onChange(property, value);
     },
-    [onChange, property],
+    [onChange, property, type],
   );
-  return <Input {...rest} onChange={onChangeText} />;
+
+  if (type === "time") {
+    return <TimeInput {...rest} onChange={onChangeText} />;
+  }
+  return <Input {...rest} type={type} onChange={onChangeText} />;
 }
 
 export const ConfigurableSpaceInput = memo(

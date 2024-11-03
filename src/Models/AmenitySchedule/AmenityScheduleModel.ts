@@ -120,24 +120,13 @@ export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
   private closeDatePicker = this.toggleKey("openDatePicker", false);
   private openNewReservation = this.toggleKey("openNewReservation", true);
   private closeNewReservation = this.toggleKey("openNewReservation", false);
-
-  private closeEditReservation = () => {
-    this.update(state => {
-      state.openEditReservation = false;
-    });
-    setTimeout(() => {
-      this.update(state => {
-        state.currentReservation = {};
-      });
-    }, 500);
-  };
-
   private openEditReservation = (reservation: AmenityReservation) => {
     this.update(state => {
       state.openEditReservation = true;
       state.currentReservation = reservation;
     });
   };
+  private closeEditReservation = this.toggleKey("openEditReservation", false)
 
   public datePicker = StackModel.createToggle(
     this.openDatePicker,

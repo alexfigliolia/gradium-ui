@@ -16,7 +16,7 @@ import { useEditableValue } from "Hooks/useEditableValue";
 import { BasketballCourtFilled } from "Icons/BasketballCourt";
 import { Clock } from "Icons/Clock";
 import { User } from "Icons/User";
-import { selectAmenities, useAmenities } from "State/Amenities";
+import { Amenities, selectAmenities, useAmenities } from "State/Amenities";
 import { AmenitySchedule } from "State/AmenitySchedule";
 import { Properties } from "State/Properties";
 import { Scope } from "State/Scope";
@@ -55,9 +55,9 @@ function ConfigureReservationComponent<
 
   const initialState = useMemo(
     () => ({
+      charge: "yes",
       end: defaultEnd,
       start: defaultStart,
-      charge: "yes",
       reserver: defaultReserver,
       amenityId: initialAmenity(),
     }),
@@ -66,7 +66,7 @@ function ConfigureReservationComponent<
 
   const [state, setState] = useEditableValue(initialState);
 
-  const controller = useController(new Controller(setState, cancellable));
+  const controller = useController(new Controller(setState));
 
   const [name, price, billed] = useMemo(
     () => Controller.getMeta(state.amenityId),
@@ -74,6 +74,10 @@ function ConfigureReservationComponent<
   );
 
   const [canClickOutside, enable, disable] = useEnabledClickOutside();
+
+  const deferEnableClickOutside = useCallback(() => {
+    timeout.execute(enable, 100);
+  }, [timeout, enable]);
 
   const cost = useMemo(
     () => Controller.computeCost(price, billed, state.start, state.end),
@@ -101,17 +105,23 @@ function ConfigureReservationComponent<
     };
   }, [state]);
 
-  const resetForm = useCallback(() => {
-    timeout.execute(() => {
-      setState({
-        end: "",
-        start: "",
-        charge: "yes",
-        reserver: "",
-        amenityId: initialAmenity(),
-      });
-    }, 500);
-  }, [initialAmenity, timeout, setState]);
+  const resetForm = useCallback(
+    (delay = 400) => {
+      if (cancellable) {
+        return;
+      }
+      timeout.execute(() => {
+        setState({
+          end: "",
+          start: "",
+          charge: "yes",
+          reserver: "",
+          amenityId: initialAmenity(),
+        });
+      }, delay);
+    },
+    [initialAmenity, timeout, setState, cancellable],
+  );
 
   const closeAndReset = useCallback(() => {
     close();
@@ -130,7 +140,6 @@ function ConfigureReservationComponent<
   useEffect(() => {
     if (!open) {
       resetForm();
-      controller.destroy();
     }
   }, [open, resetForm, controller]);
 
@@ -151,9 +160,9 @@ function ConfigureReservationComponent<
           multiple={false}
           value={state.amenityId}
           onOpen={disable}
-          onClose={enable}
           onChange={controller.setAmenity}
           icon={<BasketballCourtFilled />}
+          onClose={deferEnableClickOutside}
         />
         <div className="input-split">
           <TimeInput
@@ -180,16 +189,22 @@ function ConfigureReservationComponent<
           icon={<User />}
           value={state.reserver}
           onOpen={disable}
-          onClose={enable}
           fetch={Controller.fetchPeople}
+          onClose={deferEnableClickOutside}
           onChange={controller.setReserver}
         />
-        <RadioGroup
-          value={state.charge}
-          onChange={onChargeChange}
-          options={PropertyOptions.YES_NO}
-          label="Create a charge for this reservation?"
-        />
+        {!(
+          parseFloat(
+            Amenities.getById(parseInt(state.amenityId || "-1"))?.price,
+          ) === 0
+        ) && (
+          <RadioGroup
+            value={state.charge}
+            onChange={onChargeChange}
+            options={PropertyOptions.YES_NO}
+            label="Create a charge for this reservation?"
+          />
+        )}
         {!!cost && state.charge === "yes" && !!state.reserver && (
           <div className="cost">
             <div>

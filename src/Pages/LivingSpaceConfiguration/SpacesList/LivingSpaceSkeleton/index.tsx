@@ -11,7 +11,7 @@ export const LivingSpaceSkeleton = memo(
         inputGroupClassName="living-space-form">
         <InputSkeleton className="name-input" />
         <InputSkeleton className="dropdown type-dropdown" />
-        <InputSkeleton className="number-input size-input" />
+        <InputSkeleton className="number size-input" />
         <InputSkeleton className="dropdown beds-dropdown" />
         <InputSkeleton className="dropdown baths-dropdown" />
       </FormSkeleton>

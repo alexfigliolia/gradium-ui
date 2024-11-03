@@ -19,9 +19,9 @@ export const Scroller = memo(
     const node = useRef<HTMLDivElement>(null);
 
     const scrollTo = useCallback((index: number) => {
-      if (node.current) {
+      if (node.current?.children?.[0]) {
         const { height } = node.current.children[0].getBoundingClientRect();
-        node.current.scrollTo({ top: height * index });
+        node.current.scrollTo({ top: height * index, behavior: "instant" });
       }
     }, []);
 

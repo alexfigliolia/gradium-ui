@@ -102,7 +102,15 @@ function IDropDown<T extends IHTMLOption, M extends boolean | undefined>({
     [onFocus, controller.Toggle],
   );
 
-  const classes = useClassNames("dropdown", className);
+  const onClickIcon = useMemo(() => {
+    if (Devices.IS_MOBILE_BROWSER) {
+      return controller.Toggle.open;
+    }
+  }, [controller.Toggle]);
+
+  const classes = useClassNames("dropdown", className, {
+    isMobile: Devices.IS_MOBILE_BROWSER,
+  });
 
   return (
     <Input
@@ -111,10 +119,11 @@ function IDropDown<T extends IHTMLOption, M extends boolean | undefined>({
       label={label}
       ref={cacheRef}
       onChange={NOOP}
+      autoComplete="off"
       disabled={disabled}
       className={classes}
       onFocus={onFocusDD}
-      autoComplete="off"
+      onClickIcon={onClickIcon}
       value={Controller.parseValues(value, table)}>
       {children}
       {Devices.IS_MOBILE_BROWSER ? (

@@ -21,7 +21,7 @@ export class Controller {
   ) => {
     const [additions, deletions] = this.diff(current, selections);
     if (!additions.size && !deletions.size) {
-      return;
+      return this.setState("loading", false);
     }
     return this.update(additions, deletions);
   };

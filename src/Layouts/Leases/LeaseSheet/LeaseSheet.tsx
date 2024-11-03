@@ -93,7 +93,7 @@ export default memo(function LeaseSheet({
           autoComplete="off"
           value={rate.toString()}
           onChange={model.setRate}
-          className="number-input rate-input"
+          className="rate-input"
         />
         <h3>Lessees</h3>
         {lessees.map((person, i) => {
