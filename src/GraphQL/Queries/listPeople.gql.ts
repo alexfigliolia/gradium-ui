@@ -9,8 +9,8 @@ export const listPeople = gql`
     ) {
       cursor
       list {
+        id
         name
-        userId
       }
     }
   }

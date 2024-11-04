@@ -10,6 +10,7 @@ import { Catch } from "./Catch";
 import { Leases } from "./Leases";
 import { LivingSpaceConfiguration } from "./LivingSpaceConfiguration";
 import { PropertyConfiguration } from "./PropertyConfiguration";
+import { PropertyMaintenance } from "./PropertyMaintenance";
 
 export const Manage: NonIndexRouteObject = {
   path: AdminRoutes.slugRoute(":slug"),
@@ -25,6 +26,7 @@ export const Manage: NonIndexRouteObject = {
   },
   children: [
     Leases,
+    PropertyMaintenance,
     AmenityReservations,
     PropertyConfiguration,
     AmenitiesConfiguration,

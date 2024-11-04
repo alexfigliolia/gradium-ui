@@ -8,6 +8,7 @@ type Query {
   getAmenities(propertyId: Int!, organizationId: Int!): [Amenity!]!
   verifySession: Boolean!
   getLivingSpaces(propertyId: Int!, organizationId: Int!): [LivingSpace!]!
+  listManagementTasks(organizationId: Int!, propertyId: Int): [ManagementTask!]!
   fetchAmenityReservations(propertyId: Int!, organizationId: Int!, date: String!, amenityIds: [Int!]): [AmenityReservation!]!
   generateUploadSignature(organizationId: Int!, type: GradiumImageType!): UploadSignature!
   generateDestroySignature(organizationId: Int!, publicId: String!, type: GradiumImageType!): DestroySignature!
@@ -39,8 +40,6 @@ type PaginatedPeople {
 }
 type Person {
   id: Int!
-  organizationId: Int!
-  userId: Int!
   name: String!
 }
 type Amenity {
@@ -69,6 +68,30 @@ type LivingSpace {
   propertyId: Int!
   images: [GradiumImage!]!
   floorPlans: [GradiumImage!]!
+}
+type ManagementTask {
+  id: Int!
+  createdAt: String!
+  title: String!
+  description: String!
+  status: ManagementTaskStatus!
+  priority: ManagementTaskPriority!
+  createdBy: Person!
+  images: [GradiumImage!]!
+  assignedTo: StaffProfile
+  expenses: [Expense!]!
+}
+type StaffProfile {
+  id: Int!
+  name: String!
+}
+type Expense {
+  id: Int!
+  createdAt: String!
+  cost: String!
+  title: String!
+  description: String!
+  attachments: [GradiumImage!]!
 }
 type AmenityReservation {
   id: Int!
@@ -134,6 +157,7 @@ type Mutation {
   setOrganizationName(name: String!, organizationId: Int!): Boolean!
   modifyPropertyAddons(propertyId: Int!, organizationId: Int!, additions: [PropertyAddonType!]!, deletions: [Int!]!): [PropertyAddon!]!
   createOrUpdateAmenity(propertyId: Int!, organizationId: Int!, id: Int, name: String!, billed: BillFrequency!, open: String!, close: String!, price: String!, size: String!): Amenity!
+  setManagementTaskStatus(id: Int!, organizationId: Int!, status: ManagementTaskStatus!): Boolean!
   updateBasicPropertyInfo(propertyId: Int!, organizationId: Int!, name: String!, address1: String!, address2: String!, city: String!, state: String!, zipCode: String!): AdminBasicProperty!
   createAmenityReservation(propertyId: Int!, organizationId: Int!, amenityId: Int!, personId: Int!, date: String!, start: String!, end: String!, charge: Boolean): AmenityReservation!
   cancelAmenityReservation(id: Int!, propertyId: Int!, organizationId: Int!): Int!
@@ -157,6 +181,17 @@ enum BillFrequency {
 enum LivingSpaceType {
   unit
   dwelling
+}
+enum ManagementTaskStatus {
+  todo
+  inProgress
+  underReview
+  complete
+}
+enum ManagementTaskPriority {
+  high
+  low
+  immediate
 }
 enum GradiumImageType {
   propertyImage

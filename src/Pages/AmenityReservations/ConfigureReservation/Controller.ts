@@ -76,7 +76,7 @@ export class Controller {
         cursor: response.listPeople.cursor,
         list: response.listPeople.list.map(item => ({
           label: item.name,
-          value: item.userId.toString(),
+          value: item.id.toString(),
         })),
       };
     } catch (error) {

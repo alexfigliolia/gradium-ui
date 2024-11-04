@@ -1,0 +1,18 @@
+@use "Styles/Variables";
+
+.scrum {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  margin-top: 1em;
+  overflow-x: scroll;
+  display: grid;
+  column-gap: 0.25em;
+  grid-template-columns: repeat(4, 100%);
+  @media (min-width: Variables.$small-vertical-tablet) {
+    grid-template-columns: repeat(4, 50%);
+  }
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(4, calc(25% - 0.2em));
+  }
+}

@@ -1,0 +1,86 @@
+@use "Styles/Variables";
+
+.management-task {
+  width: 100%;
+  padding: 0.75em;
+  border: none;
+  text-align: left;
+  border-radius: 0.25em;
+  background-color: var(--drop-down-background);
+  box-shadow: var(--shadow-level-1-mid);
+  &__title {
+    margin-bottom: 0.5em;
+    &>div {
+      display: flex;
+      align-items: flex-start;
+      column-gap: 0.5em;
+      justify-content: space-between;
+      &>h4 {
+        max-width: 100%;
+        font-size: 1em;
+        font-weight: 500;
+        @include Variables.gradientText;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      &>svg {
+        width: 1.75em;
+        height: 1.75em;
+        filter: drop-shadow(var(--shadow-level-1-mid));
+        & path {
+          &:not(:first-of-type) {
+            stroke: #fff;
+          }
+        }
+        &.low-priority path:first-of-type {
+          fill: url(#successGradient);
+          stroke: url(#successGradient);
+        }
+        &.high-priority path:first-of-type {
+          fill: url(#errorGradient);
+          stroke: url(#errorGradient);
+        }
+        &.immediate-priority path:first-of-type {
+          fill: url(#themeGradient);
+          stroke: url(#themeGradient);
+        }
+      }
+    }
+    &>time,
+    &>p {
+      display: block;
+      font-size: 0.8em;
+      font-weight: 400;
+      color: var(--text-color-light);
+    }
+    &>time {
+      margin-top: -0.5em;
+    }
+    &>p { 
+      margin-top: 0.2em;
+      &>strong {
+        &.low {
+          @include Variables.successGradient;
+          @include Variables.clipText;
+        }
+        &.high {
+          @include Variables.errorGradient;
+          @include Variables.clipText;
+        }
+        &.immediate {
+          @include Variables.gradientText;
+        }
+      }
+    }
+  }
+  &>p {
+    font-size: 0.95em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+            line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+}

@@ -1,0 +1,10 @@
+.null-task {
+  height: 150px;
+  width: 100%;
+  border-radius: 0.5em;
+  font-size: 1.1em;
+  font-weight: 300;
+  color: rgb(from var(--text-color-lightest) r g b / 75%);
+  border: 2px solid var(--background);
+  background-color: rgb(from var(--background) r g b / 50%);
+}
