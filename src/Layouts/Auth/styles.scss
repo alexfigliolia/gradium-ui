@@ -3,6 +3,7 @@
 .auth-screen {
   width: 100%;
   height: 100vh;
+  height: 100svh;
   overflow: hidden;
   position: relative;
   animation: show 0.5s forwards;
@@ -18,6 +19,15 @@
     margin-top: 6vh;
     @media (min-width: 390px) {
       margin-top: 8vh;
+    }
+    @media (min-width: 400px) {
+      margin-top: 10vh;
+    }
+    @media (min-width: 440px) {
+      margin-top: 15vh;
+    }
+    @media (min-width: 500px) {
+      margin-top: 10vh;
     }
     @media (min-width: Variables.$small-vertical-tablet) {
       margin-top: 5vh;
