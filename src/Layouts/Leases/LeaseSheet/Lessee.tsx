@@ -64,6 +64,7 @@ export const Lessee = memo(function Lessees({
           icon={<At />}
           autoComplete="off"
           value={email}
+          inputMode="email"
           onChange={setEmail}
         />
         {index !== 0 && (

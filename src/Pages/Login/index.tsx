@@ -16,6 +16,7 @@ export default memo(
           type="email"
           label="Email"
           name="email"
+          inputMode="email"
           autoComplete="email"
         />
         <Input

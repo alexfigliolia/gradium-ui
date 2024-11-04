@@ -76,6 +76,7 @@ export const LinkEmail = memo(function LinkEmail(_: Propless) {
           icon={<At />}
           name="email"
           ref={input}
+          inputMode="email"
           autoComplete="off"
         />
         <ActionButton loading={loading} error={!!error} success={success}>

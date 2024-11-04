@@ -97,7 +97,7 @@ export class AmenitiesModel extends ConfigurableSpaceModel<Amenity> {
       close: "21:00:00",
       images: [],
       floorPlans: [],
-      capacity: 0,
+      capacity: "0",
       price: "0",
       billed: BillFrequency.Hour,
       propertyId: Properties.getState().current,
@@ -111,7 +111,7 @@ export class AmenitiesModel extends ConfigurableSpaceModel<Amenity> {
     return (
       amenity.name.length !== 0 &&
       // @ts-ignore
-      parseInt(amenity.capacity) == amenity.capacity
+      parseFloat(amenity.capacity) == amenity.capacity
     );
   }
 }

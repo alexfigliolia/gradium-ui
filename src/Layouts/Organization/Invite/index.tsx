@@ -35,6 +35,7 @@ export const Invite = memo(
         type="email"
         label="Email"
         icon={<At />}
+        inputMode="email"
         error={!!error}
         success={success}
         loading={loading}

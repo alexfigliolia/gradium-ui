@@ -89,6 +89,7 @@ export default memo(function LeaseSheet({
           type="number"
           label="Rate"
           step={0.01}
+          inputMode="decimal"
           icon={<Price />}
           autoComplete="off"
           value={rate.toString()}

@@ -59,18 +59,19 @@ export const Inputs = memo(
           onChange={controller.update}
         />
         <ConfigurableSpaceInput<Amenity>
+          step={1}
           type="number"
           label="Capacity"
-          step={1}
           property="capacity"
           name={sizeKey}
           icon={<Ruler />}
+          inputMode="numeric"
           value={item.capacity}
           autoComplete="off"
           disabled={!editing}
           onChange={controller.update}
           className="capacity-input">
-          <div className="postfix">sqft</div>
+          <div className="postfix">People</div>
         </ConfigurableSpaceInput>
         <h4>Hours of Operation</h4>
         <ConfigurableSpaceInput<Amenity>
@@ -101,6 +102,7 @@ export const Inputs = memo(
           name={priceKey}
           property="price"
           icon={<Price />}
+          inputMode="decimal"
           autoComplete="off"
           value={item.price}
           disabled={!editing}

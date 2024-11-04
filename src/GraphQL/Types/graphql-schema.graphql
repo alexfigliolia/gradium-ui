@@ -50,7 +50,7 @@ type Amenity {
   billed: BillFrequency!
   open: String!
   close: String!
-  capacity: Int!
+  capacity: String!
   propertyId: Int!
   images: [GradiumImage!]!
   floorPlans: [GradiumImage!]!
@@ -157,7 +157,7 @@ type Mutation {
   deleteLivingSpace(propertyId: Int!, organizationId: Int!, id: Int!): LivingSpace!
   setOrganizationName(name: String!, organizationId: Int!): Boolean!
   modifyPropertyAddons(propertyId: Int!, organizationId: Int!, additions: [PropertyAddonType!]!, deletions: [Int!]!): [PropertyAddon!]!
-  createOrUpdateAmenity(propertyId: Int!, organizationId: Int!, id: Int, name: String!, billed: BillFrequency!, open: String!, close: String!, price: String!, capacity: Int!): Amenity!
+  createOrUpdateAmenity(propertyId: Int!, organizationId: Int!, id: Int, name: String!, billed: BillFrequency!, open: String!, close: String!, price: String!, capacity: String!): Amenity!
   setManagementTaskStatus(id: Int!, organizationId: Int!, status: ManagementTaskStatus!): Boolean!
   updateBasicPropertyInfo(propertyId: Int!, organizationId: Int!, name: String!, address1: String!, address2: String!, city: String!, state: String!, zipCode: String!): AdminBasicProperty!
   createAmenityReservation(propertyId: Int!, organizationId: Int!, amenityId: Int!, personId: Int!, date: ISODate!, start: ISODate!, end: ISODate!, charge: Boolean): AmenityReservation!

@@ -34,6 +34,7 @@ export const YearInput = memo(function YearInput({
         minLength={4}
         maxLength={4}
         pattern=""
+        inputMode="numeric"
         readOnly={!open}
         disabled={!open}
         icon={<Clock />}

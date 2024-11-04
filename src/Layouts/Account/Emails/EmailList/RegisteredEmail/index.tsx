@@ -40,6 +40,7 @@ export const RegisteredEmail = memo(function RegisteredEmail({ email }: Props) {
         label="Email"
         icon={<At />}
         name="email"
+        inputMode="email"
         autoComplete="off"
         value={update}
         onChange={onChange}

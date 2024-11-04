@@ -59,6 +59,7 @@ export const Inputs = memo(
           step="any"
           value={size}
           property="size"
+          inputMode="numeric"
           icon={<Ruler />}
           autoComplete="off"
           disabled={!editing}

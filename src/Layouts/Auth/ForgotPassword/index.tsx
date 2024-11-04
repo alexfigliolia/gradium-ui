@@ -73,6 +73,7 @@ export const ForgotPassword = memo(
             name="email"
             label="Email"
             icon={<At />}
+            inputMode="email"
             ref={controller}
           />
           <ActionButton
