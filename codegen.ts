@@ -13,6 +13,11 @@ const config: CodegenConfig = {
         gqlTagName: "gql",
         fragmentMasking: false,
       },
+      config: {
+        scalars: {
+          ISODate: "string",
+        },
+      },
     },
   },
   ignoreNoDocuments: true,

@@ -44,7 +44,7 @@ export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
         FetchAmenityReservationsQuery,
         FetchAmenityReservationsQueryVariables
       >(fetchAmenityReservations, {
-        date: Dates.toDayPreciseISOString(date),
+        date: Dates.setTime(date).toISOString(),
         propertyId: Properties.getState().current,
         organizationId: Scope.getState().currentOrganizationId,
         amenityIds: amenityIds.length ? amenityIds : undefined,
@@ -126,7 +126,7 @@ export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
       state.currentReservation = reservation;
     });
   };
-  private closeEditReservation = this.toggleKey("openEditReservation", false)
+  private closeEditReservation = this.toggleKey("openEditReservation", false);
 
   public datePicker = StackModel.createToggle(
     this.openDatePicker,

@@ -205,20 +205,27 @@ export class Dates {
     return `${days} ${days === 1 ? "day" : "days"} remaining`;
   }
 
-  public static toDayPreciseISOString(date: Date) {
-    date.setHours(0);
-    date.setMinutes(0);
-    date.setSeconds(0);
-    date.setMilliseconds(0);
-    return date.toISOString();
+  public static setTime(
+    date: Date,
+    hours = 0,
+    minutes = 0,
+    seconds = 0,
+    milliseconds = 0,
+  ) {
+    date.setHours(hours);
+    date.setMinutes(minutes);
+    date.setSeconds(seconds);
+    date.setMilliseconds(milliseconds);
+    return date;
   }
 
   public static timeToDate(time: string, date = new Date()) {
     const [hours, minutes, seconds] = time.split(":");
-    date.setHours(parseInt(hours));
-    date.setMinutes(parseInt(minutes));
-    date.setSeconds(parseInt(seconds));
-    date.setMilliseconds(0);
-    return date;
+    return this.setTime(
+      date,
+      parseInt(hours),
+      parseInt(minutes),
+      parseInt(seconds),
+    );
   }
 }

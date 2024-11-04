@@ -93,15 +93,17 @@ function ConfigureReservationComponent<
 
   const getFormData = useCallback(() => {
     const { start, end, charge, reserver, amenityId } = state;
+    const { currentDate } = AmenitySchedule.getState();
+    const base = Dates.setTime(new Date(currentDate));
     return {
-      end,
-      start,
+      date: base.toISOString(),
       charge: charge === "no" ? false : true,
+      end: Dates.timeToDate(end, new Date(base)).toISOString(),
+      start: Dates.timeToDate(start, new Date(base)).toISOString(),
       personId: Controller.toIdentifier(reserver),
       amenityId: Controller.toIdentifier(amenityId),
       organizationId: Scope.getState().currentOrganizationId,
       propertyId: Properties.getState().current,
-      date: Dates.toDayPreciseISOString(AmenitySchedule.getState().currentDate),
     };
   }, [state]);
 
