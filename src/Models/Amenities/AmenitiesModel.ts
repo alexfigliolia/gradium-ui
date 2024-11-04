@@ -17,6 +17,7 @@ import { BillFrequency, GradiumImageType } from "GraphQL/Types";
 import { UIClient } from "GraphQL/UIClient";
 import { Properties } from "State/Properties";
 import { Scope } from "State/Scope";
+import { Dates } from "Tools/Dates";
 import type { Callback } from "Types/Generics";
 
 export class AmenitiesModel extends ConfigurableSpaceModel<Amenity> {
@@ -34,7 +35,11 @@ export class AmenitiesModel extends ConfigurableSpaceModel<Amenity> {
       propertyId: Properties.getState().current,
       organizationId: Scope.getState().currentOrganizationId,
     });
-    return response.getAmenities;
+    return response.getAmenities.map(amenity => ({
+      ...amenity,
+      open: Dates.toLocalTime(amenity.open),
+      close: Dates.toLocalTime(amenity.close),
+    }));
   }
 
   protected async saveSpace(
@@ -47,10 +52,17 @@ export class AmenitiesModel extends ConfigurableSpaceModel<Amenity> {
       CreateOrUpdateAmenityMutationVariables
     >(createOrUpdateAmenity, {
       ...newAmenity,
+      open: Dates.toUTCTime(newAmenity.open),
+      close: Dates.toUTCTime(newAmenity.close),
       propertyId: Properties.getState().current,
       organizationId: Scope.getState().currentOrganizationId,
     });
-    return response.createOrUpdateAmenity;
+    const amenity = response.createOrUpdateAmenity;
+    return {
+      ...amenity,
+      open: Dates.toLocalTime(amenity.open),
+      close: Dates.toLocalTime(amenity.close),
+    };
   }
 
   protected async deleteTransaction(

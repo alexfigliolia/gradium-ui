@@ -228,4 +228,26 @@ export class Dates {
       parseInt(seconds),
     );
   }
+
+  public static toUTCTime(time: string) {
+    const date = this.timeToDate(time);
+    const [_, isoTime] = date.toISOString().split("T");
+    const [utcTime] = isoTime.split(".");
+    return utcTime;
+  }
+
+  public static toLocalTime(utcTime: string) {
+    const [hours, minutes, seconds] = utcTime.split(":");
+    const date = new Date();
+    date.setUTCHours(parseInt(hours));
+    date.setUTCMinutes(parseInt(minutes));
+    date.setUTCSeconds(parseInt(seconds));
+    date.setMilliseconds(0);
+    return date.toLocaleString("en-us", {
+      hour12: false,
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    });
+  }
 }
