@@ -8,7 +8,7 @@ export const AmenityFragment = gql`
     price
     billed
     close
-    size
+    capacity
     propertyId
     images {
       id

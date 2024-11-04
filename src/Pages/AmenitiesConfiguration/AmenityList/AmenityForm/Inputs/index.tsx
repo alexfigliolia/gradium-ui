@@ -25,7 +25,7 @@ export const Inputs = memo(
       [controller],
     );
     const sizeKey = useMemo(
-      () => controller.createKey("size", "amenity"),
+      () => controller.createKey("capacity", "amenity"),
       [controller],
     );
     const openKey = useMemo(
@@ -60,16 +60,16 @@ export const Inputs = memo(
         />
         <ConfigurableSpaceInput<Amenity>
           type="number"
-          label="Size"
-          step="any"
-          property="size"
+          label="Capacity"
+          step={1}
+          property="capacity"
           name={sizeKey}
           icon={<Ruler />}
-          value={item.size}
+          value={item.capacity}
           autoComplete="off"
           disabled={!editing}
           onChange={controller.update}
-          className="size-input">
+          className="capacity-input">
           <div className="postfix">sqft</div>
         </ConfigurableSpaceInput>
         <h4>Hours of Operation</h4>
