@@ -48,13 +48,25 @@ export const Input = memo(
       input.current?.focus?.();
     }, [onClickIcon]);
 
+    const triggerValidityCheck = useCallback(() => {
+      setValid(!!input.current?.validity?.valid && !!input.current?.value);
+      setAutofilled(!!input.current?.matches?.(":autofill"));
+    }, []);
+
     useImperativeHandle(
       ref,
       () => ({
         input: input.current,
         label: labelNode.current,
+        clear: () => {
+          if (input.current) {
+            input.current.value = "";
+            input.current.dispatchEvent(new Event("change", { bubbles: true }));
+            triggerValidityCheck();
+          }
+        },
       }),
-      [input],
+      [input, triggerValidityCheck],
     );
 
     const focusInterceptor = useMemo(
@@ -90,18 +102,16 @@ export const Input = memo(
 
     useEffect(() => {
       try {
-        setTimeout(() => {
-          setValid(!!input.current?.validity?.valid && !!input.current?.value);
-          setAutofilled(!!input.current?.matches?.(":autofill"));
-        }, 100);
+        setTimeout(triggerValidityCheck, 100);
       } catch (error) {
         // browser support
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
-      setValid(!!input.current?.validity?.valid && !!input.current?.value);
-    }, [value]);
+      triggerValidityCheck();
+    }, [value, triggerValidityCheck]);
 
     return (
       <label className={classes} ref={labelNode}>
@@ -143,6 +153,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export interface InputRef {
+  clear: () => void;
   label: HTMLLabelElement | null;
   input: HTMLInputElement | null;
 }
