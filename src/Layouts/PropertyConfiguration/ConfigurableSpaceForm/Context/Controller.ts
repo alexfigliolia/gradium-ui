@@ -5,6 +5,7 @@ import type { ConfigurableSpaceModel } from "Generics/ConfigurableSpaceModel";
 import type { GradiumImageType } from "GraphQL/Types";
 import { Modals } from "State/Modals";
 import { CloudinaryUploader } from "Tools/CloudinaryUploader";
+import { Dates } from "Tools/Dates";
 import type { Callback } from "Types/Generics";
 import type { IConfigurableSpace } from "Types/Gradium";
 
@@ -37,6 +38,43 @@ export class Controller<
     this.setState("loading", true);
     this.model.updateListItem(this.ID, key, value);
     this.debouncer.execute();
+  };
+
+  public updateInt = <K extends Extract<keyof T, string>>(
+    key: K,
+    value: string,
+  ) => {
+    return this.update(key, parseInt(value) as T[K]);
+  };
+
+  public updateTimeToDate = <K extends Extract<keyof T, string>>(
+    key: K,
+    value: T[K],
+  ) => {
+    if (!value) {
+      return this.model.updateListItem(this.ID, key, value);
+    }
+    if (typeof value === "string") {
+      const date = Dates.timeToDate(value);
+      if (date === "Invalid Date") {
+        return this.update(key, value);
+      }
+      return this.update(key, Dates.timeToDate(value) as T[k]);
+    }
+  };
+
+  public parseTimeFromDate = (date: string) => {
+    if (!date) {
+      return "";
+    }
+    if (!Dates.isISODate(date)) {
+      return date;
+    }
+    const dateObj = new Date(date);
+    if (dateObj.toString() === "Invalid Date") {
+      return date;
+    }
+    return Dates.dateToTime(new Date(date));
   };
 
   public destroy() {

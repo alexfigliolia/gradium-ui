@@ -98,8 +98,8 @@ function ConfigureReservationComponent<
     return {
       date: base.toISOString(),
       charge: charge === "no" ? false : true,
-      end: Dates.timeToDate(end, new Date(base)).toISOString(),
-      start: Dates.timeToDate(start, new Date(base)).toISOString(),
+      end: Dates.timeToDate(end, new Date(base)),
+      start: Dates.timeToDate(start, new Date(base)),
       personId: Controller.toIdentifier(reserver),
       amenityId: Controller.toIdentifier(amenityId),
       organizationId: Scope.getState().currentOrganizationId,

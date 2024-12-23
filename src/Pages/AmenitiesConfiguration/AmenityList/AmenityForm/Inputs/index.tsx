@@ -45,6 +45,15 @@ export const Inputs = memo(
       [controller],
     );
 
+    const open = useMemo(
+      () => controller.parseTimeFromDate(item.open),
+      [item.open, controller],
+    );
+    const close = useMemo(
+      () => controller.parseTimeFromDate(item.close),
+      [item.close, controller],
+    );
+
     return (
       <Fragment>
         <ConfigurableSpaceInput<Amenity>
@@ -69,7 +78,7 @@ export const Inputs = memo(
           value={item.capacity}
           autoComplete="off"
           disabled={!editing}
-          onChange={controller.update}
+          onChange={controller.updateInt}
           className="capacity-input">
           <div className="postfix">People</div>
         </ConfigurableSpaceInput>
@@ -80,9 +89,9 @@ export const Inputs = memo(
           label="Open From"
           icon={<Clock />}
           property="open"
+          value={open}
           disabled={!editing}
-          onChange={controller.update}
-          value={item.open}
+          onChange={controller.updateTimeToDate}
         />
         <ConfigurableSpaceInput<Amenity>
           label="Closes At"
@@ -91,8 +100,8 @@ export const Inputs = memo(
           property="close"
           name={closeKey}
           disabled={!editing}
-          onChange={controller.update}
-          value={item.close}
+          value={close}
+          onChange={controller.updateTimeToDate}
         />
         <h4>Reservation Pricing</h4>
         <ConfigurableSpaceInput<Amenity>

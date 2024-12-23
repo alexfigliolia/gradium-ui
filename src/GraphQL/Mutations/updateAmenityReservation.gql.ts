@@ -9,9 +9,9 @@ export const updateAmenityReservation = gql`
     $propertyId: Int!
     $amenityId: Int!
     $personId: Int!
-    $date: ISODate!
-    $start: ISODate!
-    $end: ISODate!
+    $date: String!
+    $start: String!
+    $end: String!
     $charge: Boolean
   ) {
     updateAmenityReservation(

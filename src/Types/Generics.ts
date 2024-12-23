@@ -6,10 +6,8 @@ export interface LifeCycleController {
 }
 
 export type FilterKeys<T, V> = {
-  [K in keyof T]: T[K] extends V ? T[K] : never;
-};
-
-export type KeysOfType<T, V> = Extract<keyof FilterKeys<T, V>, string>;
+  [K in keyof T]: T[K] extends V ? K : never;
+}[keyof T];
 
 export type Shift<T extends any[]> = T extends [infer _, ...infer R]
   ? R

@@ -3,6 +3,7 @@ import { useFocusedKeyListener } from "@figliolia/react-hooks";
 import type { EventClickArg } from "@fullcalendar/core/index.js";
 import FullCalendar from "@fullcalendar/react";
 import TimeGrid from "@fullcalendar/timegrid";
+import { useTimeString } from "Hooks/useTimeString";
 import {
   AmenitySchedule,
   openAndClose,
@@ -10,7 +11,6 @@ import {
   selectReservations,
   useAmenitySchedule,
 } from "State/AmenitySchedule";
-import { Dates } from "Tools/Dates";
 import type { Propless } from "Types/React";
 import "./styles.scss";
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -20,7 +20,9 @@ export const DayView = memo(
     const calendar = useRef<FullCalendar>(null);
     const events = useAmenitySchedule(selectReservations);
     const active = useAmenitySchedule(selectCurrentDate);
-    const [open, close] = useAmenitySchedule(openAndClose);
+    const [openISO, closeISO] = useAmenitySchedule(openAndClose);
+    const open = useTimeString(openISO);
+    const close = useTimeString(closeISO);
 
     const calendarEvents = useMemo(
       () =>
@@ -28,8 +30,8 @@ export const DayView = memo(
           id: e.id.toString(),
           title: e.amenity.name,
           rawEvent: e,
-          start: Dates.timeToDate(e.start, new Date(active)),
-          end: Dates.timeToDate(e.end, new Date(active)),
+          start: e.start,
+          end: e.end,
           date: active,
         })),
       [events, active],

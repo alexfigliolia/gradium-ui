@@ -2,7 +2,6 @@ schema {
   query: Query
   mutation: Mutation
 }
-scalar ISODate
 type Query {
   userScope: LoggedInUser!
   listPeople(organizationId: Int!, limit: Int, cursor: Int): PaginatedPeople!
@@ -10,7 +9,7 @@ type Query {
   verifySession: Boolean!
   getLivingSpaces(propertyId: Int!, organizationId: Int!): [LivingSpace!]!
   listManagementTasks(organizationId: Int!, propertyId: Int): [ManagementTask!]!
-  fetchAmenityReservations(propertyId: Int!, organizationId: Int!, date: ISODate!, amenityIds: [Int!]): [AmenityReservation!]!
+  fetchAmenityReservations(propertyId: Int!, organizationId: Int!, date: String!, amenityIds: [Int!]): [AmenityReservation!]!
   generateUploadSignature(organizationId: Int!, type: GradiumImageType!): UploadSignature!
   generateDestroySignature(organizationId: Int!, publicId: String!, type: GradiumImageType!): DestroySignature!
   adminBasicPropertiesList(organizationId: Int!): [AdminBasicProperty!]!
@@ -50,7 +49,7 @@ type Amenity {
   billed: BillFrequency!
   open: String!
   close: String!
-  capacity: String!
+  capacity: Int!
   propertyId: Int!
   images: [GradiumImage!]!
   floorPlans: [GradiumImage!]!
@@ -96,9 +95,9 @@ type Expense {
 }
 type AmenityReservation {
   id: Int!
-  date: ISODate!
-  start: ISODate!
-  end: ISODate!
+  date: String!
+  start: String!
+  end: String!
   amenity: EntitySnapShot!
   person: EntitySnapShot!
 }
@@ -157,12 +156,12 @@ type Mutation {
   deleteLivingSpace(propertyId: Int!, organizationId: Int!, id: Int!): LivingSpace!
   setOrganizationName(name: String!, organizationId: Int!): Boolean!
   modifyPropertyAddons(propertyId: Int!, organizationId: Int!, additions: [PropertyAddonType!]!, deletions: [Int!]!): [PropertyAddon!]!
-  createOrUpdateAmenity(propertyId: Int!, organizationId: Int!, id: Int, name: String!, billed: BillFrequency!, open: String!, close: String!, price: String!, capacity: String!): Amenity!
+  createOrUpdateAmenity(propertyId: Int!, organizationId: Int!, id: Int, name: String!, billed: BillFrequency!, open: String!, close: String!, price: String!, capacity: Int!): Amenity!
   setManagementTaskStatus(id: Int!, organizationId: Int!, status: ManagementTaskStatus!): Boolean!
   updateBasicPropertyInfo(propertyId: Int!, organizationId: Int!, name: String!, address1: String!, address2: String!, city: String!, state: String!, zipCode: String!): AdminBasicProperty!
-  createAmenityReservation(propertyId: Int!, organizationId: Int!, amenityId: Int!, personId: Int!, date: ISODate!, start: ISODate!, end: ISODate!, charge: Boolean): AmenityReservation!
+  createAmenityReservation(propertyId: Int!, organizationId: Int!, amenityId: Int!, personId: Int!, date: String!, start: String!, end: String!, charge: Boolean): AmenityReservation!
   cancelAmenityReservation(id: Int!, propertyId: Int!, organizationId: Int!): Int!
-  updateAmenityReservation(id: Int!, propertyId: Int!, organizationId: Int!, amenityId: Int!, personId: Int!, date: ISODate!, start: ISODate!, end: ISODate!, charge: Boolean): AmenityReservation!
+  updateAmenityReservation(id: Int!, propertyId: Int!, organizationId: Int!, amenityId: Int!, personId: Int!, date: String!, start: String!, end: String!, charge: Boolean): AmenityReservation!
   createOrUpdateLivingSpace(propertyId: Int!, organizationId: Int!, id: Int, name: String!, type: LivingSpaceType!, beds: Int!, baths: Float!, size: String!): LivingSpace!
 }
 type BasicUser {

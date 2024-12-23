@@ -4,6 +4,7 @@ import type {
   UpdateAmenityReservationMutation,
   UpdateAmenityReservationMutationVariables,
 } from "GraphQL/Types";
+import { useTimeString } from "Hooks/useTimeString";
 import {
   AmenitySchedule,
   editReservation,
@@ -20,6 +21,8 @@ export const EditReservation = memo(
     const { id, end, start, person, amenity } = useAmenitySchedule(
       selectCurrentReservation,
     );
+    const endTime = useTimeString(end);
+    const startTime = useTimeString(start);
 
     const configureMutation = useCallback(
       (data: CRFormData) => ({
@@ -42,8 +45,8 @@ export const EditReservation = memo(
         id={id}
         cancellable
         open={open}
-        defaultEnd={end}
-        defaultStart={start}
+        defaultEnd={endTime}
+        defaultStart={startTime}
         title="Edit Reservation"
         configureMutation={configureMutation}
         defaultReserver={person?.id?.toString()}

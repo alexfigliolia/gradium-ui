@@ -6,7 +6,7 @@ export const fetchAmenityReservations = gql`
   query fetchAmenityReservations(
     $organizationId: Int!
     $propertyId: Int!
-    $date: ISODate!
+    $date: String!
     $amenityIds: [Int!]
   ) {
     fetchAmenityReservations(

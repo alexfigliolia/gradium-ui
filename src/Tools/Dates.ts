@@ -226,28 +226,18 @@ export class Dates {
       parseInt(hours),
       parseInt(minutes),
       parseInt(seconds),
-    );
+    ).toISOString();
   }
 
-  public static toUTCTime(time: string) {
-    const date = this.timeToDate(time);
-    const [_, isoTime] = date.toISOString().split("T");
-    const [utcTime] = isoTime.split(".");
-    return utcTime;
+  public static dateToTime(input: Date | string) {
+    const date = typeof input === "string" ? new Date(input) : input;
+    return `${this.pad(date.getHours())}:${this.pad(date.getMinutes())}:${this.pad(date.getSeconds())}`;
   }
 
-  public static toLocalTime(utcTime: string) {
-    const [hours, minutes, seconds] = utcTime.split(":");
-    const date = new Date();
-    date.setUTCHours(parseInt(hours));
-    date.setUTCMinutes(parseInt(minutes));
-    date.setUTCSeconds(parseInt(seconds));
-    date.setMilliseconds(0);
-    return date.toLocaleString("en-us", {
-      hour12: false,
-      hour: "numeric",
-      minute: "numeric",
-      second: "numeric",
-    });
+  private static pad(value: number) {
+    if (value < 10) {
+      return `0${value}`;
+    }
+    return value.toString();
   }
 }
