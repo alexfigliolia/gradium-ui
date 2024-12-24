@@ -16,8 +16,6 @@ import type { IAmenitySchedule } from "./types";
 export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
   constructor() {
     super("Amenity Schedule", {
-      open: "09:00:00",
-      close: "21:00:00",
       loading: false,
       amenityIds: [],
       reservations: [],
@@ -26,6 +24,8 @@ export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
       openNewReservation: false,
       openEditReservation: false,
       currentReservation: {},
+      open: Dates.timeToDate("09:00:00"),
+      close: Dates.timeToDate("21:00:00"),
     });
   }
 

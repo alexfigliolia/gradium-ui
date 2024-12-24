@@ -10,7 +10,7 @@ export class StackModel<T extends Record<string, any>> extends BaseModel<T> {
     return ModalStack.create(opener, closer);
   }
 
-  protected toggleKey = <K extends keyof FilterKeys<T, boolean>>(
+  protected toggleKey = <K extends FilterKeys<T, boolean>>(
     key: K,
     nextValue: boolean,
   ) => {
