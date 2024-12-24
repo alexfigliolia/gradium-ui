@@ -3,6 +3,7 @@ import type { ILoadingStateSetter } from "@figliolia/react-hooks";
 import { useFormState } from "@figliolia/react-hooks";
 import { ActionButton } from "Components/ActionButton";
 import { Confirmation } from "Components/Confirmation";
+import type { InputRef } from "Components/Input";
 import { Input } from "Components/Input";
 import { resetPassword } from "GraphQL/Mutations/resetPassword.gql";
 import type {
@@ -19,6 +20,8 @@ import type { Propless } from "Types/React";
 import "./styles.scss";
 
 export const ResetPassword = memo(function ResetPassword(_: Propless) {
+  const nextPW = useRef<InputRef>(null);
+  const currentPW = useRef<InputRef>(null);
   const form = useRef<HTMLFormElement>(null);
   const open = useModals(selectResetPassword);
   const callback = useCallback(
@@ -42,12 +45,19 @@ export const ResetPassword = memo(function ResetPassword(_: Propless) {
         await client.executeQuery<
           ResetPasswordMutation,
           ResetPasswordMutationVariables
-        >(resetPassword, {
-          next,
-          previous,
-          userId: Scope.getState().id,
-        });
-        form.current?.reset();
+        >(
+          resetPassword,
+          {
+            next,
+            previous,
+            userId: Scope.getState().id,
+          },
+          () => {
+            nextPW.current?.clear?.();
+            currentPW.current?.clear?.();
+            Modals.resetPassword.close();
+          },
+        );
       } catch (error) {
         // silence
       }
@@ -65,6 +75,7 @@ export const ResetPassword = memo(function ResetPassword(_: Propless) {
       <form ref={form} onSubmit={onSubmit}>
         <Input
           required
+          ref={currentPW}
           icon={<LockStroked />}
           type="password"
           label="Current Password"
@@ -73,6 +84,7 @@ export const ResetPassword = memo(function ResetPassword(_: Propless) {
         />
         <Input
           required
+          ref={nextPW}
           icon={<LockStroked />}
           type="password"
           label="New Password"

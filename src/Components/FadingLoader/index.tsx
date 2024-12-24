@@ -15,7 +15,7 @@ export const FadingLoader = memo(
     useImperativeHandle(ref, () => setFade);
     const classes = useClassNames("fading-loader", "reveal", { hide });
     return (
-      <div className={classes}>
+      <div className={classes} aria-hidden={hide}>
         <TriangleLoader />
       </div>
     );

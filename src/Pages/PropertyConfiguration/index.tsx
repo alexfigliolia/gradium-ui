@@ -37,7 +37,6 @@ export default memo(
         <PropertyConfigurationPage labelFN={labelFN} className="base-property">
           <PropertyImages />
           <NameAndLocation />
-          <AddonsTile />
           <LivingSpaceTile>
             <GradientTransitionLink
               label="Edit Living Spaces"
@@ -50,6 +49,7 @@ export default memo(
               to={amenitiesRoute}
             />
           </AmenitiesTile>
+          <AddonsTile />
         </PropertyConfigurationPage>
         <LazyInfoModals />
       </PermissedRoute>

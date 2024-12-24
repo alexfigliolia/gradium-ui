@@ -10,14 +10,20 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      width: 100%;
       margin-bottom: 1.5em;
+      &>.fading-loader {
+        scale: 0.75;
+        & svg {
+          filter: drop-shadow(0em 0px 0.2em var(--shadow-color-mid));
+        }
+      }
       &>button.gradient-border-button {
         border: none;
         --border-radius: 0.5em;
         --padding: 0.15em 0.5em; 
         margin-bottom: 0.25em;
         white-space: nowrap;
-        box-shadow: var(--shadow-level-2-mid);
         animation: show 0.5s forwards;
         &>div {
           font-size: 1.5em;
