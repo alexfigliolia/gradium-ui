@@ -105,6 +105,10 @@ export abstract class HashedListModel<T extends IListItem> extends BaseModel<
     }
     return result;
   }
+
+  public toList() {
+    return Object.values(this.getState().list);
+  }
 }
 
 export interface IListItem {

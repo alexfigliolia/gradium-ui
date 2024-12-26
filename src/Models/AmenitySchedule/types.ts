@@ -9,6 +9,7 @@ export interface IAmenitySchedule {
   openNewReservation: boolean;
   openEditReservation: boolean;
   amenityIds: number[];
+  openReservationsWarning: boolean;
   reservations: AmenityReservation[];
   currentReservation: Partial<AmenityReservation>;
 }

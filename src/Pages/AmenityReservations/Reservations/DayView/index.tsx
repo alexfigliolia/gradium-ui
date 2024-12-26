@@ -4,6 +4,7 @@ import type { EventClickArg } from "@fullcalendar/core/index.js";
 import FullCalendar from "@fullcalendar/react";
 import TimeGrid from "@fullcalendar/timegrid";
 import { useTimeString } from "Hooks/useTimeString";
+import { proxyReservationModifier } from "Pages/AmenityReservations/ProxyReservationModifier";
 import {
   AmenitySchedule,
   openAndClose,
@@ -41,13 +42,26 @@ export const DayView = memo(
       calendar.current?.getApi()?.gotoDate?.(active);
     }, [active]);
 
-    const onEventClick = useCallback((e: EventClickArg) => {
-      e.jsEvent.stopPropagation();
-      const { rawEvent } = e.event._def.extendedProps;
-      if (rawEvent) {
-        AmenitySchedule.editReservation.open(rawEvent);
-      }
-    }, []);
+    const newReservation = useMemo(
+      () => proxyReservationModifier(AmenitySchedule.newReservation.open),
+      [],
+    );
+
+    const editReservation = useMemo(
+      () => proxyReservationModifier(AmenitySchedule.editReservation.open),
+      [],
+    );
+
+    const onEventClick = useCallback(
+      (e: EventClickArg) => {
+        e.jsEvent.stopPropagation();
+        const { rawEvent } = e.event._def.extendedProps;
+        if (rawEvent) {
+          editReservation(rawEvent);
+        }
+      },
+      [editReservation],
+    );
 
     const keyboardAccessibility = useFocusedKeyListener(
       AmenitySchedule.newReservation.open,
@@ -60,7 +74,7 @@ export const DayView = memo(
         tabIndex={0}
         className="day-view"
         {...keyboardAccessibility.events}
-        onClick={AmenitySchedule.newReservation.open}>
+        onClick={newReservation}>
         <FullCalendar
           ref={calendar}
           height="auto"

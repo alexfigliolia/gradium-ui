@@ -23,6 +23,7 @@ export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
       currentDate: new Date(),
       openNewReservation: false,
       openEditReservation: false,
+      openReservationsWarning: false,
       currentReservation: {},
       open: Dates.timeToDate("09:00:00"),
       close: Dates.timeToDate("21:00:00"),
@@ -118,6 +119,14 @@ export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
 
   private openDatePicker = this.toggleKey("openDatePicker", true);
   private closeDatePicker = this.toggleKey("openDatePicker", false);
+  private openReservationsWarning = this.toggleKey(
+    "openReservationsWarning",
+    true,
+  );
+  private closeReservationsWarning = this.toggleKey(
+    "openReservationsWarning",
+    false,
+  );
   private openNewReservation = this.toggleKey("openNewReservation", true);
   private closeNewReservation = this.toggleKey("openNewReservation", false);
   private openEditReservation = (reservation: AmenityReservation) => {
@@ -140,6 +149,11 @@ export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
   public editReservation = StackModel.createToggle(
     this.openEditReservation,
     this.closeEditReservation,
+  );
+
+  public reservationsWarning = StackModel.createToggle(
+    this.openReservationsWarning,
+    this.closeReservationsWarning,
   );
 
   public loading(ns: boolean) {
