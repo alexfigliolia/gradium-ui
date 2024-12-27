@@ -69,14 +69,16 @@ export const DateInput = memo(function DateInput({
   );
 
   const cacheRef = useCallback(
-    (instance: InputRef) => {
-      node(instance?.label);
+    (instance: InputRef<DateInputType> | null) => {
+      if (instance) {
+        node(instance?.label);
+      }
     },
     [node],
   );
 
   return (
-    <Input
+    <Input<DateInputType>
       {...rest}
       minLength={1}
       ref={cacheRef}
@@ -100,9 +102,14 @@ export const DateInput = memo(function DateInput({
 });
 
 interface Props
-  extends Omit<InputProps, "type" | "autoComplete" | "onChange" | "value"> {
+  extends Omit<
+    InputProps<DateInputType>,
+    "type" | "autoComplete" | "onChange" | "value"
+  > {
   value: string;
   pickerLocationY?: "above" | "below";
   pickerLocationX?: "left" | "right";
   onChange: Callback<[date: string]>;
 }
+
+type DateInputType = "date" | "text";

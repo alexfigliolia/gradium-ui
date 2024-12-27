@@ -28,7 +28,9 @@ export const ActionInput = memo(function ActionInput({
   );
 });
 
-interface Props extends Omit<InputProps, "onSubmit">, ActionState {
+interface Props
+  extends Omit<InputProps<"text" | "email">, "onSubmit">,
+    ActionState {
   className?: string;
   buttonText: string;
   onSubmit: Callback<[FormEvent<HTMLFormElement>]>;

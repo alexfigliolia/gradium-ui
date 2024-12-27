@@ -4,7 +4,7 @@ import { Input } from "Components/Input";
 import "./styles.scss";
 
 export const TimeInput = memo(function TimeInput(
-  props: Omit<InputProps, "type">,
+  props: Omit<InputProps<"time">, "type">,
 ) {
   return <Input {...props} type="time" />;
 });

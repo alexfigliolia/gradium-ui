@@ -30,7 +30,10 @@ export const ConfigurableSpaceInput = memo(
 ) as unknown as typeof ConfigurableSpaceInputComponent;
 
 interface Props<T extends Record<string, any>, K extends keyof T = keyof T>
-  extends Omit<InputProps, "onChange" | "property"> {
+  extends Omit<
+    InputProps<"text" | "time" | "number" | "date">,
+    "onChange" | "property"
+  > {
   property: K;
   onChange: Callback<[key: K, value: string]>;
 }

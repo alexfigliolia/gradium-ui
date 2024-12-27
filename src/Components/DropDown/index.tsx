@@ -65,7 +65,7 @@ function IDropDown<T extends IHTMLOption, M extends boolean | undefined>({
   });
 
   const cacheRef = useCallback(
-    (instance: InputRef | null) => {
+    (instance: InputRef<"text"> | null) => {
       if (instance) {
         node(instance.label);
         controller.registerNode(instance.input);
@@ -163,7 +163,7 @@ export interface DropDownProps<
   T extends IHTMLOption = IHTMLOption,
   M extends boolean | undefined = undefined,
 > extends Omit<
-    InputProps,
+    InputProps<"text">,
     "value" | "list" | "onChange" | "type" | "disabled" | "autoComplete"
   > {
   list: T[];

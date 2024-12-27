@@ -20,8 +20,8 @@ import type { Propless } from "Types/React";
 import "./styles.scss";
 
 export const ResetPassword = memo(function ResetPassword(_: Propless) {
-  const nextPW = useRef<InputRef>(null);
-  const currentPW = useRef<InputRef>(null);
+  const nextPW = useRef<InputRef<"password">>(null);
+  const currentPW = useRef<InputRef<"password">>(null);
   const form = useRef<HTMLFormElement>(null);
   const open = useModals(selectResetPassword);
   const callback = useCallback(

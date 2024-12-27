@@ -21,7 +21,7 @@ export const ForgotPassword = memo(
     const timeout = useTimeout();
     const client = useRef<UIClient>();
     const open = useModals(forgotPassword);
-    const controller = useRef<InputRef>(null);
+    const controller = useRef<InputRef<"password">>(null);
     const clickOutside = useToasts(toastsEmpty);
 
     const { loading, success, error, onSubmit } = useFormState(
@@ -34,7 +34,7 @@ export const ForgotPassword = memo(
           ForgotPasswordMutation,
           ForgotPasswordMutationVariables
         >(forgotPasswordQuery, {
-          email: data.get("email")?.toString() ?? "",
+          email: data.get("email")?.toString?.() ?? "",
         });
       },
     );

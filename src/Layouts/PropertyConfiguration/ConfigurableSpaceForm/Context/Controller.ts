@@ -59,7 +59,7 @@ export class Controller<
       if (date === "Invalid Date") {
         return this.update(key, value);
       }
-      return this.update(key, Dates.timeToDate(value) as T[k]);
+      return this.update(key, Dates.timeToDate(value) as T[K]);
     }
   };
 

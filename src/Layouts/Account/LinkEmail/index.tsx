@@ -21,7 +21,7 @@ import "./styles.scss";
 export const LinkEmail = memo(function LinkEmail(_: Propless) {
   const open = useModals(linkEmail);
   const timeout = useTimeout();
-  const input = useRef<InputRef>(null);
+  const input = useRef<InputRef<"email">>(null);
 
   const clear = useCallback(() => {
     if (input.current?.input) {
