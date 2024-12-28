@@ -17,8 +17,10 @@ export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
   constructor() {
     super("Amenity Schedule", {
       loading: false,
-      amenityIds: [],
+      filters: false,
       reservations: [],
+      reservers: new Set(),
+      amenityIds: new Set(),
       openDatePicker: false,
       currentDate: new Date(),
       openNewReservation: false,
@@ -30,6 +32,34 @@ export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
     });
   }
 
+  public resetScope() {
+    this.resetFilters();
+    this.update(state => {
+      state.currentReservation = {};
+    });
+  }
+
+  public filterByAmenity(ids: Set<number>) {
+    this.update(state => {
+      state.amenityIds = ids;
+    });
+    void this.fetchReservations();
+  }
+
+  public filterByReserver(ids: Set<number>) {
+    this.update(state => {
+      state.reservers = ids;
+    });
+    void this.fetchReservations();
+  }
+
+  public resetFilters = () => {
+    this.update(state => {
+      state.reservers = new Set();
+      state.amenityIds = new Set();
+    });
+  };
+
   public selectDate(date: Date) {
     this.update(state => {
       state.currentDate = date;
@@ -39,7 +69,7 @@ export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
 
   public async fetchReservations(date = this.getState().currentDate) {
     this.loading(true);
-    const { amenityIds } = this.getState();
+    const { amenityIds, reservers } = this.getState();
     try {
       const response = await graphQLRequest<
         FetchAmenityReservationsQuery,
@@ -48,7 +78,8 @@ export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
         date: Dates.setTime(date).toISOString(),
         propertyId: Properties.getState().current,
         organizationId: Scope.getState().currentOrganizationId,
-        amenityIds: amenityIds.length ? amenityIds : undefined,
+        amenityIds: amenityIds.size ? Array.from(amenityIds) : undefined,
+        reservers: reservers.size ? Array.from(amenityIds) : undefined,
       });
       this.update(state => {
         state.reservations = response.fetchAmenityReservations;
@@ -120,6 +151,8 @@ export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
     }
   }
 
+  private openFilters = this.toggleKey("filters", true);
+  private closeFilters = this.toggleKey("filters", false);
   private openDatePicker = this.toggleKey("openDatePicker", true);
   private closeDatePicker = this.toggleKey("openDatePicker", false);
   private openReservationsWarning = this.toggleKey(
@@ -139,6 +172,8 @@ export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
     });
   };
   private closeEditReservation = this.toggleKey("openEditReservation", false);
+
+  public filters = this.createToggle(this.openFilters, this.closeFilters);
 
   public datePicker = this.createToggle(
     this.openDatePicker,

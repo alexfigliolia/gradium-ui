@@ -12,7 +12,7 @@ type Query {
   getLivingSpaces(propertyId: Int!, organizationId: Int!): [LivingSpace!]!
   listStaffMembers(organizationId: Int!, limit: Int, cursor: Int): PaginatedStaff!
   listManagementTasks(organizationId: Int!, propertyId: Int): [ManagementTask!]!
-  fetchAmenityReservations(propertyId: Int!, organizationId: Int!, date: DateTime!, amenityIds: [Int!]): [AmenityReservation!]!
+  fetchAmenityReservations(propertyId: Int!, organizationId: Int!, date: DateTime!, amenityIds: [Int!], reservers: [Int!]): [AmenityReservation!]!
   generateUploadSignature(organizationId: Int!, type: GradiumImageType!): UploadSignature!
   generateDestroySignature(organizationId: Int!, publicId: String!, type: GradiumImageType!): DestroySignature!
   adminBasicPropertiesList(organizationId: Int!): [AdminBasicProperty!]!

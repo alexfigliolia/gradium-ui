@@ -1,4 +1,4 @@
-import { memo, useMemo } from "react";
+import { memo, useEffect, useMemo } from "react";
 import { GradientButton } from "Components/GradientButton";
 import { PermissedPropertyRoute } from "Components/PermissedPropertyRoute";
 import { Page, PageTitle } from "Layouts/Management";
@@ -7,6 +7,7 @@ import { AmenitySchedule } from "State/AmenitySchedule";
 import type { Propless } from "Types/React";
 import { DateSelector } from "./DateSelector";
 import { EditReservation } from "./EditReservation";
+import { Filters } from "./Filters";
 import { NewReservation } from "./NewReservation";
 import { proxyReservationModifier } from "./ProxyReservationModifier";
 import { Reservations } from "./Reservations";
@@ -19,6 +20,11 @@ export default memo(
       () => proxyReservationModifier(AmenitySchedule.newReservation.open),
       [],
     );
+
+    useEffect(() => {
+      return () => AmenitySchedule.resetScope();
+    }, []);
+
     return (
       <PermissedPropertyRoute
         fallback=".."
@@ -29,6 +35,7 @@ export default memo(
           </PageTitle>
           <Reservations />
         </Page>
+        <Filters />
         <DateSelector />
         <NewReservation />
         <EditReservation />

@@ -1,16 +1,8 @@
 import type { ChangeEvent, Dispatch, SetStateAction } from "react";
-import type { ILoadingStateSetter } from "@figliolia/react-hooks";
-import { listPeople } from "GraphQL/Queries/listPeople.gql";
-import type {
-  Amenity,
-  ListPeopleQuery,
-  ListPeopleQueryVariables,
-} from "GraphQL/Types";
-import { UIClient } from "GraphQL/UIClient";
+import type { Amenity } from "GraphQL/Types";
 import { Amenities } from "State/Amenities";
-import { Scope } from "State/Scope";
 import { Dates } from "Tools/Dates";
-import type { Callback, Maybe } from "Types/Generics";
+import type { Callback } from "Types/Generics";
 import type { IHTMLOption } from "Types/React";
 
 export class Controller {
@@ -58,32 +50,6 @@ export class Controller {
     return amenities.map(v => ({ label: v.name, value: v.id.toString() }));
   }
 
-  public static fetchPeople = async (
-    setState: ILoadingStateSetter,
-    cursor: Maybe<number>,
-  ) => {
-    const client = new UIClient({ setState });
-    try {
-      const response = await client.executeQuery<
-        ListPeopleQuery,
-        ListPeopleQueryVariables
-      >(listPeople, {
-        cursor,
-        limit: 10,
-        organizationId: Scope.getState().currentOrganizationId,
-      });
-      return {
-        cursor: response.listPeople.cursor,
-        list: response.listPeople.list.map(item => ({
-          label: item.name,
-          value: item.id.toString(),
-        })),
-      };
-    } catch (error) {
-      // silence
-    }
-  };
-
   public static computeCost(
     price: number,
     billed: string,
@@ -93,7 +59,6 @@ export class Controller {
     if (!start || !end || !price) {
       return 0;
     }
-    // TODO - fix diffing times
     const MS = this.timeToInt(end) - this.timeToInt(start);
     if (MS <= 0) {
       return 0;

@@ -1,6 +1,7 @@
 import { memo, useContext, useMemo } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import { ColoredLoadingState } from "Components/ColoredLoadingState";
+import { IconButton } from "Components/IconButton";
 import { ThinLockClosed } from "Icons/ThinLockClosed";
 import { ThinLockOpen } from "Icons/ThinLockOpen";
 import { TrashThin } from "Icons/TrashThin";
@@ -27,7 +28,7 @@ export const CRUDActions = memo(
 
     return (
       <div className={classes}>
-        <button
+        <IconButton
           className="editor-toggle"
           aria-label={label}
           onClick={toggleEdit}>
@@ -38,13 +39,13 @@ export const CRUDActions = memo(
             error={error}
             success={success}
           />
-        </button>
-        <button
+        </IconButton>
+        <IconButton
           className="trash-button"
           aria-label="Delete Item"
           onClick={onDelete}>
           <TrashThin aria-hidden />
-        </button>
+        </IconButton>
       </div>
     );
   },

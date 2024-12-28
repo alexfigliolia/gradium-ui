@@ -6,16 +6,15 @@ import {
   useTimeout,
 } from "@figliolia/react-hooks";
 import { ActionButton } from "Components/ActionButton";
-import { Confirmation, useEnabledClickOutside } from "Components/Confirmation";
+import { Confirmation } from "Components/Confirmation";
 import { DropDown } from "Components/DropDown";
-import { PaginatedDropDown } from "Components/PaginatedDropDown";
+import { PeopleDropDown } from "Components/PeopleDropDown";
 import { RadioGroup } from "Components/RadioGroup";
 import { TimeInput } from "Components/TimeInput";
 import { UIClient } from "GraphQL/UIClient";
 import { useEditableValue } from "Hooks/useEditableValue";
 import { BasketballCourtFilled } from "Icons/BasketballCourt";
 import { Clock } from "Icons/Clock";
-import { User } from "Icons/User";
 import { Amenities, selectAmenities, useAmenities } from "State/Amenities";
 import { AmenitySchedule } from "State/AmenitySchedule";
 import { Properties } from "State/Properties";
@@ -72,12 +71,6 @@ function ConfigureReservationComponent<
     () => Controller.getMeta(state.amenityId),
     [state.amenityId],
   );
-
-  const [canClickOutside, enable, disable] = useEnabledClickOutside();
-
-  const deferEnableClickOutside = useCallback(() => {
-    timeout.execute(enable, 100);
-  }, [timeout, enable]);
 
   const cost = useMemo(
     () => Controller.computeCost(price, billed, state.start, state.end),
@@ -149,7 +142,6 @@ function ConfigureReservationComponent<
     <Confirmation
       open={open}
       close={close}
-      clickOutside={canClickOutside}
       className="reservation-configurer slim">
       <h2>{title}</h2>
       {subtitle && <p>{subtitle}</p>}
@@ -162,10 +154,8 @@ function ConfigureReservationComponent<
           multiple={false}
           title="Amenities"
           value={state.amenityId}
-          onOpen={disable}
           onChange={controller.setAmenity}
           icon={<BasketballCourtFilled />}
-          onClose={deferEnableClickOutside}
         />
         <div className="input-split">
           <TimeInput
@@ -183,18 +173,12 @@ function ConfigureReservationComponent<
             onChange={controller.setEnd}
           />
         </div>
-        <PaginatedDropDown
+        <PeopleDropDown
           required
           prefetch
-          name="user"
           multiple={false}
           label="Resident"
-          icon={<User />}
           value={state.reserver}
-          onOpen={disable}
-          title="Staff & Residents"
-          fetch={Controller.fetchPeople}
-          onClose={deferEnableClickOutside}
           onChange={controller.setReserver}
         />
         {parseFloat(

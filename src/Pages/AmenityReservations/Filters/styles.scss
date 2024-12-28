@@ -1,0 +1,33 @@
+@use "Styles/Variables";
+
+.bottom-sheet.confirmation-sheet.reservation-filters {
+  & label.dropdown {
+    margin-bottom: 1.5em;
+  }
+  & label.dropdown svg.basketball-court-filled {
+    margin-top: 0.05em;
+    margin-left: 0.6em;
+    &:first-of-type {
+      stroke: none;
+      fill: none;
+      &>path {
+        fill: var(--text-color-light);
+      }
+    }
+    &:last-of-type {
+      stroke: none;
+      fill: none;
+      &>path {
+        fill: url(#themeGradient);
+      }
+    }
+    &>g > path {
+      fill: var(--tile-background);
+    }
+  }
+  & .gradient-button.clear-filters {
+    height: 50px;
+    width: 100%;
+    max-width: unset;
+  }
+}

@@ -8,12 +8,14 @@ export const fetchAmenityReservations = gql`
     $propertyId: Int!
     $date: DateTime!
     $amenityIds: [Int!]
+    $reservers: [Int!]
   ) {
     fetchAmenityReservations(
       organizationId: $organizationId
       propertyId: $propertyId
       date: $date
       amenityIds: $amenityIds
+      reservers: $reservers
     ) {
       ...AmenityReservationFragment
     }

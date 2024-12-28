@@ -1,0 +1,24 @@
+@use "Styles/Variables";
+
+.icon-button {
+  width: 2.5em;
+  height: 2.5em;
+  position: relative;
+  border-radius: 0.5em;
+  overflow: hidden;
+  @include Variables.center;
+  background-color: var(--background);
+  border: none;
+  transition: background-color 0.3s;
+  &:hover {
+    background-color: var(--background-dark);
+  }
+  &>svg {
+    top: 15%;
+    left: 15%;
+    width: 70%;
+    height: 70%;
+    position: absolute;
+    transition: translate 0.5s, scale 0.5s;
+  }
+}

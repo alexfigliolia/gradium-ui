@@ -15,7 +15,14 @@ export const selectCurrentReservation = (state: IAmenitySchedule) =>
   state.currentReservation;
 export const selectCurrentDate = (state: IAmenitySchedule) => state.currentDate;
 export const datePicker = (state: IAmenitySchedule) => state.openDatePicker;
+export const filtersOpen = (state: IAmenitySchedule) => state.filters;
 export const newReservation = (state: IAmenitySchedule) =>
   state.openNewReservation;
 export const editReservation = (state: IAmenitySchedule) =>
   state.openEditReservation;
+export const selectFilters = (state: IAmenitySchedule) => [
+  state.amenityIds,
+  state.reservers,
+];
+export const totalActiveFilters = (state: IAmenitySchedule) =>
+  state.amenityIds.size + state.reservers.size;

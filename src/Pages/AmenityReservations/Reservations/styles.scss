@@ -8,11 +8,15 @@
     width: 100%;
     &>.title {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       width: 100%;
       margin-bottom: 1.5em;
+      position: relative;
       &>.fading-loader {
+        top: 0;
+        right: 0;
+        position: absolute;
         scale: 0.75;
         & svg {
           filter: drop-shadow(0em 0px 0.2em var(--shadow-color-mid));
@@ -41,6 +45,15 @@
               font-weight: 800;
             }
           }
+        }
+      }
+      &>button.icon-button {
+        font-size: 1.075em;
+        @media (min-width: Variables.$small-vertical-tablet) {
+          font-size: 1.18em;
+        }
+        &> svg {
+          stroke: var(--text-color-light);
         }
       }
     }
