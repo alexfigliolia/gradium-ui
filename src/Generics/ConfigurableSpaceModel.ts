@@ -17,7 +17,7 @@ export abstract class ConfigurableSpaceModel<
   }
 
   protected abstract saveSpace(
-    space: T | Omit<T, "id">,
+    space: T | Omit<T, "id" | "dummy"> | Omit<T, "dummy">,
     setState?: ILoadingStateSetter,
   ): Promise<T>;
 
@@ -46,9 +46,10 @@ export abstract class ConfigurableSpaceModel<
 
   public async save(id: number, setState?: ILoadingStateSetter) {
     const item = this.getState().list[id];
-    const { id: _, ...rest } = item;
+    const { id: _1, dummy: _2, ...rest } = item;
+    const { dummy: _, ...space } = item;
     const saved = await this.saveSpace(
-      this.isClient(item) ? rest : item,
+      this.isClient(item) ? rest : space,
       setState,
     );
     this.updateByIdentifier(saved.id, saved);
@@ -66,7 +67,7 @@ export abstract class ConfigurableSpaceModel<
     setState: ILoadingStateSetter,
     callback: Callback,
   ) {
-    if (this.isClient({ id })) {
+    if (this.isClient(this.getById(id))) {
       this.delete(id);
       return callback?.();
     }
@@ -146,8 +147,8 @@ export abstract class ConfigurableSpaceModel<
     return copy;
   }
 
-  public isClient<T extends { id: number }>(data?: T) {
-    return (data?.id ?? 0) < 0;
+  public isClient<D extends { id: number; dummy?: true }>(data?: D) {
+    return data?.dummy === true || (data?.id ?? 0) < 0;
   }
 
   private toLinkedList(images: GradiumImage[]) {

@@ -8,9 +8,8 @@ export const createAmenityReservation = gql`
     $propertyId: Int!
     $amenityId: Int!
     $personId: Int!
-    $date: String!
-    $start: String!
-    $end: String!
+    $start: DateTime!
+    $end: DateTime!
     $charge: Boolean
   ) {
     createAmenityReservation(
@@ -18,7 +17,6 @@ export const createAmenityReservation = gql`
       propertyId: $propertyId
       amenityId: $amenityId
       personId: $personId
-      date: $date
       start: $start
       end: $end
       charge: $charge

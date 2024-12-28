@@ -10,7 +10,7 @@ export const PropertyList = memo(
     const loading = useProperties(isLoading);
     const properties = useProperties(allProperties);
     if (loading) {
-      return "loading";
+      return null;
     }
     if (!properties.length) {
       return <NoProperties />;

@@ -82,6 +82,7 @@ export class AmenitiesModel extends ConfigurableSpaceModel<Amenity> {
   protected blankItem() {
     return {
       name: "",
+      dummy: true,
       open: Dates.timeToDate("09:00:00"),
       close: Dates.timeToDate("21:00:00"),
       images: [],

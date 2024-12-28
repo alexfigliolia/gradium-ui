@@ -83,9 +83,9 @@ function PaginatedDropDownComponent<
 
 export const PaginatedDropDown = memo(
   PaginatedDropDownComponent,
-) as unknown as typeof PaginatedDropDownComponent;
+) as typeof PaginatedDropDownComponent;
 
-interface Props<T extends IHTMLOption, M extends boolean | undefined>
+export interface Props<T extends IHTMLOption, M extends boolean | undefined>
   extends Omit<DropDownProps<T, M>, "list"> {
   prefetch?: boolean;
   fetch: Callback<
@@ -94,9 +94,9 @@ interface Props<T extends IHTMLOption, M extends boolean | undefined>
   >;
 }
 
-interface CursoredResult {
-  cursor: number;
-  list: IHTMLOption[];
-}
-
-type FetchResult = CursoredResult | undefined;
+type FetchResult =
+  | {
+      cursor: Maybe<number>;
+      list: IHTMLOption[];
+    }
+  | undefined;

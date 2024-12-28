@@ -160,6 +160,7 @@ function ConfigureReservationComponent<
           name="amenity"
           label="Amenity"
           multiple={false}
+          title="Amenities"
           value={state.amenityId}
           onOpen={disable}
           onChange={controller.setAmenity}
@@ -191,15 +192,14 @@ function ConfigureReservationComponent<
           icon={<User />}
           value={state.reserver}
           onOpen={disable}
+          title="Staff & Residents"
           fetch={Controller.fetchPeople}
           onClose={deferEnableClickOutside}
           onChange={controller.setReserver}
         />
-        {!(
-          parseFloat(
-            Amenities.getById(parseInt(state.amenityId || "-1"))?.price,
-          ) === 0
-        ) && (
+        {parseFloat(
+          Amenities.getById(parseInt(state.amenityId || "-1"))?.price,
+        ) !== 0 && (
           <RadioGroup
             value={state.charge}
             onChange={onChargeChange}
@@ -227,7 +227,7 @@ function ConfigureReservationComponent<
           )}
           <div>
             <ActionButton loading={loading} error={!!error} success={success}>
-              Confirm
+              {cancellable ? "Update" : "Confirm"}
             </ActionButton>
           </div>
         </div>
@@ -238,7 +238,7 @@ function ConfigureReservationComponent<
 
 export const ConfigureReservation = memo(
   ConfigureReservationComponent,
-) as unknown as typeof ConfigureReservationComponent;
+) as typeof ConfigureReservationComponent;
 
 interface Props<
   QD extends Record<string, any>,

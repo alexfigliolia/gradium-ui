@@ -2,14 +2,17 @@ schema {
   query: Query
   mutation: Mutation
 }
+"A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar."
+scalar DateTime
 type Query {
   userScope: LoggedInUser!
   listPeople(organizationId: Int!, limit: Int, cursor: Int): PaginatedPeople!
   getAmenities(propertyId: Int!, organizationId: Int!): [Amenity!]!
   verifySession: Boolean!
   getLivingSpaces(propertyId: Int!, organizationId: Int!): [LivingSpace!]!
+  listStaffMembers(organizationId: Int!, limit: Int, cursor: Int): PaginatedStaff!
   listManagementTasks(organizationId: Int!, propertyId: Int): [ManagementTask!]!
-  fetchAmenityReservations(propertyId: Int!, organizationId: Int!, date: String!, amenityIds: [Int!]): [AmenityReservation!]!
+  fetchAmenityReservations(propertyId: Int!, organizationId: Int!, date: DateTime!, amenityIds: [Int!]): [AmenityReservation!]!
   generateUploadSignature(organizationId: Int!, type: GradiumImageType!): UploadSignature!
   generateDestroySignature(organizationId: Int!, publicId: String!, type: GradiumImageType!): DestroySignature!
   adminBasicPropertiesList(organizationId: Int!): [AdminBasicProperty!]!
@@ -35,7 +38,7 @@ type PersonRole {
   role: PersonRoleType!
 }
 type PaginatedPeople {
-  cursor: Int!
+  cursor: Int
   list: [Person!]!
 }
 type Person {
@@ -47,8 +50,8 @@ type Amenity {
   name: String!
   price: String!
   billed: BillFrequency!
-  open: String!
-  close: String!
+  open: DateTime!
+  close: DateTime!
   capacity: Int!
   propertyId: Int!
   images: [GradiumImage!]!
@@ -69,25 +72,29 @@ type LivingSpace {
   images: [GradiumImage!]!
   floorPlans: [GradiumImage!]!
 }
+type PaginatedStaff {
+  cursor: Int
+  list: [StaffMember!]!
+}
+type StaffMember {
+  id: Int!
+  name: String!
+}
 type ManagementTask {
   id: Int!
-  createdAt: String!
+  createdAt: DateTime!
   title: String!
   description: String!
   status: ManagementTaskStatus!
   priority: ManagementTaskPriority!
   createdBy: Person!
   images: [GradiumImage!]!
-  assignedTo: StaffProfile
+  assignedTo: StaffMember
   expenses: [Expense!]!
-}
-type StaffProfile {
-  id: Int!
-  name: String!
 }
 type Expense {
   id: Int!
-  createdAt: String!
+  createdAt: DateTime!
   cost: String!
   title: String!
   description: String!
@@ -95,9 +102,8 @@ type Expense {
 }
 type AmenityReservation {
   id: Int!
-  date: String!
-  start: String!
-  end: String!
+  start: DateTime!
+  end: DateTime!
   amenity: EntitySnapShot!
   person: EntitySnapShot!
 }
@@ -156,12 +162,13 @@ type Mutation {
   deleteLivingSpace(propertyId: Int!, organizationId: Int!, id: Int!): LivingSpace!
   setOrganizationName(name: String!, organizationId: Int!): Boolean!
   modifyPropertyAddons(propertyId: Int!, organizationId: Int!, additions: [PropertyAddonType!]!, deletions: [Int!]!): [PropertyAddon!]!
-  createOrUpdateAmenity(propertyId: Int!, organizationId: Int!, id: Int, name: String!, billed: BillFrequency!, open: String!, close: String!, price: String!, capacity: Int!): Amenity!
+  createOrUpdateAmenity(propertyId: Int!, organizationId: Int!, id: Int, name: String!, billed: BillFrequency!, open: DateTime!, close: DateTime!, price: String!, capacity: Int!): Amenity!
+  createManagementTask(organizationId: Int!, propertyId: Int, title: String!, description: String!, status: ManagementTaskStatus!, priority: ManagementTaskPriority!, images: [GradiumImageInput!]!, assignedToId: Int): ManagementTask!
   setManagementTaskStatus(id: Int!, organizationId: Int!, status: ManagementTaskStatus!): Boolean!
   updateBasicPropertyInfo(propertyId: Int!, organizationId: Int!, name: String!, address1: String!, address2: String!, city: String!, state: String!, zipCode: String!): AdminBasicProperty!
-  createAmenityReservation(propertyId: Int!, organizationId: Int!, amenityId: Int!, personId: Int!, date: String!, start: String!, end: String!, charge: Boolean): AmenityReservation!
+  createAmenityReservation(propertyId: Int!, organizationId: Int!, amenityId: Int!, personId: Int!, start: DateTime!, end: DateTime!, charge: Boolean): AmenityReservation!
   cancelAmenityReservation(id: Int!, propertyId: Int!, organizationId: Int!): Int!
-  updateAmenityReservation(id: Int!, propertyId: Int!, organizationId: Int!, amenityId: Int!, personId: Int!, date: String!, start: String!, end: String!, charge: Boolean): AmenityReservation!
+  updateAmenityReservation(id: Int!, propertyId: Int!, organizationId: Int!, amenityId: Int!, personId: Int!, start: DateTime!, end: DateTime!, charge: Boolean): AmenityReservation!
   createOrUpdateLivingSpace(propertyId: Int!, organizationId: Int!, id: Int, name: String!, type: LivingSpaceType!, beds: Int!, baths: Float!, size: String!): LivingSpace!
 }
 type BasicUser {
@@ -207,6 +214,10 @@ enum PropertyAddonType {
   propertyEvents
   leaseManagement
   hoaManagement
+}
+input GradiumImageInput {
+  id: Int!
+  url: String!
 }
 "Exposes a URL that specifies the behavior of this scalar."
 directive @specifiedBy(

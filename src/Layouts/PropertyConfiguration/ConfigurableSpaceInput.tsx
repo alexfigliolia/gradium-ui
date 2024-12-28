@@ -27,7 +27,7 @@ function ConfigurableSpaceInputComponent<
 
 export const ConfigurableSpaceInput = memo(
   ConfigurableSpaceInputComponent,
-) as unknown as typeof ConfigurableSpaceInputComponent;
+) as typeof ConfigurableSpaceInputComponent;
 
 interface Props<T extends Record<string, any>, K extends keyof T = keyof T>
   extends Omit<

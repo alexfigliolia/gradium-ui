@@ -22,7 +22,7 @@ export abstract class HashedListModel<T extends IListItem> extends BaseModel<
     const item = this.getBlank();
     this.setList({
       ...this.getState().list,
-      [item.id]: item,
+      [item.id]: { ...item, dummy: true },
     });
   };
 
@@ -120,5 +120,5 @@ export interface IHashedListState<T extends Record<string, any>> {
   loading: boolean;
   deleteItemId: number;
   deleteItemName: string;
-  list: Record<number, T>;
+  list: Record<number, T & { dummy?: true }>;
 }

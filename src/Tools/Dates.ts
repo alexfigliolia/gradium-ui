@@ -231,13 +231,11 @@ export class Dates {
 
   public static dateToTime(input: Date | string) {
     const date = typeof input === "string" ? new Date(input) : input;
-    return `${this.pad(date.getHours())}:${this.pad(date.getMinutes())}:${this.pad(date.getSeconds())}`;
-  }
-
-  private static pad(value: number) {
-    if (value < 10) {
-      return `0${value}`;
-    }
-    return value.toString();
+    return date.toLocaleTimeString(window.navigator.language, {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    });
   }
 }

@@ -61,14 +61,14 @@ function ConfigurableSpaceFormComponent<
 
 export const ConfigurableSpaceForm = memo(
   ConfigurableSpaceFormComponent,
-) as unknown as typeof ConfigurableSpaceFormComponent;
+) as typeof ConfigurableSpaceFormComponent;
 
 export interface IConfigurableSpaceForm<
   T extends IConfigurableSpace,
   M extends ConfigurableSpaceModel<T>,
 > extends IConfigurableSpaceProps<T, M>,
     OptionalChildren {
-  item: T;
+  item: T & { dummy?: true };
   className?: string;
   spaceDisplayName: string;
 }

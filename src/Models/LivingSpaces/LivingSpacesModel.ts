@@ -87,6 +87,7 @@ export class LivingSpacesModel extends ConfigurableSpaceModel<LivingSpace> {
       images: [],
       floorPlans: [],
       size: "0",
+      dummy: true,
       propertyId: Properties.getState().current,
     };
   }

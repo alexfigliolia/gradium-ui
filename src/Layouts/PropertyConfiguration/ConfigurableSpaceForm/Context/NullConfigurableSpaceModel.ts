@@ -32,9 +32,10 @@ export class NullConfigurableSpaceModel extends ConfigurableSpaceModel<IConfigur
     return false;
   }
 
-  public blankItem(): Omit<IConfigurableSpace, "id"> {
+  public blankItem() {
     return {
       name: "",
+      dummy: true,
       images: [],
       floorPlans: [],
     };

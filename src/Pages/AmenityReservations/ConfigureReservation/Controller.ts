@@ -60,7 +60,7 @@ export class Controller {
 
   public static fetchPeople = async (
     setState: ILoadingStateSetter,
-    cursor?: Maybe<number>,
+    cursor: Maybe<number>,
   ) => {
     const client = new UIClient({ setState });
     try {
@@ -93,6 +93,7 @@ export class Controller {
     if (!start || !end || !price) {
       return 0;
     }
+    // TODO - fix diffing times
     const MS = this.timeToInt(end) - this.timeToInt(start);
     if (MS <= 0) {
       return 0;

@@ -9,8 +9,8 @@ export const createOrUpdateAmenity = gql`
     $organizationId: Int!
     $name: String!
     $billed: BillFrequency!
-    $open: String!
-    $close: String!
+    $open: DateTime!
+    $close: DateTime!
     $capacity: Int!
     $price: String!
   ) {

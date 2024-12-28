@@ -87,18 +87,25 @@ export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
   public resolveScope(amenities: Amenity[]) {
     let minOpen = "";
     let maxClose = "";
-    let minOpenInt = Infinity;
-    let maxCloseInt = -Infinity;
+    let minOpenDate: Date | undefined;
+    let maxCloseDate: Date | undefined;
     for (const { open, close } of amenities) {
-      const openInt = this.toTimeInt(open);
-      const closeInt = this.toTimeInt(close);
-      if (openInt < minOpenInt) {
+      const openDate = new Date(Dates.timeToDate(open));
+      const closeDate = new Date(Dates.timeToDate(close));
+      if (minOpenDate === undefined || maxCloseDate === undefined) {
+        minOpenDate = openDate;
         minOpen = open;
-        minOpenInt = openInt;
-      }
-      if (closeInt > maxCloseInt) {
+        maxCloseDate = closeDate;
         maxClose = close;
-        maxCloseInt = closeInt;
+        continue;
+      }
+      if (openDate < minOpenDate) {
+        minOpen = open;
+        minOpenDate = openDate;
+      }
+      if (closeDate > maxCloseDate) {
+        maxClose = close;
+        maxCloseDate = closeDate;
       }
     }
     if (minOpen) {
@@ -111,10 +118,6 @@ export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
         state.close = maxClose;
       });
     }
-  }
-
-  private toTimeInt(time: string) {
-    return parseInt(time.split(":").join(""));
   }
 
   private openDatePicker = this.toggleKey("openDatePicker", true);
@@ -137,21 +140,21 @@ export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
   };
   private closeEditReservation = this.toggleKey("openEditReservation", false);
 
-  public datePicker = StackModel.createToggle(
+  public datePicker = this.createToggle(
     this.openDatePicker,
     this.closeDatePicker,
   );
-  public newReservation = StackModel.createToggle(
+  public newReservation = this.createToggle(
     this.openNewReservation,
     this.closeNewReservation,
   );
 
-  public editReservation = StackModel.createToggle(
+  public editReservation = this.createToggle(
     this.openEditReservation,
     this.closeEditReservation,
   );
 
-  public reservationsWarning = StackModel.createToggle(
+  public reservationsWarning = this.createToggle(
     this.openReservationsWarning,
     this.closeReservationsWarning,
   );

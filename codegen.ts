@@ -15,7 +15,7 @@ const config: CodegenConfig = {
       },
       config: {
         scalars: {
-          ISODate: "string",
+          GraphQLDateTime: "string",
         },
       },
     },

@@ -7,7 +7,6 @@ import {
   selectCurrentDate,
   useAmenitySchedule,
 } from "State/AmenitySchedule";
-import { Dates } from "Tools/Dates";
 import type { Propless } from "Types/React";
 import "./styles.scss";
 
@@ -15,7 +14,7 @@ export const DateSelector = memo(
   function DateSelector(_: Propless) {
     const open = useAmenitySchedule(datePicker);
     const current = useAmenitySchedule(selectCurrentDate);
-    const ISO = useMemo(() => Dates.toISODateString(current), [current]);
+    const ISO = useMemo(() => current.toISOString(), [current]);
     const onChange = useCallback((date: string) => {
       AmenitySchedule.selectDate(new Date(date));
     }, []);
