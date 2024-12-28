@@ -61,6 +61,7 @@ export default memo(function LeaseSheet({
           multiple={false}
           name="living-space"
           icon={<Building />}
+          title="Living Spaces"
           onChange={model.setUnit}
         />
         <h3>Term</h3>

@@ -17,7 +17,7 @@
     "not dead"
   ],
   "dependencies": {
-    "@figliolia/bottom-sheet": "^1.3.1",
+    "@figliolia/bottom-sheet": "^1.4.1",
     "@figliolia/classnames": "^1.0.1",
     "@figliolia/data-structures": "^1.1.0",
     "@figliolia/day-night-toggle": "^1.0.5",

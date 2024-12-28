@@ -30,6 +30,7 @@ function IDropDown<T extends IHTMLOption, M extends boolean | undefined>({
   onScrollEnd,
   disabled = false,
   multiple = false,
+  title = "Options",
   ...rest
 }: DropDownProps<T, M>) {
   const [open, setOpen] = useState(false);
@@ -133,7 +134,7 @@ function IDropDown<T extends IHTMLOption, M extends boolean | undefined>({
           open={open}
           options={list}
           value={value}
-          title="Options"
+          title={title}
           loading={loading}
           fallback={fallback}
           multiple={multiple}
@@ -157,7 +158,7 @@ function IDropDown<T extends IHTMLOption, M extends boolean | undefined>({
   );
 }
 
-export const DropDown = memo(IDropDown) as unknown as typeof IDropDown;
+export const DropDown = memo(IDropDown) as typeof IDropDown;
 
 export interface DropDownProps<
   T extends IHTMLOption = IHTMLOption,
@@ -169,6 +170,7 @@ export interface DropDownProps<
   list: T[];
   name: string;
   multiple?: M;
+  title?: string;
   disabled?: boolean;
   className?: string;
   value: DDValue<M>;

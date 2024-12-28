@@ -126,6 +126,7 @@ export const Inputs = memo(
           icon={<Clock />}
           property="billed"
           disabled={!editing}
+          title="Billed By"
           onChange={controller.update}
           list={PropertyOptions.BILLED_BY}
         />

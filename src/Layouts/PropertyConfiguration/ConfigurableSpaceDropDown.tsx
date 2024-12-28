@@ -28,7 +28,7 @@ function ConfigurableSpaceDropDownComponent<
 
 export const ConfigurableSpaceDropDown = memo(
   ConfigurableSpaceDropDownComponent,
-) as unknown as typeof ConfigurableSpaceDropDownComponent;
+) as typeof ConfigurableSpaceDropDownComponent;
 
 interface Props<
   T extends Record<string, any>,

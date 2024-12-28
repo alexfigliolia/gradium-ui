@@ -1,7 +1,6 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect } from "react";
 import type { IBottomSheetProps } from "@figliolia/bottom-sheet";
 import { useClassNames } from "@figliolia/classnames";
-import { useTimeout } from "@figliolia/react-hooks";
 import {
   CheckBoxGroup,
   type Props as CheckBoxProps,
@@ -26,38 +25,18 @@ function IOptionSelector<T extends IHTMLOption, M extends boolean | undefined>({
   onChange,
   className,
   blurInput,
-  clickOutside,
   ...rest
 }: Props<T, M>) {
-  const timeout = useTimeout();
-  const [enableOutsideClickDetection, setEnabled] = useState(
-    open && clickOutside,
-  );
-
   useEffect(() => {
     if (open) {
       blurInput();
     }
   }, [open, blurInput]);
 
-  useEffect(() => {
-    if (open && clickOutside) {
-      timeout.execute(() => {
-        setEnabled(true);
-      }, 500);
-    } else {
-      setEnabled(false);
-    }
-  }, [open, clickOutside, timeout]);
-
   const classes = useClassNames("option-selector", className);
 
   return (
-    <Confirmation
-      {...rest}
-      open={open}
-      className={classes}
-      clickOutside={enableOutsideClickDetection}>
+    <Confirmation {...rest} open={open} className={classes}>
       <h2>{title}</h2>
       {multiple && <p>You may select any number of values</p>}
       {!options.length && !loading && (
@@ -88,9 +67,7 @@ function IOptionSelector<T extends IHTMLOption, M extends boolean | undefined>({
   );
 }
 
-export const OptionSelector = memo(
-  IOptionSelector,
-) as unknown as typeof IOptionSelector;
+export const OptionSelector = memo(IOptionSelector) as typeof IOptionSelector;
 
 export type Props<T extends IHTMLOption, M extends boolean | undefined> = Omit<
   IInputProps<T, M>,
