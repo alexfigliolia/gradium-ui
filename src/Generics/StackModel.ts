@@ -3,7 +3,7 @@ import { ModalStack } from "Tools/ModalStack";
 import type { Callback, FilterKeys } from "Types/Generics";
 
 export class StackModel<T extends Record<string, any>> extends BaseModel<T> {
-  protected static createToggle<T extends any[]>(
+  protected createToggle<T extends any[]>(
     opener: Callback<T>,
     closer: Callback,
   ) {

@@ -4,7 +4,6 @@ import TSConfig from "../../tsconfig.json";
 export class BuildSettings {
   public static ROOT = process.cwd();
   public static SRC = path.join(this.ROOT, "src");
-  public static CERTS = path.join(this.ROOT, "../my-perf-core/cert");
   public static PRODUCTION = process.env.NODE_ENV !== "development";
 
   public static alias(relative: string) {

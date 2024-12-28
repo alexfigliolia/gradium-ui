@@ -22,23 +22,23 @@ export class PropertyConfigurationModel extends StackModel<IPCM> {
     });
   }
 
-  hoaAddonInfo = StackModel.createToggle(
+  hoaAddonInfo = this.createToggle(
     this.openHOAAddonInfo,
     this.closeHOAAddonInfo,
   );
-  eventAddonInfo = StackModel.createToggle(
+  eventAddonInfo = this.createToggle(
     this.openEventAddonInfo,
     this.closeEventAddonInfo,
   );
-  leaseAddonInfo = StackModel.createToggle(
+  leaseAddonInfo = this.createToggle(
     this.openLeaseAddonInfo,
     this.closeLeaseAddonInfo,
   );
-  packageAddonInfo = StackModel.createToggle(
+  packageAddonInfo = this.createToggle(
     this.openPackageAddonInfo,
     this.closePackageAddonInfo,
   );
-  amenitiesAddonInfo = StackModel.createToggle(
+  amenitiesAddonInfo = this.createToggle(
     this.openAmenitiesAddonInfo,
     this.closeAmenitiesAddonInfo,
   );
