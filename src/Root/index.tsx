@@ -1,5 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { getClient } from "GraphQL/getClient";
 import { App } from "./App";
 import "Styles/Reset.scss";
 
@@ -9,6 +11,8 @@ if (!ROOT) {
 }
 createRoot(ROOT).render(
   <StrictMode>
-    <App />
+    <QueryClientProvider client={getClient()}>
+      <App />
+    </QueryClientProvider>
   </StrictMode>,
 );

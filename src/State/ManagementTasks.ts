@@ -5,6 +5,8 @@ import { ManagementTaskModel } from "Models/ManagementTask";
 
 export const ManagementTasks = new ManagementTaskModel();
 export const useTasks = createUseState(ManagementTasks);
+export const creating = (state: IManagementTasks) => state.creating;
+export const editing = (state: IManagementTasks) => state.editing;
 
 export const tasksOfStatus =
   (status: ManagementTaskStatus) => (state: IManagementTasks) =>

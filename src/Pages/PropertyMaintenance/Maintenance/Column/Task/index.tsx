@@ -1,45 +1,30 @@
 import { memo, useMemo } from "react";
 import type { ManagementTask } from "GraphQL/Types";
+import { Dates } from "Tools/Dates";
 import { Controller } from "./Controller";
 import "./styles.scss";
 
 export const Task = memo(function Task({
   title,
-  priority,
-  assignedTo,
   createdAt,
   description,
+  priority,
 }: ManagementTask) {
-  const displayPriority = useMemo(
-    () => Controller.mapPriority(priority),
-    [priority],
+  const dateDisplay = useMemo(
+    () => Dates.format(new Date(createdAt)),
+    [createdAt],
   );
-  const Icon = useMemo(() => Controller.renderIcon(priority), [priority]);
-  const date = useMemo(() => new Date(parseInt(createdAt)), [createdAt]);
-  const ISO = useMemo(() => date.toISOString(), [date]);
-  const userFacingDate = useMemo(() => Controller.renderDateTime(date), [date]);
+  const Icon = useMemo(() => Controller.priorityIcon(priority), [priority]);
   return (
-    <button className="management-task">
-      <div className="management-task__title">
+    <div className="task">
+      <div className="title">
         <div>
-          <h4>{title}</h4>
-          <Icon aria-hidden />
+          <div>{title}</div>
+          <div>{dateDisplay}</div>
         </div>
-        <time dateTime={ISO}>{userFacingDate}</time>
-        {assignedTo && (
-          <p>
-            Assigned:&nbsp;&nbsp;
-            <strong> {assignedTo?.name || "Alex Figliolia"}</strong>
-          </p>
-        )}
-        {true && (
-          <p>
-            Priority:&nbsp;&nbsp;
-            <strong className={priority}> {displayPriority}</strong>
-          </p>
-        )}
+        <Icon />
       </div>
-      <p>{description}</p>
-    </button>
+      <div className="description">{description}</div>
+    </div>
   );
 });

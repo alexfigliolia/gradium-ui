@@ -1,5 +1,10 @@
 import { gql } from "graphql-request";
 import { AdminBasicPropertyFragment } from "GraphQL/Fragments/adminBasicProperty.gql";
+import { queryBuilder } from "GraphQL/queryBuilder";
+import type {
+  AdminBasicPropertiesListQuery,
+  AdminBasicPropertiesListQueryVariables,
+} from "GraphQL/Types";
 
 export const adminBasicPropertiesList = gql`
   ${AdminBasicPropertyFragment}
@@ -9,3 +14,8 @@ export const adminBasicPropertiesList = gql`
     }
   }
 `;
+
+export const getAdminBasicProperties = queryBuilder<
+  AdminBasicPropertiesListQuery,
+  AdminBasicPropertiesListQueryVariables
+>(adminBasicPropertiesList);

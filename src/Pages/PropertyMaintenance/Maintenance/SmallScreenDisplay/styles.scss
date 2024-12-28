@@ -1,0 +1,13 @@
+.scrum-small {
+  width: 100%;
+  min-height: 100vh;
+  margin-top: 1em;
+  & .column {
+    width: 95%;
+    padding-right: 5%;
+    @media (min-width: 670px) {
+      width: 47.5%;
+      padding-right: 2.5%;
+    }
+  }
+}

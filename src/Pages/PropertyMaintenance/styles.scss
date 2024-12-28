@@ -1,0 +1,18 @@
+.management-page-title.maintenance-title {
+  @media (min-width: 800px) {
+    justify-content: flex-start;
+    & .gradient-button {
+      margin-left: 1.5em;
+    }
+  }
+  & .gradient-button {
+    display: flex;
+    padding: 0.5em 1em;
+    & svg {
+      width: 1.2em;
+      height: 1.2em;
+      fill: #fff;
+      margin-left: 0.25em;
+    }
+  }
+}

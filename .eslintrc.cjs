@@ -24,6 +24,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:prettier/recommended",
     "plugin:jsx-a11y/strict",
+    "plugin:@tanstack/eslint-plugin-query/recommended",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {

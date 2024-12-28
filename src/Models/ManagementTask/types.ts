@@ -1,5 +1,4 @@
 import type { ManagementTask, ManagementTaskStatus } from "GraphQL/Types";
-import type { Propless } from "Types/React";
 
 export type TaskTable = Record<number, ManagementTask>;
 
@@ -9,5 +8,5 @@ export interface IManagementTasks {
   creating: boolean;
   editing: boolean;
   tasks: SortedTasks;
-  editableTask: Propless | ManagementTask;
+  editableTask: ManagementTask;
 }

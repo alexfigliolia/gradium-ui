@@ -1,0 +1,18 @@
+@use "Styles/Variables";
+
+.scrum {
+  margin-top: 1em;
+  margin-left: calc(var(--core-padding) * -1);
+  width: calc(100% + (var(--core-padding) * 2));
+  max-width: calc(100% + (var(--core-padding) * 2));
+  margin-top: 1em;
+  &>div {
+    width: 100%;
+    overflow-x: scroll;
+    column-gap: 1em;
+    min-height: 100vh;
+    padding: 0 var(--core-padding);
+    display: grid;
+    grid-template-columns: repeat(4, minmax(300px, 1fr));
+  }
+}

@@ -1,0 +1,30 @@
+@use "Styles/Variables";
+
+.confirmation-sheet.bottom-sheet.create-maintentance-task {
+  & form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    & .row {
+      width: 100%;
+      gap: 1em;
+      @include Variables.center;
+    }
+    & .attachments {
+      width: 100%;
+      gap: 1em;
+      @include Variables.center;
+      &>.cloudinary-image-interface {
+        height: 130px;
+        & p {
+          margin-bottom: 0;
+          font-size: 0.9em;
+        }
+      }
+    }
+  }
+  & .gradient-button {
+    margin-top: 1em;
+  }
+}
