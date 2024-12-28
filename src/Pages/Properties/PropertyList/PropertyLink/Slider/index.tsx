@@ -1,8 +1,8 @@
 import { memo, useMemo } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import { ImagePlaceholder } from "Components/ImagePlaceholder";
-import type { IImage } from "Components/ImageSlider";
-import { ImageSlider } from "Components/ImageSlider";
+import type { ISliderChild } from "Components/TouchSlider";
+import { TouchSlider } from "Components/TouchSlider";
 import type { GradiumImage } from "GraphQL/Types";
 import { LeftRight } from "Icons/LeftRight";
 import { Devices } from "Tools/Devices";
@@ -10,7 +10,7 @@ import "./styles.scss";
 
 export const Slider = memo(function Slider({ images }: Props) {
   const slides = useMemo(() => {
-    const imageList: IImage[] = [];
+    const imageList: ISliderChild[] = [];
     for (const image of images) {
       if (image) {
         imageList.push({ type: "image", content: image.url });
@@ -25,9 +25,9 @@ export const Slider = memo(function Slider({ images }: Props) {
 
   if (images.length) {
     return (
-      <ImageSlider className={classes} images={slides}>
+      <TouchSlider className={classes} images={slides}>
         {!Devices.IS_MOBILE_BROWSER && <LeftRight aria-hidden />}
-      </ImageSlider>
+      </TouchSlider>
     );
   }
 

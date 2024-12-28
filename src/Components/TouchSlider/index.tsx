@@ -10,7 +10,11 @@ import {
 import { useClassNames } from "@figliolia/classnames";
 import { useController, useUnmount } from "@figliolia/react-hooks";
 import type { OptionalChildren } from "Types/React";
-import { Controller, type FlickityOptions, type IImage } from "./Controller";
+import {
+  Controller,
+  type FlickityOptions,
+  type ISliderChild,
+} from "./Controller";
 import "./styles.scss";
 
 export const DEFAULT_OPTIONS: FlickityOptions = {
@@ -20,8 +24,8 @@ export const DEFAULT_OPTIONS: FlickityOptions = {
   setGallerySize: false,
 };
 
-export const ImageSlider = memo(
-  forwardRef(function ImageSlider(
+export const TouchSlider = memo(
+  forwardRef(function TouchSlider(
     { images, children, className, options = DEFAULT_OPTIONS, ...rest }: Props,
     ref: ForwardedRef<Controller>,
   ) {
@@ -62,10 +66,10 @@ export const ImageSlider = memo(
 );
 
 interface Props extends HTMLAttributes<HTMLDivElement>, OptionalChildren {
-  images: IImage[];
+  images: ISliderChild[];
   options?: FlickityOptions;
 }
 
 export { Controller } from "./Controller";
 
-export type { IImage, FlickityOptions } from "./Controller";
+export type { ISliderChild, FlickityOptions } from "./Controller";

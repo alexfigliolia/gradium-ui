@@ -33,7 +33,7 @@ export class Controller {
     this.cacheSlider();
   }
 
-  public create(images: IImage[]) {
+  public create(images: ISliderChild[]) {
     if (!this.slider) {
       return null;
     }
@@ -78,7 +78,7 @@ export class Controller {
     });
   }
 
-  private renderSlides(images: IImage[]) {
+  private renderSlides(images: ISliderChild[]) {
     return images.map(({ type, content }) => {
       if (type === "image" && typeof content === "string") {
         return (
@@ -109,7 +109,7 @@ export class Controller {
   }
 }
 
-export interface IImage {
+export interface ISliderChild {
   type: "image" | "child";
   content: ReactNode;
 }
