@@ -9,6 +9,12 @@
   &.open {
     pointer-events: auto;
   }
+  & > .sheet > .sheet-scroll-view > .sheet-content {
+    margin: auto;
+    width: 95%;
+    max-width: 450px;
+    padding-bottom: 1em;
+  }
   &.mobile > .sheet > .sheet-scroll-view > .sheet-content {
     padding-bottom: 1.5em;
   }
@@ -23,10 +29,6 @@
     }
   }
   & .sheet-content {
-    margin: auto;
-    width: 95%;
-    max-width: 450px;
-    padding-bottom: 1em;
     & h2,
     & p {
       width: 100%;

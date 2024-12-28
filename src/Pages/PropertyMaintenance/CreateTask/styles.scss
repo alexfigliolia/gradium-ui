@@ -13,7 +13,7 @@
     }
     & .attachments {
       width: 100%;
-      gap: 1em;
+      gap: 0.5em;
       @include Variables.center;
       &>.cloudinary-image-interface {
         height: 130px;
