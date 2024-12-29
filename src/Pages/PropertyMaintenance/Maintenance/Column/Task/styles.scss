@@ -3,7 +3,17 @@
   border-radius: 0.5em;
   padding: 1em;
   margin-bottom: 1em;
+  border: none;
+  text-align: left;
+  transition-duration: 0.4s;
   background-color: var(--background);
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  &:hover {
+    box-shadow: var(--shadow-level-2-mid);
+  }
   &>.title {
     display: flex;
     gap: 0.5em;

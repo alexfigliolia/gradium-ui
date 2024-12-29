@@ -1,9 +1,11 @@
 .management-page-title.maintenance-title {
   @media (min-width: 800px) {
-    justify-content: flex-start;
     & .gradient-button {
       margin-left: 1.5em;
     }
+  }
+  @media (min-width: 1400px) {
+    margin-top: 1em;
   }
   & .gradient-button {
     display: flex;

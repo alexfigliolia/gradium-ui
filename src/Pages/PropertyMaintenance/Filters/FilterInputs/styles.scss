@@ -1,0 +1,15 @@
+.task-filter-inputs {
+  &>label.input {
+    margin-bottom: 1.25em;
+    & .search-icon {
+      stroke: none;
+      stroke-width: 0;
+      &:first-of-type {
+        fill: var(--input-text-color);
+      }
+      &:last-of-type {
+        fill: url(#themeGradient);
+      }
+    }
+  }
+}

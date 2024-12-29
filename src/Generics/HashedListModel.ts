@@ -1,9 +1,9 @@
-import { BaseModel } from "Models/BaseModel";
+import { PropertyScopeModel } from "Models/PropertyScopeModel";
 import { NegativeIncrementIDs } from "Tools/NegativeIncrementingIDs";
 
-export abstract class HashedListModel<T extends IListItem> extends BaseModel<
-  IHashedListState<T>
-> {
+export abstract class HashedListModel<
+  T extends IListItem,
+> extends PropertyScopeModel<IHashedListState<T>> {
   protected IDs = new NegativeIncrementIDs();
   constructor(name: string, loading = false) {
     super(name, {

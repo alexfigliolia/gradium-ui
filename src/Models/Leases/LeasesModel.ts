@@ -1,10 +1,10 @@
 import { addYears, subYears } from "date-fns";
 import type { ChangeEvent } from "react";
 import { LivingSpaceType } from "GraphQL/Types";
-import { BaseModel } from "Models/BaseModel";
+import { PropertyScopeModel } from "Models/PropertyScopeModel";
 import type { ILease, ILeases, ILeaseStatus } from "./types";
 
-export class LeasesModel extends BaseModel<ILeases> {
+export class LeasesModel extends PropertyScopeModel<ILeases> {
   public DISPLAY_MAP: Record<ILeaseStatus | "unknown", string> = {
     complete: "Complete",
     "in-progress": "In Progress",

@@ -9,6 +9,7 @@ import {
   selectFilters,
   useAmenitySchedule,
 } from "State/AmenitySchedule";
+import { EnhancedSet } from "Tools/EnhancedSet";
 import { ClearButton } from "./ClearButton";
 import "./styles.scss";
 
@@ -24,37 +25,23 @@ export const FilterInputs = memo(function FilterInputs({ className }: Props) {
     [amenities],
   );
 
-  const toNumericSet = useCallback((set: Set<string>) => {
-    return new Set([...set].map(s => parseInt(s)));
-  }, []);
-
-  const toStringSet = useCallback((set: Set<number>) => {
-    return new Set([...set].map(s => s.toString()));
-  }, []);
-
   const amenitiesSelected = useMemo(
-    () => toStringSet(activeAmenities),
-    [toStringSet, activeAmenities],
+    () => EnhancedSet.toStringSet(activeAmenities),
+    [activeAmenities],
   );
 
   const reserversSelected = useMemo(
-    () => toStringSet(reservers),
-    [toStringSet, reservers],
+    () => EnhancedSet.toStringSet(reservers),
+    [reservers],
   );
 
-  const onAmenitySelection = useCallback(
-    (selected: Set<string>) => {
-      AmenitySchedule.filterByAmenity(toNumericSet(selected));
-    },
-    [toNumericSet],
-  );
+  const onAmenitySelection = useCallback((selected: Set<string>) => {
+    AmenitySchedule.filterByAmenity(EnhancedSet.toNumericSet(selected));
+  }, []);
 
-  const onPersonSelection = useCallback(
-    (selected: Set<string>) => {
-      AmenitySchedule.filterByReserver(toNumericSet(selected));
-    },
-    [toNumericSet],
-  );
+  const onPersonSelection = useCallback((selected: Set<string>) => {
+    AmenitySchedule.filterByReserver(EnhancedSet.toNumericSet(selected));
+  }, []);
 
   const classes = useClassNames("reservation-filter-inputs", className);
 

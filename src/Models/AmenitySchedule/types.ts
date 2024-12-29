@@ -1,4 +1,5 @@
 import type { AmenityReservation } from "GraphQL/Types";
+import type { EnhancedSet } from "Tools/EnhancedSet";
 
 export interface IAmenitySchedule {
   open: string;
@@ -9,8 +10,8 @@ export interface IAmenitySchedule {
   openDatePicker: boolean;
   openNewReservation: boolean;
   openEditReservation: boolean;
-  reservers: Set<number>;
-  amenityIds: Set<number>;
+  reservers: EnhancedSet<number>;
+  amenityIds: EnhancedSet<number>;
   openReservationsWarning: boolean;
   reservations: AmenityReservation[];
   currentReservation: Partial<AmenityReservation>;

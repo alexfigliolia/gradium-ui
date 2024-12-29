@@ -1,12 +1,12 @@
 import { memo } from "react";
-import { GradientButton } from "Components/GradientButton";
 import { PermissedPropertyRoute } from "Components/PermissedPropertyRoute";
-import { Add } from "Icons/Add";
 import { Page, PageTitle } from "Layouts/Management";
 import { AdminRoutes } from "Router/AdminRoutes";
-import { ManagementTasks } from "State/ManagementTasks";
 import type { Propless } from "Types/React";
 import { CreateTask } from "./CreateTask";
+import { EditTask } from "./EditTask";
+import { Filters } from "./Filters";
+import { InlineFilters } from "./InlineFilters";
 import { Maintenance } from "./Maintenance";
 import "./styles.scss";
 
@@ -18,13 +18,12 @@ export default memo(
         requirements={AdminRoutes.access("PROPERTY_MAINTENACE")}>
         <Page className="maintenance-section">
           <PageTitle className="maintenance-title" title="Maintenance">
-            <GradientButton onClick={ManagementTasks.createTask.open}>
-              New Task
-              <Add />
-            </GradientButton>
+            <InlineFilters />
           </PageTitle>
           <Maintenance />
         </Page>
+        <Filters />
+        <EditTask />
         <CreateTask />
       </PermissedPropertyRoute>
     );

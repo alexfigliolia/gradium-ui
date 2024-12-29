@@ -1,8 +1,8 @@
-import { BaseModel } from "Models/BaseModel";
+import { PropertyScopeModel } from "Models/PropertyScopeModel";
 
 export abstract class CRUDModel<
   T extends Record<string, any>,
-> extends BaseModel<T> {
+> extends PropertyScopeModel<T> {
   public abstract batch(value: any): void;
 
   protected createSetter<K extends Extract<keyof T, string>>(

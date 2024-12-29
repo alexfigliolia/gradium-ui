@@ -1,4 +1,3 @@
-import { StackModel } from "Generics/StackModel";
 import { fetchAmenityReservations } from "GraphQL/Queries/fetchAmenityReservations.gql";
 import { graphQLRequest } from "GraphQL/request";
 import type {
@@ -7,20 +6,22 @@ import type {
   FetchAmenityReservationsQuery,
   FetchAmenityReservationsQueryVariables,
 } from "GraphQL/Types";
+import { PropertyScopeModel } from "Models/PropertyScopeModel";
 import { Properties } from "State/Properties";
 import { Scope } from "State/Scope";
 import { Toasts } from "State/Toasts";
 import { Dates } from "Tools/Dates";
+import { EnhancedSet } from "Tools/EnhancedSet";
 import type { IAmenitySchedule } from "./types";
 
-export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
+export class AmenityScheduleModel extends PropertyScopeModel<IAmenitySchedule> {
   constructor() {
     super("Amenity Schedule", {
       loading: false,
       filters: false,
       reservations: [],
-      reservers: new Set(),
-      amenityIds: new Set(),
+      reservers: new EnhancedSet(),
+      amenityIds: new EnhancedSet(),
       openDatePicker: false,
       currentDate: new Date(),
       openNewReservation: false,
@@ -39,14 +40,14 @@ export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
     });
   }
 
-  public filterByAmenity(ids: Set<number>) {
+  public filterByAmenity(ids: EnhancedSet<number>) {
     this.update(state => {
       state.amenityIds = ids;
     });
     void this.fetchReservations();
   }
 
-  public filterByReserver(ids: Set<number>) {
+  public filterByReserver(ids: EnhancedSet<number>) {
     this.update(state => {
       state.reservers = ids;
     });
@@ -55,20 +56,20 @@ export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
 
   public resetFilters = () => {
     this.update(state => {
-      state.reservers = new Set();
-      state.amenityIds = new Set();
+      state.reservers = new EnhancedSet();
+      state.amenityIds = new EnhancedSet();
     });
   };
 
   public clearReservers = () => {
     this.update(state => {
-      state.reservers = new Set();
+      state.reservers = new EnhancedSet();
     });
   };
 
   public clearAmenities = () => {
     this.update(state => {
-      state.amenityIds = new Set();
+      state.amenityIds = new EnhancedSet();
     });
   };
 
@@ -90,8 +91,8 @@ export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
         date: Dates.setTime(date).toISOString(),
         propertyId: Properties.getState().current,
         organizationId: Scope.getState().currentOrganizationId,
-        amenityIds: amenityIds.size ? Array.from(amenityIds) : undefined,
-        reservers: reservers.size ? Array.from(amenityIds) : undefined,
+        amenityIds: amenityIds.size ? amenityIds.toJSON() : undefined,
+        reservers: reservers.size ? amenityIds.toJSON() : undefined,
       });
       this.update(state => {
         state.reservations = response.fetchAmenityReservations;

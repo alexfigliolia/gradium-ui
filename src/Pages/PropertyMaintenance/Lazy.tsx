@@ -3,9 +3,8 @@ import { AppLoaders } from "Tools/AppLoaders";
 import { DataSuspender } from "Tools/LazyLoading";
 
 export const Loader = AppLoaders.create(async () => {
+  ManagementTasks.setLoading(true);
   await AppLoaders.Properties.get();
-  await ManagementTasks.fetch();
-  return ManagementTasks.getState();
 });
 
 export const LazyPropertyMaintenece = DataSuspender(() => Loader.get())({

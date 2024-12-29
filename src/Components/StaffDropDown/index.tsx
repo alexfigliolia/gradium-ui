@@ -15,7 +15,9 @@ import { Scope } from "State/Scope";
 import type { Maybe } from "Types/Generics";
 import type { IHTMLOption } from "Types/React";
 
-export const StaffDropDown = memo(function StaffDropDown(props: Props) {
+function StaffDropDownComponent<M extends boolean | undefined>(
+  props: Props<M>,
+) {
   const fetch = useCallback(
     async (setState: ILoadingStateSetter, cursor: Maybe<number>) => {
       const client = new UIClient({ setState });
@@ -44,13 +46,19 @@ export const StaffDropDown = memo(function StaffDropDown(props: Props) {
   return (
     <PaginatedDropDown
       prefetch
-      multiple={false}
       icon={<User />}
       fetch={fetch}
       title="Staff List"
       {...props}
     />
   );
-});
+}
 
-type Props = Omit<DDProps<IHTMLOption, false>, "fetch" | "icon" | "multiple">;
+export const StaffDropDown = memo(
+  StaffDropDownComponent,
+) as typeof StaffDropDownComponent;
+
+type Props<M extends boolean | undefined> = Omit<
+  DDProps<IHTMLOption, M>,
+  "fetch" | "icon"
+>;

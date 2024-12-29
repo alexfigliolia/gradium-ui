@@ -1,0 +1,54 @@
+@use "Styles/Variables";
+
+.toggle-filters-button.icon-button {
+  overflow: visible;
+  position: relative;
+  border: 2px solid var(--theme-gray);
+  @media (min-width: 670px) {
+    width: 2.75em;
+    height: 2.75em;
+  }
+  &.loading .filters-icon {
+    scale: 0;
+    opacity: 0;
+    transition: scale 0.4s 0s, opacity 0.4s 0s;
+  }
+  & .filters-icon {
+    transition: scale 0.4s 0.5s, opacity 0.4s 0.5s;
+    stroke: var(--text-color-light);
+  }
+  & .colored-loading-action {
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: transparent;
+  }
+  & .indicator {
+    top: -0.55em;
+    left: -0.55em;
+    position: absolute;
+    width: 1.15em;
+    height: 1.15em;
+    border-radius: 50%;
+    background-color: #e71841;
+    line-height: 1;
+    scale: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: scale 0.4s, opacity 0.4s, visibility 0s 0.4s;
+    @include Variables.center;
+    &>strong {
+      color: #fff;
+      font-size: 0.9em;
+      font-weight: 500;
+    }
+    &.active {
+      scale: 1;
+      opacity: 1;
+      visibility: visible;
+      transition: scale 0.4s, opacity 0.4s, visibility 0s;
+    }
+  }
+}

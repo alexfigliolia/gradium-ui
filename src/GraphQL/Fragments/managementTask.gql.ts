@@ -3,18 +3,18 @@ import { gql } from "graphql-request";
 export const ManagementTaskFragment = gql`
   fragment ManagementTaskFragment on ManagementTask {
     id
-    priority
     createdAt
     title
     description
     status
-    images {
-      id
-      url
-    }
+    priority
     createdBy {
       id
       name
+    }
+    images {
+      id
+      url
     }
     assignedTo {
       id
@@ -22,8 +22,8 @@ export const ManagementTaskFragment = gql`
     }
     expenses {
       id
-      createdAt
       cost
+      createdAt
       title
       description
       attachments {

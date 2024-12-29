@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo } from "react";
+import { memo, useMemo } from "react";
 import { GradientButton } from "Components/GradientButton";
 import { PermissedPropertyRoute } from "Components/PermissedPropertyRoute";
 import { Page, PageTitle } from "Layouts/Management";
@@ -20,11 +20,6 @@ export default memo(
       () => proxyReservationModifier(AmenitySchedule.newReservation.open),
       [],
     );
-
-    useEffect(() => {
-      return () => AmenitySchedule.resetScope();
-    }, []);
-
     return (
       <PermissedPropertyRoute
         fallback=".."

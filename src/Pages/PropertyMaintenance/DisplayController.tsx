@@ -13,6 +13,11 @@ export class DisplayController {
     ManagementTaskStatus.Complete,
   ];
 
+  public static priorityOptions = this.priorities.map(priority => ({
+    value: priority,
+    label: this.displayPriority(priority),
+  }));
+
   public static displayStatus(key: ManagementTaskStatus) {
     switch (key) {
       case ManagementTaskStatus.Todo:

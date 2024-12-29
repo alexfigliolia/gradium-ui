@@ -1,26 +1,25 @@
 @use "Styles/Variables";
 
-.reservation-filter-button.icon-button {
+.task-filter-button.toggle-filters-button {
   @media (min-width: 1400px) {
     display: none;
   }
-  & .indicator {
-    @media (min-width: Variables.$small-vertical-tablet) {
-      font-size: 0.8em;
-    }
+  & .colored-loading-action {
+    scale: 0.8;
   }
 }
 
-.reservation-filter-inputs.horizontal-filters {
+.task-filter-inputs.horizontal-filters {
   display: none;
   @media (min-width: 1400px) {
     display: flex;
     align-items: center;
     gap: 1em;
+    margin-right: auto;
   }
   &>label.input {
+    margin: 0;
     min-width: 275px;
     --border-radius: 0.5em;
-    --background: var(--tile-background);
   }
 }

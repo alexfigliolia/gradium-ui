@@ -11,7 +11,7 @@ type Query {
   verifySession: Boolean!
   getLivingSpaces(propertyId: Int!, organizationId: Int!): [LivingSpace!]!
   listStaffMembers(organizationId: Int!, limit: Int, cursor: Int): PaginatedStaff!
-  listManagementTasks(organizationId: Int!, propertyId: Int): [ManagementTask!]!
+  listManagementTasks(organizationId: Int!, propertyId: Int, priority: [ManagementTaskPriority], assignedToId: [Int], searchString: String): [ManagementTask!]!
   fetchAmenityReservations(propertyId: Int!, organizationId: Int!, date: DateTime!, amenityIds: [Int!], reservers: [Int!]): [AmenityReservation!]!
   generateUploadSignature(organizationId: Int!, type: GradiumImageType!): UploadSignature!
   generateDestroySignature(organizationId: Int!, publicId: String!, type: GradiumImageType!): DestroySignature!
@@ -163,7 +163,8 @@ type Mutation {
   setOrganizationName(name: String!, organizationId: Int!): Boolean!
   modifyPropertyAddons(propertyId: Int!, organizationId: Int!, additions: [PropertyAddonType!]!, deletions: [Int!]!): [PropertyAddon!]!
   createOrUpdateAmenity(propertyId: Int!, organizationId: Int!, id: Int, name: String!, billed: BillFrequency!, open: DateTime!, close: DateTime!, price: String!, capacity: Int!): Amenity!
-  createManagementTask(organizationId: Int!, propertyId: Int, title: String!, description: String!, status: ManagementTaskStatus!, priority: ManagementTaskPriority!, images: [GradiumImageInput!]!, assignedToId: Int): ManagementTask!
+  createManagementTask(organizationId: Int!, propertyId: Int, title: String!, description: String!, status: ManagementTaskStatus!, priority: ManagementTaskPriority!, assignedToId: Int, images: [GradiumImageInput!]!): ManagementTask!
+  updateManagementTask(organizationId: Int!, propertyId: Int, title: String!, description: String!, status: ManagementTaskStatus!, priority: ManagementTaskPriority!, assignedToId: Int, id: Int!): ManagementTask!
   setManagementTaskStatus(id: Int!, organizationId: Int!, status: ManagementTaskStatus!): Boolean!
   updateBasicPropertyInfo(propertyId: Int!, organizationId: Int!, name: String!, address1: String!, address2: String!, city: String!, state: String!, zipCode: String!): AdminBasicProperty!
   createAmenityReservation(propertyId: Int!, organizationId: Int!, amenityId: Int!, personId: Int!, start: DateTime!, end: DateTime!, charge: Boolean): AmenityReservation!
