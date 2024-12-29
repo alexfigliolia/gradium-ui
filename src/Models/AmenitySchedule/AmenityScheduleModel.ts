@@ -60,6 +60,18 @@ export class AmenityScheduleModel extends StackModel<IAmenitySchedule> {
     });
   };
 
+  public clearReservers = () => {
+    this.update(state => {
+      state.reservers = new Set();
+    });
+  };
+
+  public clearAmenities = () => {
+    this.update(state => {
+      state.amenityIds = new Set();
+    });
+  };
+
   public selectDate(date: Date) {
     this.update(state => {
       state.currentDate = date;

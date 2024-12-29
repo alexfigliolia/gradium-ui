@@ -8,6 +8,7 @@ export const Task = memo(function Task({
   title,
   createdAt,
   description,
+  assignedTo,
   priority,
 }: ManagementTask) {
   const dateDisplay = useMemo(
@@ -20,7 +21,12 @@ export const Task = memo(function Task({
       <div className="title">
         <div>
           <div>{title}</div>
-          <div>{dateDisplay}</div>
+          <div className="subtext">{dateDisplay}</div>
+          {assignedTo && (
+            <div className="subtext">
+              Assigned To: <span>{assignedTo?.name}</span>
+            </div>
+          )}
         </div>
         <Icon />
       </div>

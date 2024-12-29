@@ -61,7 +61,7 @@ export const PeopleDropDown = memo(
 interface Props<M extends boolean | undefined>
   extends Pick<
     PaginatedDropDownProps<IHTMLOption, M>,
-    "multiple" | "onChange" | "required" | "prefetch" | "value"
+    "multiple" | "onChange" | "required" | "prefetch" | "value" | "children"
   > {
   name?: string;
   label?: string;

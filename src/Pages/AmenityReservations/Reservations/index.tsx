@@ -9,7 +9,7 @@ import {
 } from "State/AmenitySchedule";
 import type { Propless } from "Types/React";
 import { DayView } from "./DayView";
-import { FilterButton } from "./FilterButton";
+import { InlineFilters } from "./InlineFilters";
 import "./styles.scss";
 
 export const Reservations = memo(
@@ -26,7 +26,7 @@ export const Reservations = memo(
                 <strong>,&nbsp;&nbsp;&nbsp;{year}</strong>
               </div>
             </GradientBorderButton>
-            <FilterButton />
+            <InlineFilters />
           </div>
           <DayView />
         </div>

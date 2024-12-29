@@ -6,6 +6,7 @@
   background-color: var(--background);
   &>.title {
     display: flex;
+    gap: 0.5em;
     justify-content: space-between;
     margin-bottom: 0.75em;
     &>div {
@@ -15,7 +16,7 @@
       &>div {
         font-size: 1em;
         font-weight: 400;
-        &:last-of-type {
+        &.subtext {
           font-size: 0.8em;
           color: var(--text-color-lightest);
         }

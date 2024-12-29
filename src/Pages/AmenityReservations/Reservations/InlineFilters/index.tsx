@@ -1,9 +1,10 @@
-import { memo, useEffect, useRef } from "react";
+import { Fragment, memo, useEffect, useRef } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import { ColoredLoadingState } from "Components/ColoredLoadingState";
 import { FadingLoader } from "Components/FadingLoader";
 import { IconButton } from "Components/IconButton";
 import { Filters } from "Icons/Filters";
+import { FilterInputs } from "Pages/AmenityReservations/Filters/FilterInputs";
 import { selectAmenities, useAmenities } from "State/Amenities";
 import {
   AmenitySchedule,
@@ -15,7 +16,7 @@ import type { Callback } from "Types/Generics";
 import type { Propless } from "Types/React";
 import "./styles.scss";
 
-export const FilterButton = memo(function FilterButton(_: Propless) {
+export const InlineFilters = memo(function InlineFilters(_: Propless) {
   const fade = useRef<Callback<[boolean]>>(null);
   const loading = useAmenitySchedule(isLoading);
   const amenities = useAmenities(selectAmenities);
@@ -32,12 +33,15 @@ export const FilterButton = memo(function FilterButton(_: Propless) {
   }
 
   return (
-    <IconButton className={classes} onClick={AmenitySchedule.filters.open}>
-      <Filters />
-      <div className={indicatorClasses}>
-        <strong>{active}</strong>
-      </div>
-      <ColoredLoadingState loading={loading} />
-    </IconButton>
+    <Fragment>
+      <IconButton className={classes} onClick={AmenitySchedule.filters.open}>
+        <Filters />
+        <div className={indicatorClasses}>
+          <strong>{active}</strong>
+        </div>
+        <ColoredLoadingState loading={loading} />
+      </IconButton>
+      <FilterInputs className="horizontal-filters" />
+    </Fragment>
   );
 });

@@ -4,6 +4,9 @@
   overflow: visible;
   position: relative;
   border: 2px solid var(--theme-gray);
+  @media (min-width: 1400px) {
+    display: none;
+  }
   &.loading .filters-icon {
     scale: 0;
     opacity: 0;
@@ -48,5 +51,19 @@
       visibility: visible;
       transition: scale 0.4s, opacity 0.4s, visibility 0s;
     }
+  }
+}
+
+.reservation-filter-inputs.horizontal-filters {
+  display: none;
+  @media (min-width: 1400px) {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+  }
+  &>label.input {
+    min-width: 275px;
+    --border-radius: 0.5em;
+    --background: var(--tile-background);
   }
 }

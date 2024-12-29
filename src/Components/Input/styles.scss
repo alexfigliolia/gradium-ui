@@ -1,7 +1,9 @@
 @use "Styles/Variables";
 
 .input {
+  --border-color: var(--theme-gray);
   --border-radius: 45px;
+  --input-text-color: var(--text-color-light);
   width: 100%;
   display: flex;
   font-size: 1em;
@@ -13,7 +15,7 @@
   background-size: 400% 400%;
   background-position: 0% 50%;
   transition: background-position 0.6s;
-  background-image: linear-gradient(to right, var(--theme-gray), var(--theme-gray), var(--theme-light), var(--theme-dark));
+  background-image: linear-gradient(to right, var(--border-color), var(--border-color), var(--theme-light), var(--theme-dark));
   &.autofilled,
   &.focused,
   &.valid {
@@ -61,7 +63,7 @@
     left: 15px;
     z-index: 2;
     pointer-events: none;
-    color: var(--text-color-light);
+    color: var(--input-text-color);
     border-radius: 1em;
     transition: scale 0.4s, transform 0.4s;
     padding: 0.2em 0.3em;
@@ -127,10 +129,10 @@
         width: 70%;
         margin-left: 20%;
         transition-duration: 0.4s;
-        stroke: var(--text-color-light);
+        stroke: var(--input-text-color);
         &:first-of-type path,
         &:first-of-type circle {
-          stroke: var(--text-color-light);
+          stroke: var(--input-text-color);
         }
         &:last-of-type {
           position: absolute;
