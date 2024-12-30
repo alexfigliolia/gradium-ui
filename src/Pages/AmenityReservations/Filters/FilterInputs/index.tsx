@@ -10,7 +10,6 @@ import {
   useAmenitySchedule,
 } from "State/AmenitySchedule";
 import { EnhancedSet } from "Tools/EnhancedSet";
-import { ClearButton } from "./ClearButton";
 import "./styles.scss";
 
 export const FilterInputs = memo(function FilterInputs({ className }: Props) {
@@ -55,24 +54,16 @@ export const FilterInputs = memo(function FilterInputs({ className }: Props) {
         title="Amenities"
         value={amenitiesSelected}
         onChange={onAmenitySelection}
-        icon={<BasketballCourtFilled />}>
-        <ClearButton
-          active={!!amenitiesSelected.size}
-          onClick={AmenitySchedule.clearAmenities}
-        />
-      </DropDown>
+        icon={<BasketballCourtFilled />}
+      />
       <PeopleDropDown
         multiple
         name="reservers"
         label="Reserved By"
         title="Reserved By"
         value={reserversSelected}
-        onChange={onPersonSelection}>
-        <ClearButton
-          active={!!reserversSelected.size}
-          onClick={AmenitySchedule.clearReservers}
-        />
-      </PeopleDropDown>
+        onChange={onPersonSelection}
+      />
     </div>
   );
 });

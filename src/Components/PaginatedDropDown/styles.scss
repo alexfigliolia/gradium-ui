@@ -1,23 +1,23 @@
 .dropdown.paginated-dropdown {
+  &:has(.loading-action.dd-fetch-loader.loading) .dd-clear-button {
+    scale: 0;
+  }
   &> .loading-action.dd-fetch-loader {
+    top: 0;
+    right: 0;
+    position: absolute;
     width: 41px;
-    height: 41px;
+    height: 100%;
     margin-top: 0;
-    background-color: var(--background);
-    border-top-right-radius: calc(var(--border-radius)* 0.925);
-    border-bottom-right-radius: calc(var(--border-radius)* 0.925);
+    pointer-events: none;
     &.loading {
       &>.triangle-loader {
-        translate: -50% -52.5%;
+        translate: -60% -52.5%;
         scale: 0.5;
       }
       &>svg {
         display: none;
       }
     }
-  }
-  &>.input-positioner {
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
   }
 }

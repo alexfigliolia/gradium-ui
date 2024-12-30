@@ -8,6 +8,7 @@ import { OptionSelector } from "Components/OptionSelector";
 import { Devices } from "Tools/Devices";
 import type { Callback } from "Types/Generics";
 import type { IHTMLOption } from "Types/React";
+import { ClearButton } from "./ClearButton";
 import { Controller } from "./Controller";
 import { DesktopSelect } from "./DesktopSelect";
 import type { DDValue } from "./types";
@@ -49,6 +50,10 @@ function IDropDown<T extends IHTMLOption, M extends boolean | undefined>({
     },
     [onChange, value, multiple],
   );
+
+  const clear = useCallback(() => {
+    onChange(new Set() as DDValue<M>);
+  }, [onChange]);
 
   const blurInput = useCallback(() => {
     controller.blurNode();
@@ -109,6 +114,13 @@ function IDropDown<T extends IHTMLOption, M extends boolean | undefined>({
     }
   }, [controller.Toggle]);
 
+  const inputValue = useMemo(
+    () => Controller.parseValues(value, table),
+    [value, table],
+  );
+
+  const valueLength = useMemo(() => Controller.valueLength(value), [value]);
+
   const classes = useClassNames("dropdown", className, {
     isMobile: Devices.IS_MOBILE_BROWSER,
   });
@@ -125,8 +137,9 @@ function IDropDown<T extends IHTMLOption, M extends boolean | undefined>({
       className={classes}
       onFocus={onFocusDD}
       onClickIcon={onClickIcon}
-      value={Controller.parseValues(value, table)}>
+      value={inputValue}>
       {children}
+      {multiple && <ClearButton onClick={clear} valueLength={valueLength} />}
       {Devices.IS_MOBILE_BROWSER ? (
         // @ts-ignore
         <OptionSelector<T, M>

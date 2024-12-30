@@ -16,7 +16,6 @@ import {
   useTasks,
 } from "State/ManagementTasks";
 import { EnhancedSet } from "Tools/EnhancedSet";
-import { ClearButton } from "./ClearButton";
 import "./styles.scss";
 
 export const FilterInputs = memo(function FilterInputs({ className }: Props) {
@@ -64,24 +63,16 @@ export const FilterInputs = memo(function FilterInputs({ className }: Props) {
         title="Priorities"
         value={activePriorities}
         onChange={onPrioritySelection}
-        icon={<LowPriority />}>
-        <ClearButton
-          active={!!activePriorities.size}
-          onClick={ManagementTasks.clearPriorityFilter}
-        />
-      </DropDown>
+        icon={<LowPriority />}
+      />
       <StaffDropDown
         multiple
         name="assignees"
         label="Assigned To"
         title="Assigned To"
         value={assignees}
-        onChange={onPersonSelection}>
-        <ClearButton
-          active={!!assignees.size}
-          onClick={ManagementTasks.clearAssignmentFilter}
-        />
-      </StaffDropDown>
+        onChange={onPersonSelection}
+      />
     </div>
   );
 });

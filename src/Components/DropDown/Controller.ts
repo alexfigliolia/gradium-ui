@@ -2,6 +2,7 @@ import type { Callback } from "@figliolia/drag-detector";
 import type { ModalToggle } from "@figliolia/modal-stack";
 import { ModalStack } from "Tools/ModalStack";
 import type { IHTMLOption } from "Types/React";
+import type { DDValue } from "./types";
 
 export class Controller {
   Toggle: ModalToggle;
@@ -37,6 +38,13 @@ export class Controller {
       return;
     }
     this.node.blur();
+  }
+
+  public static valueLength<M extends boolean | undefined>(value: DDValue<M>) {
+    if (typeof value === "string") {
+      return 0;
+    }
+    return value.size;
   }
 
   public static toTable<T extends IHTMLOption>(list: T[]) {
