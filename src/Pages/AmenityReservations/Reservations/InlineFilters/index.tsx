@@ -1,31 +1,22 @@
-import { Fragment, memo, useEffect, useRef } from "react";
-import { FadingLoader } from "Components/FadingLoader";
+import { Fragment, memo } from "react";
+import { useClassNames } from "@figliolia/classnames";
 import { FilterButton } from "Components/FilterButton";
 import { FilterInputs } from "Pages/AmenityReservations/Filters/FilterInputs";
-import { selectAmenities, useAmenities } from "State/Amenities";
 import {
   AmenitySchedule,
   isLoading,
   totalActiveFilters,
   useAmenitySchedule,
 } from "State/AmenitySchedule";
-import type { Callback } from "Types/Generics";
+import { isDarkMode, useTheme } from "State/Theme";
 import type { Propless } from "Types/React";
 import "./styles.scss";
 
 export const InlineFilters = memo(function InlineFilters(_: Propless) {
-  const fade = useRef<Callback<[boolean]>>(null);
+  const dark = useTheme(isDarkMode);
   const loading = useAmenitySchedule(isLoading);
-  const amenities = useAmenities(selectAmenities);
   const active = useAmenitySchedule(totalActiveFilters);
-
-  useEffect(() => {
-    fade.current?.(!loading);
-  }, [loading]);
-
-  if (loading && amenities.length < 2) {
-    return <FadingLoader ref={fade} />;
-  }
+  const filterClasses = useClassNames("horizontal-filters", { dark });
 
   return (
     <Fragment>
@@ -35,7 +26,7 @@ export const InlineFilters = memo(function InlineFilters(_: Propless) {
         className="reservation-filter-button"
         onClick={AmenitySchedule.filters.open}
       />
-      <FilterInputs className="horizontal-filters" />
+      <FilterInputs className={filterClasses} />
     </Fragment>
   );
 });

@@ -9,6 +9,13 @@
       font-size: 0.8em;
     }
   }
+  &>.colored-loading-action {
+    scale: 0.8;
+    translate: 0 2.5%;
+    @media (min-width: Variables.$small-vertical-tablet) {
+      scale: 1;
+    }
+  }
 }
 
 .reservation-filter-inputs.horizontal-filters {
@@ -17,6 +24,9 @@
     display: flex;
     align-items: center;
     gap: 1em;
+  }
+  &.dark > label.input {
+    --input-text-color: var(--text-color);
   }
   &>label.input {
     min-width: 275px;

@@ -1,3 +1,4 @@
+import type { ITheme } from "@figliolia/galena-dark-mode";
 import { DarkModeManager } from "@figliolia/galena-dark-mode";
 import { createUseState } from "@figliolia/react-galena";
 import { LocalStorage } from "Tools/LocalStorage";
@@ -10,3 +11,4 @@ export const Theme = new DarkModeManager(
 );
 
 export const useTheme = createUseState(Theme);
+export const isDarkMode = (state: ITheme) => state.theme === "dark";
