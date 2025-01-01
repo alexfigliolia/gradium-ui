@@ -163,7 +163,7 @@ type Mutation {
   setOrganizationName(name: String!, organizationId: Int!): Boolean!
   modifyPropertyAddons(propertyId: Int!, organizationId: Int!, additions: [PropertyAddonType!]!, deletions: [Int!]!): [PropertyAddon!]!
   createOrUpdateAmenity(propertyId: Int!, organizationId: Int!, id: Int, name: String!, billed: BillFrequency!, open: DateTime!, close: DateTime!, price: String!, capacity: Int!): Amenity!
-  createManagementTask(organizationId: Int!, propertyId: Int, title: String!, description: String!, status: ManagementTaskStatus!, priority: ManagementTaskPriority!, assignedToId: Int, images: [GradiumImageInput!]!): ManagementTask!
+  createManagementTask(organizationId: Int!, propertyId: Int, title: String!, description: String!, status: ManagementTaskStatus!, priority: ManagementTaskPriority!, assignedToId: Int): ManagementTask!
   updateManagementTask(organizationId: Int!, propertyId: Int, title: String!, description: String!, status: ManagementTaskStatus!, priority: ManagementTaskPriority!, assignedToId: Int, id: Int!): ManagementTask!
   setManagementTaskStatus(id: Int!, organizationId: Int!, status: ManagementTaskStatus!): Boolean!
   updateBasicPropertyInfo(propertyId: Int!, organizationId: Int!, name: String!, address1: String!, address2: String!, city: String!, state: String!, zipCode: String!): AdminBasicProperty!
@@ -215,10 +215,6 @@ enum PropertyAddonType {
   propertyEvents
   leaseManagement
   hoaManagement
-}
-input GradiumImageInput {
-  id: Int!
-  url: String!
 }
 "Exposes a URL that specifies the behavior of this scalar."
 directive @specifiedBy(

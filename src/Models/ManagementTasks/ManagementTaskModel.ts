@@ -102,6 +102,28 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
     });
   }
 
+  public partialUpdateByID(
+    id: number,
+    update: Partial<Omit<ManagementTask, "id">>,
+  ) {
+    const task = this.getByID(id);
+    if (!task) {
+      return;
+    }
+    const updated = { ...task, update };
+    this.updateByID(updated);
+  }
+
+  public getByID(id: number) {
+    const { tasks } = this.getState();
+    for (const key in tasks) {
+      const status = key as ManagementTaskStatus;
+      if (id in tasks[status]) {
+        return tasks[status][id];
+      }
+    }
+  }
+
   public setLoading(loading: boolean) {
     this.set("loading", loading);
   }

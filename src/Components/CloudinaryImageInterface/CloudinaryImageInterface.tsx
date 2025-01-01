@@ -80,7 +80,7 @@ export const CloudinaryImageInterface = memo(
         {state.temporaryImage && <ImageFader image={state.temporaryImage} />}
         {image && <ImageFader image={image.url} />}
         {image && !state.loading && !disabled ? (
-          <Closer type="button" onClick={deleteImage} />
+          <Closer className="cii-closer" type="button" onClick={deleteImage} />
         ) : (
           <ImageUploader
             image={image}
@@ -97,11 +97,9 @@ export const CloudinaryImageInterface = memo(
 
 interface Props {
   disabled?: boolean;
-  entityId?: number;
+  entityId: number;
   image?: GradiumImage;
-  type?: GradiumImageType;
+  type: GradiumImageType;
   onUpload?: Callback<[GradiumImage]>;
   onDelete?: Callback<[GradiumImage]>;
 }
-
-export type { Controller } from "./Controller";

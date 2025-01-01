@@ -1,6 +1,18 @@
 @use "Styles/Variables";
 
 .confirmation-sheet.bottom-sheet.create-maintentance-task {
+  --horizontal-padding: 1em;
+  --padding: 2em var(--horizontal-padding) 1em;
+  @media (min-width: Variables.$small-vertical-tablet) {
+    --horizontal-padding: 1.5em;
+    --padding: 1.5em;
+  }
+  & > .sheet {
+    width: 100%;
+    &>.sheet-scroll-view {
+      padding: var(--padding);
+    }
+  }
   & form {
     width: 100%;
     display: flex;
@@ -11,15 +23,20 @@
       gap: 1em;
       @include Variables.center;
     }
-    & .attachments {
-      width: 100%;
-      gap: 0.5em;
-      @include Variables.center;
+    & h3 {
+      font-weight: 500;
+    }
+    & .task-attachments {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
       &>.cloudinary-image-interface {
+        flex: 1;
+        max-width: calc(33% - 0.3333em);
         height: 130px;
-        & p {
+        aspect-ratio: 1 / 1;
+        &>.file-uploader p {
           margin-bottom: 0;
-          font-size: 0.9em;
         }
       }
     }

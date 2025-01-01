@@ -13,8 +13,6 @@ import { Task } from "./Task";
 import "./styles.scss";
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 
-const NOOP = () => {};
-
 export const Column = memo(function Column({ status }: Props) {
   const label = useMemo(
     () => DisplayController.displayStatus(status),

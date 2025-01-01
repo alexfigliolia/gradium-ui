@@ -10,7 +10,6 @@ export const createManagementTask = gql`
     $description: String!
     $status: ManagementTaskStatus!
     $priority: ManagementTaskPriority!
-    $images: [GradiumImageInput!]!
     $assignedToId: Int
   ) {
     createManagementTask(
@@ -20,7 +19,6 @@ export const createManagementTask = gql`
       description: $description
       status: $status
       priority: $priority
-      images: $images
       assignedToId: $assignedToId
     ) {
       ...ManagementTaskFragment

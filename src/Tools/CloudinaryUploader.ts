@@ -28,22 +28,45 @@ export class CloudinaryUploader {
     e: ChangeEvent<HTMLInputElement>,
     scope: CloudinaryAssetScope,
   ) => {
-    const files = this.runValidations(e);
+    const files = CloudinaryUploader.runValidations(e);
     if (!files) {
       return [];
     }
-    const destination = await this.signUpload(scope.type);
+    const destination = await CloudinaryUploader.signUpload(scope.type);
     if (!destination) {
       return [];
     }
     this.setTemporaryImages(files);
     const results = await Promise.all(
-      files.map(file => this.upload(file, scope, destination)),
+      files.map(file =>
+        CloudinaryUploader.uploadFile(file, scope, destination),
+      ),
     );
     return results.filter(image => !!image);
   };
 
-  private async upload(
+  public static async uploadBatch(
+    scope: CloudinaryAssetScope,
+    ...files: File[]
+  ) {
+    try {
+      const validFiles = this.validateFiles(files);
+      const signature = await this.signUpload(scope.type);
+      if (!signature) {
+        return [];
+      }
+      return Promise.allSettled(
+        validFiles.map(file => this.uploadFile(file, scope, signature)),
+      );
+    } catch (error) {
+      Toasts.error(
+        "Something went wrong while uploading your files. Please try again",
+      );
+      return [];
+    }
+  }
+
+  private static async uploadFile(
     file: File,
     scope: CloudinaryAssetScope,
     destination: UploadSignature,
@@ -60,19 +83,19 @@ export class CloudinaryUploader {
     }
   }
 
-  private runValidations(e: ChangeEvent<HTMLInputElement>) {
+  public static runValidations(e: ChangeEvent<HTMLInputElement>) {
     const files = this.validateEvent(e);
     if (!files) {
       return;
     }
-    const filtered = this.validateFile(files);
+    const filtered = CloudinaryUploader.validateFiles(files);
     if (!filtered.length) {
       return;
     }
     return filtered;
   }
 
-  private async signUpload(type: GradiumImageType) {
+  private static async signUpload(type: GradiumImageType) {
     try {
       const response = await graphQLRequest<
         GenerateUploadSignatureQuery,
@@ -87,7 +110,7 @@ export class CloudinaryUploader {
     }
   }
 
-  private async saveImage(url: string, scope: CloudinaryAssetScope) {
+  private static async saveImage(url: string, scope: CloudinaryAssetScope) {
     try {
       const response = await graphQLRequest<
         SaveImageMutation,
@@ -105,7 +128,7 @@ export class CloudinaryUploader {
     }
   }
 
-  private async toCloudinary(file: File, destination: UploadSignature) {
+  private static async toCloudinary(file: File, destination: UploadSignature) {
     const { name, __typename: _, ...rest } = destination;
     const data = new FormData();
     data.append("file", file);
@@ -127,7 +150,7 @@ export class CloudinaryUploader {
     return json.secure_url as string;
   }
 
-  private validateEvent(e: ChangeEvent<HTMLInputElement>) {
+  private static validateEvent(e: ChangeEvent<HTMLInputElement>) {
     const { target } = e;
     if (target.tagName !== "INPUT") {
       return false;
@@ -142,7 +165,7 @@ export class CloudinaryUploader {
     return clone;
   }
 
-  private validateFile(files: File[]) {
+  private static validateFiles(files: File[]) {
     const validFiles: File[] = [];
     for (const file of files) {
       if (file.size > CloudinaryUploader.MAX_SIZE) {

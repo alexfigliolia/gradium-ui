@@ -45,6 +45,7 @@ export const ImageUploader = memo(
     const pClasses = useClassNames({ hidden: disableUpload });
     return (
       <Uploader
+        multiple
         ref={clearInput}
         accept="image/*"
         disabled={disableUpload}

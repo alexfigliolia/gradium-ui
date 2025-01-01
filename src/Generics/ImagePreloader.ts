@@ -2,11 +2,15 @@ import type { Callback } from "Types/Generics";
 
 export class ImagePreloader {
   public src: string;
-  public onLoad: Callback;
+  public onLoad?: Callback;
   private Image?: HTMLImageElement;
   public onError?: Callback<[ErrorEvent]>;
   private handler = Promise.withResolvers<void>();
-  constructor(src: string, onLoad: Callback, onError?: Callback<[ErrorEvent]>) {
+  constructor(
+    src: string,
+    onLoad?: Callback,
+    onError?: Callback<[ErrorEvent]>,
+  ) {
     this.src = src;
     this.onLoad = onLoad;
     this.onError = onError;
@@ -31,7 +35,7 @@ export class ImagePreloader {
   }
 
   private loadHandler = () => {
-    this.onLoad();
+    this.onLoad?.();
     this.handler.resolve();
   };
 

@@ -1,4 +1,4 @@
-import type { ChangeEvent, ForwardedRef } from "react";
+import type { ForwardedRef } from "react";
 import {
   forwardRef,
   memo,
@@ -9,28 +9,23 @@ import {
   useState,
 } from "react";
 import type { ILoadingStateSetter } from "@figliolia/react-hooks";
-import { useFormState } from "@figliolia/react-hooks";
+import { useController, useFormState } from "@figliolia/react-hooks";
 import { ActionButton } from "Components/ActionButton";
-import { CloudinaryImageInterface } from "Components/CloudinaryImageInterface";
 import { Confirmation } from "Components/Confirmation";
 import { DropDown } from "Components/DropDown";
 import { Input } from "Components/Input";
 import { StaffDropDown } from "Components/StaffDropDown";
 import type {
   CreateManagementTaskMutationVariables,
-  GradiumImage,
   ManagementTask,
-  ManagementTaskPriority,
 } from "GraphQL/Types";
-import { ManagementTaskStatus } from "GraphQL/Types";
 import { Check } from "Icons/Check";
 import { HighPriority } from "Icons/HighPriority";
 import { Title } from "Icons/Title";
 import { ManagementTaskModel } from "Models/ManagementTasks";
-import { Properties } from "State/Properties";
-import { Scope } from "State/Scope";
 import type { Callback } from "Types/Generics";
-import { Controller } from "./Controller";
+import type { OptionalChildren } from "Types/React";
+import { Controller, type IState } from "./Controller";
 import "./styles.scss";
 
 export const TaskModal = memo(
@@ -38,94 +33,37 @@ export const TaskModal = memo(
     {
       open,
       close,
+      children,
       actionText,
       onFormSubmit,
       title: modalTitle,
       task = ManagementTaskModel.EMPTY_TASK,
+      subtitle = "Tasks you create can be tracked on your board. Assigned staff members will be notified when receiving new tasks.",
     }: Props,
     ref: ForwardedRef<Callback>,
   ) {
     const form = useRef<HTMLFormElement>(null);
-    const [assigned, setAssigned] = useState(
-      task.assignedTo?.id?.toString?.() ?? "",
+    const [formState, setState] = useState<IState>(
+      Controller.initialState(task),
     );
-    const [title, setTitle] = useState(task.title);
-    const [description, setDescription] = useState(task.description);
-    const [images, setImages] = useState<GradiumImage[]>(task.images);
-    const [status, setStatus] = useState<string>(
-      task.status ?? ManagementTaskStatus.Todo,
-    );
-    const [priority, setPriority] = useState<string>(task.priority);
+    const controller = useController(new Controller(setState));
 
     useEffect(() => {
-      setTitle(task.title);
-      setDescription(task.description);
-      setAssigned(task.assignedTo?.id?.toString?.() ?? "");
-      setImages(task.images);
-      setStatus(task.status ?? ManagementTaskStatus.Todo);
-      setPriority(task.priority);
-    }, [task]);
+      controller.resetState(task);
+    }, [task, controller]);
 
-    const onChangeText = useCallback(
-      (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        if (name === "description") {
-          setDescription(value);
-        } else if (name === "title") {
-          setTitle(value);
-        }
-      },
-      [],
-    );
-
-    const resetForm = useCallback(() => {
-      form.current?.reset();
-      setTitle("");
-      setDescription("");
-      setAssigned("");
-      setImages([]);
-      setPriority("");
-      setStatus(ManagementTaskStatus.Todo);
-    }, []);
-
-    useImperativeHandle(ref, () => resetForm, [resetForm]);
-
-    const onUpload = useCallback((image: GradiumImage) => {
-      setImages(images => [...images, image]);
-    }, []);
-
-    const onDelete = useCallback((image: GradiumImage) => {
-      setImages(images => images.filter(img => img.id !== image.id));
-    }, []);
+    const reset = useCallback(() => {
+      controller.clearForm();
+    }, [controller]);
 
     const onAction = useCallback(
-      (_: FormData, setState: ILoadingStateSetter) => {
-        void onFormSubmit(
-          {
-            ...task,
-            title,
-            description,
-            assignedToId: assigned === "" ? undefined : parseInt(assigned),
-            propertyId: Properties.getState().current,
-            organizationId: Scope.getState().currentOrganizationId,
-            status: status as ManagementTaskStatus,
-            priority: priority as ManagementTaskPriority,
-            images: images,
-          },
-          setState,
-        );
+      (_: FormData, setState: ILoadingStateSetter, resetState: Callback) => {
+        void onFormSubmit(controller.toGQL(formState), setState, resetState);
       },
-      [
-        status,
-        priority,
-        assigned,
-        images,
-        description,
-        onFormSubmit,
-        task,
-        title,
-      ],
+      [controller, formState, onFormSubmit],
     );
+
+    useImperativeHandle(ref, () => reset, [reset]);
 
     const { loading, success, error, onSubmit } = useFormState(onAction);
 
@@ -135,7 +73,7 @@ export const TaskModal = memo(
         className="create-maintentance-task"
         close={close}>
         <h2>{modalTitle}</h2>
-        <p>Tasks you create can be tracked on your maintenace scrum board</p>
+        <p>{subtitle}</p>
         <form ref={form} onSubmit={onSubmit}>
           <Input
             required
@@ -143,66 +81,51 @@ export const TaskModal = memo(
             label="Title"
             icon={<Title />}
             name="title"
-            value={title}
-            onChange={onChangeText}
+            value={formState.title}
+            onChange={controller.onChangeText}
             autoComplete="off"
+          />
+          <StaffDropDown
+            multiple={false}
+            label="Assign to"
+            name="assignedToId"
+            value={formState.assigned}
+            onChange={controller.setAssigned}
           />
           <div className="row">
             <DropDown
               required
-              value={priority}
+              value={formState.priority}
               label="Priority"
               title="Priorities"
               list={Controller.priorityList}
               multiple={false}
               name="priority"
               icon={<HighPriority />}
-              onChange={setPriority}
+              onChange={controller.setPriority}
             />
             <DropDown
               required
-              value={status}
+              value={formState.status}
               label="Status"
               title="Statuses"
               list={Controller.statusList}
               multiple={false}
               name="status"
               icon={<Check />}
-              onChange={setStatus}
+              onChange={controller.setStatus}
             />
           </div>
-          <StaffDropDown
-            multiple={false}
-            label="Assign to"
-            name="assignedToId"
-            value={assigned}
-            onChange={setAssigned}
-          />
           <Input
             type="textarea"
             label="Description"
             name="description"
             autoComplete="off"
-            value={description}
-            onChange={onChangeText}
+            value={formState.description}
+            onChange={controller.onChangeText}
           />
-          <div className="attachments">
-            <CloudinaryImageInterface
-              image={images[0]}
-              onUpload={onUpload}
-              onDelete={onDelete}
-            />
-            <CloudinaryImageInterface
-              image={images[1]}
-              onUpload={onUpload}
-              onDelete={onDelete}
-            />
-            <CloudinaryImageInterface
-              image={images[2]}
-              onUpload={onUpload}
-              onDelete={onDelete}
-            />
-          </div>
+          <h3>Attachments</h3>
+          <div className="task-attachments">{children}</div>
           <ActionButton
             type="submit"
             error={!!error}
@@ -216,14 +139,20 @@ export const TaskModal = memo(
   }),
 );
 
-interface Props {
+interface Props extends OptionalChildren {
   open: boolean;
   title: string;
+  subtitle?: string;
   task?: ManagementTask;
   close: Callback;
   onFormSubmit: Callback<
-    [CreateManagementTaskMutationVariables, ILoadingStateSetter],
+    [SubmitTaskArgs, ILoadingStateSetter, Callback],
     void | Promise<void>
   >;
   actionText: string;
 }
+
+export type SubmitTaskArgs = Omit<
+  CreateManagementTaskMutationVariables,
+  "images"
+>;
