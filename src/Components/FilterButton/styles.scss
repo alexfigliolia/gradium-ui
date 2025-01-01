@@ -4,6 +4,7 @@
   overflow: visible;
   position: relative;
   border: 2px solid var(--theme-gray);
+  background-color: var(--drop-down-background);
   @media (min-width: 670px) {
     width: 2.75em;
     height: 2.75em;
@@ -15,7 +16,7 @@
   }
   & .filters-icon {
     transition: scale 0.4s 0.5s, opacity 0.4s 0.5s;
-    stroke: var(--text-color-light);
+    stroke: url(#themeGradient);
   }
   & .colored-loading-action {
     top: 0;

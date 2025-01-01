@@ -52,9 +52,6 @@
         @media (min-width: Variables.$small-vertical-tablet) {
           font-size: 1.18em;
         }
-        &> svg {
-          stroke: var(--text-color-light);
-        }
       }
     }
   }

@@ -14,6 +14,22 @@
     width: 95%;
     max-width: 450px;
     padding-bottom: 1em;
+    &>.closer-button {
+      top: 1em;
+      right: 1em;
+      --dimensions: 2.5em;
+      position: fixed;
+      z-index: 2;
+      transition: opacity 0.25s;
+      @media (min-width: 670px) {
+        top: 1.25em;
+        right: 1.25em;
+        --dimensions: 3em;
+      }
+      &:hover {
+        opacity: 0.5;
+      }
+    }
   }
   &.mobile > .sheet > .sheet-scroll-view > .sheet-content {
     padding-bottom: 1.5em;
@@ -51,22 +67,6 @@
     &>form .gradient-button {
       margin-left: auto;
       margin-right: auto;
-    }
-  }
-  & .closer-button {
-    top: 1em;
-    right: 1em;
-    --dimensions: 2.5em;
-    position: fixed;
-    z-index: 2;
-    transition: opacity 0.25s;
-    @media (min-width: 670px) {
-      top: 1.25em;
-      right: 1.25em;
-      --dimensions: 3em;
-    }
-    &:hover {
-      opacity: 0.5;
     }
   }
 }

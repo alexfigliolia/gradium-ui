@@ -976,6 +976,11 @@
   resolved "https://registry.yarnpkg.com/@figliolia/size-observer/-/size-observer-1.0.3.tgz#ad2f0fbdc9ab0f874f9bbc9cca981f410b58b7ce"
   integrity sha512-qB8QrxvBbo8TjTWbxd0kkZ8m29pXCRDsk84hj3IhIky/tzB7B6KVg6AmKyXt4hhHFbz+KGV3DB3NylUNFg8HTA==
 
+"@figliolia/size-observer@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@figliolia/size-observer/-/size-observer-1.1.0.tgz#c7960cf898398c40e34d9dc4616ee1b48b894904"
+  integrity sha512-xukhs3MhOB6KYTnOMgDNwdrm4fV6fk9P6HpHAVv0K5xX3xGBXrBaRNoAvEBc8LZcTVOIIAiL3+gGvUgzfe0esw==
+
 "@figliolia/typed-storage@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@figliolia/typed-storage/-/typed-storage-1.0.1.tgz#f8649523c5693f0d1d2ceb19fd1a80bb439fc343"

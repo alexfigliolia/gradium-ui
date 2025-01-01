@@ -1,6 +1,7 @@
 @use "Styles/Variables";
 
 .task-filter-button.toggle-filters-button {
+background-color: transparent;
   @media (min-width: 1400px) {
     display: none;
   }
