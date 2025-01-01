@@ -54,8 +54,14 @@
         padding: 0.5em;
         &>div {
           margin-right: 1em;
+          &>div {
+            background-color: var(--drop-down-background);
+          }
         }
       }
+    }
+    & .checkbox-group label > div > div {
+      background-color: var(--drop-down-background);
     }
   }
 }
