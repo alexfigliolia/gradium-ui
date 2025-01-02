@@ -36,6 +36,7 @@ export const Attachments = memo(function Attachments({ id, images }: Props) {
           }
           return (
             <CloudinaryImageInterface
+              key={i}
               entityId={id}
               onUpload={onUpload}
               type={GradiumImageType.TaskImage}

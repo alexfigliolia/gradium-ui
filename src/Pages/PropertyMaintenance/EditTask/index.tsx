@@ -92,6 +92,7 @@ export const EditTask = memo(
               images={task.images}
               renderItem={(_, i) => (
                 <CloudinaryImageInterface
+                  key={i}
                   entityId={task.id}
                   image={task.images[i]}
                   onUpload={onUpload}
