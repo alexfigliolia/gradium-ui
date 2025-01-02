@@ -2,6 +2,8 @@ import type { DragEvent } from "react";
 import { memo, useCallback, useMemo } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import type { ManagementTask } from "GraphQL/Types";
+import { Attachment } from "Icons/Attachment";
+import { MoneyStroked } from "Icons/Money";
 import { DragAndDrop } from "Pages/PropertyMaintenance/DragAndDrop";
 import { ManagementTasks } from "State/ManagementTasks";
 import { Dates } from "Tools/Dates";
@@ -9,7 +11,15 @@ import { Controller } from "./Controller";
 import "./styles.scss";
 
 export const Task = memo(function Task(task: ManagementTask) {
-  const { title, createdAt, description, assignedTo, priority } = task;
+  const {
+    title,
+    createdAt,
+    description,
+    assignedTo,
+    priority,
+    images,
+    expenses,
+  } = task;
   const isDragging = DragAndDrop.useDragging();
   const dateDisplay = useMemo(
     () => Dates.format(new Date(createdAt)),
@@ -38,6 +48,8 @@ export const Task = memo(function Task(task: ManagementTask) {
     DragAndDrop.reset();
   }, []);
 
+  const visibleAttachments = useMemo(() => images.slice(0, 4), [images]);
+
   return (
     <button
       draggable
@@ -58,6 +70,34 @@ export const Task = memo(function Task(task: ManagementTask) {
         <Icon />
       </div>
       <div className="description">{description}</div>
+      {!!visibleAttachments.length && (
+        <div className="attachments">
+          <div className="subtext">Attachments:</div>
+          <div className="grid">
+            {visibleAttachments.map(img => (
+              <div key={img.id}>
+                <img src={img.url} alt="attachment" />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      {(!!images.length || !!expenses.length) && (
+        <div className="meta-data">
+          {!!images.length && (
+            <div>
+              <Attachment />
+              {images.length}
+            </div>
+          )}
+          {!!expenses.length && (
+            <div>
+              <MoneyStroked />
+              {expenses.length}
+            </div>
+          )}
+        </div>
+      )}
     </button>
   );
 });

@@ -1,3 +1,5 @@
+@use "Styles/Variables";
+
 .task {
   width: 100%;
   border-radius: 0.5em;
@@ -13,6 +15,10 @@
   }
   &:hover {
     box-shadow: var(--shadow-level-2-mid);
+  }
+  & .subtext {
+    font-size: 0.8em;
+    color: var(--text-color-lightest);
   }
   &>.title {
     display: flex;
@@ -52,5 +58,51 @@
   &>.description {
     font-size: 0.95em;
     color: var(--text-color-light);
+  }
+  &>.attachments {
+    margin-top: 0.5em;
+    &>.subtext {
+      margin-bottom: 0.5em;
+    }
+    &>.grid {
+      display: flex;
+      gap: 0.5em;
+      &>div {
+        width: 60px;
+        height: 60px;
+        overflow: hidden;
+        border-radius: 0.5em;
+        box-shadow: var(--shadow-level-1);
+        &>img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+  &>.meta-data {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    margin-top: 1em;
+    &>div {
+      @include Variables.center;
+      gap: 0.5em;
+      font-size: 0.9em;
+      padding: 0.15em 0.35em;
+      border-radius: 0.5em;
+      border: 1px solid var(--text-color-lightest);
+      color: var(--text-color-lightest);
+      &>svg {
+        width: 1.5em;
+        height: 1.5em;
+        stroke: var(--text-color-lightest);
+        &.money-stroked-icon {
+          scale: 0.95;
+        }
+      }
+    }
   }
 }
