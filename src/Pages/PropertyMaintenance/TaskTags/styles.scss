@@ -1,0 +1,25 @@
+@use "Styles/Variables";
+
+.task-tags {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  &>div {
+    @include Variables.center;
+    gap: 0.5em;
+    font-size: 0.9em;
+    padding: 0.15em 0.35em;
+    border-radius: 0.5em;
+    border: 1px solid var(--text-color-lightest);
+    color: var(--text-color-lightest);
+    &>svg {
+      width: 1.5em;
+      height: 1.5em;
+      stroke: var(--text-color-lightest);
+      &.money-stroked-icon {
+        scale: 0.95;
+      }
+    }
+  }
+}

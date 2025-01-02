@@ -165,6 +165,7 @@ type Mutation {
   createOrUpdateAmenity(propertyId: Int!, organizationId: Int!, id: Int, name: String!, billed: BillFrequency!, open: DateTime!, close: DateTime!, price: String!, capacity: Int!): Amenity!
   createManagementTask(organizationId: Int!, propertyId: Int, title: String!, description: String!, status: ManagementTaskStatus!, priority: ManagementTaskPriority!, assignedToId: Int): ManagementTask!
   updateManagementTask(organizationId: Int!, propertyId: Int, title: String!, description: String!, status: ManagementTaskStatus!, priority: ManagementTaskPriority!, assignedToId: Int, id: Int!): ManagementTask!
+  deleteManagementTask(organizationId: Int!, propertyId: Int, id: Int!): Boolean!
   setManagementTaskStatus(id: Int!, organizationId: Int!, status: ManagementTaskStatus!): Boolean!
   updateBasicPropertyInfo(propertyId: Int!, organizationId: Int!, name: String!, address1: String!, address2: String!, city: String!, state: String!, zipCode: String!): AdminBasicProperty!
   createAmenityReservation(propertyId: Int!, organizationId: Int!, amenityId: Int!, personId: Int!, start: DateTime!, end: DateTime!, charge: Boolean): AmenityReservation!

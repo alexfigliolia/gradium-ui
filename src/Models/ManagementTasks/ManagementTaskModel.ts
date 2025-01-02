@@ -22,15 +22,17 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
   private debouncer = new Debouncer(() => this.fetch(), 500);
   constructor() {
     super("Management Tasks", {
-      loading: false,
       editing: false,
+      loading: false,
+      viewing: false,
       creating: false,
       filters: false,
+      deleting: false,
       priorityFilter: new EnhancedSet(),
       assignmentFilter: new EnhancedSet(),
       searchFilter: undefined,
       tasks: ManagementTaskModel.EMPTY_TABLE(),
-      editableTask: ManagementTaskModel.EMPTY_TASK,
+      scopedTask: ManagementTaskModel.EMPTY_TASK,
     });
   }
 
@@ -99,6 +101,19 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
       }
       copy[task.status][task.id] = task;
       state.tasks = copy;
+      if (state.scopedTask.id === task.id) {
+        state.scopedTask = task;
+      }
+    });
+  }
+
+  public deleteByID(id: number) {
+    this.update(state => {
+      const copy = { ...state.tasks };
+      for (const table in copy) {
+        delete copy[table as ManagementTaskStatus][id];
+      }
+      state.tasks = copy;
     });
   }
 
@@ -110,7 +125,7 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
     if (!task) {
       return;
     }
-    const updated = { ...task, update };
+    const updated = { ...task, ...update };
     this.updateByID(updated);
   }
 
@@ -200,29 +215,34 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
     status: ManagementTaskStatus.Todo,
   };
 
-  private openEdit = (task: ManagementTask) => {
+  private openTask = (task: ManagementTask) => {
     this.update(state => {
-      state.editableTask = task;
-      state.editing = true;
+      state.scopedTask = task;
+      state.viewing = true;
     });
   };
 
-  private closeEdit = () => {
+  private closeTask = () => {
     this.update(state => {
-      state.editing = false;
+      state.viewing = false;
     });
-    setTimeout(() => {
-      this.set("editableTask", ManagementTaskModel.EMPTY_TASK);
-    }, 400);
   };
+
+  private openDelete = this.toggleKey("deleting", true);
+  private closeDelete = this.toggleKey("deleting", false);
 
   private openCreate = this.toggleKey("creating", true);
   private closeCreate = this.toggleKey("creating", false);
+
+  private openEdit = this.toggleKey("editing", true);
+  private closeEdit = this.toggleKey("editing", false);
 
   private openFilters = this.toggleKey("filters", true);
   private closeFilters = this.toggleKey("filters", false);
 
   public createTask = this.createToggle(this.openCreate, this.closeCreate);
+  public viewTask = this.createToggle(this.openTask, this.closeTask);
   public editTask = this.createToggle(this.openEdit, this.closeEdit);
+  public deleteTask = this.createToggle(this.openDelete, this.closeDelete);
   public filters = this.createToggle(this.openFilters, this.closeFilters);
 }

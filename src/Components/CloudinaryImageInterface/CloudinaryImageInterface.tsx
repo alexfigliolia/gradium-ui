@@ -1,6 +1,7 @@
 import type { ChangeEvent, ForwardedRef } from "react";
 import {
   forwardRef,
+  Fragment,
   memo,
   useCallback,
   useEffect,
@@ -80,7 +81,15 @@ export const CloudinaryImageInterface = memo(
         {state.temporaryImage && <ImageFader image={state.temporaryImage} />}
         {image && <ImageFader image={image.url} />}
         {image && !state.loading && !disabled ? (
-          <Closer className="cii-closer" type="button" onClick={deleteImage} />
+          <Fragment>
+            {onDelete && (
+              <Closer
+                className="cii-closer"
+                type="button"
+                onClick={deleteImage}
+              />
+            )}
+          </Fragment>
         ) : (
           <ImageUploader
             image={image}

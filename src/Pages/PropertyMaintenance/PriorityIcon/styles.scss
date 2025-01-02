@@ -1,0 +1,38 @@
+.priority-icon {
+  width: 1.75em;
+  height: 1.75em;
+  --filled-stroke: var(--sheet-background);
+  &.fill > svg {
+    &.immediate-priority {
+      fill: url(#errorGradient);
+      stroke: var(--filled-stroke);
+      &>path:nth-of-type(2) {
+        stroke: var(--filled-stroke);
+      }
+    }
+    &.high-priority {
+      stroke: var(--filled-stroke);
+      fill: url(#infoGradient);
+    }
+    &.low-priority {
+      stroke: var(--filled-stroke);
+      fill: url(#successGradient);
+    }
+  }
+  &>svg {
+    width: 100%;
+    height: 100%;
+    &.immediate-priority {
+      stroke: url(#errorGradient);
+      &>path:nth-of-type(2) {
+        stroke: #f5176c;
+      }
+    }
+    &.high-priority {
+      stroke: url(#infoGradient);
+    }
+    &.low-priority {
+      stroke: url(#successGradient);
+    }
+  }
+}

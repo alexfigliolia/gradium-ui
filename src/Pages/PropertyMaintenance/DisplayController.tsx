@@ -1,4 +1,7 @@
 import { ManagementTaskPriority, ManagementTaskStatus } from "GraphQL/Types";
+import { HighPriority } from "Icons/HighPriority";
+import { ImmediatePriority } from "Icons/ImmediatePriority";
+import { LowPriority } from "Icons/LowPriority";
 
 export class DisplayController {
   public static readonly priorities = [
@@ -39,6 +42,17 @@ export class DisplayController {
         return "High";
       case ManagementTaskPriority.Immediate:
         return "Immediate";
+    }
+  }
+
+  public static priorityIcon(status: ManagementTaskPriority) {
+    switch (status) {
+      case ManagementTaskPriority.High:
+        return HighPriority;
+      case ManagementTaskPriority.Immediate:
+        return ImmediatePriority;
+      case ManagementTaskPriority.Low:
+        return LowPriority;
     }
   }
 }

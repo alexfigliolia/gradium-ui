@@ -1,0 +1,23 @@
+@use "Styles/Variables";
+
+.delete-maintentance-task.bottom-sheet.confirmation-sheet {
+  z-index: 10001;
+  background-color: #000000a3;
+  & .actions {
+    width: 100%;
+    gap: 1em;
+    @include Variables.center;
+    &>.gradient-button {
+      height: 50px;
+      margin: 0;
+      font-size: 1em;
+      padding: 0;
+      &:not(.loading) {
+        width: 100%;
+      }
+      &.delete {
+        @include Variables.errorGradient;
+      }
+    }
+  }
+}

@@ -31,6 +31,7 @@ const documents = {
     "\n  \n  mutation deleteEmail($userId: Int!, $email: String!) {\n    deleteEmail(userId: $userId, email: $email) {\n      ...BasicUserFragment\n    }\n  }\n": types.DeleteEmailDocument,
     "\n  mutation deleteImage(\n    $propertyId: Int!\n    $organizationId: Int!\n    $id: Int!\n    $type: GradiumImageType!\n  ) {\n    deleteImage(\n      id: $id\n      type: $type\n      propertyId: $propertyId\n      organizationId: $organizationId\n    ) {\n      id\n      url\n    }\n  }\n": types.DeleteImageDocument,
     "\n  \n  mutation deleteLivingSpace(\n    $organizationId: Int!\n    $propertyId: Int!\n    $id: Int!\n  ) {\n    deleteLivingSpace(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      id: $id\n    ) {\n      ...LivingSpaceFragment\n    }\n  }\n": types.DeleteLivingSpaceDocument,
+    "\n  mutation deleteManagementTask(\n    $id: Int!\n    $organizationId: Int!\n    $propertyId: Int\n  ) {\n    deleteManagementTask(\n      id: $id\n      organizationId: $organizationId\n      propertyId: $propertyId\n    )\n  }\n": types.DeleteManagementTaskDocument,
     "\n  mutation forgotPassword($email: String!) {\n    forgotPassword(email: $email)\n  }\n": types.ForgotPasswordDocument,
     "\n  mutation inviteStaffMember($email: String!, $organizationId: Int!) {\n    inviteStaffMember(email: $email, organizationId: $organizationId)\n  }\n": types.InviteStaffMemberDocument,
     "\n  \n  mutation linkEmail($userId: Int!, $email: String!) {\n    linkEmail(userId: $userId, email: $email) {\n      ...BasicUserFragment\n    }\n  }\n": types.LinkEmailDocument,
@@ -144,6 +145,10 @@ export function gql(source: "\n  mutation deleteImage(\n    $propertyId: Int!\n 
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  \n  mutation deleteLivingSpace(\n    $organizationId: Int!\n    $propertyId: Int!\n    $id: Int!\n  ) {\n    deleteLivingSpace(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      id: $id\n    ) {\n      ...LivingSpaceFragment\n    }\n  }\n"): (typeof documents)["\n  \n  mutation deleteLivingSpace(\n    $organizationId: Int!\n    $propertyId: Int!\n    $id: Int!\n  ) {\n    deleteLivingSpace(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      id: $id\n    ) {\n      ...LivingSpaceFragment\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation deleteManagementTask(\n    $id: Int!\n    $organizationId: Int!\n    $propertyId: Int\n  ) {\n    deleteManagementTask(\n      id: $id\n      organizationId: $organizationId\n      propertyId: $propertyId\n    )\n  }\n"): (typeof documents)["\n  mutation deleteManagementTask(\n    $id: Int!\n    $organizationId: Int!\n    $propertyId: Int\n  ) {\n    deleteManagementTask(\n      id: $id\n      organizationId: $organizationId\n      propertyId: $propertyId\n    )\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

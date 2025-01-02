@@ -2,12 +2,11 @@ import type { DragEvent } from "react";
 import { memo, useCallback, useMemo } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import type { ManagementTask } from "GraphQL/Types";
-import { Attachment } from "Icons/Attachment";
-import { MoneyStroked } from "Icons/Money";
 import { DragAndDrop } from "Pages/PropertyMaintenance/DragAndDrop";
+import { PriorityIcon } from "Pages/PropertyMaintenance/PriorityIcon";
+import { TaskTags } from "Pages/PropertyMaintenance/TaskTags";
 import { ManagementTasks } from "State/ManagementTasks";
 import { Dates } from "Tools/Dates";
-import { Controller } from "./Controller";
 import "./styles.scss";
 
 export const Task = memo(function Task(task: ManagementTask) {
@@ -27,14 +26,12 @@ export const Task = memo(function Task(task: ManagementTask) {
   );
 
   const onClick = useCallback(() => {
-    ManagementTasks.editTask.open(task);
+    ManagementTasks.viewTask.open(task);
   }, [task]);
 
   const classes = useClassNames("task", {
     disabled: isDragging,
   });
-
-  const Icon = useMemo(() => Controller.priorityIcon(priority), [priority]);
 
   const onDragStart = useCallback(
     (e: DragEvent<HTMLButtonElement>) => {
@@ -67,7 +64,7 @@ export const Task = memo(function Task(task: ManagementTask) {
             </div>
           )}
         </div>
-        <Icon />
+        <PriorityIcon priority={priority} />
       </div>
       <div className="description">{description}</div>
       {!!visibleAttachments.length && (
@@ -82,22 +79,7 @@ export const Task = memo(function Task(task: ManagementTask) {
           </div>
         </div>
       )}
-      {(!!images.length || !!expenses.length) && (
-        <div className="meta-data">
-          {!!images.length && (
-            <div>
-              <Attachment />
-              {images.length}
-            </div>
-          )}
-          {!!expenses.length && (
-            <div>
-              <MoneyStroked />
-              {expenses.length}
-            </div>
-          )}
-        </div>
-      )}
+      <TaskTags totalImages={images.length} totalExpenses={expenses.length} />
     </button>
   );
 });

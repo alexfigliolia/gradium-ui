@@ -1,5 +1,11 @@
 import type { ForwardedRef } from "react";
-import { forwardRef, memo, useImperativeHandle, useState } from "react";
+import {
+  forwardRef,
+  memo,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
 import { useController } from "@figliolia/react-hooks";
 import { DropDown } from "Components/DropDown";
 import { Input } from "Components/Input";
@@ -32,6 +38,10 @@ export const TaskInputs = memo(
       }),
       [controller, formState],
     );
+
+    useEffect(() => {
+      setState(Controller.initialState(task));
+    }, [task]);
 
     return (
       <div className="task-inputs">
