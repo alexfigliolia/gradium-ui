@@ -1,5 +1,5 @@
 import { memo } from "react";
-import type { ISliderChild } from "Components/TouchSlider";
+import type { FlickityOptions, ISliderChild } from "Components/TouchSlider";
 import { DEFAULT_OPTIONS, TouchSlider } from "Components/TouchSlider";
 import { DisplayController } from "Pages/PropertyMaintenance/DisplayController";
 import type { Propless } from "Types/React";
@@ -11,9 +11,11 @@ const COLUMNS: ISliderChild[] = DisplayController.statuses.map(status => ({
   content: <Column key={status} status={status} />,
 }));
 
-const OPTIONS = {
+const OPTIONS: FlickityOptions = {
   ...DEFAULT_OPTIONS,
   cellAlign: "left",
+  setGallerySize: true,
+  adaptiveHeight: true,
 };
 
 export const SmallScreenDisplay = memo(

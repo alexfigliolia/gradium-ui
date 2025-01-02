@@ -2,8 +2,10 @@
 
 .scrum-small {
   width: 100%;
-  min-height: 100vh;
   margin-top: 1em;
+  &>.image-slider > .flickity-viewport {
+    transition: height 0.3s;
+  }
   & .column {
     width: 95%;
     padding-right: 5%;
