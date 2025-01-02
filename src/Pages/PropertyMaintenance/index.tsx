@@ -4,7 +4,6 @@ import { Page, PageTitle } from "Layouts/Management";
 import { AdminRoutes } from "Router/AdminRoutes";
 import type { Propless } from "Types/React";
 import { CreateTask } from "./CreateTask";
-import { EditTask } from "./EditTask";
 import { Filters } from "./Filters";
 import { InlineFilters } from "./InlineFilters";
 import { Maintenance } from "./Maintenance";
@@ -23,7 +22,6 @@ export default memo(
           <Maintenance />
         </Page>
         <Filters />
-        <EditTask />
         <CreateTask />
       </PermissedPropertyRoute>
     );

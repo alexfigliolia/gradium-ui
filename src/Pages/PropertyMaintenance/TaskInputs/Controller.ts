@@ -68,7 +68,7 @@ export class Controller {
       description: "",
       assigned: "",
       priority: "" as ManagementTaskPriority,
-      status: "" as ManagementTaskStatus.Todo,
+      status: ManagementTaskStatus.Todo,
     });
   }
 
