@@ -21,7 +21,7 @@
       position: fixed;
       z-index: 2;
       transition: opacity 0.25s;
-      @media (min-width: 670px) {
+      @media (min-width: Variables.$small-vertical-tablet) {
         top: 1.25em;
         right: 1.25em;
         --dimensions: 3em;

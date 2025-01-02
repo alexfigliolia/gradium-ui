@@ -42,7 +42,7 @@
       }
       &>.loading-action:not(.loading),
       &>.gradient-transition-button {
-        @media (min-width: 670px) {
+        @media (min-width: Variables.$small-vertical-tablet) {
           width: 400px;
         }
       }

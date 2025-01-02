@@ -6,7 +6,7 @@
   left: 0;
   height: 13vh;
   width: 13vh;
-  @media (min-width: 390px) {
+  @media (min-width: Variables.$iphone) {
     height: 15vh;
     width: 15vh;
   }

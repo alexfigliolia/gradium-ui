@@ -5,7 +5,7 @@
   position: relative;
   border: 2px solid var(--theme-gray);
   background-color: var(--drop-down-background);
-  @media (min-width: 670px) {
+  @media (min-width: Variables.$small-vertical-tablet) {
     width: 2.75em;
     height: 2.75em;
   }

@@ -3,7 +3,7 @@
 .space-crud-actions {
   display: flex;
   column-gap: 0.25em;
-  @media (min-width: 670px) {
+  @media (min-width: Variables.$small-vertical-tablet) {
     font-size: 1.1em;
   }
   &.open > .icon-button.editor-toggle > svg {

@@ -17,7 +17,7 @@
         @include Variables.gradientText;
         font-weight: 600;
       }
-      @media (min-width: 670px) {
+      @media (min-width: Variables.$small-vertical-tablet) {
         font-size: 2em;
       }
     }

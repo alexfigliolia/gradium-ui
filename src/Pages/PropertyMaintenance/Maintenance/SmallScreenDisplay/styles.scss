@@ -1,3 +1,5 @@
+@use "Styles/Variables";
+
 .scrum-small {
   width: 100%;
   min-height: 100vh;
@@ -5,7 +7,7 @@
   & .column {
     width: 95%;
     padding-right: 5%;
-    @media (min-width: 670px) {
+    @media (min-width: Variables.$small-vertical-tablet) {
       width: 47.5%;
       padding-right: 2.5%;
     }

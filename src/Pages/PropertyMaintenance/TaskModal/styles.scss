@@ -27,16 +27,18 @@
       font-weight: 500;
     }
     & .task-attachments {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 1em;
       &>.cloudinary-image-interface {
-        flex: 1;
-        max-width: calc(33% - 0.3333em);
+        width: 100%;
         height: 130px;
-        aspect-ratio: 1 / 1;
         &>.file-uploader p {
           margin-bottom: 0;
+          font-size: 0.8em;
+          @media(min-width: Variables.$iphone-pro-max) {
+            font-size: 1em;
+          }
         }
       }
     }
