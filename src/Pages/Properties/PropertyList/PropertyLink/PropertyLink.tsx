@@ -1,5 +1,4 @@
 import { memo, useMemo } from "react";
-import { Building } from "Icons/Building";
 import { SettingsFilled } from "Icons/Settings";
 import type { PropertyWithNullImages } from "Models/Properties";
 import { AdminRoutes } from "Router/AdminRoutes";
@@ -17,7 +16,6 @@ export const PropertyLink = memo(function PropertyLink({
   address1,
   address2,
 }: PropertyWithNullImages) {
-  const baseRoute = useMemo(() => AdminRoutes.slugRoute(slug), [slug]);
   const configure = useMemo(
     () => AdminRoutes.slugRoute(slug, "configure"),
     [slug],
@@ -35,14 +33,6 @@ export const PropertyLink = memo(function PropertyLink({
           </p>
         </address>
         <div>
-          {!!address1 && (
-            <Link
-              text="Manage"
-              to={baseRoute}
-              icon={<Building />}
-              className="to-manage"
-            />
-          )}
           <Link
             to={configure}
             text="Configure"

@@ -52,8 +52,8 @@ export class PropertiesModel extends BaseModel<IProperties> {
       map[property.id] = property;
     }
     this.update(state => {
-      state.properties = map;
       state.loading = false;
+      state.properties = map;
     });
     return map;
   }
