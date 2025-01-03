@@ -1,0 +1,40 @@
+@use "Styles/Variables";
+
+.property-link.skeleton {
+  &>.image-placeholder {
+    @include Variables.skeleton;
+  }
+  & .skeleton-text {
+    color: transparent;
+    line-height: 1;
+    margin: 0.2em 0;
+    border-radius: 0.25em;
+    @include Variables.skeleton;
+  }
+  & h3.skeleton-text {
+    padding: 0.1em 0;
+    margin-bottom: 0.4em;
+  }
+  & address {
+    & p {
+      line-height: 1;
+      &.skeleton-text, {
+        margin-bottom: 0.5em;
+        width: 60%;
+        &:nth-of-type(2) {
+          width: 40%;
+        }
+      }
+      &>span.skeleton-text {
+        font-size: 0.9em;
+        border-radius: 0.35em;
+      }
+    }
+  }
+  & .link-placeholder {
+    font-size: 0.95em;
+    width: 100%;
+    padding: 1.15em;
+    border-radius: 2em;
+  }
+}

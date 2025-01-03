@@ -2,7 +2,7 @@ import { memo } from "react";
 import { allProperties, isLoading, useProperties } from "State/Properties";
 import type { Propless } from "Types/React";
 import { NoProperties } from "./NoProperties";
-import { PropertyLink } from "./PropertyLink";
+import { PropertyLink, PropertyLinkSkeleton } from "./PropertyLink";
 import "./styles.scss";
 
 export const PropertyList = memo(
@@ -10,7 +10,11 @@ export const PropertyList = memo(
     const loading = useProperties(isLoading);
     const properties = useProperties(allProperties);
     if (loading) {
-      return null;
+      return (
+        <div className="property-list">
+          <PropertyLinkSkeleton />
+        </div>
+      );
     }
     if (!properties.length) {
       return <NoProperties />;
