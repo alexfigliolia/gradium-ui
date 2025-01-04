@@ -43,6 +43,11 @@
   --shadow-level-2-dark: #{Variables.$shadow-level-2} var(--shadow-color-dark);
   --shadow-level-3-dark: #{Variables.$shadow-level-3} var(--shadow-color-dark);
   --skeleton-gradient: linear-gradient(90deg, #eee 25%, #e7e7e7 50%, #eee 75%);
+  --maintenance-column-background: #ededed;
+  --maintenance-column-header-background: #e7e5e5;
+  --maintenance-task-background: #fff;
+  --create-maintenance-task-border: #e2e0e0;
+  --create-maintenance-task-text-color: var(--text-color-lightest);
   @media (min-width: Variables.$small-vertical-tablet) {
     --core-padding: 1.5em;
   }
@@ -92,6 +97,11 @@ html[data-theme='dark'] {
   --shadow-level-2-dark: #{Variables.$shadow-level-2} var(--shadow-color-dark);
   --shadow-level-3-dark: #{Variables.$shadow-level-3} var(--shadow-color-dark);
   --skeleton-gradient: linear-gradient(90deg, #2c2b2b 25%, #313131 50%, #2c2b2b 75%);
+  --maintenance-column-background: var(--tile-background);
+  --maintenance-column-header-background: var(--background-dark);
+  --maintenance-task-background: var(--background-dark);
+  --create-maintenance-task-border: #2e2d2d;
+  --create-maintenance-task-text-color: #b0aeae;
 }
 
 * {

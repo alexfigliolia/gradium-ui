@@ -8,7 +8,7 @@
   border: none;
   text-align: left;
   transition: box-shadow 0.4s;
-  background-color: var(--background);
+  background-color: var(--maintenance-task-background);
   &.disabled {
     opacity: 0.5;
     pointer-events: none;
