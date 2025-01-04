@@ -55,7 +55,7 @@ export const Task = memo(function Task(task: ManagementTask) {
       onDragEnd={onDragEnd}
       onDragStart={onDragStart}>
       <div className="title">
-        <div>
+        <div className="title-content">
           <div className="titletext">{title}</div>
           <div className="subtext">{dateDisplay}</div>
           {assignedTo && (
@@ -66,7 +66,7 @@ export const Task = memo(function Task(task: ManagementTask) {
         </div>
         <PriorityIcon priority={priority} />
       </div>
-      <div className="description">{description}</div>
+      {description && <div className="description">{description}</div>}
       {!!visibleAttachments.length && (
         <div className="attachments">
           <div className="subtext">Attachments:</div>

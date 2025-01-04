@@ -11,12 +11,12 @@
     font-size: 0.9em;
     padding: 0.15em 0.35em;
     border-radius: 0.5em;
-    border: 1px solid var(--text-color-lightest);
-    color: var(--text-color-lightest);
+    color: var(--maintenance-tag-background-stroke);
+    background-color: var(--maintenance-tag-background);
     &>svg {
       width: 1.5em;
       height: 1.5em;
-      stroke: var(--text-color-lightest);
+      stroke: var(--maintenance-tag-background-stroke);
       &.money-stroked-icon {
         scale: 0.95;
       }

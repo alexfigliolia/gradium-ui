@@ -41,6 +41,7 @@
         &>.selectors {
           display: flex;
           align-items: center;
+          margin-bottom: 0.65em;
         }
         &>.h2 {
           font-size: 1.5em;
@@ -50,8 +51,8 @@
         }
         &>p {    
           margin: 0;
-          font-size: 0.85em;
-          padding: 0 1.25em;
+          font-size: 0.925em;
+          padding: 0 1.1em;
           line-height: 1;
           color: var(--text-color-light);
         }

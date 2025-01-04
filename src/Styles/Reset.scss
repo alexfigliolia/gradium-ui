@@ -47,7 +47,9 @@
   --maintenance-column-header-background: #e7e5e5;
   --maintenance-task-background: #fff;
   --create-maintenance-task-border: #e2e0e0;
-  --create-maintenance-task-text-color: var(--text-color-lightest);
+  --create-maintenance-task-text-color: #818080;
+  --maintenance-tag-background: var(--background);
+  --maintenance-tag-background-stroke: #737373;
   @media (min-width: Variables.$small-vertical-tablet) {
     --core-padding: 1.5em;
   }
@@ -102,6 +104,8 @@ html[data-theme='dark'] {
   --maintenance-task-background: var(--background-dark);
   --create-maintenance-task-border: #2e2d2d;
   --create-maintenance-task-text-color: #b0aeae;
+  --maintenance-tag-background: #363636;
+  --maintenance-tag-background-stroke: #b8b8b8;
 }
 
 * {

@@ -6,6 +6,9 @@
   padding: 1em;
   margin-bottom: 1em;
   border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
   text-align: left;
   transition: box-shadow 0.4s;
   background-color: var(--maintenance-task-background);
@@ -17,15 +20,15 @@
     box-shadow: var(--shadow-level-2-mid);
   }
   & .subtext {
-    font-size: 0.8em;
+    font-size: 0.9em;
     color: var(--text-color-lightest);
   }
   &>.title {
     display: flex;
     gap: 0.5em;
+    width: 100%;
     justify-content: space-between;
-    margin-bottom: 0.75em;
-    &>div {
+    &>.title-content {
       display: flex;
       gap: 0.25em;
       flex-direction: column;
@@ -39,8 +42,12 @@
           overflow: hidden;
         }
         &.subtext {
-          font-size: 0.8em;
+          font-size: 0.9em;
           color: var(--text-color-lightest);
+          &>span {
+            font-weight: 500;
+            @include Variables.gradientText;
+          }
         }
       }
     }
@@ -54,7 +61,6 @@
     overflow: hidden;
   }
   &>.attachments {
-    margin-top: 0.5em;
     &>.subtext {
       margin-bottom: 0.5em;
     }
@@ -74,8 +80,5 @@
         }
       }
     }
-  }
-  &>.task-tags {
-    margin-top: 1em;
   }
 }
