@@ -7,11 +7,11 @@ export class Controller {
     this.setFrame = setFrame;
   }
 
-  private cacheNode = (node: HTMLDivElement) => {
+  private readonly cacheNode = (node: HTMLDivElement) => {
     this.node = node;
   };
 
-  private onMouseEnter = (e: Interaction) => {
+  private readonly onMouseEnter = (e: Interaction) => {
     if (!this.node) {
       return;
     }
@@ -19,11 +19,11 @@ export class Controller {
     this.setFrame(previous => ({ ...previous, opacity: 0.75 }));
   };
 
-  private onMouseMove = (e: Interaction) => {
+  private readonly onMouseMove = (e: Interaction) => {
     this.toPosition(e);
   };
 
-  private onMouseLeave = () => {
+  private readonly onMouseLeave = () => {
     this.setFrame({ x: 0, y: 0, opacity: 0 });
   };
 

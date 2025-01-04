@@ -1,7 +1,7 @@
 import { State } from "@figliolia/galena";
 
 export class BaseModel<T> extends State<T> {
-  private static instances = new Map<string, State<any>>();
+  private static readonly instances = new Map<string, State<any>>();
   constructor(...args: ConstructorParameters<typeof State<T>>) {
     super(...args);
     const [name] = args;

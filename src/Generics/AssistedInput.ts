@@ -6,8 +6,8 @@ import type { Callback } from "Types/Generics";
 
 export class AssistedInput {
   public readonly Toggle: ModalToggle;
-  protected FocusListener: FocusedKeyListener;
-  protected setState: Callback<[open: boolean]>;
+  protected readonly FocusListener: FocusedKeyListener;
+  protected readonly setState: Callback<[open: boolean]>;
   constructor(
     setState: Callback<[open: boolean]>,
     listener: FocusedKeyListener,
@@ -17,18 +17,18 @@ export class AssistedInput {
     this.Toggle = ModalStack.create(this.open, this.close);
   }
 
-  public onFocus = () => {
+  public readonly onFocus = () => {
     if (!Devices.IS_MOBILE_BROWSER) {
       this.Toggle.open();
     }
     this.FocusListener.onFocus();
   };
 
-  private open = () => {
+  private readonly open = () => {
     this.setState(true);
   };
 
-  private close = () => {
+  private readonly close = () => {
     this.setState(false);
   };
 }

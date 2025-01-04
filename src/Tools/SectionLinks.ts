@@ -8,7 +8,7 @@ export class SectionLinks extends Subscriptable<Callback<[string]>> {
   offsetSelectors: Set<string>;
   sections = new Set<HTMLElement>();
   offsetElements = new Set<HTMLElement>();
-  private listenerIDs = new Set<string>();
+  private readonly listenerIDs = new Set<string>();
   constructor(ids: string[], ...offsetSelectors: string[]) {
     super();
     this.ids = new Set(ids);
@@ -79,7 +79,7 @@ export class SectionLinks extends Subscriptable<Callback<[string]>> {
     }
   }
 
-  private findActiveSection = () => {
+  private readonly findActiveSection = () => {
     const offset = this.getCurrentOffset();
     for (const section of this.sections) {
       const Y = window.scrollY;
@@ -98,16 +98,16 @@ export class SectionLinks extends Subscriptable<Callback<[string]>> {
     }
   };
 
-  private onScroll = debounce(this.findActiveSection, 0);
+  private readonly onScroll = debounce(this.findActiveSection, 0);
 
-  private detectHash = (behavior: ScrollBehavior = "instant") => {
+  private readonly detectHash = (behavior: ScrollBehavior = "instant") => {
     const hash = window.location.hash.slice(1);
     if (this.ids.has(hash)) {
       this.scrollTo(hash, behavior);
     }
   };
 
-  private onHashChange = () => {
+  private readonly onHashChange = () => {
     this.detectHash("smooth");
   };
 

@@ -5,10 +5,10 @@ import type { IHTMLOption } from "Types/React";
 import type { DDValue } from "./types";
 
 export class Controller {
-  Toggle: ModalToggle;
+  public readonly Toggle: ModalToggle;
   private onOpen?: Callback;
   private onClose?: Callback;
-  private setOpen: Callback<[open: boolean]>;
+  private readonly setOpen: Callback<[open: boolean]>;
   node: HTMLInputElement | null = null;
   constructor(setOpen: Callback<[open: boolean]>) {
     this.setOpen = setOpen;
@@ -24,11 +24,11 @@ export class Controller {
     this.onClose = onClose;
   }
 
-  public open = () => {
+  public readonly open = () => {
     this.proxy(true);
   };
 
-  public close = () => {
+  public readonly close = () => {
     this.proxy(false);
     this.blurNode();
   };

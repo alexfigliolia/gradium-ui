@@ -4,8 +4,8 @@ import { ChildProcess } from "@figliolia/child-process";
 import "dotenv/config";
 
 export class CodeGen {
-  private static URL = process.env.GRAPHQL_URL ?? "";
-  private static TYPES_DIRECTORY = "src/GraphQL/Types";
+  private static readonly URL = process.env.GRAPHQL_URL ?? "";
+  private static readonly TYPES_DIRECTORY = "src/GraphQL/Types";
   public static async run() {
     await this.getSchema();
     await this.generateTypes();

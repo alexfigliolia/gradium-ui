@@ -142,31 +142,31 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
     this.set("loading", loading);
   }
 
-  public filterByPriority = this.debouncedFetchProxy(
+  public readonly filterByPriority = this.debouncedFetchProxy(
     (priorities: EnhancedSet<ManagementTaskPriority>) => {
       this.set("priorityFilter", priorities);
     },
   );
 
-  public filterByAssignee = this.debouncedFetchProxy(
+  public readonly filterByAssignee = this.debouncedFetchProxy(
     (assignees: EnhancedSet<number>) => {
       this.set("assignmentFilter", assignees);
     },
   );
 
-  public search = this.debouncedFetchProxy((search?: string) => {
+  public readonly search = this.debouncedFetchProxy((search?: string) => {
     this.set("searchFilter", search);
   });
 
-  public clearPriorityFilter = this.debouncedFetchProxy(() => {
+  public readonly clearPriorityFilter = this.debouncedFetchProxy(() => {
     this.set("priorityFilter", new EnhancedSet());
   });
 
-  public clearAssignmentFilter = this.debouncedFetchProxy(() => {
+  public readonly clearAssignmentFilter = this.debouncedFetchProxy(() => {
     this.set("assignmentFilter", new EnhancedSet());
   });
 
-  public resetAllFilters = this.debouncedFetchProxy(() => {
+  public readonly resetAllFilters = this.debouncedFetchProxy(() => {
     this.update(state => {
       state.assignmentFilter = new EnhancedSet();
       state.priorityFilter = new EnhancedSet();
@@ -227,11 +227,14 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
     });
   };
 
-  private readonly openCreate = () => {
+  private readonly openCreate = (
+    status: ManagementTaskStatus = ManagementTaskStatus.Todo,
+  ) => {
     this.update(state => {
       state.creating = true;
       state.scopedTask = {
         ...ManagementTaskModel.EMPTY_TASK,
+        status,
         createdBy: {
           id: -1,
           name: Scope.getState().name,
@@ -253,8 +256,17 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
   private readonly openFilters = this.toggleKey("filters", true);
   private readonly closeFilters = this.toggleKey("filters", false);
 
-  public createTask = this.createToggle(this.openCreate, this.closeCreate);
-  public viewTask = this.createToggle(this.openTask, this.closeTask);
-  public deleteTask = this.createToggle(this.openDelete, this.closeDelete);
-  public filters = this.createToggle(this.openFilters, this.closeFilters);
+  public readonly createTask = this.createToggle(
+    this.openCreate,
+    this.closeCreate,
+  );
+  public readonly viewTask = this.createToggle(this.openTask, this.closeTask);
+  public readonly deleteTask = this.createToggle(
+    this.openDelete,
+    this.closeDelete,
+  );
+  public readonly filters = this.createToggle(
+    this.openFilters,
+    this.closeFilters,
+  );
 }

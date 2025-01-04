@@ -1,11 +1,11 @@
 import type { Callback } from "Types/Generics";
 
 export class ImagePreloader {
-  public src: string;
-  public onLoad?: Callback;
+  public readonly src: string;
+  public readonly onLoad?: Callback;
   private Image?: HTMLImageElement;
-  public onError?: Callback<[ErrorEvent]>;
-  private handler = Promise.withResolvers<void>();
+  public readonly onError?: Callback<[ErrorEvent]>;
+  private readonly handler = Promise.withResolvers<void>();
   constructor(
     src: string,
     onLoad?: Callback,
@@ -34,12 +34,12 @@ export class ImagePreloader {
     }
   }
 
-  private loadHandler = () => {
+  private readonly loadHandler = () => {
     this.onLoad?.();
     this.handler.resolve();
   };
 
-  private errorHandler = (e: ErrorEvent) => {
+  private readonly errorHandler = (e: ErrorEvent) => {
     this.onError?.(e);
     this.handler.reject(e);
   };

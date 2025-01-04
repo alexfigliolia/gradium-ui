@@ -4,7 +4,7 @@ import { StackModel } from "Generics/StackModel";
 export class PropertyScopeModel<
   T extends Record<string, any>,
 > extends StackModel<T> {
-  private static scopedInstances = new Map<string, State<any>>();
+  private static readonly scopedInstances = new Map<string, State<any>>();
   constructor(...args: ConstructorParameters<typeof State<T>>) {
     super(...args);
     const [name] = args;

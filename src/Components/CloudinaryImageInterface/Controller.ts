@@ -17,9 +17,9 @@ export interface IState {
 type StateSetter = Dispatch<SetStateAction<IState>>;
 
 export class Controller {
-  private setState: StateSetter;
-  private Timeout = new Timeout();
-  private ImageUploader: RefObject<IImageUploader>;
+  private readonly setState: StateSetter;
+  private readonly Timeout = new Timeout();
+  private readonly ImageUploader: RefObject<IImageUploader>;
   constructor(setState: StateSetter, uploader: RefObject<IImageUploader>) {
     this.setState = setState;
     this.ImageUploader = uploader;
@@ -41,7 +41,7 @@ export class Controller {
     return true;
   }
 
-  public onUpload = async (
+  public readonly onUpload = async (
     e: ChangeEvent<HTMLInputElement>,
     scope: CloudinaryAssetScope,
   ) => {
@@ -74,7 +74,7 @@ export class Controller {
     return preloader;
   }
 
-  public onLoad = () => {
+  public readonly onLoad = () => {
     this.fadeLoader(() => {
       this.setTemporaryImage(null);
     });

@@ -16,9 +16,9 @@ export class Controller<
   model: M;
   ID: number;
   setState!: ILoadingStateSetter;
-  private debouncer: Debouncer<Callback>;
-  public uploadImages: Callback<[ChangeEvent<HTMLInputElement>]>;
-  public uploadFloorPlans: Callback<[ChangeEvent<HTMLInputElement>]>;
+  private readonly debouncer: Debouncer<Callback>;
+  public readonly uploadImages: Callback<[ChangeEvent<HTMLInputElement>]>;
+  public readonly uploadFloorPlans: Callback<[ChangeEvent<HTMLInputElement>]>;
   constructor(model: M, ID: number) {
     this.ID = ID;
     this.model = model;
@@ -34,20 +34,23 @@ export class Controller<
     this.setState = setState;
   }
 
-  public update = <K extends Extract<keyof T, string>>(key: K, value: T[K]) => {
+  public readonly update = <K extends Extract<keyof T, string>>(
+    key: K,
+    value: T[K],
+  ) => {
     this.setState("loading", true);
     this.model.updateListItem(this.ID, key, value);
     this.debouncer.execute();
   };
 
-  public updateInt = <K extends Extract<keyof T, string>>(
+  public readonly updateInt = <K extends Extract<keyof T, string>>(
     key: K,
     value: string,
   ) => {
     return this.update(key, parseInt(value) as T[K]);
   };
 
-  public updateTimeToDate = <K extends Extract<keyof T, string>>(
+  public readonly updateTimeToDate = <K extends Extract<keyof T, string>>(
     key: K,
     value: T[K],
   ) => {
@@ -63,7 +66,7 @@ export class Controller<
     }
   };
 
-  public parseTimeFromDate = (date: string) => {
+  public readonly parseTimeFromDate = (date: string) => {
     if (!date) {
       return "";
     }
@@ -88,7 +91,7 @@ export class Controller<
     return `${name}-${base}-${this.ID}`;
   }
 
-  public onTrashClick = (item: T) => {
+  public readonly onTrashClick = (item: T) => {
     this.model.setDeletionScope(item);
     return Modals.deleteSpace.open();
   };

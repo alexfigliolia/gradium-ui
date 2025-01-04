@@ -4,7 +4,7 @@ import { Errors } from "Tools/Errors";
 import type { Callback } from "Types/Generics";
 
 export class Validators {
-  private static EMAIL_PARSER = z
+  private static readonly EMAIL_PARSER = z
     .string()
     .min(1, { message: "A valid email is required" })
     .email("A valid email is required");

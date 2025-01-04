@@ -54,20 +54,20 @@ export class AmenityScheduleModel extends PropertyScopeModel<IAmenitySchedule> {
     void this.fetchReservations();
   }
 
-  public resetFilters = () => {
+  public readonly resetFilters = () => {
     this.update(state => {
       state.reservers = new EnhancedSet();
       state.amenityIds = new EnhancedSet();
     });
   };
 
-  public clearReservers = () => {
+  public readonly clearReservers = () => {
     this.update(state => {
       state.reservers = new EnhancedSet();
     });
   };
 
-  public clearAmenities = () => {
+  public readonly clearAmenities = () => {
     this.update(state => {
       state.amenityIds = new EnhancedSet();
     });
@@ -164,45 +164,57 @@ export class AmenityScheduleModel extends PropertyScopeModel<IAmenitySchedule> {
     }
   }
 
-  private openFilters = this.toggleKey("filters", true);
-  private closeFilters = this.toggleKey("filters", false);
-  private openDatePicker = this.toggleKey("openDatePicker", true);
-  private closeDatePicker = this.toggleKey("openDatePicker", false);
-  private openReservationsWarning = this.toggleKey(
+  private readonly openFilters = this.toggleKey("filters", true);
+  private readonly closeFilters = this.toggleKey("filters", false);
+  private readonly openDatePicker = this.toggleKey("openDatePicker", true);
+  private readonly closeDatePicker = this.toggleKey("openDatePicker", false);
+  private readonly openReservationsWarning = this.toggleKey(
     "openReservationsWarning",
     true,
   );
-  private closeReservationsWarning = this.toggleKey(
+  private readonly closeReservationsWarning = this.toggleKey(
     "openReservationsWarning",
     false,
   );
-  private openNewReservation = this.toggleKey("openNewReservation", true);
-  private closeNewReservation = this.toggleKey("openNewReservation", false);
-  private openEditReservation = (reservation: AmenityReservation) => {
+  private readonly openNewReservation = this.toggleKey(
+    "openNewReservation",
+    true,
+  );
+  private readonly closeNewReservation = this.toggleKey(
+    "openNewReservation",
+    false,
+  );
+  private readonly openEditReservation = (reservation: AmenityReservation) => {
     this.update(state => {
       state.openEditReservation = true;
       state.currentReservation = reservation;
     });
   };
-  private closeEditReservation = this.toggleKey("openEditReservation", false);
+  private readonly closeEditReservation = this.toggleKey(
+    "openEditReservation",
+    false,
+  );
 
-  public filters = this.createToggle(this.openFilters, this.closeFilters);
+  public readonly filters = this.createToggle(
+    this.openFilters,
+    this.closeFilters,
+  );
 
-  public datePicker = this.createToggle(
+  public readonly datePicker = this.createToggle(
     this.openDatePicker,
     this.closeDatePicker,
   );
-  public newReservation = this.createToggle(
+  public readonly newReservation = this.createToggle(
     this.openNewReservation,
     this.closeNewReservation,
   );
 
-  public editReservation = this.createToggle(
+  public readonly editReservation = this.createToggle(
     this.openEditReservation,
     this.closeEditReservation,
   );
 
-  public reservationsWarning = this.createToggle(
+  public readonly reservationsWarning = this.createToggle(
     this.openReservationsWarning,
     this.closeReservationsWarning,
   );

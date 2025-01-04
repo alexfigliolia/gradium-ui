@@ -9,9 +9,9 @@ import type { Callback } from "Types/Generics";
 import { graphQLRequest } from "./request";
 
 export class UIClient {
-  errorMessage: string;
-  setState?: ILoadingStateSetter;
-  successMessage: string | string[];
+  private readonly errorMessage: string;
+  public readonly setState?: ILoadingStateSetter;
+  private readonly successMessage: string | string[];
   private Abort = new AbortController();
   private timer: ReturnType<typeof setTimeout> | null = null;
   constructor({
@@ -57,7 +57,7 @@ export class UIClient {
     }
   }
 
-  private onSuccess = <T>(response: T) => {
+  private readonly onSuccess = <T>(response: T) => {
     this.setVisualState("success", true);
     if (this.successMessage) {
       Toasts.success(this.parseSuccessMessage<T>(response));
@@ -65,7 +65,7 @@ export class UIClient {
     return response;
   };
 
-  private onError = (error: any) => {
+  private readonly onError = (error: any) => {
     if (error?.name === "AbortError") {
       return;
     }

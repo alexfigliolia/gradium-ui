@@ -1,13 +1,13 @@
 import type { Callback } from "Types/Generics";
 
 export class Controller {
-  private setWidth: Callback<[string]>;
+  private readonly setWidth: Callback<[string]>;
   private node: HTMLDivElement | null = null;
   constructor(setWidth: Callback<[string]>) {
     this.setWidth = setWidth;
   }
 
-  public register = (node: HTMLDivElement) => {
+  public readonly register = (node: HTMLDivElement) => {
     this.node = node;
   };
 

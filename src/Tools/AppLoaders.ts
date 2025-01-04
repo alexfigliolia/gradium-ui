@@ -5,7 +5,7 @@ import { Toasts } from "State/Toasts";
 import { Authentication } from "./Authentication";
 
 export class AppLoaders {
-  private static register = new Set<DataLoader<any>>();
+  private static readonly register = new Set<DataLoader<any>>();
 
   public static create<T>(callback: () => Promise<T>) {
     const instance = new DataLoader(callback);

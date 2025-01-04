@@ -9,11 +9,11 @@ import { UIClient } from "GraphQL/UIClient";
 import { Scope } from "State/Scope";
 
 export class Controller {
-  setState: ILoadingStateSetter;
+  public readonly setState: ILoadingStateSetter;
+  private readonly Debouncer = new Debouncer(this.update.bind(this), 2000);
   constructor(setState: ILoadingStateSetter) {
     this.setState = setState;
   }
-  private Debouncer = new Debouncer(this.update.bind(this), 2000);
 
   public executeQuery(name: string) {
     return this.Debouncer.execute(name);

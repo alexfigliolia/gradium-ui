@@ -23,14 +23,14 @@ export class ModalsModel extends StackModel<IModals> {
     });
   }
 
-  private openDeleteEmail = (email: string) => {
+  private readonly openDeleteEmail = (email: string) => {
     this.update(state => {
       state.emailToDelete = email;
       state.deleteEmail = true;
     });
   };
 
-  private closeDeleteEmail = () => {
+  private readonly closeDeleteEmail = () => {
     this.update(state => {
       state.emailToDelete = "";
       state.deleteEmail = false;
@@ -38,66 +38,105 @@ export class ModalsModel extends StackModel<IModals> {
   };
 
   /* TOGGLES */
-  private openLinkEmail = this.toggleKey("linkEmail", true);
-  private closeLinkEmail = this.toggleKey("linkEmail", false);
-  private openEmailInfo = this.toggleKey("emailInfo", true);
-  private closeEmailInfo = this.toggleKey("emailInfo", false);
-  private openResetPassword = this.toggleKey("resetPassword", true);
-  private closeResetPassword = this.toggleKey("resetPassword", false);
-  private openNewLease = this.toggleKey("newLease", true);
-  private closeNewLease = this.toggleKey("newLease", false);
-  private openEditLease = this.toggleKey("editLease", true);
-  private closeEditLease = this.toggleKey("editLease", false);
-  private openNewProperty = this.toggleKey("newProperty", true);
-  private closeNewProperty = this.toggleKey("newProperty", false);
-  private openDeleteSpace = this.toggleKey("deleteSpace", true);
-  private closeDeleteSpace = this.toggleKey("deleteSpace", false);
-  private openForgotPassword = this.toggleKey("forgotPassword", true);
-  private closeForgotPassword = this.toggleKey("forgotPassword", false);
-  private openCoreMobileMenu = this.toggleKey("coreMobileMenu", true);
-  private closeCoreMobileMenu = this.toggleKey("coreMobileMenu", false);
-  private openMobileMenu = this.toggleKey("marketingMobileMenu", true);
-  private closeMobileMenu = this.toggleKey("marketingMobileMenu", false);
-  private openDeleteProperty = this.toggleKey("deleteProperty", true);
-  private closeDeleteProperty = this.toggleKey("deleteProperty", false);
-  private openLeaseFilters = this.toggleKey("leaseFilters", true);
-  private closeLeaseFilters = this.toggleKey("leaseFilters", false);
-  private openDashboardFilters = this.toggleKey("dashboardFilters", true);
-  private closeDashboardFilters = this.toggleKey("dashboardFilters", false);
+  private readonly openLinkEmail = this.toggleKey("linkEmail", true);
+  private readonly closeLinkEmail = this.toggleKey("linkEmail", false);
+  private readonly openEmailInfo = this.toggleKey("emailInfo", true);
+  private readonly closeEmailInfo = this.toggleKey("emailInfo", false);
+  private readonly openResetPassword = this.toggleKey("resetPassword", true);
+  private readonly closeResetPassword = this.toggleKey("resetPassword", false);
+  private readonly openNewLease = this.toggleKey("newLease", true);
+  private readonly closeNewLease = this.toggleKey("newLease", false);
+  private readonly openEditLease = this.toggleKey("editLease", true);
+  private readonly closeEditLease = this.toggleKey("editLease", false);
+  private readonly openNewProperty = this.toggleKey("newProperty", true);
+  private readonly closeNewProperty = this.toggleKey("newProperty", false);
+  private readonly openDeleteSpace = this.toggleKey("deleteSpace", true);
+  private readonly closeDeleteSpace = this.toggleKey("deleteSpace", false);
+  private readonly openForgotPassword = this.toggleKey("forgotPassword", true);
+  private readonly closeForgotPassword = this.toggleKey(
+    "forgotPassword",
+    false,
+  );
+  private readonly openCoreMobileMenu = this.toggleKey("coreMobileMenu", true);
+  private readonly closeCoreMobileMenu = this.toggleKey(
+    "coreMobileMenu",
+    false,
+  );
+  private readonly openMobileMenu = this.toggleKey("marketingMobileMenu", true);
+  private readonly closeMobileMenu = this.toggleKey(
+    "marketingMobileMenu",
+    false,
+  );
+  private readonly openDeleteProperty = this.toggleKey("deleteProperty", true);
+  private readonly closeDeleteProperty = this.toggleKey(
+    "deleteProperty",
+    false,
+  );
+  private readonly openLeaseFilters = this.toggleKey("leaseFilters", true);
+  private readonly closeLeaseFilters = this.toggleKey("leaseFilters", false);
+  private readonly openDashboardFilters = this.toggleKey(
+    "dashboardFilters",
+    true,
+  );
+  private readonly closeDashboardFilters = this.toggleKey(
+    "dashboardFilters",
+    false,
+  );
 
   /* CONTROLLERS */
-  marketingMobileMenu = ModalStack.create(
+  public readonly marketingMobileMenu = ModalStack.create(
     this.openMobileMenu,
     this.closeMobileMenu,
   );
-  coreMobileMenu = ModalStack.create(
+  public readonly coreMobileMenu = ModalStack.create(
     this.openCoreMobileMenu,
     this.closeCoreMobileMenu,
   );
-  linkEmail = ModalStack.create(this.openLinkEmail, this.closeLinkEmail);
-  emailInfo = ModalStack.create(this.openEmailInfo, this.closeEmailInfo);
-  resetPassword = ModalStack.create(
+  public readonly linkEmail = ModalStack.create(
+    this.openLinkEmail,
+    this.closeLinkEmail,
+  );
+  public readonly emailInfo = ModalStack.create(
+    this.openEmailInfo,
+    this.closeEmailInfo,
+  );
+  public readonly resetPassword = ModalStack.create(
     this.openResetPassword,
     this.closeResetPassword,
   );
-  deleteEmail = ModalStack.create(this.openDeleteEmail, this.closeDeleteEmail);
-  forgotPassword = ModalStack.create(
+  public readonly deleteEmail = ModalStack.create(
+    this.openDeleteEmail,
+    this.closeDeleteEmail,
+  );
+  public readonly forgotPassword = ModalStack.create(
     this.openForgotPassword,
     this.closeForgotPassword,
   );
-  newLease = ModalStack.create(this.openNewLease, this.closeNewLease);
-  editLease = ModalStack.create(this.openEditLease, this.closeEditLease);
-  newProperty = ModalStack.create(this.openNewProperty, this.closeNewProperty);
-  deleteSpace = ModalStack.create(this.openDeleteSpace, this.closeDeleteSpace);
-  leaseFilters = ModalStack.create(
+  public readonly newLease = ModalStack.create(
+    this.openNewLease,
+    this.closeNewLease,
+  );
+  public readonly editLease = ModalStack.create(
+    this.openEditLease,
+    this.closeEditLease,
+  );
+  public readonly newProperty = ModalStack.create(
+    this.openNewProperty,
+    this.closeNewProperty,
+  );
+  public readonly deleteSpace = ModalStack.create(
+    this.openDeleteSpace,
+    this.closeDeleteSpace,
+  );
+  public readonly leaseFilters = ModalStack.create(
     this.openLeaseFilters,
     this.closeLeaseFilters,
   );
-  dashboardFilters = ModalStack.create(
+  public readonly dashboardFilters = ModalStack.create(
     this.openDashboardFilters,
     this.closeDashboardFilters,
   );
-  deleteProperty = ModalStack.create(
+  public readonly deleteProperty = ModalStack.create(
     this.openDeleteProperty,
     this.closeDeleteProperty,
   );

@@ -10,12 +10,12 @@ import { Properties } from "State/Properties";
 import { Scope } from "State/Scope";
 
 export class Controller {
-  private setState: ILoadingStateSetter;
+  private readonly setState: ILoadingStateSetter;
   constructor(setState: ILoadingStateSetter) {
     this.setState = setState;
   }
 
-  public synchronize = (
+  public readonly synchronize = (
     current: Set<PropertyAddonType>,
     selections: Set<PropertyAddonType>,
   ) => {

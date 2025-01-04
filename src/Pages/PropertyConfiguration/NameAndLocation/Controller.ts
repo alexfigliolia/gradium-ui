@@ -13,13 +13,13 @@ import { Validators } from "Tools/Validators";
 export class Controller {
   private inFlight = false;
   private inFlightKeys = new Set<string>();
-  private setTable: Dispatch<SetStateAction<Set<string>>>;
+  private readonly setTable: Dispatch<SetStateAction<Set<string>>>;
   private timer: ReturnType<typeof setTimeout> | null = null;
   constructor(setTable: Dispatch<SetStateAction<Set<string>>>) {
     this.setTable = setTable;
   }
 
-  public onKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
+  public readonly onKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
     this.setTable(table => {
       const input = e.target as HTMLInputElement;
       const copy = new Set(table);
@@ -38,7 +38,10 @@ export class Controller {
     });
   };
 
-  public submit = async (data: FormData, setState: ILoadingStateSetter) => {
+  public readonly submit = async (
+    data: FormData,
+    setState: ILoadingStateSetter,
+  ) => {
     this.inFlight = true;
     try {
       const name = Validators.propertyNameParser(data);
@@ -83,7 +86,7 @@ export class Controller {
     }
   }
 
-  private onComplete = () => {
+  private readonly onComplete = () => {
     this.timer = setTimeout(() => {
       this.setTable(this.inFlightKeys);
       this.destroy();

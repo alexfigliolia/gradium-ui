@@ -18,13 +18,13 @@ import type { CloudinaryAssetScope } from "Types/Gradium";
 import { CloudinaryDeleter } from "./CloudinaryDeleter";
 
 export class CloudinaryUploader {
-  private static MAX_SIZE = 2 * 1024 * 1024;
-  private onObjectURL?: Callback<[string[]]>;
+  private static readonly MAX_SIZE = 2 * 1024 * 1024;
+  private readonly onObjectURL?: Callback<[string[]]>;
   constructor(onObjectUrl: Callback<[string[]]>) {
     this.onObjectURL = onObjectUrl;
   }
 
-  public onUpload = async (
+  public readonly onUpload = async (
     e: ChangeEvent<HTMLInputElement>,
     scope: CloudinaryAssetScope,
   ) => {

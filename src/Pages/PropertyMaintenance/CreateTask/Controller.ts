@@ -16,11 +16,11 @@ import type { Callback } from "Types/Generics";
 import type { Controller as InputController, IState } from "../TaskViewer";
 
 export class Controller {
-  private resetState: Callback;
-  private timeout = new Timeout();
+  private readonly resetState: Callback;
+  private readonly timeout = new Timeout();
   private task: null | IState = null;
-  private setState: ILoadingStateSetter;
-  private inputs: RefObject<InputController>;
+  private readonly setState: ILoadingStateSetter;
+  private readonly inputs: RefObject<InputController>;
   constructor({ setState, resetState, inputs }: Config) {
     this.inputs = inputs;
     this.setState = setState;

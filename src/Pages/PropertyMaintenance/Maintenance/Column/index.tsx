@@ -47,7 +47,7 @@ export const Column = memo(function Column({ status }: Props) {
       <div>
         <h3>{label}</h3>
         <div className="column-list">
-          <DummyTask />
+          <DummyTask status={status} />
           {tasks.map(task => (
             <Task key={task.id} {...task} />
           ))}

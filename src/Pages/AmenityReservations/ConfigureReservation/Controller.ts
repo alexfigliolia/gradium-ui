@@ -6,11 +6,11 @@ import type { Callback } from "Types/Generics";
 import type { IHTMLOption } from "Types/React";
 
 export class Controller {
-  public setAmenity: Callback<[string]>;
-  public setReserver: Callback<[string]>;
-  private setState: Dispatch<SetStateAction<UIState>>;
-  public setEnd: Callback<[ChangeEvent<HTMLInputElement>]>;
-  public setStart: Callback<[ChangeEvent<HTMLInputElement>]>;
+  public readonly setAmenity: Callback<[string]>;
+  public readonly setReserver: Callback<[string]>;
+  private readonly setState: Dispatch<SetStateAction<UIState>>;
+  public readonly setEnd: Callback<[ChangeEvent<HTMLInputElement>]>;
+  public readonly setStart: Callback<[ChangeEvent<HTMLInputElement>]>;
   constructor(setState: Dispatch<SetStateAction<UIState>>) {
     this.setState = setState;
     this.setEnd = this.createTimeParser("end");

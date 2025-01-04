@@ -1,8 +1,8 @@
 import type { FilterKeys } from "Types/Generics";
 
 export class HashList<T extends Record<string, any>> {
-  public table = {} as Record<string, T>;
-  private key: Key<T>;
+  private readonly key: Key<T>;
+  public readonly table = {} as Record<string, T>;
   constructor(list: T[], key: Key<T>) {
     this.key = key;
     for (const item of list) {

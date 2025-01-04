@@ -3,7 +3,7 @@ import type { Callback } from "Types/Generics";
 
 export class LanguageHandler extends Subscriptable<Callback> {
   private static initialized = false;
-  private static subscriptions = new Subscriptable();
+  private static readonly subscriptions = new Subscriptable();
 
   public static initialize() {
     if (!this.initialized) {
@@ -28,7 +28,7 @@ export class LanguageHandler extends Subscriptable<Callback> {
     return window?.navigator?.language ?? "en-us";
   }
 
-  private static onLanguageChange = () => {
+  private static readonly onLanguageChange = () => {
     void this.subscriptions.execute();
   };
 }

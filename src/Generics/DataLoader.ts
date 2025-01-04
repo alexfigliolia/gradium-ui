@@ -1,7 +1,7 @@
 export class DataLoader<T> {
   public fired = false;
   private _result!: Promise<T>;
-  private executor: () => Promise<T>;
+  private readonly executor: () => Promise<T>;
   constructor(executor: () => Promise<T>) {
     this.executor = executor;
   }

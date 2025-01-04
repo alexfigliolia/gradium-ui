@@ -5,8 +5,8 @@ import type { IndexedToast, IToast, IToasts } from "./types";
 
 export class ToastsModel extends BaseModel<IToasts> {
   private listener?: string;
-  public Emitter = new EventEmitter();
-  private IDs = new AutoIncrementingID();
+  public readonly Emitter = new EventEmitter();
+  private readonly IDs = new AutoIncrementingID();
   private timeout: null | ReturnType<typeof setTimeout> = null;
   constructor() {
     super("Toaster", {

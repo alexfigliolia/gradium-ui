@@ -2,15 +2,16 @@ import type { Dispatch, SetStateAction, UIEvent } from "react";
 import { Timeout } from "@figliolia/react-hooks";
 import { Numbers } from "Tools/Numbers";
 import type { Callback } from "Types/Generics";
+/* eslint-disable @typescript-eslint/prefer-readonly */
 
 export class Controller extends Timeout {
   private scrollTOD?: Callback<[number]>;
   private scrollHours?: Callback<[number]>;
   private scrollMinutes?: Callback<[number]>;
-  public registerScrollTOD = this.createRef("scrollTOD");
-  public registerScrollHours = this.createRef("scrollHours");
-  public registerScrollMinutes = this.createRef("scrollMinutes");
-  public enableScrollListener: Dispatch<SetStateAction<boolean>>;
+  public readonly registerScrollTOD = this.createRef("scrollTOD");
+  public readonly registerScrollHours = this.createRef("scrollHours");
+  public readonly registerScrollMinutes = this.createRef("scrollMinutes");
+  public readonly enableScrollListener: Dispatch<SetStateAction<boolean>>;
   constructor(enableScrollListener: Dispatch<SetStateAction<boolean>>) {
     super();
     this.enableScrollListener = enableScrollListener;
