@@ -224,4 +224,11 @@ export class AmenityScheduleModel extends PropertyScopeModel<IAmenitySchedule> {
       state.loading = ns;
     });
   }
+
+  public override closeAll() {
+    super.closeAll();
+    this.update(state => {
+      state.currentReservation = {};
+    });
+  }
 }

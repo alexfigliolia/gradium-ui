@@ -1,4 +1,5 @@
 import { memo, useMemo } from "react";
+import { useUnmount } from "@figliolia/react-hooks";
 import { GradientButton } from "Components/GradientButton";
 import { PermissedPropertyRoute } from "Components/PermissedPropertyRoute";
 import { Page, PageTitle } from "Layouts/Management";
@@ -20,6 +21,11 @@ export default memo(
       () => proxyReservationModifier(AmenitySchedule.newReservation.open),
       [],
     );
+
+    useUnmount(() => {
+      AmenitySchedule.closeAll();
+    });
+
     return (
       <PermissedPropertyRoute
         fallback=".."

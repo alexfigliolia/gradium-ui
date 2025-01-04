@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import type { ILoadingStateSetter } from "@figliolia/react-hooks";
 import {
   useLoadingState,
@@ -12,23 +12,26 @@ export const useDropDownPagination = <T extends IHTMLOption>(
   fetch: FetchFN<T>,
   prefetch = true,
 ) => {
+  const fetching = useRef(false);
   const [complete, setComplete] = useState(false);
   const [list, setList] = useState<T[]>([]);
   const [cursor, setCurser] = useState<Maybe<number>>();
   const { loading, success, error, setState } = useLoadingState();
 
   const queryNext = useCallback(async () => {
-    const result = await fetch(setState, cursor);
-    if (!result) {
+    if (fetching.current || complete) {
       return;
     }
-    if (result.list.length) {
+    fetching.current = true;
+    const result = await fetch(setState, cursor);
+    if (result?.list?.length) {
       setList(list => [...list, ...result.list]);
       setCurser(result.cursor);
-    } else {
+    } else if (result) {
       setComplete(true);
     }
-  }, [fetch, cursor, setState]);
+    fetching.current = false;
+  }, [fetch, cursor, setState, complete]);
 
   const onFocus = useCallback(() => {
     if (!list.length) {

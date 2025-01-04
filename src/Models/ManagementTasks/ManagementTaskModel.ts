@@ -269,4 +269,11 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
     this.openFilters,
     this.closeFilters,
   );
+
+  public override closeAll() {
+    super.closeAll();
+    this.update(state => {
+      state.scopedTask = ManagementTaskModel.EMPTY_TASK;
+    });
+  }
 }
