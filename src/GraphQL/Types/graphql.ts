@@ -15,7 +15,7 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
-  DateTime: { input: any; output: any; }
+  DateTime: { input: string; output: string; }
 };
 
 export type AdminBasicProperty = {
@@ -553,9 +553,9 @@ export type UserAffiliation = {
 
 export type AdminBasicPropertyFragmentFragment = { __typename?: 'AdminBasicProperty', id: number, name: string, slug: string, address1: string, address2: string, city: string, state: string, zipCode: string, mapsLink: string, images: Array<{ __typename?: 'GradiumImage', id: number, url: string }>, addons: Array<{ __typename?: 'PropertyAddon', id: number, type: PropertyAddonType }> };
 
-export type AmenityFragmentFragment = { __typename?: 'Amenity', id: number, name: string, open: any, price: string, billed: BillFrequency, close: any, capacity: number, propertyId: number, images: Array<{ __typename?: 'GradiumImage', id: number, url: string }>, floorPlans: Array<{ __typename?: 'GradiumImage', id: number, url: string }> };
+export type AmenityFragmentFragment = { __typename?: 'Amenity', id: number, name: string, open: string, price: string, billed: BillFrequency, close: string, capacity: number, propertyId: number, images: Array<{ __typename?: 'GradiumImage', id: number, url: string }>, floorPlans: Array<{ __typename?: 'GradiumImage', id: number, url: string }> };
 
-export type AmenityReservationFragmentFragment = { __typename?: 'AmenityReservation', id: number, start: any, end: any, amenity: { __typename?: 'EntitySnapShot', id: number, name: string }, person: { __typename?: 'EntitySnapShot', id: number, name: string } };
+export type AmenityReservationFragmentFragment = { __typename?: 'AmenityReservation', id: number, start: string, end: string, amenity: { __typename?: 'EntitySnapShot', id: number, name: string }, person: { __typename?: 'EntitySnapShot', id: number, name: string } };
 
 export type BasicUserFragmentFragment = { __typename?: 'BasicUser', name: string, emails: Array<{ __typename?: 'LinkedEmail', email: string }> };
 
@@ -563,7 +563,7 @@ export type LivingSpaceFragmentFragment = { __typename?: 'LivingSpace', id: numb
 
 export type LoggedInUserFragmentFragment = { __typename?: 'LoggedInUser', id: number, name: string, emails: Array<{ __typename?: 'LinkedEmail', email: string }>, affiliations: Array<{ __typename?: 'UserAffiliation', organization: { __typename?: 'OrgAffiliation', id: number, name: string }, roles: Array<{ __typename?: 'PersonRole', role: PersonRoleType }> }> };
 
-export type ManagementTaskFragmentFragment = { __typename?: 'ManagementTask', id: number, createdAt: any, title: string, description: string, status: ManagementTaskStatus, priority: ManagementTaskPriority, createdBy: { __typename?: 'Person', id: number, name: string }, images: Array<{ __typename?: 'GradiumImage', id: number, url: string }>, assignedTo?: { __typename?: 'StaffMember', id: number, name: string } | null, expenses: Array<{ __typename?: 'Expense', id: number, cost: string, createdAt: any, title: string, description: string, attachments: Array<{ __typename?: 'GradiumImage', id: number, url: string }> }> };
+export type ManagementTaskFragmentFragment = { __typename?: 'ManagementTask', id: number, createdAt: string, title: string, description: string, status: ManagementTaskStatus, priority: ManagementTaskPriority, createdBy: { __typename?: 'Person', id: number, name: string }, images: Array<{ __typename?: 'GradiumImage', id: number, url: string }>, assignedTo?: { __typename?: 'StaffMember', id: number, name: string } | null, expenses: Array<{ __typename?: 'Expense', id: number, cost: string, createdAt: string, title: string, description: string, attachments: Array<{ __typename?: 'GradiumImage', id: number, url: string }> }> };
 
 export type CancelAmenityReservationMutationVariables = Exact<{
   organizationId: Scalars['Int']['input'];
@@ -594,7 +594,7 @@ export type CreateAmenityReservationMutationVariables = Exact<{
 }>;
 
 
-export type CreateAmenityReservationMutation = { __typename?: 'Mutation', createAmenityReservation: { __typename?: 'AmenityReservation', id: number, start: any, end: any, amenity: { __typename?: 'EntitySnapShot', id: number, name: string }, person: { __typename?: 'EntitySnapShot', id: number, name: string } } };
+export type CreateAmenityReservationMutation = { __typename?: 'Mutation', createAmenityReservation: { __typename?: 'AmenityReservation', id: number, start: string, end: string, amenity: { __typename?: 'EntitySnapShot', id: number, name: string }, person: { __typename?: 'EntitySnapShot', id: number, name: string } } };
 
 export type CreateManagementTaskMutationVariables = Exact<{
   organizationId: Scalars['Int']['input'];
@@ -607,7 +607,7 @@ export type CreateManagementTaskMutationVariables = Exact<{
 }>;
 
 
-export type CreateManagementTaskMutation = { __typename?: 'Mutation', createManagementTask: { __typename?: 'ManagementTask', id: number, createdAt: any, title: string, description: string, status: ManagementTaskStatus, priority: ManagementTaskPriority, createdBy: { __typename?: 'Person', id: number, name: string }, images: Array<{ __typename?: 'GradiumImage', id: number, url: string }>, assignedTo?: { __typename?: 'StaffMember', id: number, name: string } | null, expenses: Array<{ __typename?: 'Expense', id: number, cost: string, createdAt: any, title: string, description: string, attachments: Array<{ __typename?: 'GradiumImage', id: number, url: string }> }> } };
+export type CreateManagementTaskMutation = { __typename?: 'Mutation', createManagementTask: { __typename?: 'ManagementTask', id: number, createdAt: string, title: string, description: string, status: ManagementTaskStatus, priority: ManagementTaskPriority, createdBy: { __typename?: 'Person', id: number, name: string }, images: Array<{ __typename?: 'GradiumImage', id: number, url: string }>, assignedTo?: { __typename?: 'StaffMember', id: number, name: string } | null, expenses: Array<{ __typename?: 'Expense', id: number, cost: string, createdAt: string, title: string, description: string, attachments: Array<{ __typename?: 'GradiumImage', id: number, url: string }> }> } };
 
 export type CreateOrUpdateAmenityMutationVariables = Exact<{
   id?: InputMaybe<Scalars['Int']['input']>;
@@ -622,7 +622,7 @@ export type CreateOrUpdateAmenityMutationVariables = Exact<{
 }>;
 
 
-export type CreateOrUpdateAmenityMutation = { __typename?: 'Mutation', createOrUpdateAmenity: { __typename?: 'Amenity', id: number, name: string, open: any, price: string, billed: BillFrequency, close: any, capacity: number, propertyId: number, images: Array<{ __typename?: 'GradiumImage', id: number, url: string }>, floorPlans: Array<{ __typename?: 'GradiumImage', id: number, url: string }> } };
+export type CreateOrUpdateAmenityMutation = { __typename?: 'Mutation', createOrUpdateAmenity: { __typename?: 'Amenity', id: number, name: string, open: string, price: string, billed: BillFrequency, close: string, capacity: number, propertyId: number, images: Array<{ __typename?: 'GradiumImage', id: number, url: string }>, floorPlans: Array<{ __typename?: 'GradiumImage', id: number, url: string }> } };
 
 export type CreateOrUpdateLivingSpaceMutationVariables = Exact<{
   id?: InputMaybe<Scalars['Int']['input']>;
@@ -653,7 +653,7 @@ export type DeleteAmenityMutationVariables = Exact<{
 }>;
 
 
-export type DeleteAmenityMutation = { __typename?: 'Mutation', deleteAmenity: { __typename?: 'Amenity', id: number, name: string, open: any, price: string, billed: BillFrequency, close: any, capacity: number, propertyId: number, images: Array<{ __typename?: 'GradiumImage', id: number, url: string }>, floorPlans: Array<{ __typename?: 'GradiumImage', id: number, url: string }> } };
+export type DeleteAmenityMutation = { __typename?: 'Mutation', deleteAmenity: { __typename?: 'Amenity', id: number, name: string, open: string, price: string, billed: BillFrequency, close: string, capacity: number, propertyId: number, images: Array<{ __typename?: 'GradiumImage', id: number, url: string }>, floorPlans: Array<{ __typename?: 'GradiumImage', id: number, url: string }> } };
 
 export type DeleteEmailMutationVariables = Exact<{
   userId: Scalars['Int']['input'];
@@ -786,7 +786,7 @@ export type UpdateAmenityReservationMutationVariables = Exact<{
 }>;
 
 
-export type UpdateAmenityReservationMutation = { __typename?: 'Mutation', updateAmenityReservation: { __typename?: 'AmenityReservation', id: number, start: any, end: any, amenity: { __typename?: 'EntitySnapShot', id: number, name: string }, person: { __typename?: 'EntitySnapShot', id: number, name: string } } };
+export type UpdateAmenityReservationMutation = { __typename?: 'Mutation', updateAmenityReservation: { __typename?: 'AmenityReservation', id: number, start: string, end: string, amenity: { __typename?: 'EntitySnapShot', id: number, name: string }, person: { __typename?: 'EntitySnapShot', id: number, name: string } } };
 
 export type UpdateBasicPropertyInfoMutationVariables = Exact<{
   propertyId: Scalars['Int']['input'];
@@ -823,7 +823,7 @@ export type UpdateManagementTaskMutationVariables = Exact<{
 }>;
 
 
-export type UpdateManagementTaskMutation = { __typename?: 'Mutation', updateManagementTask: { __typename?: 'ManagementTask', id: number, createdAt: any, title: string, description: string, status: ManagementTaskStatus, priority: ManagementTaskPriority, createdBy: { __typename?: 'Person', id: number, name: string }, images: Array<{ __typename?: 'GradiumImage', id: number, url: string }>, assignedTo?: { __typename?: 'StaffMember', id: number, name: string } | null, expenses: Array<{ __typename?: 'Expense', id: number, cost: string, createdAt: any, title: string, description: string, attachments: Array<{ __typename?: 'GradiumImage', id: number, url: string }> }> } };
+export type UpdateManagementTaskMutation = { __typename?: 'Mutation', updateManagementTask: { __typename?: 'ManagementTask', id: number, createdAt: string, title: string, description: string, status: ManagementTaskStatus, priority: ManagementTaskPriority, createdBy: { __typename?: 'Person', id: number, name: string }, images: Array<{ __typename?: 'GradiumImage', id: number, url: string }>, assignedTo?: { __typename?: 'StaffMember', id: number, name: string } | null, expenses: Array<{ __typename?: 'Expense', id: number, cost: string, createdAt: string, title: string, description: string, attachments: Array<{ __typename?: 'GradiumImage', id: number, url: string }> }> } };
 
 export type AdminBasicPropertiesListQueryVariables = Exact<{
   organizationId: Scalars['Int']['input'];
@@ -841,7 +841,7 @@ export type FetchAmenityReservationsQueryVariables = Exact<{
 }>;
 
 
-export type FetchAmenityReservationsQuery = { __typename?: 'Query', fetchAmenityReservations: Array<{ __typename?: 'AmenityReservation', id: number, start: any, end: any, amenity: { __typename?: 'EntitySnapShot', id: number, name: string }, person: { __typename?: 'EntitySnapShot', id: number, name: string } }> };
+export type FetchAmenityReservationsQuery = { __typename?: 'Query', fetchAmenityReservations: Array<{ __typename?: 'AmenityReservation', id: number, start: string, end: string, amenity: { __typename?: 'EntitySnapShot', id: number, name: string }, person: { __typename?: 'EntitySnapShot', id: number, name: string } }> };
 
 export type GenerateDestroySignatureQueryVariables = Exact<{
   organizationId: Scalars['Int']['input'];
@@ -866,7 +866,7 @@ export type GetAmenitiesQueryVariables = Exact<{
 }>;
 
 
-export type GetAmenitiesQuery = { __typename?: 'Query', getAmenities: Array<{ __typename?: 'Amenity', id: number, name: string, open: any, price: string, billed: BillFrequency, close: any, capacity: number, propertyId: number, images: Array<{ __typename?: 'GradiumImage', id: number, url: string }>, floorPlans: Array<{ __typename?: 'GradiumImage', id: number, url: string }> }> };
+export type GetAmenitiesQuery = { __typename?: 'Query', getAmenities: Array<{ __typename?: 'Amenity', id: number, name: string, open: string, price: string, billed: BillFrequency, close: string, capacity: number, propertyId: number, images: Array<{ __typename?: 'GradiumImage', id: number, url: string }>, floorPlans: Array<{ __typename?: 'GradiumImage', id: number, url: string }> }> };
 
 export type GetLivingSpacesQueryVariables = Exact<{
   propertyId: Scalars['Int']['input'];
@@ -885,7 +885,7 @@ export type ListManagementTasksQueryVariables = Exact<{
 }>;
 
 
-export type ListManagementTasksQuery = { __typename?: 'Query', listManagementTasks: Array<{ __typename?: 'ManagementTask', id: number, createdAt: any, title: string, description: string, status: ManagementTaskStatus, priority: ManagementTaskPriority, createdBy: { __typename?: 'Person', id: number, name: string }, images: Array<{ __typename?: 'GradiumImage', id: number, url: string }>, assignedTo?: { __typename?: 'StaffMember', id: number, name: string } | null, expenses: Array<{ __typename?: 'Expense', id: number, cost: string, createdAt: any, title: string, description: string, attachments: Array<{ __typename?: 'GradiumImage', id: number, url: string }> }> }> };
+export type ListManagementTasksQuery = { __typename?: 'Query', listManagementTasks: Array<{ __typename?: 'ManagementTask', id: number, createdAt: string, title: string, description: string, status: ManagementTaskStatus, priority: ManagementTaskPriority, createdBy: { __typename?: 'Person', id: number, name: string }, images: Array<{ __typename?: 'GradiumImage', id: number, url: string }>, assignedTo?: { __typename?: 'StaffMember', id: number, name: string } | null, expenses: Array<{ __typename?: 'Expense', id: number, cost: string, createdAt: string, title: string, description: string, attachments: Array<{ __typename?: 'GradiumImage', id: number, url: string }> }> }> };
 
 export type ListPeopleQueryVariables = Exact<{
   organizationId: Scalars['Int']['input'];

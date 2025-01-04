@@ -1,12 +1,18 @@
-import { addMonths, subMonths, subYears } from "date-fns";
+import {
+  addMonths,
+  differenceInMilliseconds,
+  subMonths,
+  subYears,
+} from "date-fns";
 import { LanguageHandler } from "./LanguageHandler";
 
 export class Dates {
-  public static TODAY = this.today();
-  public static ONE_HOUR = 1000 * 60 * 60;
-  public static ONE_DAY = this.ONE_HOUR * 24;
-  public static ONE_MONTH = this.ONE_DAY * 30;
-  public static ONE_YEAR = this.ONE_DAY * 365;
+  public static readonly TODAY = this.today();
+  public static readonly ONE_MINUTE = 1000 * 60;
+  public static readonly ONE_HOUR = this.ONE_MINUTE * 60;
+  public static readonly ONE_DAY = this.ONE_HOUR * 24;
+  public static readonly ONE_MONTH = this.ONE_DAY * 30;
+  public static readonly ONE_YEAR = this.ONE_DAY * 365;
   public static DAY_FORMATTER = new Intl.DateTimeFormat(
     LanguageHandler.locale,
     {
@@ -237,5 +243,11 @@ export class Dates {
       second: "2-digit",
       hour12: false,
     });
+  }
+
+  public static timeBetween(start: string, end: string) {
+    const diff = Math.abs(differenceInMilliseconds(start, end));
+    const startMS = new Date(start).getTime();
+    return [startMS, startMS + diff, diff];
   }
 }

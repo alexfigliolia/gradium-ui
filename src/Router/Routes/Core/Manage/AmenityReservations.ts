@@ -11,8 +11,8 @@ export const AmenityReservations = {
     AmenitySchedule.loading(true);
     await AppLoaders.Properties.get();
     void AmenitySchedule.fetchReservations();
-    const amenities = await Amenities.fetch();
-    AmenitySchedule.resolveScope(amenities);
+    await Amenities.fetch();
+    AmenitySchedule.resolveScope();
     return AmenitySchedule.getState();
   },
 };

@@ -5,7 +5,15 @@ import { AmenityScheduleModel } from "Models/AmenitySchedule";
 export const AmenitySchedule = new AmenityScheduleModel();
 export const useAmenitySchedule = createUseState(AmenitySchedule);
 export const selectReservations = (state: IAmenitySchedule) =>
-  state.reservations;
+  state.reservations.filter(
+    reservation =>
+      !(
+        (state.amenityIds.size &&
+          !state.amenityIds.has(reservation.amenity.id)) ||
+        (state.reservers.size && !state.reservers.has(reservation.person.id))
+      ),
+  );
+
 export const openAndClose = (state: IAmenitySchedule) => [
   state.open,
   state.close,

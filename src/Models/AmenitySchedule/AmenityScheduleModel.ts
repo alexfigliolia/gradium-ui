@@ -1,12 +1,13 @@
+import { differenceInMilliseconds } from "date-fns";
 import { fetchAmenityReservations } from "GraphQL/Queries/fetchAmenityReservations.gql";
 import { graphQLRequest } from "GraphQL/request";
 import type {
-  Amenity,
   AmenityReservation,
   FetchAmenityReservationsQuery,
   FetchAmenityReservationsQueryVariables,
 } from "GraphQL/Types";
 import { PropertyScopeModel } from "Models/PropertyScopeModel";
+import { Amenities } from "State/Amenities";
 import { Properties } from "State/Properties";
 import { Scope } from "State/Scope";
 import { Toasts } from "State/Toasts";
@@ -44,14 +45,12 @@ export class AmenityScheduleModel extends PropertyScopeModel<IAmenitySchedule> {
     this.update(state => {
       state.amenityIds = ids;
     });
-    void this.fetchReservations();
   }
 
   public filterByReserver(ids: EnhancedSet<number>) {
     this.update(state => {
       state.reservers = ids;
     });
-    void this.fetchReservations();
   }
 
   public readonly resetFilters = () => {
@@ -82,7 +81,6 @@ export class AmenityScheduleModel extends PropertyScopeModel<IAmenitySchedule> {
 
   public async fetchReservations(date = this.getState().currentDate) {
     this.loading(true);
-    const { amenityIds, reservers } = this.getState();
     try {
       const response = await graphQLRequest<
         FetchAmenityReservationsQuery,
@@ -91,8 +89,6 @@ export class AmenityScheduleModel extends PropertyScopeModel<IAmenitySchedule> {
         date: Dates.setTime(date).toISOString(),
         propertyId: Properties.getState().current,
         organizationId: Scope.getState().currentOrganizationId,
-        amenityIds: amenityIds.size ? amenityIds.toJSON() : undefined,
-        reservers: reservers.size ? amenityIds.toJSON() : undefined,
       });
       this.update(state => {
         state.reservations = response.fetchAmenityReservations;
@@ -128,19 +124,25 @@ export class AmenityScheduleModel extends PropertyScopeModel<IAmenitySchedule> {
     });
   }
 
-  public resolveScope(amenities: Amenity[]) {
+  public resolveScope() {
     let minOpen = "";
     let maxClose = "";
     let minOpenDate: Date | undefined;
     let maxCloseDate: Date | undefined;
-    for (const { open, close } of amenities) {
+    const { amenityIds } = this.getState();
+    const amenities = Amenities.toList();
+    const whiteList = amenityIds.size
+      ? amenities.filter(a => amenityIds.has(a.id))
+      : amenities;
+    for (const { open, close } of whiteList) {
+      const difference = Math.abs(differenceInMilliseconds(open, close));
       const openDate = new Date(Dates.timeToDate(open));
-      const closeDate = new Date(Dates.timeToDate(close));
+      const closeDate = new Date(openDate.getTime() + difference);
       if (minOpenDate === undefined || maxCloseDate === undefined) {
         minOpenDate = openDate;
-        minOpen = open;
+        minOpen = openDate.toISOString();
         maxCloseDate = closeDate;
-        maxClose = close;
+        maxClose = closeDate.toISOString();
         continue;
       }
       if (openDate < minOpenDate) {
