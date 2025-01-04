@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { Tile } from "Components/Tile";
 import { LockFilled } from "Icons/Lock";
-import { Modals } from "State/Modals";
+import { Account } from "State/Account";
 import type { Propless } from "Types/React";
 import { TileAction } from "../TileAction";
 import "./styles.scss";
@@ -22,7 +22,7 @@ export const Password = memo(
           To keep your account and personal information secure, we recommend
           using a strong password
         </p>
-        <TileAction onClick={Modals.resetPassword.open}>
+        <TileAction onClick={Account.resetPassword.open}>
           Reset Password
         </TileAction>
       </Tile>

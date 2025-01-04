@@ -12,7 +12,7 @@ import type {
   DeleteEmailMutationVariables,
 } from "GraphQL/Types";
 import { UIClient } from "GraphQL/UIClient";
-import { Modals, selectEmailDeletion, useModals } from "State/Modals";
+import { Account, selectEmailDeletion, useAccount } from "State/Account";
 import { Scope } from "State/Scope";
 import type { Propless } from "Types/React";
 import "./styles.scss";
@@ -20,7 +20,7 @@ import "./styles.scss";
 export const DeleteEmail = memo(function DeleteEmail(_: Propless) {
   const emailRef = useRef("");
   const timeout = useTimeout();
-  const [open, email] = useModals(selectEmailDeletion);
+  const [open, email] = useAccount(selectEmailDeletion);
   const { loading, error, success, setState } = useLoadingState();
 
   const deleteEmail = useCallback(() => {
@@ -39,7 +39,7 @@ export const DeleteEmail = memo(function DeleteEmail(_: Propless) {
       .then(response => {
         Scope.updateBasicInfo(response.deleteEmail);
         timeout.execute(() => {
-          Modals.deleteEmail.close();
+          Account.deleteEmail.close();
         }, 1000);
       })
       .catch(() => {});
@@ -57,7 +57,7 @@ export const DeleteEmail = memo(function DeleteEmail(_: Propless) {
     <Confirmation
       open={open}
       className="delete-email tight"
-      close={Modals.deleteEmail.close}>
+      close={Account.deleteEmail.close}>
       <h2>Confirmation</h2>
       <p>
         Are you sure you want to remove the email{" "}

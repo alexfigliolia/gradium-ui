@@ -2,14 +2,14 @@ import { memo, useCallback } from "react";
 import { Card } from "Components/Card";
 import { GradientBorderButton } from "Components/GradientBorderButton";
 import { NewLease } from "State/LeaseCRUD";
-import { Modals } from "State/Modals";
+import { Leases } from "State/Leases";
 import type { OptionalChildren } from "Types/React";
 import "./styles.scss";
 
 export const Space = memo(function Space({ name, id, children }: Props) {
   const onClick = useCallback(() => {
     NewLease.setUnit(id.toString());
-    Modals.newLease.open();
+    Leases.newLease.open();
   }, [id]);
   return (
     <Card className="space-card">

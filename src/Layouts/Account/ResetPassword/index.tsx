@@ -1,4 +1,4 @@
-import { memo, useCallback, useRef } from "react";
+import { memo, useCallback, useEffect, useRef } from "react";
 import type { ILoadingStateSetter } from "@figliolia/react-hooks";
 import { useFormState } from "@figliolia/react-hooks";
 import { ActionButton } from "Components/ActionButton";
@@ -12,7 +12,7 @@ import type {
 } from "GraphQL/Types";
 import { UIClient } from "GraphQL/UIClient";
 import { LockStroked } from "Icons/Lock";
-import { Modals, selectResetPassword, useModals } from "State/Modals";
+import { Account, selectResetPassword, useAccount } from "State/Account";
 import { Scope } from "State/Scope";
 import { Toasts } from "State/Toasts";
 import { Validators } from "Tools/Validators";
@@ -20,11 +20,12 @@ import type { Propless } from "Types/React";
 import "./styles.scss";
 
 export const ResetPassword = memo(function ResetPassword(_: Propless) {
+  const form = useRef<HTMLFormElement>(null);
   const nextPW = useRef<InputRef<"password">>(null);
   const currentPW = useRef<InputRef<"password">>(null);
-  const form = useRef<HTMLFormElement>(null);
-  const open = useModals(selectResetPassword);
-  const callback = useCallback(
+  const open = useAccount(selectResetPassword);
+
+  const submitFN = useCallback(
     async (data: FormData, setState: ILoadingStateSetter) => {
       const client = new UIClient({
         setState,
@@ -55,7 +56,7 @@ export const ResetPassword = memo(function ResetPassword(_: Propless) {
           () => {
             nextPW.current?.clear?.();
             currentPW.current?.clear?.();
-            Modals.resetPassword.close();
+            Account.resetPassword.close();
           },
         );
       } catch (error) {
@@ -64,12 +65,19 @@ export const ResetPassword = memo(function ResetPassword(_: Propless) {
     },
     [],
   );
-  const { loading, error, success, onSubmit } = useFormState(callback);
+
+  const { loading, error, success, onSubmit } = useFormState(submitFN);
+
+  useEffect(() => {
+    nextPW.current?.clear?.();
+    currentPW.current?.clear?.();
+  }, [open]);
+
   return (
     <Confirmation
       open={open}
       className="reset-password tight"
-      close={Modals.resetPassword.close}>
+      close={Account.resetPassword.close}>
       <h2>Reset Password</h2>
       <p>Ah, wise decision!</p>
       <form ref={form} onSubmit={onSubmit}>

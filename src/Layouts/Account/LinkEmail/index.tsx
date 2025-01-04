@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useRef } from "react";
 import type { ILoadingStateSetter } from "@figliolia/react-hooks";
-import { useFormState, useTimeout } from "@figliolia/react-hooks";
+import { useFormState } from "@figliolia/react-hooks";
 import { ActionButton } from "Components/ActionButton";
 import { Confirmation } from "Components/Confirmation";
 import type { InputRef } from "Components/Input";
@@ -12,22 +12,15 @@ import type {
 } from "GraphQL/Types";
 import { UIClient } from "GraphQL/UIClient";
 import { At } from "Icons/At";
-import { linkEmail, Modals, useModals } from "State/Modals";
+import { Account, linkEmail, useAccount } from "State/Account";
 import { Scope } from "State/Scope";
 import { Validators } from "Tools/Validators";
 import type { Propless } from "Types/React";
 import "./styles.scss";
 
 export const LinkEmail = memo(function LinkEmail(_: Propless) {
-  const open = useModals(linkEmail);
-  const timeout = useTimeout();
+  const open = useAccount(linkEmail);
   const input = useRef<InputRef<"email">>(null);
-
-  const clear = useCallback(() => {
-    if (input.current?.input) {
-      input.current.input.value = "";
-    }
-  }, []);
 
   const formAction = useCallback(
     async (data: FormData, setState: ILoadingStateSetter) => {
@@ -44,25 +37,25 @@ export const LinkEmail = memo(function LinkEmail(_: Propless) {
           email,
           userId: Scope.getState().id,
         });
+        input.current?.clear?.();
         Scope.updateBasicInfo(response.linkEmail);
-        timeout.execute(clear, 500);
       } catch (error) {
         // Silence
       }
     },
-    [clear, timeout],
+    [],
   );
 
   useEffect(() => {
-    clear();
-  }, [open, clear]);
+    input.current?.clear?.();
+  }, [open]);
 
   const { loading, error, success, onSubmit } = useFormState(formAction);
   return (
     <Confirmation
       open={open}
       className="link-email tight"
-      close={Modals.linkEmail.close}>
+      close={Account.linkEmail.close}>
       <h2>Link Email Address</h2>
       <p>
         To link a new email address to your account, enter it below, then press

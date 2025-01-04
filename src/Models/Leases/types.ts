@@ -29,4 +29,7 @@ export interface ILeases {
   space: string;
   endDate: string;
   startDate: string;
+  newLease: boolean;
+  editLease: boolean;
+  leaseFilters: boolean;
 }

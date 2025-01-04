@@ -4,13 +4,11 @@ import { GradientTransitionButton } from "Components/GradientTransitionButton";
 import { Input } from "Components/Input";
 import { Building } from "Icons/Building";
 import { leaseFilters, Leases, useLeases } from "State/Leases";
-import { Modals, useModals } from "State/Modals";
 import type { Propless } from "Types/React";
 
 export const Filters = memo(
   function Filters(_: Propless) {
-    const open = useModals(state => state.leaseFilters);
-    const [space, start, end] = useLeases(leaseFilters);
+    const [open, space, start, end] = useLeases(leaseFilters);
     const disabled = useMemo(
       () => !space && !start && !end,
       [space, start, end],
@@ -19,7 +17,7 @@ export const Filters = memo(
       <FilterMenu
         open={open}
         title="Search Leases"
-        close={Modals.leaseFilters.close}>
+        close={Leases.leaseFilters.close}>
         <h3>By Space:</h3>
         <Input
           required

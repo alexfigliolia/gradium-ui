@@ -1,4 +1,5 @@
 import { memo, useCallback } from "react";
+import { useUnmount } from "@figliolia/react-hooks";
 import { GradientButton } from "Components/GradientButton";
 import { PermissedPropertyRoute } from "Components/PermissedPropertyRoute";
 import { SearchBar } from "Components/SearchBar";
@@ -9,7 +10,7 @@ import { Page, PageTitle } from "Layouts/Management";
 import type { ILease } from "Models/Leases";
 import { AdminRoutes } from "Router/AdminRoutes";
 import { NewLease } from "State/LeaseCRUD";
-import { Modals } from "State/Modals";
+import { Leases } from "State/Leases";
 import type { Propless } from "Types/React";
 import { Filters } from "./Filters";
 import { LeaseCreator } from "./LeaseCreator";
@@ -22,11 +23,16 @@ const progressRenderer = (lease: ILease) => (
   <LeaseRemaining {...lease} labelFN={endDate => `Available on ${endDate}`} />
 );
 
-export default memo(function Leases(_: Propless) {
+export default memo(function LeasesPage(_: Propless) {
   const openNewLease = useCallback(() => {
     NewLease.reset();
-    Modals.newLease.open();
+    Leases.newLease.open();
   }, []);
+
+  useUnmount(() => {
+    Leases.closeAll();
+  });
+
   return (
     <PermissedPropertyRoute
       fallback=".."
@@ -44,7 +50,7 @@ export default memo(function Leases(_: Propless) {
           <GradientButton onClick={openNewLease}>
             <Add />
           </GradientButton>
-          <GradientButton onClick={Modals.leaseFilters.open}>
+          <GradientButton onClick={Leases.leaseFilters.open}>
             Search <Search />
           </GradientButton>
         </PageTitle>

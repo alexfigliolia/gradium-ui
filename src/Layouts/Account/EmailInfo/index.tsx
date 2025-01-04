@@ -2,17 +2,17 @@ import { memo } from "react";
 import { Confirmation } from "Components/Confirmation";
 import { GradientButton } from "Components/GradientButton";
 import { At } from "Icons/At";
-import { emailInfo, Modals, useModals } from "State/Modals";
+import { Account, emailInfo, useAccount } from "State/Account";
 import type { Propless } from "Types/React";
 import "./styles.scss";
 
 export const EmailInfo = memo(function EmailInfo(_: Propless) {
-  const open = useModals(emailInfo);
+  const open = useAccount(emailInfo);
   return (
     <Confirmation
       open={open}
       className="email-info"
-      close={Modals.emailInfo.close}>
+      close={Account.emailInfo.close}>
       <h2>
         <At />
         Emails
@@ -42,7 +42,7 @@ export const EmailInfo = memo(function EmailInfo(_: Propless) {
           your account
         </li>
       </ul>
-      <GradientButton onClick={Modals.emailInfo.close}>Dismiss</GradientButton>
+      <GradientButton onClick={Account.emailInfo.close}>Dismiss</GradientButton>
     </Confirmation>
   );
 });

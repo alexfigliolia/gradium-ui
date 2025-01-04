@@ -5,14 +5,13 @@ import { PropertyScopeModel } from "Models/PropertyScopeModel";
 import type { ILease, ILeases, ILeaseStatus } from "./types";
 
 export class LeasesModel extends PropertyScopeModel<ILeases> {
-  public DISPLAY_MAP: Record<ILeaseStatus | "unknown", string> = {
+  public readonly DISPLAY_MAP: Record<ILeaseStatus | "unknown", string> = {
     complete: "Complete",
     "in-progress": "In Progress",
     terminated: "Terminated",
     unknown: "Unknown",
     pending: "Pending",
   };
-
   constructor() {
     super("Leases", {
       page: 1,
@@ -20,41 +19,44 @@ export class LeasesModel extends PropertyScopeModel<ILeases> {
       endDate: "",
       startDate: "",
       maxPage: 10,
+      newLease: false,
+      editLease: false,
+      leaseFilters: false,
       leases: LeasesModel.LEASES,
     });
   }
 
-  public previous = () => {
+  public readonly previous = () => {
     this.update(state => {
       state.page = Math.max(1, state.page - 1);
     });
   };
 
-  public next = () => {
+  public readonly next = () => {
     this.update(state => {
       state.page = Math.min(state.maxPage, state.page + 1);
     });
   };
 
-  public searchSpace = (e: ChangeEvent<HTMLInputElement>) => {
+  public readonly searchSpace = (e: ChangeEvent<HTMLInputElement>) => {
     this.update(state => {
       state.space = e.target.value;
     });
   };
 
-  public setStartDate = (value: string) => {
+  public readonly setStartDate = (value: string) => {
     this.update(state => {
       state.startDate = value;
     });
   };
 
-  public setEndDate = (value: string) => {
+  public readonly setEndDate = (value: string) => {
     this.update(state => {
       state.endDate = value;
     });
   };
 
-  public resetFilters = () => {
+  public readonly resetFilters = () => {
     this.update(state => {
       state.space = "";
       state.endDate = "";
@@ -139,4 +141,24 @@ export class LeasesModel extends PropertyScopeModel<ILeases> {
       lessees: [],
     },
   ];
+
+  private readonly openNewLease = this.toggleKey("newLease", true);
+  private readonly closeNewLease = this.toggleKey("newLease", false);
+  private readonly openEditLease = this.toggleKey("editLease", true);
+  private readonly closeEditLease = this.toggleKey("editLease", false);
+  private readonly openLeaseFilters = this.toggleKey("leaseFilters", true);
+  private readonly closeLeaseFilters = this.toggleKey("leaseFilters", false);
+
+  public readonly newLease = this.createToggle(
+    this.openNewLease,
+    this.closeNewLease,
+  );
+  public readonly editLease = this.createToggle(
+    this.openEditLease,
+    this.closeEditLease,
+  );
+  public readonly leaseFilters = this.createToggle(
+    this.openLeaseFilters,
+    this.closeLeaseFilters,
+  );
 }

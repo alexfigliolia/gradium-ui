@@ -1,12 +1,12 @@
 import { memo } from "react";
 import { LazyLeaseSheet } from "Layouts/Leases/LeaseSheet/LazyLeaseSheet";
 import { EditLease } from "State/LeaseCRUD";
-import { Modals, useModals } from "State/Modals";
+import { editing, Leases, useLeases } from "State/Leases";
 import type { Propless } from "Types/React";
 
 export const LeaseModifier = memo(
   function LeaseModifier(_: Propless) {
-    const open = useModals(state => state.editLease);
+    const open = useLeases(editing);
     return (
       <LazyLeaseSheet
         open={open}
@@ -15,7 +15,7 @@ export const LeaseModifier = memo(
         title="Edit Lease"
         actionText="Save"
         subtitle="Modified lease terms will take place immediately. Please ensure that you've reviewed your changes"
-        close={Modals.editLease.close}
+        close={Leases.editLease.close}
       />
     );
   },

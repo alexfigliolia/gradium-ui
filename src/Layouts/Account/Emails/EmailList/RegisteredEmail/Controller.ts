@@ -5,7 +5,7 @@ import type {
   UpdateEmailMutationVariables,
 } from "GraphQL/Types";
 import { UIClient } from "GraphQL/UIClient";
-import { Modals } from "State/Modals";
+import { Account } from "State/Account";
 import { Scope } from "State/Scope";
 import { Validators } from "Tools/Validators";
 
@@ -16,7 +16,10 @@ export class Controller {
     this.current = current;
   }
 
-  public onSubmit = async (data: FormData, setState: ILoadingStateSetter) => {
+  public readonly onSubmit = async (
+    data: FormData,
+    setState: ILoadingStateSetter,
+  ) => {
     try {
       const next = Validators.emailParser(data);
       const client = new UIClient({
@@ -42,7 +45,7 @@ export class Controller {
     }
   };
 
-  public deleteEmail = () => {
-    Modals.deleteEmail.open(this.current);
+  public readonly deleteEmail = () => {
+    Account.deleteEmail.open(this.current);
   };
 }

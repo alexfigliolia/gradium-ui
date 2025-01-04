@@ -1,12 +1,12 @@
 import { memo } from "react";
 import { LazyLeaseSheet } from "Layouts/Leases/LeaseSheet/LazyLeaseSheet";
 import { NewLease } from "State/LeaseCRUD";
-import { Modals, useModals } from "State/Modals";
+import { creating, Leases, useLeases } from "State/Leases";
 import type { Propless } from "Types/React";
 
 export const LeaseCreator = memo(
   function LeaseCreator(_: Propless) {
-    const open = useModals(state => state.newLease);
+    const open = useLeases(creating);
     return (
       <LazyLeaseSheet
         open={open}
@@ -15,7 +15,7 @@ export const LeaseCreator = memo(
         title="Create Lease"
         subtitle="Leases are your contractual obligations to a specific tenant or
           tenants"
-        close={Modals.newLease.close}
+        close={Leases.newLease.close}
       />
     );
   },

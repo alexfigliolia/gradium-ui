@@ -6,7 +6,6 @@ import { LeaseRemaining } from "Layouts/Leases";
 import type { ILease } from "Models/Leases";
 import { EditLease } from "State/LeaseCRUD";
 import { Leases } from "State/Leases";
-import { Modals } from "State/Modals";
 import { Dates } from "Tools/Dates";
 import { Progress } from "Tools/Progress";
 import "./styles.scss";
@@ -15,10 +14,12 @@ export const Lease = memo(function Lease(lease: ILease) {
   const { space, status } = lease;
   const { price, endDate, formattedStartDate, progress, pending } =
     useLeaseProgress(lease);
+
   const [color1, color2] = useMemo(
     () => Progress.getGradient(progress),
     [progress],
   );
+
   const statusLabel = useMemo(() => {
     if (pending) {
       return `Starts ${formattedStartDate}`;
@@ -31,7 +32,7 @@ export const Lease = memo(function Lease(lease: ILease) {
 
   const edit = useCallback(() => {
     EditLease.batch(lease);
-    Modals.editLease.open();
+    Leases.editLease.open();
   }, [lease]);
 
   return (
