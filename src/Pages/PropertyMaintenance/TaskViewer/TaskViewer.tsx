@@ -19,6 +19,7 @@ import { Assigned } from "./Assigned";
 import type { IState, UpdateProxy } from "./Controller";
 import { Controller } from "./Controller";
 import { Priority } from "./Priority";
+import { Status } from "./Status";
 import { TextArea } from "./TextArea";
 import "./styles.scss";
 
@@ -60,10 +61,13 @@ export const TaskViewer = memo(
     return (
       <Confirmation open={open} className={classes} close={close}>
         <div className="title">
-          <Priority
-            priority={state.priority}
-            onChange={controller.setPriority}
-          />
+          <div className="selectors">
+            <Priority
+              priority={state.priority}
+              onChange={controller.setPriority}
+            />
+            <Status status={state.status} onChange={controller.setStatus} />
+          </div>
           <TextArea
             name="title"
             className="h2"

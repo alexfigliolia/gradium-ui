@@ -8,6 +8,7 @@ import type { Controller as InputController } from "../TaskViewer";
 import { TaskViewer } from "../TaskViewer";
 import { Attachments } from "./Attachments";
 import { Controller } from "./Controller";
+import "./styles.scss";
 
 export const CreateTask = memo(
   function CreateTask(_: Propless) {
@@ -26,6 +27,7 @@ export const CreateTask = memo(
     return (
       <TaskViewer
         open={open}
+        className="create-task"
         ref={inputController}
         onUpdate={controller.cacheTask}
         close={ManagementTasks.createTask.close}>

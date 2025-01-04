@@ -1,12 +1,11 @@
-import { Fragment, memo, useCallback, useMemo, useState } from "react";
+import { Fragment, memo, useCallback, useMemo } from "react";
 import { useClassNames } from "@figliolia/classnames";
-import { useClickOutside, useController } from "@figliolia/react-hooks";
 import { OptionSelection } from "Components/DropDown";
 import { useDropDownPagination } from "Components/PaginatedDropDown";
 import { fetchStaff } from "Components/StaffDropDown";
-import { Devices } from "Tools/Devices";
+import { useMousePointerOutside } from "Hooks/useMousePointerOutside";
+import { useToggle } from "Hooks/useToggle";
 import { HashList } from "Tools/HashedList";
-import { ModalStack } from "Tools/ModalStack";
 import type { Callback } from "Types/Generics";
 import type { IHTMLOption } from "Types/React";
 import "./styles.scss";
@@ -16,11 +15,9 @@ export const Assigned = memo(function Assigned({
   className,
   onChange,
 }: Props) {
-  const [isOpen, setOpen] = useState(false);
-  const open = useCallback(() => setOpen(true), []);
-  const close = useCallback(() => setOpen(false), []);
+  const [isOpen, toggle] = useToggle();
+  const node = useMousePointerOutside<HTMLDivElement>(isOpen, toggle.close);
   const classes = useClassNames("assigned-to", className);
-  const toggle = useController(ModalStack.create(open, close));
 
   const content = useMemo(() => {
     if (assigned) {
@@ -43,15 +40,6 @@ export const Assigned = memo(function Assigned({
     },
     [onChange, table],
   );
-
-  const node = useClickOutside<HTMLDivElement, false>({
-    open: isOpen,
-    callback: () => {
-      if (!Devices.IS_MOBILE_BROWSER) {
-        toggle.close();
-      }
-    },
-  });
 
   return (
     <div ref={node} className={classes}>

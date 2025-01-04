@@ -16,9 +16,14 @@ export class DisplayController {
     ManagementTaskStatus.Complete,
   ];
 
-  public static priorityOptions = this.priorities.map(priority => ({
+  public static readonly priorityOptions = this.priorities.map(priority => ({
     value: priority,
     label: this.displayPriority(priority),
+  }));
+
+  public static readonly statusOptions = this.statuses.map(status => ({
+    value: status,
+    label: this.displayStatus(status),
   }));
 
   public static displayStatus(key: ManagementTaskStatus) {

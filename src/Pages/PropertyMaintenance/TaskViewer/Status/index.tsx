@@ -1,39 +1,39 @@
 import { memo } from "react";
 import { OptionSelection } from "Components/DropDown";
-import type { ManagementTaskPriority } from "GraphQL/Types";
+import type { ManagementTaskStatus } from "GraphQL/Types";
 import { useMousePointerOutside } from "Hooks/useMousePointerOutside";
 import { useToggle } from "Hooks/useToggle";
 import { DisplayController } from "Pages/PropertyMaintenance/DisplayController";
-import { PriorityIcon } from "Pages/PropertyMaintenance/PriorityIcon";
+import { StatusIcon } from "Pages/PropertyMaintenance/StatusIcon";
 import type { Callback } from "Types/Generics";
 import type { IHTMLOption } from "Types/React";
 import "./styles.scss";
 
-export const Priority = memo(function Priority({ priority, onChange }: Props) {
+export const Status = memo(function Status({ status, onChange }: Props) {
   const [isOpen, controller] = useToggle();
   const node = useMousePointerOutside<HTMLDivElement>(isOpen, controller.close);
 
   return (
-    <div ref={node} className="priority-selector">
+    <div ref={node} className="status-selector">
       <button onClick={controller.open}>
-        <PriorityIcon fill priority={priority} />{" "}
-        {DisplayController.displayPriority(priority)}
+        <StatusIcon status={status} />
+        {DisplayController.displayStatus(status)}
       </button>
       <OptionSelection<IHTMLOption, false>
         multiple={false}
         open={isOpen}
-        title="Select a Priority"
-        value={priority}
+        title="Select a Status"
+        value={status}
         onChange={onChange}
         blurInput={() => {}}
         close={controller.close}
-        options={DisplayController.priorityOptions}
+        options={DisplayController.statusOptions}
       />
     </div>
   );
 });
 
 interface Props {
-  priority: ManagementTaskPriority;
+  status: ManagementTaskStatus;
   onChange: Callback<[string]>;
 }

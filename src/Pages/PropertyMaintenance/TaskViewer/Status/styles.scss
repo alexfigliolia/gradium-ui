@@ -1,7 +1,6 @@
-.priority-selector {
+.status-selector {
   position: relative;
   &>button {
-    width: 100%;
     border: none;
     background-color: transparent;
     font-size: 0.95em;
@@ -14,10 +13,11 @@
     &:focus-visible {
       background-color: var(--background-dark);
     }
-    &>.priority-icon {
+    &>.status-icon {
       width: 2.2em;
       height: 2.2em;
       margin-right: 0.5em;
+      transition: fill 0.3s;
     }
   }
   &>.dd-selector {

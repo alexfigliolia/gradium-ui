@@ -1,0 +1,14 @@
+.status-icon {
+  &.complete {
+    fill: url(#successGradient);
+  }
+  &.inProgress {
+    fill: url(#infoGradient);
+  }
+  &.underReview {
+    fill: url(#marketingGradient);
+  }
+  &.todo {
+    fill: url(#errorGradient);
+  }
+}

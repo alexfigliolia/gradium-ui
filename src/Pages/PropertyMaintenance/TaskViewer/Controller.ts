@@ -43,7 +43,10 @@ export class Controller {
   };
 
   public setStatus = (value: string) => {
-    this.set("status", value as ManagementTaskStatus);
+    this.set(
+      "status",
+      (value as ManagementTaskStatus) || ManagementTaskStatus.Todo,
+    );
   };
 
   public onChangeText = (
