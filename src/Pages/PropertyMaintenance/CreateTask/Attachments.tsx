@@ -38,13 +38,15 @@ export const Attachments = memo(function Attachments({
   );
 
   return (
-    <UploaderGrid
-      images={images}
-      minVisible={3}
-      onUpload={onUpload}
-      onDelete={onDelete}
-      clearLoading={clearLoadingState}
-    />
+    <div className="attachments">
+      <UploaderGrid
+        images={images}
+        minVisible={3}
+        onUpload={onUpload}
+        onDelete={onDelete}
+        clearLoading={clearLoadingState}
+      />
+    </div>
   );
 });
 

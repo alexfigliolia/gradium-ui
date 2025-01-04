@@ -5,7 +5,6 @@ import { AdminRoutes } from "Router/AdminRoutes";
 import type { Propless } from "Types/React";
 import { ConfirmDelete } from "./ConfirmDelete";
 import { CreateTask } from "./CreateTask";
-import { EditTask } from "./EditTask";
 import { Filters } from "./Filters";
 import { InlineFilters } from "./InlineFilters";
 import { Maintenance } from "./Maintenance";
@@ -25,7 +24,6 @@ export default memo(
           <Maintenance />
         </Page>
         <Filters />
-        <EditTask />
         <ViewTask />
         <CreateTask />
         <ConfirmDelete />

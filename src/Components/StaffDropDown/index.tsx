@@ -1,53 +1,20 @@
-import { memo, useCallback } from "react";
-import type { ILoadingStateSetter } from "@figliolia/react-hooks";
+import { memo } from "react";
 import {
   PaginatedDropDown,
   type Props as DDProps,
 } from "Components/PaginatedDropDown";
-import { listStaffMembers } from "GraphQL/Queries/listStaffMembers.gql";
-import type {
-  ListStaffMembersQuery,
-  ListStaffMembersQueryVariables,
-} from "GraphQL/Types";
-import { UIClient } from "GraphQL/UIClient";
 import { User } from "Icons/User";
-import { Scope } from "State/Scope";
-import type { Maybe } from "Types/Generics";
 import type { IHTMLOption } from "Types/React";
+import { fetchStaff } from "./fetchStaff";
 
 function StaffDropDownComponent<M extends boolean | undefined>(
   props: Props<M>,
 ) {
-  const fetch = useCallback(
-    async (setState: ILoadingStateSetter, cursor: Maybe<number>) => {
-      const client = new UIClient({ setState });
-      try {
-        const response = await client.executeQuery<
-          ListStaffMembersQuery,
-          ListStaffMembersQueryVariables
-        >(listStaffMembers, {
-          cursor,
-          limit: 10,
-          organizationId: Scope.getState().currentOrganizationId,
-        });
-        return {
-          cursor: response.listStaffMembers.cursor,
-          list: response.listStaffMembers.list.map(item => ({
-            label: item.name,
-            value: item.id.toString(),
-          })),
-        };
-      } catch (error) {
-        // silence
-      }
-    },
-    [],
-  );
   return (
     <PaginatedDropDown
       prefetch
       icon={<User />}
-      fetch={fetch}
+      fetch={fetchStaff}
       title="Staff List"
       {...props}
     />
@@ -62,3 +29,5 @@ type Props<M extends boolean | undefined> = Omit<
   DDProps<IHTMLOption, M>,
   "fetch" | "icon"
 >;
+
+export { fetchStaff } from "./fetchStaff";

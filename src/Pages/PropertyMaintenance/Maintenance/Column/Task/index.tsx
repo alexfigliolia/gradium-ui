@@ -56,7 +56,7 @@ export const Task = memo(function Task(task: ManagementTask) {
       onDragStart={onDragStart}>
       <div className="title">
         <div>
-          <div>{title}</div>
+          <div className="titletext">{title}</div>
           <div className="subtext">{dateDisplay}</div>
           {assignedTo && (
             <div className="subtext">

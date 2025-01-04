@@ -1,69 +1,84 @@
-import { memo, useMemo } from "react";
-import { Confirmation } from "Components/Confirmation";
-import { GradientButton } from "Components/GradientButton";
+import { memo, useCallback, useRef, useState } from "react";
+import { useClassNames } from "@figliolia/classnames";
+import { useController, useDebouncer } from "@figliolia/react-hooks";
+import type { Controller } from "Components/TouchSlider";
+import { updateManagementTask } from "GraphQL/Mutations/updateManagementTask.gql";
+import type {
+  GradiumImage,
+  UpdateManagementTaskMutation,
+  UpdateManagementTaskMutationVariables,
+} from "GraphQL/Types";
+import { UIClient } from "GraphQL/UIClient";
 import {
   ManagementTasks,
   selectScopedTask,
   useTasks,
   viewing,
 } from "State/ManagementTasks";
-import { selectUserId, useScope } from "State/Scope";
-import { Dates } from "Tools/Dates";
+import { ModalStack } from "Tools/ModalStack";
 import type { Propless } from "Types/React";
-import { DisplayController } from "../DisplayController";
-import { PriorityIcon } from "../PriorityIcon";
+import type { Controller as InputController, IState } from "../TaskViewer";
+import { TaskViewer } from "../TaskViewer";
 import { Attachments } from "./Attachments";
-import "./styles.scss";
+import { ImageViewer } from "./ImageViewer";
 
 export const ViewTask = memo(
   function ViewTask(_: Propless) {
     const open = useTasks(viewing);
     const task = useTasks(selectScopedTask);
-    const userID = useScope(selectUserId);
-    const date = useMemo(
-      () => Dates.format(new Date(task.createdAt)),
-      [task.createdAt],
-    );
+    const controller = useRef<Controller>();
+    const [openViewer, setOpen] = useState(false);
+    const inputController = useRef<InputController>(null);
+
+    const updateTask = useDebouncer(async (state: IState) => {
+      if (!inputController.current) {
+        return;
+      }
+      try {
+        const client = new UIClient({ setState: () => {} });
+        const result = await client.executeQuery<
+          UpdateManagementTaskMutation,
+          UpdateManagementTaskMutationVariables
+        >(updateManagementTask, {
+          id: task.id,
+          ...inputController.current.toGQL(state),
+        });
+        ManagementTasks.updateByID(result.updateManagementTask);
+      } catch (error) {
+        // silence
+      }
+    }, 500);
+
+    const onImageClick = useCallback((_: GradiumImage, index: number) => {
+      setOpen(true);
+      controller.current?.flickity?.selectCell?.(index, false, true);
+    }, []);
+
+    const closeViewer = useCallback(() => setOpen(false), []);
+
+    const classes = useClassNames({ "viewer-open": openViewer });
+
+    const toggle = useController(ModalStack.create(onImageClick, closeViewer));
+
+    const cacheFlickity = useCallback((flickity: Controller) => {
+      controller.current = flickity;
+    }, []);
 
     return (
-      <Confirmation
+      <TaskViewer
         open={open}
-        className="task-viewer"
+        className={classes}
+        ref={inputController}
+        onUpdate={updateTask.execute}
         close={ManagementTasks.viewTask.close}>
-        <div className="title">
-          <div className="priority">
-            <PriorityIcon fill priority={task.priority} />{" "}
-            {DisplayController.displayPriority(task.priority)}
-          </div>
-          <h2>{task.title}</h2>
-          <p>
-            Created {date} by <strong>{task.createdBy.name}</strong>
-          </p>
-        </div>
-        {task.description && <p>{task.description}</p>}
-        {task.assignedTo && (
-          <div className="title">
-            <p>
-              Assigned to: <strong>{task.assignedTo.name}</strong>
-            </p>
-          </div>
-        )}
-        {!!task.images.length && (
-          <Attachments id={task.id} images={task.images} />
-        )}
-        <div className="actions">
-          {userID === task.createdBy.id && (
-            <GradientButton
-              onClick={ManagementTasks.deleteTask.open}
-              className="delete">
-              Delete Task
-            </GradientButton>
-          )}
-          <GradientButton onClick={ManagementTasks.editTask.open}>
-            Edit Task
-          </GradientButton>
-        </div>
-      </Confirmation>
+        <Attachments id={task.id} images={task.images} onClick={toggle.open} />
+        <ImageViewer
+          open={openViewer}
+          close={toggle.close}
+          images={task.images}
+          controllerRef={cacheFlickity}
+        />
+      </TaskViewer>
     );
   },
   () => true,

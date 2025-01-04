@@ -19,10 +19,9 @@ import { EnhancedSet } from "Tools/EnhancedSet";
 import type { IManagementTasks, SortedTasks } from "./types";
 
 export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
-  private debouncer = new Debouncer(() => this.fetch(), 500);
+  private readonly debouncer = new Debouncer(() => this.fetch(), 500);
   constructor() {
     super("Management Tasks", {
-      editing: false,
       loading: false,
       viewing: false,
       creating: false,
@@ -215,34 +214,47 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
     status: ManagementTaskStatus.Todo,
   };
 
-  private openTask = (task: ManagementTask) => {
+  private readonly openTask = (task: ManagementTask) => {
     this.update(state => {
-      state.scopedTask = task;
       state.viewing = true;
+      state.scopedTask = task;
     });
   };
 
-  private closeTask = () => {
+  private readonly closeTask = () => {
     this.update(state => {
       state.viewing = false;
     });
   };
 
-  private openDelete = this.toggleKey("deleting", true);
-  private closeDelete = this.toggleKey("deleting", false);
+  private readonly openCreate = () => {
+    this.update(state => {
+      state.creating = true;
+      state.scopedTask = {
+        ...ManagementTaskModel.EMPTY_TASK,
+        createdBy: {
+          id: -1,
+          name: Scope.getState().name,
+        },
+      };
+    });
+  };
 
-  private openCreate = this.toggleKey("creating", true);
-  private closeCreate = this.toggleKey("creating", false);
+  private readonly closeCreate = () => {
+    this.set("creating", false);
+    setTimeout(() => {
+      this.set("scopedTask", ManagementTaskModel.EMPTY_TASK);
+    }, 500);
+  };
 
-  private openEdit = this.toggleKey("editing", true);
-  private closeEdit = this.toggleKey("editing", false);
+  private readonly openDelete = this.toggleKey("deleting", true);
+  private readonly closeDelete = this.toggleKey("deleting", false);
 
-  private openFilters = this.toggleKey("filters", true);
-  private closeFilters = this.toggleKey("filters", false);
+  private readonly openFilters = this.toggleKey("filters", true);
+  private readonly closeFilters = this.toggleKey("filters", false);
 
   public createTask = this.createToggle(this.openCreate, this.closeCreate);
   public viewTask = this.createToggle(this.openTask, this.closeTask);
-  public editTask = this.createToggle(this.openEdit, this.closeEdit);
   public deleteTask = this.createToggle(this.openDelete, this.closeDelete);
   public filters = this.createToggle(this.openFilters, this.closeFilters);
 }

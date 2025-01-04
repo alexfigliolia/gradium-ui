@@ -1,12 +1,15 @@
 import type { ChangeEvent, Dispatch, SetStateAction } from "react";
-import type { ManagementTask, ManagementTaskPriority } from "GraphQL/Types";
-import { ManagementTaskStatus } from "GraphQL/Types";
+import type { ManagementTask, StaffMember } from "GraphQL/Types";
+import { ManagementTaskPriority, ManagementTaskStatus } from "GraphQL/Types";
 import { Properties } from "State/Properties";
 import { Scope } from "State/Scope";
+import type { Callback, Maybe } from "Types/Generics";
+import type { IHTMLOption } from "Types/React";
 import { DisplayController } from "../DisplayController";
 
 export class Controller {
-  private setState: SetState;
+  private readonly setState: SetState;
+  private readonly onUpdate?: UpdateProxy;
   public static statusList = DisplayController.statuses.map(value => ({
     value,
     label: DisplayController.displayStatus(value),
@@ -15,12 +18,17 @@ export class Controller {
     value,
     label: DisplayController.displayPriority(value),
   }));
-  constructor(setState: SetState) {
+  constructor(setState: SetState, onUpdate?: UpdateProxy) {
     this.setState = setState;
+    this.onUpdate = onUpdate;
   }
 
   public set<K extends keyof IState>(key: K, value: IState[K]) {
-    this.setState(ps => ({ ...ps, [key]: value }));
+    this.setState(ps => {
+      const ns = { ...ps, [key]: value };
+      void this.onUpdate?.(ns);
+      return ns;
+    });
   }
 
   public setAssigned = (value: string) => {
@@ -28,7 +36,10 @@ export class Controller {
   };
 
   public setPriority = (value: string) => {
-    this.set("priority", value as ManagementTaskPriority);
+    this.set(
+      "priority",
+      (value as ManagementTaskPriority) || ManagementTaskPriority.Low,
+    );
   };
 
   public setStatus = (value: string) => {
@@ -40,9 +51,9 @@ export class Controller {
   ) => {
     const { name, value } = e.target;
     if (name === "description") {
-      this.setState(ps => ({ ...ps, description: value }));
+      this.set("description", value);
     } else if (name === "title") {
-      this.setState(ps => ({ ...ps, title: value }));
+      this.set("title", value);
     }
   };
 
@@ -67,7 +78,7 @@ export class Controller {
       title: "",
       description: "",
       assigned: "",
-      priority: "" as ManagementTaskPriority,
+      priority: ManagementTaskPriority.Low,
       status: ManagementTaskStatus.Todo,
     });
   }
@@ -81,9 +92,17 @@ export class Controller {
       priority: task.priority,
     };
   }
+
+  public static toHTMLOption(item: Maybe<StaffMember>) {
+    if (item) {
+      return { value: item.id.toString(), label: item.name } as IHTMLOption;
+    }
+  }
 }
 
 type SetState = Dispatch<SetStateAction<IState>>;
+
+export type UpdateProxy = Callback<[IState], void | Promise<void>>;
 
 export interface IState {
   title: string;

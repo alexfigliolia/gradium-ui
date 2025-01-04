@@ -67,6 +67,7 @@ module.exports = {
     "import/no-cycle": "error",
     "react/jsx-uses-react": "error",
     "unused-imports/no-unused-imports": "error",
+    "@typescript-eslint/prefer-readonly": "error",
     "@typescript-eslint/unbound-method": 0,
     "@typescript-eslint/no-unsafe-argument": 0,
     "@typescript-eslint/no-unsafe-return": 0,

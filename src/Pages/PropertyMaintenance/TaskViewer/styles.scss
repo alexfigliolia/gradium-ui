@@ -6,48 +6,65 @@
       max-width: 800px;
     }
     &>.sheet-scroll-view > .sheet-content {
+      width: 100%;
       max-width: unset;
       display: flex;
       flex-direction: column;
       gap: 1em;
-      & h2,
+      position: relative;
       & p {
         text-align: left;
         margin-bottom: 0;
-      }
-      & p {
         font-size: 1em;
         color: var(--text-color);
         &>strong {
           @include Variables.gradientText;
         }
       }
-      &>.title {
-        &>.priority {
-          font-size: 0.95em;
-          margin-top: 0.5em;
-          margin-bottom: 0.5em;
-          display: flex;
-          align-items: center;
-          &>.priority-icon {
-            width: 2.2em;
-            height: 2.2em;
-            margin-right: 0.5em;
-          }
+      & input[type='text'],
+      & textarea {
+        border: none;
+        width: 100%;
+        background-color: transparent;
+        transition: background-color 0.4s;
+        &:hover,
+        &:focus-visible {
+          outline: none;
+          background-color: var(--background-dark);
         }
-        &>h2 {
-          margin-bottom: 0;
+      }
+      & textarea {
+        resize: none;
+        overflow: hidden;
+        min-height: 0;
+      }
+      &>.title {
+        &>.h2 {
+          font-size: 1.5em;
+          font-weight: 700;
+          padding: 0.125em 0.6em;
+          border-radius: 0.25em;
         }
         &>p {    
           margin: 0;
-          font-size: 0.9em;
+          font-size: 0.85em;
+          padding: 0 1.25em;
+          line-height: 1;
           color: var(--text-color-light);
         }
+      }
+      & .p {
+        font-size: 1em;
+        padding: 0.4em 1em;
+        border-radius: 0.5em;
+        margin: 0;
       }
       & .attachments {
         width: 100%;
         display: grid;
         gap: 1em;
+        padding: 0 1em;
+        margin: 1em 0;
         grid-template-columns: repeat(3, 1fr);
         @media (min-width: Variables.$iphone-pro-max) {
           grid-template-columns: repeat(4, 1fr);

@@ -4,13 +4,12 @@ import { useClassNames } from "@figliolia/classnames";
 import { useClickOutside, useController } from "@figliolia/react-hooks";
 import type { InputProps, InputRef } from "Components/Input";
 import { Input } from "Components/Input";
-import { OptionSelector } from "Components/OptionSelector";
 import { Devices } from "Tools/Devices";
 import type { Callback } from "Types/Generics";
 import type { IHTMLOption } from "Types/React";
 import { ClearButton } from "./ClearButton";
 import { Controller } from "./Controller";
-import { DesktopSelect } from "./DesktopSelect";
+import { OptionSelection } from "./OptionSelection";
 import type { DDValue } from "./types";
 import "./styles.scss";
 
@@ -38,18 +37,6 @@ function IDropDown<T extends IHTMLOption, M extends boolean | undefined>({
   const controller = useController(new Controller(setOpen));
   const table = useMemo(() => Controller.toTable(list), [list]);
   controller.registerProxies(onOpen, onClose);
-
-  const onSelect = useCallback(
-    (selected: string) => {
-      if (multiple && value instanceof Set) {
-        return onChange(
-          Controller.add(selected, value, multiple) as DDValue<M>,
-        );
-      }
-      onChange((value === selected ? "" : selected) as DDValue<M>);
-    },
-    [onChange, value, multiple],
-  );
 
   const clear = useCallback(() => {
     onChange(new Set() as DDValue<M>);
@@ -140,33 +127,21 @@ function IDropDown<T extends IHTMLOption, M extends boolean | undefined>({
       value={inputValue}>
       {children}
       {multiple && <ClearButton onClick={clear} valueLength={valueLength} />}
-      {Devices.IS_MOBILE_BROWSER ? (
-        // @ts-ignore
-        <OptionSelector<T, M>
-          clickOutside
-          open={open}
-          options={list}
-          value={value}
-          title={title}
-          loading={loading}
-          fallback={fallback}
-          multiple={multiple}
-          onChange={onChange}
-          blurInput={blurInput}
-          onScroll={onScrollHandler}
-          close={controller.Toggle.close}
-        />
-      ) : (
-        <DesktopSelect
-          open={open}
-          list={list}
-          value={value}
-          onChange={onSelect}
-          loading={loading}
-          fallback={fallback}
-          onScroll={onScrollHandler}
-        />
-      )}
+      {/* @ts-ignore */}
+      <OptionSelection<T, M>
+        clickOutside
+        open={open}
+        options={list}
+        value={value}
+        title={title}
+        loading={loading}
+        fallback={fallback}
+        multiple={multiple}
+        onChange={onChange}
+        blurInput={blurInput}
+        onScroll={onScrollHandler}
+        close={controller.Toggle.close}
+      />
     </Input>
   );
 }
@@ -194,3 +169,5 @@ export interface DropDownProps<
   onChange: Callback<[DDValue<M>]>;
   onScrollEnd?: Callback<[UIEvent<HTMLElement>]>;
 }
+
+export * from "./OptionSelection";

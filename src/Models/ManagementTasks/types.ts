@@ -10,7 +10,6 @@ export type TaskTable = Record<number, ManagementTask>;
 export type SortedTasks = Record<ManagementTaskStatus, TaskTable>;
 
 export interface IManagementTasks {
-  editing: boolean;
   filters: boolean;
   loading: boolean;
   creating: boolean;

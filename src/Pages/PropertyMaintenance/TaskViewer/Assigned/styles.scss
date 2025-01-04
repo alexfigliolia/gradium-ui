@@ -1,0 +1,23 @@
+@use "Styles/Variables";
+
+.assigned-to {
+  position: relative;
+  &>button {
+    border: none;
+    font-size: 0.85em;
+    padding: 0.5em 1.25em;
+    background-color: transparent;
+    border-radius: 0.5em;
+    transition: background-color 0.4s;
+    &:hover, 
+    &:focus-visible {
+      background-color: var(--background-dark);
+    }
+    &>strong {
+      @include Variables.gradientText;
+    }
+  }
+  &>.dd-selector {
+    max-width: 250px;
+  }
+}

@@ -1,0 +1,95 @@
+@use "Styles/Variables";
+
+.bottom-sheet.confirmation-sheet.image-viewer {
+  z-index: 10002;
+  &>.sheet {
+    max-width: 800px;
+    &>.sheet-scroll-view {
+      height: 90vh;
+      max-height: 90svh;
+      @media (min-width: Variables.$small-vertical-tablet) {
+        height: 80vh;
+        max-height: 80svh;
+      }
+      &>.sheet-content {
+        display: flex;
+        align-items: stretch;
+        flex-direction: column;
+        padding-bottom: 1em;
+        width: 100%;
+        max-width: 100%;
+        height: calc(90vh - 3em);
+        max-height: calc(90svh - 3em);
+        @media (min-width: Variables.$small-vertical-tablet) {
+          height: calc(80vh - 3em);
+          max-height: calc(80svh - 3em);
+        }
+        &>h2 {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  & .slider,
+  & .flickity-slider,
+  & .flickity-viewport {
+    display: flex;
+    align-items: stretch;
+  }
+  & .slider {
+    flex: 1;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 1em;
+    position: relative;
+    & .image-slider {
+      width: 100%;
+      height: 100%;
+      & .flickity-cell {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        & a {
+          height: 100%;
+          max-width: 100%;
+          margin: auto;
+          & img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            box-shadow: var(--shadow-level-2-mid);
+          }
+        }
+      }
+    }
+  }
+  & .controls {
+    width: 100%;
+    // margin-top: 1em;
+    @include Variables.center;
+    gap: 2em;
+    &>button {
+      border: none;
+      background-color: var(--background-dark);
+    }
+    &>.delete {
+      padding: 0.5em 1em;
+      border-radius: 0.5em;
+    }
+    &>.prev-next {
+      width: 2.5em;
+      height: 2.5em;
+      border-radius: 50%;
+      padding: 0.25em;
+      &:disabled {
+        opacity: 0.25;
+      }
+      &>svg {
+        width: 100%;
+        height: 100%;
+        fill: url(#themeGradient);
+      }
+    }
+  }
+}

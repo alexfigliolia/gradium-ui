@@ -6,6 +6,7 @@ import { ScopeModel } from "Models/Scope";
 export const Scope = new ScopeModel();
 export const useScope = createUseState(Scope);
 export const selectUserId = (scope: IScope) => scope.id;
+export const selectName = (scope: IScope) => scope.name;
 export const selectEmails = (scope: IScope) => scope.emails;
 export const selectTotalEmails = (scope: IScope) => scope.emails.length;
 export const residentPermission = (scope: IScope) => {

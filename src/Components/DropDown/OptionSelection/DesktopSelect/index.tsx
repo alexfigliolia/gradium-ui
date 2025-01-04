@@ -1,12 +1,13 @@
 import type { UIEvent } from "react";
 import { memo, useCallback } from "react";
 import { useClassNames } from "@figliolia/classnames";
+import type { DDValue } from "Components/DropDown/types";
 import { TriangleLoader } from "Components/TriangleLoader";
 import { Triangle } from "Icons/Triangle";
 import type { Callback } from "Types/Generics";
 import type { IHTMLOption } from "Types/React";
-import type { DDValue } from "../types";
 import { Option } from "./Option";
+import "./styles.scss";
 
 export function IDesktopSelect<
   T extends IHTMLOption,

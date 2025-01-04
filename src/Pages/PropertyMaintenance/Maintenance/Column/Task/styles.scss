@@ -7,7 +7,7 @@
   margin-bottom: 1em;
   border: none;
   text-align: left;
-  transition-duration: 0.4s;
+  transition: box-shadow 0.4s;
   background-color: var(--background);
   &.disabled {
     opacity: 0.5;
@@ -32,6 +32,12 @@
       &>div {
         font-size: 1em;
         font-weight: 400;
+        &.titletext {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;  
+          overflow: hidden;
+        }
         &.subtext {
           font-size: 0.8em;
           color: var(--text-color-lightest);
@@ -42,6 +48,10 @@
   &>.description {
     font-size: 0.95em;
     color: var(--text-color-light);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
   }
   &>.attachments {
     margin-top: 0.5em;
