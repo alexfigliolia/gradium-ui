@@ -4,6 +4,9 @@
   &> p {
     margin-bottom: 0;
   }
+  &>.radio-group {
+    --background: var(--tile-background);
+  }
   &>.loading-action {
     height: 45px;
     max-width: 400px;
