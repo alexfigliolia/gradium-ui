@@ -1,7 +1,10 @@
 .task-viewer.create-task.bottom-sheet.confirmation-sheet {
   &>.sheet > .sheet-scroll-view > .sheet-content {
     & .gradient-button:not(.loading) {
-      width: 90%;
+      margin-top: 1.5em;
+      &:not(.loading) {
+        width: 90%;
+      }
     }
   }
 }
