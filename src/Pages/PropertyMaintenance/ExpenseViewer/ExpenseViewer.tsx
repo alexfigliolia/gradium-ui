@@ -2,7 +2,6 @@ import type { ForwardedRef } from "react";
 import {
   forwardRef,
   memo,
-  useCallback,
   useEffect,
   useImperativeHandle,
   useMemo,
@@ -12,82 +11,75 @@ import { useClassNames } from "@figliolia/classnames";
 import { useController } from "@figliolia/react-hooks";
 import { AutoSizeTextArea } from "Components/AutoSizeTextArea";
 import { Confirmation } from "Components/Confirmation";
-import { selectScopedTask, useTasks } from "State/ManagementTasks";
+import { MoneyFilled } from "Icons/Money";
+import { selectScopedExpense, useTasks } from "State/ManagementTasks";
 import { Dates } from "Tools/Dates";
 import type { Callback } from "Types/Generics";
-import type { IHTMLOption, OptionalChildren } from "Types/React";
+import type { OptionalChildren } from "Types/React";
 import type { UpdateProxy } from "../BaseControllers";
-import { Assigned } from "./Assigned";
 import type { IState } from "./Controller";
 import { Controller } from "./Controller";
-import { Priority } from "./Priority";
-import { Status } from "./Status";
 import "./styles.scss";
 
-export const TaskViewer = memo(
-  forwardRef(function TaskViewer(
+export const ExpenseViewer = memo(
+  forwardRef(function ExpenseViewer(
     { open, close, onUpdate, className, children }: Props,
     ref: ForwardedRef<Controller>,
   ) {
-    const task = useTasks(selectScopedTask);
-    const [assigned, setAssigned] = useState(
-      Controller.toHTMLOption(task.assignedTo),
+    const expense = useTasks(selectScopedExpense);
+    const [state, setState] = useState<IState>(
+      Controller.initialState(expense),
     );
-    const [state, setState] = useState<IState>(Controller.initialState(task));
 
     const controller = useController(new Controller(setState, onUpdate));
 
     useImperativeHandle(ref, () => controller, [controller]);
 
     const date = useMemo(
-      () => Dates.format(new Date(task.createdAt)),
-      [task.createdAt],
-    );
-
-    const assignTo = useCallback(
-      (value?: IHTMLOption) => {
-        setAssigned(value);
-        controller.setAssigned(value?.value ?? "");
-      },
-      [controller],
+      () => Dates.format(new Date(expense.createdAt)),
+      [expense.createdAt],
     );
 
     useEffect(() => {
-      setState(Controller.initialState(task));
-      setAssigned(Controller.toHTMLOption(task.assignedTo));
-    }, [task]);
+      setState(Controller.initialState(expense));
+    }, [expense]);
 
-    const classes = useClassNames("task-viewer", className);
+    const classes = useClassNames("expense-viewer", className);
 
     return (
       <Confirmation open={open} className={classes} close={close}>
         <div className="title">
-          <div className="selectors">
-            <Priority
-              priority={state.priority}
-              onChange={controller.setPriority}
-            />
-            <Status status={state.status} onChange={controller.setStatus} />
-          </div>
+          <MoneyFilled />
           <AutoSizeTextArea
             name="title"
             className="h2"
             value={state.title}
-            placeholder="Task Title"
+            placeholder="Expense Title"
             onChange={controller.onChangeText}
           />
           <p>
-            Created {date} by <strong>{task.createdBy.name}</strong>
+            Created {date} by <strong>{expense.createdBy.name}</strong>
           </p>
-          <Assigned assigned={assigned} onChange={assignTo} />
         </div>
         <AutoSizeTextArea
-          className="p"
+          className="p description"
           name="description"
           value={state.description}
-          placeholder="Task Description"
+          placeholder="Expense Description"
           onChange={controller.onChangeText}
         />
+        <div className="cost-input">
+          $
+          <input
+            type="number"
+            step={0.01}
+            className="cost"
+            name="cost"
+            value={state.cost}
+            placeholder="0.00"
+            onChange={controller.onChangeText}
+          />
+        </div>
         {children}
       </Confirmation>
     );

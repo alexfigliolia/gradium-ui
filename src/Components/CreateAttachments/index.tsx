@@ -3,7 +3,7 @@ import { memo, useCallback } from "react";
 import { UploaderGrid } from "Components/UploaderGrid";
 import type { ImageState } from "Components/UploaderGrid/Image";
 
-export const Attachments = memo(function Attachments({
+export const CreateAttachments = memo(function CreateAttachments({
   images,
   setImages,
 }: Props) {

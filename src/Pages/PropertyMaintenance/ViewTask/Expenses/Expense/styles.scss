@@ -1,0 +1,65 @@
+@use "Styles/Variables";
+
+.expense {
+  padding: 1em;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: var(--background-dark);
+  border-radius: 0.5em;
+  transition: box-shadow 0.4s;
+  &:hover {
+    box-shadow: var(--shadow-level-2-mid);
+  }
+  @media (min-width: 550px) {
+    width: auto;
+  }
+  &>.title {
+    &>div {
+      &:first-of-type {
+        font-weight: 600;
+        color: var(--text-color-light);
+      }
+      &:last-of-type {
+        font-size: 0.85em;
+        color: var(--text-color-lightest);
+      }
+    }
+  }
+  &>.description {
+    margin: 0;
+    font-size: 0.9em;
+    margin: 1em 0 1.25em;
+    color: var(--text-color-lightest);
+  }
+  &>.meta {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+    &>div {
+      font-size: 0.9em;
+    }
+    &>.cost {
+      border-radius: 0.5em;
+      padding: 0.5em 1em;
+      font-weight: 700;
+      background-color: var(--background);
+      &>span {
+        @include Variables.successGradient;
+        @include Variables.clipText;
+      }
+    }
+    &>.percentage {
+      font-weight: 500;
+      padding: 0.35em 1em;
+      border-radius: 2em;
+      font-size: 0.85em;
+      color: #fff;
+      @include Variables.infoGradient;
+    }
+  }
+}

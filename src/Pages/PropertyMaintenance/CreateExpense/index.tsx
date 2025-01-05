@@ -3,17 +3,21 @@ import { useController, useLoadingState } from "@figliolia/react-hooks";
 import { ActionButton } from "Components/ActionButton";
 import { CreateAttachments } from "Components/CreateAttachments";
 import type { ImageState } from "Components/UploaderGrid/Image";
-import { creating, ManagementTasks, useTasks } from "State/ManagementTasks";
+import {
+  creatingExpense,
+  ManagementTasks,
+  useTasks,
+} from "State/ManagementTasks";
 import { Toasts } from "State/Toasts";
 import type { Propless } from "Types/React";
-import type { Controller as InputController } from "../TaskViewer";
-import { TaskViewer } from "../TaskViewer";
+import type { Controller as InputController } from "../ExpenseViewer";
+import { ExpenseViewer } from "../ExpenseViewer";
 import { Controller } from "./Controller";
 import "./styles.scss";
 
-export const CreateTask = memo(
-  function CreateTask(_: Propless) {
-    const open = useTasks(creating);
+export const CreateExpense = memo(
+  function CreateExpense(_: Propless) {
+    const open = useTasks(creatingExpense);
     const inputController = useRef<InputController>(null);
     const [images, setImages] = useState<ImageState[]>([]);
     const { loading, success, error, ...rest } = useLoadingState();
@@ -21,11 +25,14 @@ export const CreateTask = memo(
       new Controller({
         ...rest,
         inputs: inputController,
-        onSave: ([data, images]) => {
-          ManagementTasks.push({ ...data, images });
-          Toasts.success("Your task was created");
+        onSave: ([data, attachments]) => {
+          ManagementTasks.pushExpense({
+            ...data,
+            attachments,
+          });
+          Toasts.success("Your expense was created");
         },
-        close: ManagementTasks.createTask.close,
+        close: ManagementTasks.createExpense.close,
       }),
     );
 
@@ -37,12 +44,12 @@ export const CreateTask = memo(
     }, [controller, images]);
 
     return (
-      <TaskViewer
+      <ExpenseViewer
         open={open}
-        className="create-task"
         ref={inputController}
+        className="create-expense"
         onUpdate={controller.cacheData}
-        close={ManagementTasks.createTask.close}>
+        close={ManagementTasks.createExpense.close}>
         <CreateAttachments images={images} setImages={setImages} />
         <ActionButton
           onClick={onSubmit}
@@ -51,7 +58,7 @@ export const CreateTask = memo(
           loading={loading}>
           Create
         </ActionButton>
-      </TaskViewer>
+      </ExpenseViewer>
     );
   },
   () => true,

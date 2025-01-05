@@ -1,0 +1,17 @@
+@use "Styles/Variables";
+
+.expenses {
+  margin: 3em 0.9em 0 0.9em;
+  &>.title {
+    font-weight: 600;
+    margin-bottom: 1em;
+    font-size: 1.1em;
+  }
+  &>.list {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    margin-bottom: 1em;
+  }
+}

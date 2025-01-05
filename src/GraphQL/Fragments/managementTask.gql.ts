@@ -1,6 +1,8 @@
 import { gql } from "graphql-request";
+import { ExpenseFragment } from "./expense.gql";
 
 export const ManagementTaskFragment = gql`
+  ${ExpenseFragment}
   fragment ManagementTaskFragment on ManagementTask {
     id
     createdAt
@@ -21,15 +23,7 @@ export const ManagementTaskFragment = gql`
       name
     }
     expenses {
-      id
-      cost
-      createdAt
-      title
-      description
-      attachments {
-        id
-        url
-      }
+      ...ExpenseFragment
     }
   }
 `;

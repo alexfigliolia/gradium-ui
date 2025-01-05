@@ -6,10 +6,14 @@ import { ManagementTaskModel } from "Models/ManagementTasks";
 export const ManagementTasks = new ManagementTaskModel();
 export const useTasks = createUseState(ManagementTasks);
 export const creating = (state: IManagementTasks) => state.creating;
+export const creatingExpense = (state: IManagementTasks) =>
+  state.creatingExpense;
 export const deleting = (state: IManagementTasks) => state.deleting;
 export const viewing = (state: IManagementTasks) => state.viewing;
 export const isLoading = (state: IManagementTasks) => state.loading;
 export const selectScopedTask = (state: IManagementTasks) => state.scopedTask;
+export const selectScopedExpense = (state: IManagementTasks) =>
+  state.scopedExpense;
 export const tasksOfStatus =
   (status: ManagementTaskStatus) => (state: IManagementTasks) =>
     Object.values(state.tasks[status]);

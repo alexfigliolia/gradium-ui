@@ -1,4 +1,5 @@
 import type {
+  Expense,
   ManagementTask,
   ManagementTaskPriority,
   ManagementTaskStatus,
@@ -16,8 +17,12 @@ export interface IManagementTasks {
   viewing: boolean;
   deleting: boolean;
   tasks: SortedTasks;
+  creatingExpense: boolean;
+  viewingExpense: boolean;
+  deletingExpense: boolean;
   scopedTask: ManagementTask;
   priorityFilter: EnhancedSet<ManagementTaskPriority>;
   assignmentFilter: EnhancedSet<number>;
   searchFilter?: string;
+  scopedExpense: Expense;
 }

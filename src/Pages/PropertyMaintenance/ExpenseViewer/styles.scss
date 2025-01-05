@@ -1,9 +1,9 @@
 @use "Styles/Variables";
 
-.confirmation-sheet.bottom-sheet.task-viewer {
+.confirmation-sheet.bottom-sheet.expense-viewer {
   &>.sheet {
     @media (min-width: 670px) {
-      max-width: 800px;
+      max-width: 700px;
     }
     &>.sheet-scroll-view > .sheet-content {
       width: 100%;
@@ -18,7 +18,8 @@
           @include Variables.gradientText;
         }
       }
-      & textarea {
+      & textarea,
+      & .cost-input {
         border: none;
         width: 100%;
         background-color: transparent;
@@ -35,10 +36,13 @@
         min-height: 0;
       }
       &>.title {
-        &>.selectors {
-          display: flex;
-          align-items: center;
-          margin-bottom: 0.65em;
+        &>.money-filled-icon {
+          display: block;
+          width: 2.5em;
+          height: 2.5em;
+          fill: url(#infoGradient);
+          margin-left: 0.6em;
+          margin-bottom: 0.25em;
         }
         &>.h2 {
           font-size: 1.5em;
@@ -58,7 +62,32 @@
         font-size: 1em;
         padding: 0.75em 1em;
         border-radius: 0.5em;
-        margin: 1em 0 1.5em;
+        margin-top: 1em;
+      }
+      &>.cost-input {
+        margin-top: 0;
+        font-size: 1em;
+        border-radius: 0.5em;
+        padding: 0.75em 1em;
+        margin-bottom: 1.5em;
+        color: var(--text-color-light);
+        &>input {
+          margin-left: 0.25em;
+          border: none;
+          font-size: 1em;
+          outline: none;
+          border: none;
+          color: var(--text-color);
+          background-color: transparent;
+          &::-webkit-outer-spin-button,
+          &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+          &[type=number] {
+            -moz-appearance: textfield;
+          }
+        }
       }
       & .attachments {
         width: 100%;
@@ -72,9 +101,6 @@
         }
         @media (min-width: 550px) {
           grid-template-columns: repeat(5, 1fr);
-        }
-        @media (min-width: Variables.$small-desktop) {
-          grid-template-columns: repeat(6, 1fr);
         }
         &>button {
           border: none;

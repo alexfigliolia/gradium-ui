@@ -6,6 +6,7 @@ import { AdminRoutes } from "Router/AdminRoutes";
 import { ManagementTasks } from "State/ManagementTasks";
 import type { Propless } from "Types/React";
 import { ConfirmDelete } from "./ConfirmDelete";
+import { CreateExpense } from "./CreateExpense";
 import { CreateTask } from "./CreateTask";
 import { Filters } from "./Filters";
 import { InlineFilters } from "./InlineFilters";
@@ -32,6 +33,7 @@ export default memo(
         <Filters />
         <ViewTask />
         <CreateTask />
+        <CreateExpense />
         <ConfirmDelete />
       </PermissedPropertyRoute>
     );

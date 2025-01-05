@@ -20,6 +20,7 @@ import type { Propless } from "Types/React";
 import type { Controller as InputController, IState } from "../TaskViewer";
 import { TaskViewer } from "../TaskViewer";
 import { Attachments } from "./Attachments";
+import { Expenses } from "./Expenses";
 import { ImageViewer } from "./ImageViewer";
 
 export const ViewTask = memo(
@@ -72,6 +73,7 @@ export const ViewTask = memo(
         onUpdate={updateTask.execute}
         close={ManagementTasks.viewTask.close}>
         <Attachments id={task.id} images={task.images} onClick={toggle.open} />
+        <Expenses expenses={task.expenses} />
         <ImageViewer
           open={openViewer}
           close={toggle.close}

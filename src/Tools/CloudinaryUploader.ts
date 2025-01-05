@@ -13,6 +13,7 @@ import type {
 import { Properties } from "State/Properties";
 import { Scope } from "State/Scope";
 import { Toasts } from "State/Toasts";
+import type { UploadConfig } from "Types/Cloudinary";
 import type { Callback } from "Types/Generics";
 import type { CloudinaryAssetScope } from "Types/Gradium";
 import { CloudinaryDeleter } from "./CloudinaryDeleter";
@@ -32,14 +33,18 @@ export class CloudinaryUploader {
     if (!files) {
       return [];
     }
-    const destination = await CloudinaryUploader.signUpload(scope.type);
-    if (!destination) {
+    const signature = await CloudinaryUploader.signUpload(scope.type);
+    if (!signature) {
       return [];
     }
     this.setTemporaryImages(files);
     const results = await Promise.all(
       files.map(file =>
-        CloudinaryUploader.uploadFile(file, scope, destination),
+        CloudinaryUploader.uploadFile({
+          file,
+          scope,
+          signature,
+        }),
       ),
     );
     return results.filter(image => !!image);
@@ -56,7 +61,14 @@ export class CloudinaryUploader {
         return [];
       }
       return Promise.allSettled(
-        validFiles.map(file => this.uploadFile(file, scope, signature)),
+        validFiles.map(file =>
+          this.uploadFile({
+            file,
+            scope,
+            signature,
+            notify: false,
+          }),
+        ),
       );
     } catch (error) {
       Toasts.error(
@@ -66,15 +78,18 @@ export class CloudinaryUploader {
     }
   }
 
-  private static async uploadFile(
-    file: File,
-    scope: CloudinaryAssetScope,
-    destination: UploadSignature,
-  ) {
+  private static async uploadFile({
+    file,
+    scope,
+    signature,
+    notify = true,
+  }: UploadConfig) {
     try {
-      const url = await this.toCloudinary(file, destination);
+      const url = await this.toCloudinary(file, signature);
       const image = await this.saveImage(url, scope);
-      Toasts.success(`<strong>${file.name}</strong> uploaded successfully!`);
+      if (notify) {
+        Toasts.success(`<strong>${file.name}</strong> uploaded successfully!`);
+      }
       return image;
     } catch (error) {
       Toasts.error(

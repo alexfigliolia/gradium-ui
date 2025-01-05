@@ -3,6 +3,7 @@ import { setManagementTaskStatus } from "GraphQL/Mutations/setManagementTaskStat
 import { listManagementTasks } from "GraphQL/Queries/listManagementTasks.gql";
 import { graphQLRequest } from "GraphQL/request";
 import type {
+  Expense,
   ListManagementTasksQuery,
   ListManagementTasksQueryVariables,
   ManagementTask,
@@ -27,11 +28,15 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
       creating: false,
       filters: false,
       deleting: false,
+      viewingExpense: false,
+      creatingExpense: false,
+      deletingExpense: false,
       priorityFilter: new EnhancedSet(),
       assignmentFilter: new EnhancedSet(),
       searchFilter: undefined,
       tasks: ManagementTaskModel.EMPTY_TABLE(),
       scopedTask: ManagementTaskModel.EMPTY_TASK,
+      scopedExpense: ManagementTaskModel.EMPTY_EXPENSE,
     });
   }
 
@@ -89,6 +94,17 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
           [id]: task,
         },
       };
+    });
+  }
+
+  public pushExpense(expense: Expense) {
+    this.update(state => {
+      const update = {
+        ...state.scopedTask,
+        expenses: [...state.scopedTask.expenses, expense],
+      };
+      state.scopedTask = update;
+      state.tasks[update.status][update.id] = update;
     });
   }
 
@@ -214,16 +230,23 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
     status: ManagementTaskStatus.Todo,
   };
 
+  public static readonly EMPTY_EXPENSE: Expense = {
+    id: -1,
+    createdAt: new Date().toISOString(),
+    createdBy: {
+      id: -1,
+      name: "",
+    },
+    cost: "",
+    title: "",
+    description: "",
+    attachments: [],
+  };
+
   private readonly openTask = (task: ManagementTask) => {
     this.update(state => {
       state.viewing = true;
       state.scopedTask = task;
-    });
-  };
-
-  private readonly closeTask = () => {
-    this.update(state => {
-      state.viewing = false;
     });
   };
 
@@ -250,8 +273,44 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
     }, 500);
   };
 
+  private readonly openExpense = (expense: Expense) => {
+    this.update(state => {
+      state.viewingExpense = true;
+      state.scopedExpense = expense;
+    });
+  };
+
+  private readonly openCreateExpense = () => {
+    this.update(state => {
+      state.creatingExpense = true;
+      state.scopedExpense = {
+        ...ManagementTaskModel.EMPTY_EXPENSE,
+        createdBy: {
+          id: -1,
+          name: Scope.getState().name,
+        },
+      };
+    });
+  };
+
+  private readonly closeCreateExpense = () => {
+    this.set("creatingExpense", false);
+    setTimeout(() => {
+      this.set("scopedExpense", ManagementTaskModel.EMPTY_EXPENSE);
+    }, 500);
+  };
+
+  private readonly closeTask = this.toggleKey("viewing", false);
+  private readonly closeExpense = this.toggleKey("viewingExpense", false);
+
   private readonly openDelete = this.toggleKey("deleting", true);
   private readonly closeDelete = this.toggleKey("deleting", false);
+
+  private readonly openDeleteExpense = this.toggleKey("deletingExpense", true);
+  private readonly closeDeleteExpense = this.toggleKey(
+    "deletingExpense",
+    false,
+  );
 
   private readonly openFilters = this.toggleKey("filters", true);
   private readonly closeFilters = this.toggleKey("filters", false);
@@ -260,10 +319,22 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
     this.openCreate,
     this.closeCreate,
   );
+  public readonly createExpense = this.createToggle(
+    this.openCreateExpense,
+    this.closeCreateExpense,
+  );
   public readonly viewTask = this.createToggle(this.openTask, this.closeTask);
+  public readonly viewExpense = this.createToggle(
+    this.openExpense,
+    this.closeExpense,
+  );
   public readonly deleteTask = this.createToggle(
     this.openDelete,
     this.closeDelete,
+  );
+  public readonly deleteExpense = this.createToggle(
+    this.openDeleteExpense,
+    this.closeDeleteExpense,
   );
   public readonly filters = this.createToggle(
     this.openFilters,
@@ -274,6 +345,7 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
     super.closeAll();
     this.update(state => {
       state.scopedTask = ManagementTaskModel.EMPTY_TASK;
+      state.scopedExpense = ManagementTaskModel.EMPTY_EXPENSE;
     });
   }
 }

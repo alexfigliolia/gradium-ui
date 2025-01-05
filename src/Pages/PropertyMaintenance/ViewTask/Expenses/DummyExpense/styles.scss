@@ -1,0 +1,19 @@
+@use "Styles/Variables";
+
+.expense.dummy {
+  padding: 1em;
+  @include Variables.center;
+  gap: 0.5em;
+  border: none;
+  flex-direction: column;
+  border-radius: 0.5em;
+  background-color: var(--background-dark);
+  &>svg {
+    width: 3em;
+    height: 3em;
+    fill: url(#infoGradient);
+  }
+  &>span {
+    font-size: 0.9em;
+  }
+}

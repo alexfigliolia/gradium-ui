@@ -95,6 +95,7 @@ type ManagementTask {
 type Expense {
   id: Int!
   createdAt: DateTime!
+  createdBy: Person!
   cost: String!
   title: String!
   description: String!
@@ -158,6 +159,7 @@ type Mutation {
   forgotPassword(email: String!): String!
   deleteAmenity(propertyId: Int!, organizationId: Int!, id: Int!): Amenity!
   createProperty(name: String!, organizationId: Int!): AdminBasicProperty!
+  createExpense(organizationId: Int!, propertyId: Int, taskId: Int!, cost: String!, title: String!, description: String!): Expense!
   inviteStaffMember(organizationId: Int!, email: String!): Boolean!
   deleteLivingSpace(propertyId: Int!, organizationId: Int!, id: Int!): LivingSpace!
   setOrganizationName(name: String!, organizationId: Int!): Boolean!
@@ -209,6 +211,7 @@ enum GradiumImageType {
   amenityImage
   amenityFloorPlan
   taskImage
+  expenseAttachment
 }
 enum PropertyAddonType {
   packageManagement
