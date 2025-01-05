@@ -5,9 +5,11 @@
   width: 100%;
   max-width: 100%;
   display: flex;
+  text-align: left;
+  border: none;
   flex-direction: column;
   align-items: flex-start;
-  background-color: var(--background-dark);
+  background-color: var(--expense-background);
   border-radius: 0.5em;
   transition: box-shadow 0.4s;
   &:hover {

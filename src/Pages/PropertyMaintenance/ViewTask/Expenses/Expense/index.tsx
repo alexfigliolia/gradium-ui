@@ -23,7 +23,7 @@ export const Expense = memo(function Expense({
   );
 
   return (
-    <div className="expense">
+    <button className="expense">
       <div className="title">
         <div>{title}</div>
         <div>Created on {dateDisplay}</div>
@@ -35,7 +35,7 @@ export const Expense = memo(function Expense({
         </div>
         {float !== totalCost && <div className="percentage">{portion}%</div>}
       </div>
-    </div>
+    </button>
   );
 });
 

@@ -50,6 +50,7 @@
   --create-maintenance-task-text-color: #818080;
   --maintenance-tag-background: var(--background);
   --maintenance-tag-stroke: #737373;
+  --expense-background: var(--background-light);
   @media (min-width: Variables.$small-vertical-tablet) {
     --core-padding: 1.5em;
   }
@@ -106,6 +107,7 @@ html[data-theme='dark'] {
   --create-maintenance-task-text-color: #b0aeae;
   --maintenance-tag-background: #363636;
   --maintenance-tag-stroke: #b8b8b8;
+  --expense-background: var(--background-dark);
 }
 
 * {

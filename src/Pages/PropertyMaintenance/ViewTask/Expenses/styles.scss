@@ -3,9 +3,23 @@
 .expenses {
   margin: 3em 0.9em 0 0.9em;
   &>.title {
-    font-weight: 600;
     margin-bottom: 1em;
-    font-size: 1.1em;
+    &>div {
+      &:first-of-type {
+        font-weight: 600;
+        font-size: 1.1em;
+        margin-bottom: 0.25em;
+      }
+      &:last-of-type {
+        font-weight: 500;
+        font-size: 0.9em;
+        color: var(--text-color-light);
+        &>strong {
+          @include Variables.successGradient;
+          @include Variables.clipText;
+        }
+      }
+    }
   }
   &>.list {
     width: 100%;
