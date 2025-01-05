@@ -1,0 +1,21 @@
+.task-selector {
+  position: relative;
+  &>button {
+    border: none;
+    background-color: transparent;
+    font-size: 0.95em;
+    display: flex;
+    align-items: center;
+    padding: 0.35em 0.75em;
+    border-radius: 0.5em;
+    transition: background-color 0.4s;
+    &:hover,
+    &:focus-visible {
+      background-color: var(--background-dark);
+    }
+  }
+  &>.dd-selector {
+    top: calc(100% + 0.5em);
+    min-width: 200px;
+  }
+}

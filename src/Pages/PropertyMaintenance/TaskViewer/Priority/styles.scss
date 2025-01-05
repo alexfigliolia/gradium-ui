@@ -1,27 +1,5 @@
-.priority-selector {
-  position: relative;
-  &>button {
-    width: 100%;
-    border: none;
-    background-color: transparent;
-    font-size: 0.95em;
-    display: flex;
-    align-items: center;
-    padding: 0.35em 0.75em;
-    border-radius: 0.5em;
-    transition: background-color 0.4s;
-    &:hover,
-    &:focus-visible {
-      background-color: var(--background-dark);
-    }
-    &>.priority-icon {
-      width: 2.2em;
-      height: 2.2em;
-      margin-right: 0.5em;
-    }
-  }
-  &>.dd-selector {
-    top: calc(100% + 0.5em);
-    min-width: 200px;
-  }
+.priority-selector.task-selector > button > .priority-icon {
+  width: 2.2em;
+  height: 2.2em;
+  margin-right: 0.5em;
 }
