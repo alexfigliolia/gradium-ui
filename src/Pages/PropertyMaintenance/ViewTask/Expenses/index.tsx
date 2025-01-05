@@ -17,9 +17,9 @@ export const Expenses = memo(function Expenses({ expenses }: Props) {
   return (
     <div className="expenses">
       <div className="title">
-        <div>Expenses</div>
+        <div className="title-text">Expenses</div>
         {totalCost !== 0 && (
-          <div>
+          <div className="sub-text">
             Total Cost: <strong>{formattedCost}</strong>
           </div>
         )}

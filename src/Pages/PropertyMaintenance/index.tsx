@@ -11,6 +11,7 @@ import { CreateTask } from "./CreateTask";
 import { Filters } from "./Filters";
 import { InlineFilters } from "./InlineFilters";
 import { Maintenance } from "./Maintenance";
+import { ViewExpense } from "./ViewExpense";
 import { ViewTask } from "./ViewTask";
 import "./styles.scss";
 
@@ -32,6 +33,7 @@ export default memo(
         </Page>
         <Filters />
         <ViewTask />
+        <ViewExpense />
         <CreateTask />
         <CreateExpense />
         <ConfirmDelete />

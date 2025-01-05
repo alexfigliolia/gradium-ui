@@ -2,50 +2,52 @@ import { memo, useCallback, useRef, useState } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import { useController, useDebouncer } from "@figliolia/react-hooks";
 import type { Controller } from "Components/TouchSlider";
-import { updateManagementTask } from "GraphQL/Mutations/updateManagementTask.gql";
-import {
-  type GradiumImage,
-  GradiumImageType,
-  type UpdateManagementTaskMutation,
-  type UpdateManagementTaskMutationVariables,
+import { updateExpense } from "GraphQL/Mutations/updateExpense.gql";
+import type {
+  GradiumImage,
+  UpdateExpenseMutation,
+  UpdateExpenseMutationVariables,
 } from "GraphQL/Types";
+import { GradiumImageType } from "GraphQL/Types";
 import { UIClient } from "GraphQL/UIClient";
 import {
   ManagementTasks,
-  selectScopedTask,
+  selectScopedExpense,
   useTasks,
-  viewing,
+  viewingExpense,
 } from "State/ManagementTasks";
 import { ModalStack } from "Tools/ModalStack";
 import type { Propless } from "Types/React";
+import {
+  type Controller as InputController,
+  ExpenseViewer,
+  type IState,
+} from "../ExpenseViewer";
 import { ImageViewer } from "../ImageViewer";
-import type { Controller as InputController, IState } from "../TaskViewer";
-import { TaskViewer } from "../TaskViewer";
 import { ViewAttachments } from "../ViewAttachments";
-import { Expenses } from "./Expenses";
 
-export const ViewTask = memo(
-  function ViewTask(_: Propless) {
-    const open = useTasks(viewing);
-    const task = useTasks(selectScopedTask);
+export const ViewExpense = memo(
+  function ViewExpense(_: Propless) {
+    const open = useTasks(viewingExpense);
+    const expense = useTasks(selectScopedExpense);
     const controller = useRef<Controller>();
     const [openViewer, setOpen] = useState(false);
     const inputController = useRef<InputController>(null);
 
-    const updateTask = useDebouncer(async (state: IState) => {
+    const update = useDebouncer(async (state: IState) => {
       if (!inputController.current) {
         return;
       }
       try {
         const client = new UIClient({ setState: () => {} });
         const result = await client.executeQuery<
-          UpdateManagementTaskMutation,
-          UpdateManagementTaskMutationVariables
-        >(updateManagementTask, {
-          id: task.id,
+          UpdateExpenseMutation,
+          UpdateExpenseMutationVariables
+        >(updateExpense, {
+          id: expense.id,
           ...inputController.current.toGQL(state),
         });
-        ManagementTasks.updateByID(result.updateManagementTask);
+        ManagementTasks.updateExpenseByID(result.updateExpense);
       } catch (error) {
         // silence
       }
@@ -56,22 +58,24 @@ export const ViewTask = memo(
       controller.current?.flickity?.selectCell?.(index, false, true);
     }, []);
 
-    const onUploadImage = useCallback(
-      (image: GradiumImage) => {
-        ManagementTasks.partialUpdateByID(task.id, {
-          images: [...task.images, image],
-        });
-      },
-      [task.id, task.images],
-    );
-
     const onDeleteImage = useCallback(
       (image: GradiumImage) => {
-        ManagementTasks.partialUpdateByID(task.id, {
-          images: task.images.filter(img => image.id !== img.id),
+        ManagementTasks.updateExpenseByID({
+          ...expense,
+          attachments: expense.attachments.filter(img => img.id !== image.id),
         });
       },
-      [task.id, task.images],
+      [expense],
+    );
+
+    const onUploadImage = useCallback(
+      (image: GradiumImage) => {
+        ManagementTasks.updateExpenseByID({
+          ...expense,
+          attachments: [...expense.attachments, image],
+        });
+      },
+      [expense],
     );
 
     const closeViewer = useCallback(() => setOpen(false), []);
@@ -85,30 +89,29 @@ export const ViewTask = memo(
     }, []);
 
     return (
-      <TaskViewer
+      <ExpenseViewer
         open={open}
         className={classes}
         ref={inputController}
-        onUpdate={updateTask.execute}
-        close={ManagementTasks.viewTask.close}>
+        onUpdate={update.execute}
+        close={ManagementTasks.viewExpense.close}>
         <ViewAttachments
-          id={task.id}
-          images={task.images}
+          id={expense.id}
           onClick={toggle.open}
+          images={expense.attachments}
           onUpload={onUploadImage}
-          imageType={GradiumImageType.TaskImage}
+          imageType={GradiumImageType.ExpenseAttachment}
         />
-        <Expenses expenses={task.expenses} />
         <ImageViewer
-          entityId={task.id}
           open={openViewer}
           close={toggle.close}
-          images={task.images}
-          onDeleteImage={onDeleteImage}
+          entityId={expense.id}
+          images={expense.attachments}
           controllerRef={cacheFlickity}
-          imageType={GradiumImageType.TaskImage}
+          onDeleteImage={onDeleteImage}
+          imageType={GradiumImageType.ExpenseAttachment}
         />
-      </TaskViewer>
+      </ExpenseViewer>
     );
   },
   () => true,

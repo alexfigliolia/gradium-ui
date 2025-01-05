@@ -10,6 +10,7 @@ export const creatingExpense = (state: IManagementTasks) =>
   state.creatingExpense;
 export const deleting = (state: IManagementTasks) => state.deleting;
 export const viewing = (state: IManagementTasks) => state.viewing;
+export const viewingExpense = (state: IManagementTasks) => state.viewingExpense;
 export const isLoading = (state: IManagementTasks) => state.loading;
 export const selectScopedTask = (state: IManagementTasks) => state.scopedTask;
 export const selectScopedExpense = (state: IManagementTasks) =>

@@ -2,22 +2,19 @@ import { memo, useCallback } from "react";
 import { useLoadingState, useTimeout } from "@figliolia/react-hooks";
 import { ActionButton } from "Components/ActionButton";
 import { Confirmation } from "Components/Confirmation";
-import { type GradiumImage, GradiumImageType } from "GraphQL/Types";
-import {
-  ManagementTasks,
-  selectScopedTask,
-  useTasks,
-} from "State/ManagementTasks";
+import type { GradiumImage, GradiumImageType } from "GraphQL/Types";
 import { CloudinaryDeleter } from "Tools/CloudinaryDeleter";
 import type { Callback } from "Types/Generics";
 import "./styles.scss";
 
 export const ConfirmDelete = memo(function ConfirmDelete({
+  type,
   image,
   close,
+  entityId,
+  onDelete,
 }: Props) {
   const timeout = useTimeout();
-  const task = useTasks(selectScopedTask);
   const { loading, success, error, setState, resetState } = useLoadingState();
 
   const deleteAttachment = useCallback(() => {
@@ -26,14 +23,12 @@ export const ConfirmDelete = memo(function ConfirmDelete({
     }
     setState("loading", true);
     void CloudinaryDeleter.delete(image, {
-      entityId: task.id,
-      type: GradiumImageType.TaskImage,
+      type,
+      entityId,
     }).then(img => {
       if (img) {
         setState("success", true);
-        ManagementTasks.partialUpdateByID(task.id, {
-          images: task.images.filter(image => image.id !== img.id),
-        });
+        onDelete(img);
       } else {
         setState("error", true);
       }
@@ -42,7 +37,7 @@ export const ConfirmDelete = memo(function ConfirmDelete({
         close();
       }, 2000);
     });
-  }, [task, image, setState, resetState, close, timeout]);
+  }, [image, setState, resetState, close, timeout, onDelete, entityId, type]);
 
   return (
     <Confirmation
@@ -50,7 +45,7 @@ export const ConfirmDelete = memo(function ConfirmDelete({
       open={!!image}
       close={close}>
       <h2>Are you sure?</h2>
-      <p>Deleting task attachments is permanent</p>
+      <p>Deleting attachments is permanent</p>
       <ActionButton
         onClick={deleteAttachment}
         loading={loading}
@@ -65,4 +60,7 @@ export const ConfirmDelete = memo(function ConfirmDelete({
 interface Props {
   close: Callback;
   image?: GradiumImage;
+  type: GradiumImageType;
+  entityId: number;
+  onDelete: Callback<[GradiumImage]>;
 }

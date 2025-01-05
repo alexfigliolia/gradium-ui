@@ -122,6 +122,25 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
     });
   }
 
+  public updateExpenseByID(expense: Expense) {
+    this.update(state => {
+      const copy = { ...state.tasks };
+      const task = {
+        ...state.scopedTask,
+        expenses: state.scopedTask.expenses.map(exp =>
+          exp.id === expense.id ? expense : exp,
+        ),
+      };
+      for (const table in copy) {
+        delete copy[table as ManagementTaskStatus][task.id];
+      }
+      copy[task.status][task.id] = task;
+      state.tasks = copy;
+      state.scopedTask = task;
+      state.scopedExpense = expense;
+    });
+  }
+
   public deleteByID(id: number) {
     this.update(state => {
       const copy = { ...state.tasks };

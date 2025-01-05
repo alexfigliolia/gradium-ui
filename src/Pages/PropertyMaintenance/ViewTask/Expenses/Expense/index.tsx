@@ -1,16 +1,12 @@
-import { memo, useMemo } from "react";
+import { memo, useCallback, useMemo } from "react";
 import type { Expense as IExpense } from "GraphQL/Types";
+import { ManagementTasks } from "State/ManagementTasks";
 import { Dates } from "Tools/Dates";
 import { Numbers } from "Tools/Numbers";
 import "./styles.scss";
 
-export const Expense = memo(function Expense({
-  cost,
-  title,
-  totalCost,
-  createdAt,
-  description,
-}: Props) {
+export const Expense = memo(function Expense(expense: Props) {
+  const { cost, title, totalCost, createdAt, description } = expense;
   const dateDisplay = useMemo(
     () => Dates.format(new Date(createdAt)),
     [createdAt],
@@ -22,8 +18,12 @@ export const Expense = memo(function Expense({
     [float, totalCost],
   );
 
+  const onClick = useCallback(() => {
+    ManagementTasks.viewExpense.open(expense);
+  }, [expense]);
+
   return (
-    <button className="expense">
+    <button onClick={onClick} className="expense">
       <div className="title">
         <div>{title}</div>
         <div>Created on {dateDisplay}</div>

@@ -1,27 +1,16 @@
 import { memo, useCallback } from "react";
 import { AttachmentGrid } from "Components/AttachmentGrid";
 import { CloudinaryImageInterface } from "Components/CloudinaryImageInterface";
-import { type GradiumImage, GradiumImageType } from "GraphQL/Types";
-import { ManagementTasks } from "State/ManagementTasks";
+import type { GradiumImage, GradiumImageType } from "GraphQL/Types";
 import type { Callback } from "Types/Generics";
 
-export const Attachments = memo(function Attachments({
+export const ViewAttachments = memo(function ViewAttachments({
   id,
   images,
   onClick,
+  onUpload,
+  imageType,
 }: Props) {
-  const onUpload = useCallback(
-    (image: GradiumImage) => {
-      const task = ManagementTasks.getByID(id);
-      if (task) {
-        ManagementTasks.partialUpdateByID(id, {
-          images: [...task.images, image],
-        });
-      }
-    },
-    [id],
-  );
-
   const clickGenerator = useCallback(
     (...args: Parameters<OnImageClick>) => {
       return () => onClick(...args);
@@ -43,7 +32,7 @@ export const Attachments = memo(function Attachments({
                 <CloudinaryImageInterface
                   entityId={id}
                   image={image}
-                  type={GradiumImageType.TaskImage}
+                  type={imageType}
                 />
               </button>
             );
@@ -53,7 +42,7 @@ export const Attachments = memo(function Attachments({
               key={i}
               entityId={id}
               onUpload={onUpload}
-              type={GradiumImageType.TaskImage}
+              type={imageType}
             />
           );
         }}
@@ -66,6 +55,8 @@ interface Props {
   id: number;
   images: GradiumImage[];
   onClick: OnImageClick;
+  onUpload: Callback<[GradiumImage]>;
+  imageType: GradiumImageType;
 }
 
 type OnImageClick = Callback<[image: GradiumImage, index: number]>;

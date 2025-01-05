@@ -3,7 +3,7 @@ import { Component } from "react";
 import { Confirmation } from "Components/Confirmation";
 import type { Controller, ISliderChild } from "Components/TouchSlider";
 import { DEFAULT_OPTIONS, TouchSlider } from "Components/TouchSlider";
-import type { GradiumImage } from "GraphQL/Types";
+import type { GradiumImage, GradiumImageType } from "GraphQL/Types";
 import { Left } from "Icons/Left";
 import { Right } from "Icons/Right";
 import { ModalStack } from "Tools/ModalStack";
@@ -36,9 +36,13 @@ export class ImageViewer extends Component<Props, State> {
 
   public override UNSAFE_componentWillReceiveProps({
     images,
+    close,
   }: Readonly<Props>) {
     if (images !== this.props.images) {
       this.slides = this.createSlides(images);
+      if (!images.length) {
+        close();
+      }
     }
   }
 
@@ -70,7 +74,8 @@ export class ImageViewer extends Component<Props, State> {
 
   public override render() {
     const { index, deleting } = this.state;
-    const { open, images, close } = this.props;
+    const { open, images, close, entityId, imageType, onDeleteImage } =
+      this.props;
     return (
       <Confirmation open={open} close={close} className="image-viewer">
         <h2>Attachments</h2>
@@ -100,7 +105,13 @@ export class ImageViewer extends Component<Props, State> {
             <Right aria-hidden />
           </button>
         </div>
-        <ConfirmDelete image={deleting} close={this.Toggle.close} />
+        <ConfirmDelete
+          entityId={entityId}
+          type={imageType}
+          image={deleting}
+          onDelete={onDeleteImage}
+          close={this.Toggle.close}
+        />
       </Confirmation>
     );
   }
@@ -114,6 +125,9 @@ interface State {
 interface Props {
   open: boolean;
   close: Callback;
+  entityId: number;
+  imageType: GradiumImageType;
   images: GradiumImage[];
+  onDeleteImage: Callback<[GradiumImage]>;
   controllerRef?: RefCallback<Controller>;
 }

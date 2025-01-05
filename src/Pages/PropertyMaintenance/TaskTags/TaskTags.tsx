@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { Attachment } from "Icons/Attachment";
 import { MoneyStroked } from "Icons/Money";
+import { TaskTag } from "./TaskTag";
 import "./styles.scss";
 
 export const TaskTags = memo(function TaskTags({
@@ -13,16 +14,16 @@ export const TaskTags = memo(function TaskTags({
   return (
     <div className="task-tags">
       {!!totalImages && (
-        <div>
+        <TaskTag>
           <Attachment />
           {totalImages}
-        </div>
+        </TaskTag>
       )}
       {!!totalExpenses && (
-        <div>
+        <TaskTag>
           <MoneyStroked />
           {totalExpenses}
-        </div>
+        </TaskTag>
       )}
     </div>
   );
