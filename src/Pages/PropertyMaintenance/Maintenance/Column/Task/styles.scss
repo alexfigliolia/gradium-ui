@@ -51,6 +51,9 @@
         }
       }
     }
+    &>.priority-icon {
+      min-width: 1.75em;
+    }
   }
   &>.description {
     font-size: 0.95em;
@@ -61,15 +64,19 @@
     overflow: hidden;
   }
   &>.attachments {
+    width: 100%;
     &>.subtext {
       margin-bottom: 0.5em;
     }
     &>.grid {
-      display: flex;
       gap: 0.5em;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
       &>div {
-        width: 60px;
-        height: 60px;
+        aspect-ratio: 1/1;
+        width: calc(25% - 0.4em);
+        max-width: 70px;
         overflow: hidden;
         border-radius: 0.5em;
         box-shadow: var(--shadow-level-1);
