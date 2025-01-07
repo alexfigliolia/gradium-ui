@@ -108,7 +108,7 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
     });
   }
 
-  public updateByID(task: ManagementTask) {
+  public updateByID(task: ManagementTask, scopedTask = true) {
     this.update(state => {
       const copy = { ...state.tasks };
       for (const table in copy) {
@@ -116,13 +116,13 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
       }
       copy[task.status][task.id] = task;
       state.tasks = copy;
-      if (state.scopedTask.id === task.id) {
+      if (scopedTask && state.scopedTask.id === task.id) {
         state.scopedTask = task;
       }
     });
   }
 
-  public updateExpenseByID(expense: Expense) {
+  public updateExpenseByID(expense: Expense, scoped = true) {
     this.update(state => {
       const copy = { ...state.tasks };
       const task = {
@@ -137,7 +137,9 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
       copy[task.status][task.id] = task;
       state.tasks = copy;
       state.scopedTask = task;
-      state.scopedExpense = expense;
+      if (scoped) {
+        state.scopedExpense = expense;
+      }
     });
   }
 

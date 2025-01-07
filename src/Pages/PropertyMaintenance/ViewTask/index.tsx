@@ -45,7 +45,7 @@ export const ViewTask = memo(
           id: task.id,
           ...inputController.current.toGQL(state),
         });
-        ManagementTasks.updateByID(result.updateManagementTask);
+        ManagementTasks.updateByID(result.updateManagementTask, false);
       } catch (error) {
         // silence
       }

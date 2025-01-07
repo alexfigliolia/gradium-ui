@@ -47,7 +47,7 @@ export const ViewExpense = memo(
           id: expense.id,
           ...inputController.current.toGQL(state),
         });
-        ManagementTasks.updateExpenseByID(result.updateExpense);
+        ManagementTasks.updateExpenseByID(result.updateExpense, false);
       } catch (error) {
         // silence
       }
