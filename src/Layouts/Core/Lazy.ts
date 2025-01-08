@@ -1,6 +1,5 @@
-import { redirect } from "react-router-dom";
-import { BaseModel } from "Models/BaseModel";
 import { AppLoaders } from "Tools/AppLoaders";
+import { GradiumRedirect } from "Tools/GradiumRedirect";
 import { CreateLazyComponent } from "Tools/LazyLoading";
 
 export const Loader = async () => {
@@ -10,9 +9,7 @@ export const Loader = async () => {
     }
     void AppLoaders.Properties.get();
   } catch (error) {
-    AppLoaders.resetAll();
-    BaseModel.resetAll();
-    throw redirect("/register/login");
+    GradiumRedirect.dispatch("/register/login");
   }
 };
 

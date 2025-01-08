@@ -3,6 +3,7 @@ import { Properties } from "State/Properties";
 import { Scope } from "State/Scope";
 import { Toasts } from "State/Toasts";
 import { Authentication } from "./Authentication";
+import { GradiumRedirect } from "./GradiumRedirect";
 
 export class AppLoaders {
   private static readonly register = new Set<DataLoader<any>>();
@@ -26,7 +27,7 @@ export class AppLoaders {
   public static Scope = this.create(async () => {
     const authenticated = await this.Auth.get();
     if (!authenticated) {
-      throw new Error("Redirect");
+      return GradiumRedirect.dispatch("/register/login");
     }
     const scope = await Scope.initialize();
     if (scope.affiliations.length) {
@@ -38,12 +39,15 @@ export class AppLoaders {
       message:
         "Your user account is not associated with any Gradium organizations. This could mean you've been removed from your organization. If you believe this to be a mistake, please contact us or your organization's administractor",
     });
-    throw new Error("Redirect");
+    GradiumRedirect.dispatch("/register/login");
   });
 
   public static Properties = this.create(async () => {
     Properties.loading(true);
     const scope = await this.Scope.get();
+    if (!scope) {
+      return;
+    }
     try {
       const properties = await Properties.initialize(
         scope.currentOrganizationId,
