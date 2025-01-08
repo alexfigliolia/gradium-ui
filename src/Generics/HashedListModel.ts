@@ -5,10 +5,12 @@ export abstract class HashedListModel<
   T extends IListItem,
 > extends PropertyScopeModel<IHashedListState<T>> {
   protected IDs = new NegativeIncrementIDs();
+  public readonly deleteConfirmation = this.createBasicToggle("confirmDelete");
   constructor(name: string, loading = false) {
     super(name, {
       list: {},
       loading,
+      confirmDelete: false,
       deleteItemName: "",
       deleteItemId: Infinity,
     });
@@ -118,6 +120,7 @@ export interface IListItem {
 
 export interface IHashedListState<T extends Record<string, any>> {
   loading: boolean;
+  confirmDelete: boolean;
   deleteItemId: number;
   deleteItemName: string;
   list: Record<number, T & { dummy?: true }>;

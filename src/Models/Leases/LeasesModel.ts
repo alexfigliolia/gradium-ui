@@ -12,6 +12,9 @@ export class LeasesModel extends PropertyScopeModel<ILeases> {
     unknown: "Unknown",
     pending: "Pending",
   };
+  public readonly newLease = this.createBasicToggle("newLease");
+  public readonly editLease = this.createBasicToggle("editLease");
+  public readonly leaseFilters = this.createBasicToggle("leaseFilters");
   constructor() {
     super("Leases", {
       page: 1,
@@ -141,24 +144,4 @@ export class LeasesModel extends PropertyScopeModel<ILeases> {
       lessees: [],
     },
   ];
-
-  private readonly openNewLease = this.toggleKey("newLease", true);
-  private readonly closeNewLease = this.toggleKey("newLease", false);
-  private readonly openEditLease = this.toggleKey("editLease", true);
-  private readonly closeEditLease = this.toggleKey("editLease", false);
-  private readonly openLeaseFilters = this.toggleKey("leaseFilters", true);
-  private readonly closeLeaseFilters = this.toggleKey("leaseFilters", false);
-
-  public readonly newLease = this.createToggle(
-    this.openNewLease,
-    this.closeNewLease,
-  );
-  public readonly editLease = this.createToggle(
-    this.openEditLease,
-    this.closeEditLease,
-  );
-  public readonly leaseFilters = this.createToggle(
-    this.openLeaseFilters,
-    this.closeLeaseFilters,
-  );
 }

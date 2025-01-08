@@ -2,6 +2,10 @@ import { StackModel } from "Generics/StackModel";
 import type { IAccount } from "./types";
 
 export class AccountModel extends StackModel<IAccount> {
+  public readonly linkEmail = this.createBasicToggle("linkEmail");
+  public readonly emailInfo = this.createBasicToggle("emailInfo");
+  public readonly resetPassword = this.createBasicToggle("resetPassword");
+  public readonly forgotPassword = this.createBasicToggle("forgotPassword");
   constructor() {
     super("Account", {
       emailInfo: false,
@@ -13,18 +17,6 @@ export class AccountModel extends StackModel<IAccount> {
     });
   }
 
-  public readonly linkEmail = this.createToggle(
-    this.toggleKey("linkEmail", true),
-    this.toggleKey("linkEmail", false),
-  );
-  public readonly emailInfo = this.createToggle(
-    this.toggleKey("emailInfo", true),
-    this.toggleKey("emailInfo", false),
-  );
-  public readonly resetPassword = this.createToggle(
-    this.toggleKey("resetPassword", true),
-    this.toggleKey("resetPassword", false),
-  );
   public readonly deleteEmail = this.createToggle(
     (email: string) => {
       this.update(state => {
@@ -38,9 +30,5 @@ export class AccountModel extends StackModel<IAccount> {
         state.deleteEmail = false;
       });
     },
-  );
-  public readonly forgotPassword = this.createToggle(
-    this.toggleKey("forgotPassword", true),
-    this.toggleKey("forgotPassword", false),
   );
 }

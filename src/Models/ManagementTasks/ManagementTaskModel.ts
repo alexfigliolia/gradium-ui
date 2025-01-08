@@ -321,21 +321,6 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
     }, 500);
   };
 
-  private readonly closeTask = this.toggleKey("viewing", false);
-  private readonly closeExpense = this.toggleKey("viewingExpense", false);
-
-  private readonly openDelete = this.toggleKey("deleting", true);
-  private readonly closeDelete = this.toggleKey("deleting", false);
-
-  private readonly openDeleteExpense = this.toggleKey("deletingExpense", true);
-  private readonly closeDeleteExpense = this.toggleKey(
-    "deletingExpense",
-    false,
-  );
-
-  private readonly openFilters = this.toggleKey("filters", true);
-  private readonly closeFilters = this.toggleKey("filters", false);
-
   public readonly createTask = this.createToggle(
     this.openCreate,
     this.closeCreate,
@@ -344,23 +329,17 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
     this.openCreateExpense,
     this.closeCreateExpense,
   );
-  public readonly viewTask = this.createToggle(this.openTask, this.closeTask);
+  public readonly viewTask = this.createToggle(
+    this.openTask,
+    this.toggleKey("viewing", false),
+  );
   public readonly viewExpense = this.createToggle(
     this.openExpense,
-    this.closeExpense,
+    this.toggleKey("viewingExpense", false),
   );
-  public readonly deleteTask = this.createToggle(
-    this.openDelete,
-    this.closeDelete,
-  );
-  public readonly deleteExpense = this.createToggle(
-    this.openDeleteExpense,
-    this.closeDeleteExpense,
-  );
-  public readonly filters = this.createToggle(
-    this.openFilters,
-    this.closeFilters,
-  );
+  public readonly filters = this.createBasicToggle("filters");
+  public readonly deleteTask = this.createBasicToggle("deleting");
+  public readonly deleteExpense = this.createBasicToggle("deletingExpense");
 
   public override closeAll() {
     super.closeAll();

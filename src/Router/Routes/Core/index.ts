@@ -1,6 +1,5 @@
 import { LazyCoreLayout, Loader } from "Layouts/Core/Lazy";
 import { Account } from "./Account";
-import { Dashboard } from "./Dashboard";
 import { Home } from "./Home";
 import { Logout } from "./Logout";
 import { Manage } from "./Manage";
@@ -15,14 +14,5 @@ export const Core = {
     void Loader();
     return null;
   },
-  children: [
-    Home,
-    Staff,
-    Manage,
-    Logout,
-    Account,
-    Dashboard,
-    Properties,
-    Organization,
-  ],
+  children: [Home, Staff, Manage, Logout, Account, Properties, Organization],
 };

@@ -9,10 +9,11 @@ import type { Propless } from "Types/React";
 
 export const ConfirmDelete = memo(
   function ConfirmDelete(_: Propless) {
-    const [id, name] = useLivingSpaces(selectDeletion);
+    const [open, id, name] = useLivingSpaces(selectDeletion);
     return (
       <ConfirmDeleteConfigurableSpace
         id={id}
+        open={open}
         name={name}
         type="living space"
         model={LivingSpaces}

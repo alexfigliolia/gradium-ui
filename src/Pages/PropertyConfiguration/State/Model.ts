@@ -12,55 +12,12 @@ export class PropertyConfigurationModel extends StackModel<IPCM> {
     });
   }
 
-  private readonly openHOAAddonInfo = this.toggleKey("hoaAddonInfo", true);
-  private readonly closeHOAAddonInfo = this.toggleKey("hoaAddonInfo", false);
-  private readonly openEventAddonInfo = this.toggleKey("eventAddonInfo", true);
-  private readonly closeEventAddonInfo = this.toggleKey(
-    "eventAddonInfo",
-    false,
-  );
-  private readonly openLeaseAddonInfo = this.toggleKey("leaseAddonInfo", true);
-  private readonly closeLeaseAddonInfo = this.toggleKey(
-    "leaseAddonInfo",
-    false,
-  );
-  private readonly openPackageAddonInfo = this.toggleKey(
-    "packageAddonInfo",
-    true,
-  );
-  private readonly closePackageAddonInfo = this.toggleKey(
-    "packageAddonInfo",
-    false,
-  );
-  private readonly openAmenitiesAddonInfo = this.toggleKey(
-    "amenitiesAddonInfo",
-    true,
-  );
-  private readonly closeAmenitiesAddonInfo = this.toggleKey(
-    "amenitiesAddonInfo",
-    false,
-  );
-
-  public readonly hoaAddonInfo = this.createToggle(
-    this.openHOAAddonInfo,
-    this.closeHOAAddonInfo,
-  );
-  public readonly eventAddonInfo = this.createToggle(
-    this.openEventAddonInfo,
-    this.closeEventAddonInfo,
-  );
-  public readonly leaseAddonInfo = this.createToggle(
-    this.openLeaseAddonInfo,
-    this.closeLeaseAddonInfo,
-  );
-  public readonly packageAddonInfo = this.createToggle(
-    this.openPackageAddonInfo,
-    this.closePackageAddonInfo,
-  );
-  public readonly amenitiesAddonInfo = this.createToggle(
-    this.openAmenitiesAddonInfo,
-    this.closeAmenitiesAddonInfo,
-  );
+  public readonly hoaAddonInfo = this.createBasicToggle("hoaAddonInfo");
+  public readonly eventAddonInfo = this.createBasicToggle("eventAddonInfo");
+  public readonly leaseAddonInfo = this.createBasicToggle("leaseAddonInfo");
+  public readonly packageAddonInfo = this.createBasicToggle("packageAddonInfo");
+  public readonly amenitiesAddonInfo =
+    this.createBasicToggle("amenitiesAddonInfo");
 }
 
 export interface IPCM {

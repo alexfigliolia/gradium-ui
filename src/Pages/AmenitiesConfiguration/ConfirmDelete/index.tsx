@@ -5,10 +5,11 @@ import type { Propless } from "Types/React";
 
 export const ConfirmDelete = memo(
   function ConfirmDelete(_: Propless) {
-    const [id, name] = useAmenities(selectDeletion);
+    const [open, id, name] = useAmenities(selectDeletion);
     return (
       <ConfirmDeleteConfigurableSpace
         id={id}
+        open={open}
         name={name}
         type="amenity"
         model={Amenities}

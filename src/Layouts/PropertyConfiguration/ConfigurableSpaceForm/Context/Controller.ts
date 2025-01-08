@@ -3,7 +3,6 @@ import type { ILoadingStateSetter } from "@figliolia/react-hooks";
 import { Debouncer } from "@figliolia/react-hooks";
 import type { ConfigurableSpaceModel } from "Generics/ConfigurableSpaceModel";
 import type { GradiumImageType } from "GraphQL/Types";
-import { Modals } from "State/Modals";
 import { CloudinaryUploader } from "Tools/CloudinaryUploader";
 import { Dates } from "Tools/Dates";
 import type { Callback } from "Types/Generics";
@@ -93,7 +92,7 @@ export class Controller<
 
   public readonly onTrashClick = (item: T) => {
     this.model.setDeletionScope(item);
-    return Modals.deleteSpace.open();
+    return this.model.deleteConfirmation.open();
   };
 
   public createUploader(type: GradiumImageType) {
