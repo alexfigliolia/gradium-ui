@@ -76,3 +76,25 @@
     }
   }
 }
+
+.icon-theme-link.skeleton-theme-link {
+  &> div {
+    @include Variables.center;
+    &> div {
+      width: 90%;
+      height: 90%;
+      border-radius: 50%;
+      @include Variables.skeleton;
+    }
+  }
+  &>span {
+    display: block;
+    color: transparent;
+    border-radius: 0.35em;
+    @include Variables.skeleton;
+  }
+  &.isLight {
+    --skeleton-gradient: linear-gradient(90deg, #072937 25%, #093244 50%, #072937 75%);
+
+  }
+}

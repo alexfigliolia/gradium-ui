@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { SkeletonThemeLink } from "Components/IconThemeLink";
 import { PersonRoleType, PropertyAddonType } from "GraphQL/Types";
 import { Building } from "Icons/Building";
 import { BuildingsStroked } from "Icons/Buildings";
@@ -116,7 +117,7 @@ export class AdminRoutes {
     return properties.map(({ slug, name }) => {
       const link = this.slugRoute(slug);
       return (
-        <NavLink key={slug} to={link} className="is-property">
+        <NavLink key={slug} to={link} className="icon-theme-link is-property">
           <span aria-hidden />
           <span>{name}</span>
         </NavLink>
@@ -139,4 +140,8 @@ export class AdminRoutes {
       ...UserRoutes.links,
     ];
   }
+
+  public static readonly skeletonLinks = Array.from({ length: 8 }, (_, i) => (
+    <SkeletonThemeLink key={i} />
+  ));
 }

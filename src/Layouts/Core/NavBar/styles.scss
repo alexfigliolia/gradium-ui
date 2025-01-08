@@ -58,7 +58,7 @@
         }
         &> .management-links {
           font-size: 1em;
-          &>a {
+          &>.icon-theme-link {
             transition: background-color 0.3s;
             border-bottom: none;
             font-size: 0.9em;

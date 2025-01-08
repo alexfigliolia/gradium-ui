@@ -12,3 +12,4 @@ export const Theme = new DarkModeManager(
 
 export const useTheme = createUseState(Theme);
 export const isDarkMode = (state: ITheme) => state.theme === "dark";
+export const isLightMode = (state: ITheme) => !isDarkMode(state);

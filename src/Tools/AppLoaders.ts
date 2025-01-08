@@ -42,10 +42,16 @@ export class AppLoaders {
   });
 
   public static Properties = this.create(async () => {
+    Properties.loading(true);
     const scope = await this.Scope.get();
-    return Properties.initialize(
-      scope.currentOrganizationId,
-      scope.currentPermissions,
-    );
+    try {
+      const properties = await Properties.initialize(
+        scope.currentOrganizationId,
+        scope.currentPermissions,
+      );
+      return properties;
+    } finally {
+      Properties.loading(false);
+    }
   });
 }
