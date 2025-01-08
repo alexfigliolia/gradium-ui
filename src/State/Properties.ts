@@ -13,6 +13,9 @@ export const currentProperty = (state: IProperties) => {
   if (state.current in state.properties) {
     return state.properties[state.current];
   }
+  if (state.loading) {
+    return PropertiesModel.BLANK_PROPERTY;
+  }
   throw new Error("Current Property is not set");
 };
 

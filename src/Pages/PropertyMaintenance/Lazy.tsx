@@ -6,7 +6,6 @@ export const Loader = async () => {
   ManagementTasks.setLoading(true);
   await AppLoaders.Properties.get();
   await ManagementTasks.fetch();
-  return ManagementTasks.getState();
 };
 
 export const LazyPropertyMaintenece = CreateLazyComponent({

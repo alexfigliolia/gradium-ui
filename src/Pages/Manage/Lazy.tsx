@@ -10,7 +10,6 @@ export const Loader = async ({ params }: LoaderFunctionArgs) => {
   }
   await AppLoaders.Properties.get();
   Properties.setActiveProperty(slug);
-  return null;
 };
 
 export const LazyManagePage = CreateLazyComponent({

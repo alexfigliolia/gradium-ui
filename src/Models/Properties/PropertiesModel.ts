@@ -3,6 +3,7 @@ import { graphQLRequest } from "GraphQL/request";
 import type {
   AdminBasicPropertiesListQuery,
   AdminBasicPropertiesListQueryVariables,
+  AdminBasicProperty,
   GradiumImage,
   PropertyAddon,
 } from "GraphQL/Types";
@@ -144,5 +145,19 @@ export class PropertiesModel extends BaseModel<IProperties> {
         },
       };
     });
+  }
+
+  public static readonly BLANK_PROPERTY: AdminBasicProperty = {
+    id: -1,
+    slug: '',
+    addons: [],
+    address1: '',
+    address2: '',
+    city: '',
+    mapsLink: '',
+    name: '',
+    state: '',
+    zipCode: '',
+    images: [],
   }
 }
