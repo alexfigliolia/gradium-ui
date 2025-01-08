@@ -1,4 +1,5 @@
 import { memo, useCallback } from "react";
+import { useClassNames } from "@figliolia/classnames";
 import { AttachmentGrid } from "Components/AttachmentGrid";
 import { CloudinaryImageInterface } from "Components/CloudinaryImageInterface";
 import type { GradiumImage, GradiumImageType } from "GraphQL/Types";
@@ -10,6 +11,7 @@ export const ViewAttachments = memo(function ViewAttachments({
   onClick,
   onUpload,
   imageType,
+  className,
 }: Props) {
   const clickGenerator = useCallback(
     (...args: Parameters<OnImageClick>) => {
@@ -18,8 +20,10 @@ export const ViewAttachments = memo(function ViewAttachments({
     [onClick],
   );
 
+  const classes = useClassNames("attachments", className);
+
   return (
-    <div className="attachments">
+    <div className={classes}>
       <AttachmentGrid
         minVisible={1}
         images={images}
@@ -53,6 +57,7 @@ export const ViewAttachments = memo(function ViewAttachments({
 
 interface Props {
   id: number;
+  className?: string;
   images: GradiumImage[];
   onClick: OnImageClick;
   onUpload: Callback<[GradiumImage]>;

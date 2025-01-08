@@ -1,5 +1,7 @@
 import { memo, useCallback, useMemo } from "react";
-import type { Expense as IExpense } from "GraphQL/Types";
+import { type Expense as IExpense } from "GraphQL/Types";
+import { Attachment } from "Icons/Attachment";
+import { TaskTag } from "Pages/PropertyMaintenance/TaskTags";
 import { ManagementTasks } from "State/ManagementTasks";
 import { Dates } from "Tools/Dates";
 import { Numbers } from "Tools/Numbers";
@@ -35,6 +37,12 @@ export const Expense = memo(function Expense(expense: Props) {
         </div>
         {float !== totalCost && <div className="percentage">{portion}%</div>}
       </div>
+      {!!expense.attachments.length && (
+        <TaskTag>
+          <Attachment />
+          {expense.attachments.length}
+        </TaskTag>
+      )}
     </button>
   );
 });
