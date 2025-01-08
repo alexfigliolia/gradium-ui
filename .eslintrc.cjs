@@ -14,7 +14,6 @@ module.exports = {
   ],
   extends: [
     "eslint:recommended",
-    "plugin:import/recommended",
     "plugin:import/typescript",
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
@@ -44,7 +43,6 @@ module.exports = {
   ],
   plugins: [
     "simple-import-sort",
-    "import",
     "json-format",
     "prettier",
     "@typescript-eslint",
@@ -64,7 +62,6 @@ module.exports = {
     "prefer-rest-params": 0,
     "no-mixed-spaces-and-tabs": 0,
     "react/jsx-uses-vars": 2,
-    "import/no-cycle": "error",
     "react/jsx-uses-react": "error",
     "unused-imports/no-unused-imports": "error",
     "@typescript-eslint/prefer-readonly": "error",
@@ -113,6 +110,7 @@ module.exports = {
     },
     "import/resolver": {
       typescript: {
+        node: true,
         alwaysTryTypes: true,
         project: "./tsconfig.json",
       },

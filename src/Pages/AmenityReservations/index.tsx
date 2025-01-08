@@ -6,13 +6,9 @@ import { Page, PageTitle } from "Layouts/Management";
 import { AdminRoutes } from "Router/AdminRoutes";
 import { AmenitySchedule } from "State/AmenitySchedule";
 import type { Propless } from "Types/React";
-import { DateSelector } from "./DateSelector";
-import { EditReservation } from "./EditReservation";
-import { Filters } from "./Filters";
-import { NewReservation } from "./NewReservation";
+import { LazyDialogs } from "./LazyDialogs";
 import { proxyReservationModifier } from "./ProxyReservationModifier";
 import { Reservations } from "./Reservations";
-import { ReservationWarning } from "./ReservationWarning";
 import "./styles.scss";
 
 export default memo(
@@ -36,11 +32,7 @@ export default memo(
           </PageTitle>
           <Reservations />
         </Page>
-        <Filters />
-        <DateSelector />
-        <NewReservation />
-        <EditReservation />
-        <ReservationWarning />
+        <LazyDialogs />
       </PermissedPropertyRoute>
     );
   },

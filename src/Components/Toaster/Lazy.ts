@@ -3,7 +3,5 @@ import { CreateLazyComponent } from "Tools/LazyLoading";
 
 export const LazyToaster = CreateLazyComponent({
   priority: PriorityLevel.Background,
-  loader: async () => ({
-    default: (await import("./index")).Toaster,
-  }),
+  loader: () => import("./index").then(m => ({ default: m.Toaster })),
 });

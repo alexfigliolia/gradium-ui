@@ -1,25 +1,19 @@
-import type { ILazyComponentFactory } from "@figliolia/react-lazy";
-import { LazyComponentFactory, PriorityQueue } from "@figliolia/react-lazy";
-import type { ExtendableProps } from "Types/React";
+import type { LazyComponent } from "@figliolia/react-lazy";
+import {
+  LazyComponentFactory,
+  PriorityLevel,
+  PriorityQueue,
+} from "@figliolia/react-lazy";
 
 export const LoadingQueue = new PriorityQueue(10);
 
 export const CreateLazyComponent = LazyComponentFactory(LoadingQueue);
 
-export const DataSuspender = (...loaders: (() => Promise<any>)[]) => {
-  return <T extends ExtendableProps>({
+export const BackgroundLoader = <T extends Record<string, any>>(
+  loader: () => Promise<LazyComponent<T>>,
+) => {
+  return CreateLazyComponent({
     loader,
-    ...rest
-  }: ILazyComponentFactory<T>) => {
-    return CreateLazyComponent({
-      loader: async () => {
-        const [component] = await Promise.all([
-          loader(),
-          ...loaders.map(l => l()),
-        ]);
-        return component;
-      },
-      ...rest,
-    });
-  };
+    priority: PriorityLevel.Background,
+  });
 };
