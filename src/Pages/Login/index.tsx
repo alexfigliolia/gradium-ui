@@ -2,7 +2,7 @@ import { Fragment, memo } from "react";
 import { Input } from "Components/Input";
 import { At } from "Icons/At";
 import { LockStroked } from "Icons/Lock";
-import { Modals } from "State/Modals";
+import { Account } from "State/Account";
 import type { Propless } from "Types/React";
 import "./styles.scss";
 
@@ -30,7 +30,7 @@ export default memo(
         <button
           type="button"
           className="forgot-password"
-          onClick={Modals.forgotPassword.open}>
+          onClick={Account.forgotPassword.open}>
           Forgot Password
         </button>
       </Fragment>

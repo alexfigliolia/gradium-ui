@@ -7,6 +7,7 @@ import type {
 export interface IProperties {
   current: number;
   loading: boolean;
+  newProperty: false;
   currentAddons: Set<PropertyAddonType>;
   properties: Record<number, PropertyWithNullImages>;
 }

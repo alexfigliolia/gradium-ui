@@ -12,3 +12,4 @@ export const selectEmailDeletion = (state: IAccount): [boolean, string] => [
   state.emailToDelete,
 ];
 export const selectResetPassword = (state: IAccount) => state.resetPassword;
+export const forgotPassword = (state: IAccount) => state.forgotPassword;

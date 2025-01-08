@@ -1,4 +1,5 @@
-import { memo, useEffect, useRef } from "react";
+import { memo, useCallback, useEffect, useRef } from "react";
+import type { ILoadingStateSetter } from "@figliolia/react-hooks";
 import { useFormState, useTimeout, useUnmount } from "@figliolia/react-hooks";
 import { ActionButton } from "Components/ActionButton";
 import { Confirmation } from "Components/Confirmation";
@@ -11,7 +12,7 @@ import type {
 } from "GraphQL/Types";
 import { UIClient } from "GraphQL/UIClient";
 import { At } from "Icons/At";
-import { forgotPassword, Modals, useModals } from "State/Modals";
+import { Account, forgotPassword, useAccount } from "State/Account";
 import { toastsEmpty, useToasts } from "State/Toasts";
 import type { Propless } from "Types/React";
 import "./styles.scss";
@@ -20,12 +21,12 @@ export const ForgotPassword = memo(
   function ForgotPassword(_: Propless) {
     const timeout = useTimeout();
     const client = useRef<UIClient>();
-    const open = useModals(forgotPassword);
+    const open = useAccount(forgotPassword);
     const controller = useRef<InputRef<"password">>(null);
     const clickOutside = useToasts(toastsEmpty);
 
-    const { loading, success, error, onSubmit } = useFormState(
-      (data, setState) => {
+    const resetPassword = useCallback(
+      (data: FormData, setState: ILoadingStateSetter) => {
         client.current = new UIClient({
           setState,
           successMessage: ["forgotPassword"],
@@ -33,11 +34,18 @@ export const ForgotPassword = memo(
         void client.current.executeQuery<
           ForgotPasswordMutation,
           ForgotPasswordMutationVariables
-        >(forgotPasswordQuery, {
-          email: data.get("email")?.toString?.() ?? "",
-        });
+        >(
+          forgotPasswordQuery,
+          {
+            email: data.get("email")?.toString?.() ?? "",
+          },
+          Account.forgotPassword.close,
+        );
       },
+      [],
     );
+
+    const { loading, success, error, onSubmit } = useFormState(resetPassword);
 
     useEffect(() => {
       if (!open) {
@@ -60,7 +68,7 @@ export const ForgotPassword = memo(
         open={open}
         clickOutside={clickOutside}
         className="forgot-password-sheet tight"
-        close={Modals.forgotPassword.close}>
+        close={Account.forgotPassword.close}>
         <h2>Reset Password</h2>
         <p>
           You&apos;ll receive an email at the specified address with a link to

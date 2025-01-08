@@ -1,7 +1,7 @@
 import { memo, useMemo } from "react";
 import { AdminRoutes } from "Router/AdminRoutes";
-import { Modals } from "State/Modals";
 import { allProperties, isLoading, useProperties } from "State/Properties";
+import { Scope } from "State/Scope";
 import type { Propless } from "Types/React";
 import "./styles.scss";
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
@@ -17,7 +17,7 @@ export const ManagementLinks = memo(
       [loading, properties],
     );
     return (
-      <nav onClick={Modals.coreMobileMenu.close} className="management-links">
+      <nav onClick={Scope.coreMobileMenu.close} className="management-links">
         {links}
       </nav>
     );

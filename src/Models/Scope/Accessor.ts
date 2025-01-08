@@ -1,8 +1,8 @@
+import { StackModel } from "Generics/StackModel";
 import type { UserAffiliation } from "GraphQL/Types";
-import { BaseModel } from "Models/BaseModel";
 import type { IScope } from "./types";
 
-export class Accessor extends BaseModel<IScope> {
+export class Accessor extends StackModel<IScope> {
   protected setCurrentOrganization(id: number) {
     const current = this.affiliationById(id);
     if (!current) {

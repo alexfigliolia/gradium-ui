@@ -1,5 +1,6 @@
-import { memo, useEffect, useMemo, useRef } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { memo, useCallback, useEffect, useMemo, useRef } from "react";
+import { Outlet } from "react-router-dom";
+import type { ILoadingStateSetter } from "@figliolia/react-hooks";
 import { useFormState, useUnmount } from "@figliolia/react-hooks";
 import { ActionButton } from "Components/ActionButton";
 import { BrandSVGGradient } from "Components/BrandSVGGradient";
@@ -13,33 +14,35 @@ import type { Propless } from "Types/React";
 import { Anchor } from "./Anchor";
 import { BlobWithText } from "./BlobWithText";
 import { Controller } from "./Controller";
-import { ForgotPassword } from "./ForgotPassword";
+import { LazyForgotPassword } from "./ForgotPassword/Lazy";
 import { useSignUpScreen } from "./useSignUpScreen";
 import "./styles.scss";
 
 export default memo(
   function Auth(_: Propless) {
-    const navigate = useNavigate();
     const signUp = useSignUpScreen();
     const height = useScreen(selectHeight);
     const controller = useRef<Controller>();
     const fadeOut = useRef<Callback<[Callback]>>(null);
     const text = useMemo(() => Controller.buttonText(signUp), [signUp]);
-    const { onSubmit, error, success, loading, resetState } = useFormState(
-      (data, setState) => {
-        controller.current = new Controller(setState, navigate, fadeOut);
+
+    const authenticate = useCallback(
+      (data: FormData, setState: ILoadingStateSetter) => {
+        controller.current = new Controller(setState, fadeOut);
         void controller.current.onSubmit(data, signUp);
       },
+      [signUp],
     );
+
+    const { onSubmit, error, success, loading, resetState } =
+      useFormState(authenticate);
 
     useEffect(() => {
       resetState();
     }, [signUp, resetState]);
 
     useUnmount(() => {
-      if (controller.current) {
-        controller.current.abort();
-      }
+      controller.current?.abort?.();
     });
 
     const classes = useFadeTransition(fadeOut, "auth-screen");
@@ -65,7 +68,7 @@ export default memo(
           <BrandSVGGradient id="blobShape" />
         </Blob>
         <ThemeToggle />
-        <ForgotPassword />
+        <LazyForgotPassword />
       </section>
     );
   },

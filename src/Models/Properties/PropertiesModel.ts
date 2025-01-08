@@ -1,3 +1,4 @@
+import { StackModel } from "Generics/StackModel";
 import { adminBasicPropertiesList } from "GraphQL/Queries/adminBasicPropertiesList.gql";
 import { graphQLRequest } from "GraphQL/request";
 import type {
@@ -8,17 +9,17 @@ import type {
   PropertyAddon,
 } from "GraphQL/Types";
 import { PersonRoleType } from "GraphQL/Types";
-import { BaseModel } from "Models/BaseModel";
 import { forceAtIndex } from "Tools/Arrays";
 import { Permission } from "Tools/Permission";
 import type { IProperties, PropertyWithNullImages } from "./types";
 
-export class PropertiesModel extends BaseModel<IProperties> {
+export class PropertiesModel extends StackModel<IProperties> {
   constructor() {
     super("Properties", {
       current: -1,
       loading: false,
       properties: {},
+      newProperty: false,
       currentAddons: new Set(),
     });
   }
@@ -147,17 +148,22 @@ export class PropertiesModel extends BaseModel<IProperties> {
     });
   }
 
+  public readonly newProperty = this.createToggle(
+    this.toggleKey("newProperty", true),
+    this.toggleKey("newProperty", false),
+  );
+
   public static readonly BLANK_PROPERTY: AdminBasicProperty = {
     id: -1,
-    slug: '',
+    slug: "",
     addons: [],
-    address1: '',
-    address2: '',
-    city: '',
-    mapsLink: '',
-    name: '',
-    state: '',
-    zipCode: '',
+    address1: "",
+    address2: "",
+    city: "",
+    mapsLink: "",
+    name: "",
+    state: "",
+    zipCode: "",
     images: [],
-  }
+  };
 }

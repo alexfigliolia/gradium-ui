@@ -4,4 +4,5 @@ export interface IAccount {
   deleteEmail: boolean;
   emailInfo: boolean;
   linkEmail: boolean;
+  forgotPassword: boolean;
 }

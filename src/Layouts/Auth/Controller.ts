@@ -1,5 +1,4 @@
 import type { RefObject } from "react";
-import type { NavigateFunction } from "react-router-dom";
 import type { ILoadingStateSetter } from "@figliolia/react-hooks";
 import { createAccount } from "GraphQL/Mutations/createAccount.gql";
 import { login } from "GraphQL/Mutations/login.gql";
@@ -13,22 +12,20 @@ import type {
 import { UIClient } from "GraphQL/UIClient";
 import { Scope } from "State/Scope";
 import { AppLoaders } from "Tools/AppLoaders";
+import { GradiumRedirect } from "Tools/GradiumRedirect";
 import { Validators } from "Tools/Validators";
 import type { Callback } from "Types/Generics";
 
 export class Controller {
   private Client?: UIClient;
-  navigate: NavigateFunction;
   setState: ILoadingStateSetter;
   fadeOut: RefObject<Callback<[Callback]>>;
   constructor(
     setState: ILoadingStateSetter,
-    navigate: NavigateFunction,
     fadeOut: RefObject<Callback<[Callback]>>,
   ) {
     this.fadeOut = fadeOut;
     this.setState = setState;
-    this.navigate = navigate;
   }
 
   public static buttonText(signUp: boolean) {
@@ -97,9 +94,9 @@ export class Controller {
     const route = signUp ? "/app/organization" : "/app";
     return () => {
       if (this.fadeOut.current) {
-        this.fadeOut.current(() => this.navigate(route));
+        this.fadeOut.current(() => GradiumRedirect.dispatch(route));
       } else {
-        this.navigate(route);
+        GradiumRedirect.dispatch(route);
       }
     };
   }

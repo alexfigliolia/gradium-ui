@@ -10,12 +10,14 @@ import type {
 import { Accessor } from "./Accessor";
 
 export class ScopeModel extends Accessor {
+  public readonly coreMobileMenu = this.createBasicToggle("coreMobileMenu");
   constructor() {
     super("Scope", {
       id: -1,
       name: "",
       emails: [],
       affiliations: [],
+      coreMobileMenu: false,
       currentOrganizationId: -1,
       currentOrganizationName: "",
       currentPermissions: new Set<PersonRoleType>(),

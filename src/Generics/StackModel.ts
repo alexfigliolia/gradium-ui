@@ -9,7 +9,16 @@ export class StackModel<T extends Record<string, any>> extends BaseModel<T> {
     opener: Callback<T>,
     closer: Callback,
   ) {
-    const toggle = ModalStack.create(opener, closer);
+    return this.registerToggle(ModalStack.create(opener, closer));
+  }
+
+  protected createBasicToggle<K extends FilterKeys<T, boolean>>(key: K) {
+    return this.registerToggle(
+      ModalStack.create(this.toggleKey(key, true), this.toggleKey(key, false)),
+    );
+  }
+
+  private registerToggle<U extends any[]>(toggle: ModalToggle<U>) {
     this.scopedToggles.push(toggle);
     return toggle;
   }

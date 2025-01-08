@@ -32,3 +32,4 @@ export const propertyNames = (state: IProperties) => {
 };
 
 export const currentId = (state: IProperties) => state.current;
+export const newProperty = (state: IProperties) => state.newProperty;

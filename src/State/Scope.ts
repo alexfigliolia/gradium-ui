@@ -15,3 +15,6 @@ export const residentPermission = (scope: IScope) => {
 export const grants = (scope: IScope) => {
   return scope.currentPermissions;
 };
+export const coreMobileMenu = (state: IScope) => {
+  return state.coreMobileMenu;
+};

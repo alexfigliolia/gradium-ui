@@ -9,44 +9,38 @@ export class AccountModel extends StackModel<IAccount> {
       linkEmail: false,
       deleteEmail: false,
       resetPassword: false,
+      forgotPassword: false,
     });
   }
 
-  private readonly openDeleteEmail = (email: string) => {
-    this.update(state => {
-      state.emailToDelete = email;
-      state.deleteEmail = true;
-    });
-  };
-
-  private readonly closeDeleteEmail = () => {
-    this.update(state => {
-      state.emailToDelete = "";
-      state.deleteEmail = false;
-    });
-  };
-
-  private readonly openLinkEmail = this.toggleKey("linkEmail", true);
-  private readonly closeLinkEmail = this.toggleKey("linkEmail", false);
-  private readonly openEmailInfo = this.toggleKey("emailInfo", true);
-  private readonly closeEmailInfo = this.toggleKey("emailInfo", false);
-  private readonly openResetPassword = this.toggleKey("resetPassword", true);
-  private readonly closeResetPassword = this.toggleKey("resetPassword", false);
-
   public readonly linkEmail = this.createToggle(
-    this.openLinkEmail,
-    this.closeLinkEmail,
+    this.toggleKey("linkEmail", true),
+    this.toggleKey("linkEmail", false),
   );
   public readonly emailInfo = this.createToggle(
-    this.openEmailInfo,
-    this.closeEmailInfo,
+    this.toggleKey("emailInfo", true),
+    this.toggleKey("emailInfo", false),
   );
   public readonly resetPassword = this.createToggle(
-    this.openResetPassword,
-    this.closeResetPassword,
+    this.toggleKey("resetPassword", true),
+    this.toggleKey("resetPassword", false),
   );
   public readonly deleteEmail = this.createToggle(
-    this.openDeleteEmail,
-    this.closeDeleteEmail,
+    (email: string) => {
+      this.update(state => {
+        state.emailToDelete = email;
+        state.deleteEmail = true;
+      });
+    },
+    () => {
+      this.update(state => {
+        state.emailToDelete = "";
+        state.deleteEmail = false;
+      });
+    },
+  );
+  public readonly forgotPassword = this.createToggle(
+    this.toggleKey("forgotPassword", true),
+    this.toggleKey("forgotPassword", false),
   );
 }

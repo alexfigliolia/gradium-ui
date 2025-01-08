@@ -1,20 +1,23 @@
 import { memo, useCallback } from "react";
 import { MobileMenu as CoreMobileMenu } from "Components/MobileMenu";
-import { marketingMobileMenu, Modals, useModals } from "State/Modals";
+import { Marketing, mobileMenu, useMarketing } from "State/Marketing";
 import type { Propless } from "Types/React";
 import { Nav } from "../Nav";
 import "./styles.scss";
 
-export const MobileMenu = memo(function MobileMenu(_: Propless) {
-  const open = useModals(marketingMobileMenu);
+export const MobileMenu = memo(
+  function MobileMenu(_: Propless) {
+    const open = useMarketing(mobileMenu);
 
-  const onNavigate = useCallback(() => {
-    Modals.marketingMobileMenu.close();
-  }, []);
+    const onNavigate = useCallback(() => {
+      Marketing.mobileMenu.close();
+    }, []);
 
-  return (
-    <CoreMobileMenu open={open} className="marketing-menu">
-      <Nav onNavigate={onNavigate} />
-    </CoreMobileMenu>
-  );
-});
+    return (
+      <CoreMobileMenu open={open} className="marketing-menu">
+        <Nav onNavigate={onNavigate} />
+      </CoreMobileMenu>
+    );
+  },
+  () => true,
+);

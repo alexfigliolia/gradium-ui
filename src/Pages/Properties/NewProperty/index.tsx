@@ -10,8 +10,7 @@ import type {
 } from "GraphQL/Types";
 import { UIClient } from "GraphQL/UIClient";
 import { Building } from "Icons/Building";
-import { Modals, useModals } from "State/Modals";
-import { Properties } from "State/Properties";
+import { newProperty, Properties, useProperties } from "State/Properties";
 import { Scope } from "State/Scope";
 import { Validators } from "Tools/Validators";
 import type { Propless } from "Types/React";
@@ -20,7 +19,7 @@ import "./styles.scss";
 export const NewProperty = memo(
   function NewProperty(_: Propless) {
     const form = useRef<HTMLFormElement>(null);
-    const open = useModals(state => state.newProperty);
+    const open = useProperties(newProperty);
     const { onSubmit, loading, success, error } = useFormState(
       async (data, setState) => {
         try {
@@ -32,10 +31,14 @@ export const NewProperty = memo(
           const response = await client.executeQuery<
             CreatePropertyMutation,
             CreatePropertyMutationVariables
-          >(createProperty, {
-            name,
-            organizationId: Scope.getState().currentOrganizationId,
-          });
+          >(
+            createProperty,
+            {
+              name,
+              organizationId: Scope.getState().currentOrganizationId,
+            },
+            Properties.newProperty.close,
+          );
           form.current?.reset?.();
           Properties.addProperty(response.createProperty);
         } catch (error) {
@@ -47,7 +50,7 @@ export const NewProperty = memo(
       <Confirmation
         open={open}
         className="new-property tight"
-        close={Modals.newProperty.close}>
+        close={Properties.newProperty.close}>
         <h2>New Property</h2>
         <p>What would you like to name this property?</p>
         <form ref={form} onSubmit={onSubmit}>
