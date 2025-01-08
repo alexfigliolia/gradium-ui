@@ -3,10 +3,12 @@ import { useClassNames } from "@figliolia/classnames";
 import {
   useController,
   useLoadingState,
+  useMount,
   useUnmount,
 } from "@figliolia/react-hooks";
 import { Tile } from "Components/Tile";
 import type { ConfigurableSpaceModel } from "Generics/ConfigurableSpaceModel";
+import { useScrollToNode } from "Hooks/useScrollToNode";
 import type {
   IConfigurableSpace,
   IConfigurableSpaceProps,
@@ -29,11 +31,18 @@ function ConfigurableSpaceFormComponent<
   spaceDisplayName,
 }: IConfigurableSpaceForm<T, M>) {
   const { id, name } = item;
+  const [node, scrollTo] = useScrollToNode<HTMLDivElement>(32);
   const { setState, resetState: _, ...actionState } = useLoadingState();
   const controller = useController(new Controller<T, typeof model>(model, id));
   controller.register(id, setState);
 
   const inputClasses = useClassNames("input-group", className);
+
+  useMount(() => {
+    if (id < 0) {
+      scrollTo();
+    }
+  });
 
   useUnmount(() => {
     controller.destroy();
@@ -46,7 +55,7 @@ function ConfigurableSpaceFormComponent<
       controller={controller}
       {...actionState}
       error={!!actionState.error}>
-      <Tile TagName="div" className="spaces">
+      <Tile TagName="div" className="spaces" ref={node}>
         <div className="space-title">
           <h3>{name || `New ${spaceDisplayName}`}</h3>
           <CRUDActions />
