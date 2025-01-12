@@ -15,5 +15,17 @@
     &.money-stroked-icon {
       scale: 0.95;
     }
+    &.price-icon {
+      stroke: none;
+      scale: 0.8;
+      margin-left: -0.25em;
+      margin-right: -0.85em;
+      fill: url(#successGradient);
+    }
+  }
+  &:has(.price-icon) > span {
+    font-weight: 500;
+    @include Variables.successGradient;
+    @include Variables.clipText;
   }
 }

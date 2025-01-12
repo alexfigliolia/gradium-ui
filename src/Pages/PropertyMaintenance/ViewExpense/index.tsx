@@ -1,7 +1,6 @@
 import { memo, useCallback, useRef, useState } from "react";
 import { useClassNames } from "@figliolia/classnames";
-import { useController, useDebouncer } from "@figliolia/react-hooks";
-import type { Controller } from "Components/TouchSlider";
+import { useDebouncer } from "@figliolia/react-hooks";
 import { updateExpense } from "GraphQL/Mutations/updateExpense.gql";
 import type {
   GradiumImage,
@@ -16,22 +15,19 @@ import {
   useTasks,
   viewingExpense,
 } from "State/ManagementTasks";
-import { ModalStack } from "Tools/ModalStack";
 import type { Propless } from "Types/React";
+import { AttachmentList } from "../AttachmentList";
 import {
   type Controller as InputController,
   ExpenseViewer,
   type IState,
 } from "../ExpenseViewer";
-import { ImageViewer } from "../ImageViewer";
-import { ViewAttachments } from "../ViewAttachments";
 
 export const ViewExpense = memo(
   function ViewExpense(_: Propless) {
     const open = useTasks(viewingExpense);
     const expense = useTasks(selectScopedExpense);
-    const controller = useRef<Controller>();
-    const [openViewer, setOpen] = useState(false);
+    const [openViewer, setViewerOpen] = useState(false);
     const inputController = useRef<InputController>(null);
 
     const update = useDebouncer(async (state: IState) => {
@@ -53,11 +49,6 @@ export const ViewExpense = memo(
       }
     }, 500);
 
-    const onImageClick = useCallback((_: GradiumImage, index: number) => {
-      setOpen(true);
-      controller.current?.flickity?.selectCell?.(index, false, true);
-    }, []);
-
     const onDeleteImage = useCallback(
       (image: GradiumImage) => {
         ManagementTasks.updateExpenseByID({
@@ -78,15 +69,7 @@ export const ViewExpense = memo(
       [expense],
     );
 
-    const closeViewer = useCallback(() => setOpen(false), []);
-
     const classes = useClassNames({ "viewer-open": openViewer });
-
-    const toggle = useController(ModalStack.create(onImageClick, closeViewer));
-
-    const cacheFlickity = useCallback((flickity: Controller) => {
-      controller.current = flickity;
-    }, []);
 
     return (
       <ExpenseViewer
@@ -95,20 +78,12 @@ export const ViewExpense = memo(
         ref={inputController}
         onUpdate={update.execute}
         close={ManagementTasks.viewExpense.close}>
-        <ViewAttachments
-          id={expense.id}
-          onClick={toggle.open}
-          images={expense.attachments}
-          onUpload={onUploadImage}
-          imageType={GradiumImageType.ExpenseAttachment}
-        />
-        <ImageViewer
-          open={openViewer}
-          close={toggle.close}
+        <AttachmentList
           entityId={expense.id}
+          onToggle={setViewerOpen}
+          onUpload={onUploadImage}
+          onDelete={onDeleteImage}
           images={expense.attachments}
-          controllerRef={cacheFlickity}
-          onDeleteImage={onDeleteImage}
           imageType={GradiumImageType.ExpenseAttachment}
         />
       </ExpenseViewer>

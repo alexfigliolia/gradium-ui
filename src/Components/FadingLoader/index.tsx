@@ -3,15 +3,14 @@ import { forwardRef, memo, useImperativeHandle, useState } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import { TriangleLoader } from "Components/TriangleLoader";
 import type { Callback } from "Types/Generics";
-import type { Propless } from "Types/React";
 import "./styles.scss";
 
 export const FadingLoader = memo(
   forwardRef(function FadingLoader(
-    _: Propless,
+    { initialState = false }: Props,
     ref: ForwardedRef<Callback<[boolean]>>,
   ) {
-    const [hide, setFade] = useState(false);
+    const [hide, setFade] = useState(initialState);
     useImperativeHandle(ref, () => setFade);
     const classes = useClassNames("fading-loader", "reveal", { hide });
     return (
@@ -21,3 +20,7 @@ export const FadingLoader = memo(
     );
   }),
 );
+
+interface Props {
+  initialState?: boolean;
+}

@@ -1,7 +1,7 @@
 import { type ILoadingStateSetter, Timeout } from "@figliolia/react-hooks";
 import type { RefObject } from "@fullcalendar/core/preact.js";
-import type { ImageState } from "Components/UploaderGrid/Image";
 import type { GradiumImage, GradiumImageType } from "GraphQL/Types";
+import { Toasts } from "State/Toasts";
 import { CloudinaryUploader } from "Tools/CloudinaryUploader";
 import type { Callback } from "Types/Generics";
 import type { MaintenanceItemViewerController } from "./MaintenanceItemViewerController";
@@ -37,11 +37,14 @@ export abstract class CreateMaintentanceItemController<
     this.data = data;
   };
 
-  public async create(images: ImageState[]) {
+  public async create(files: File[]) {
     this.setState("loading", true);
     const { resolve, reject, promise } = Promise.withResolvers<void>();
     if (!this.inputs.current || !this.data) {
       this.errorAndTimedReset(reject);
+      if (!this.data) {
+        Toasts.error("Please fill out all required fields");
+      }
       return promise;
     }
     const savedItem = await this.saveData(this.inputs.current.toGQL(this.data));
@@ -49,7 +52,7 @@ export abstract class CreateMaintentanceItemController<
       this.errorAndTimedReset(reject);
       return promise;
     }
-    const attachments = await this.uploadAttachments(savedItem.id, images);
+    const attachments = await this.uploadAttachments(savedItem.id, files);
     this.onSave([savedItem, attachments]);
     this.setState("success", true);
     this.timeout.execute(() => {
@@ -67,13 +70,7 @@ export abstract class CreateMaintentanceItemController<
     expense: ReturnType<InputController["toGQL"]>,
   ): Promise<Data | void>;
 
-  private async uploadAttachments(id: number, uploads: ImageState[]) {
-    const files: File[] = [];
-    for (const { file } of uploads) {
-      if (file) {
-        files.push(file);
-      }
-    }
+  private async uploadAttachments(id: number, files: File[]) {
     const attachments = await CloudinaryUploader.uploadBatch(
       {
         entityId: id,
@@ -81,13 +78,13 @@ export abstract class CreateMaintentanceItemController<
       },
       ...files,
     );
-    const images: GradiumImage[] = [];
+    const uploads: GradiumImage[] = [];
     for (const attachment of attachments) {
       if (attachment.status === "fulfilled" && attachment.value) {
-        images.push(attachment.value);
+        uploads.push(attachment.value);
       }
     }
-    return images;
+    return uploads;
   }
 
   private errorAndTimedReset(cb?: Callback) {

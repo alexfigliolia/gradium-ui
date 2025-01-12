@@ -1,0 +1,131 @@
+@use "Styles/Variables";
+
+.file-uploader.image-uploader {
+  display: block;
+  width: 100px;
+  height: 100px;
+  position: relative;
+  border-radius: 0.5em;
+  background-color: var(--background-dark);
+  transition: box-shadow 0.3s;
+  &:hover {
+    box-shadow: var(--shadow-level-2-mid);
+    &>.closer-button {
+      opacity: 1;
+      scale: 1;
+    }
+  }
+  & p {
+    text-align: center;
+    font-size: 65%;
+    color: var(--text-color-light);
+  }
+  &.loading {
+    &>.upload-action {
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    &>.upload-pending {
+      opacity: 1;
+      transition: opacity 0.3s 0.2s;
+    }
+  }
+  &.error {
+    &>.upload-action {
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    &>.upload-pending {
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    &>.upload-error {
+      opacity: 1;
+      transition: opacity 0.3s 0.2s;
+    }
+  }
+  &.saved {
+    &>.upload-action,
+    &>.upload-pending,
+    &>.upload-error {
+      transition: opacity 0.3s;
+    }
+    &>.upload-action {
+      opacity: 0;
+    }
+  }
+  &>.closer-button {
+    top: -15%;
+    right: -15%;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 5;
+    background-color: var(--drop-down-background);
+    --dimensions: 40%;
+    opacity: 0;
+    scale: 0;
+    transition: all 0.3s;
+    box-shadow: var(--shadow-level-2-mid);
+    &:focus {
+      opacity: 1;
+      scale: 1;
+    }
+    &>div>svg {
+      width: 60%;
+      height: 60%;
+    }
+  }
+  &>div {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    gap: 0.25em;
+    flex-direction: column;
+    @include Variables.center;
+  }
+  &>.upload-action {
+    transition: opacity 0.3s 0.2s;
+    &>.image-placeholder-icon {
+      width: 45%;
+      height: 45%;
+      margin-top: 5%;
+      & path {
+        fill: var(--text-color-lightest);
+      }
+    }
+  }
+  &>.upload-pending {
+    opacity: 0;
+    transition: opacity 0.3s;
+    & .triangle-loader {
+      margin-top: -5%;
+    }
+  }
+  &>.upload-error {
+    opacity: 0;
+    transition: opacity 0.3s;
+    & .error-icon {
+      width: 50%;
+      height: 50%;
+      fill: url(#errorGradient);
+    }
+    & p {
+      white-space: nowrap;
+    }
+  }
+  &>.upload-pending,
+  &>.upload-error {
+    &>div {
+      width: 80%;
+      height: 80%;
+      border-radius: 0.5em;
+      background-color: rgba(#fff, 0.2);
+      backdrop-filter: blur(5px);
+      gap: 0.25em;
+      flex-direction: column;
+      @include Variables.center;
+    }
+  }
+}

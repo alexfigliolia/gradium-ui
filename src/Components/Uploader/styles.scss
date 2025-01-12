@@ -2,12 +2,9 @@
   position: relative;
   border-radius: 0.25em;
   transition: opacity 0.3s;
-  &:has(:focus-visible) {
+  &:has(input:focus-visible:not(:disabled)) {
     outline-offset: 0.3em;
     outline: 0.2em solid var(--theme-mid);
-  }
-  &:has(>input[type="file"]:disabled) {
-    opacity: 0.35;
   }
   &>input[type="file"] {
     top: 0;

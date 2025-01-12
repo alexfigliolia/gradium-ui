@@ -7,8 +7,12 @@ import { Dates } from "Tools/Dates";
 import { Numbers } from "Tools/Numbers";
 import "./styles.scss";
 
-export const Expense = memo(function Expense(expense: Props) {
-  const { cost, title, totalCost, createdAt, description } = expense;
+export const Expense = memo(function Expense({
+  totalCost,
+  totalExpenses,
+  ...expense
+}: Props) {
+  const { cost, title, createdAt, description } = expense;
   const dateDisplay = useMemo(
     () => Dates.format(new Date(createdAt)),
     [createdAt],
@@ -35,12 +39,12 @@ export const Expense = memo(function Expense(expense: Props) {
         <div className="cost">
           <span>{formattedCost}</span>
         </div>
-        {float !== totalCost && <div className="percentage">{portion}%</div>}
+        {!!totalExpenses && <div className="percentage">{portion}%</div>}
       </div>
       {!!expense.attachments.length && (
         <TaskTag>
           <Attachment />
-          {expense.attachments.length}
+          <span>{expense.attachments.length}</span>
         </TaskTag>
       )}
     </button>
@@ -49,4 +53,5 @@ export const Expense = memo(function Expense(expense: Props) {
 
 interface Props extends IExpense {
   totalCost: number;
+  totalExpenses?: number;
 }

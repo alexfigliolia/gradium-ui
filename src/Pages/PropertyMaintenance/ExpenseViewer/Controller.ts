@@ -24,9 +24,9 @@ export class Controller extends MaintenanceItemViewerController<
 
   public toGQL({ cost, title, description }: IState) {
     return {
-      cost,
       title,
       description,
+      cost: cost || "0.00",
       propertyId: Properties.getState().current,
       organizationId: Scope.getState().currentOrganizationId,
     };

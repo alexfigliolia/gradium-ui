@@ -39,7 +39,7 @@ export const ImageUploader = memo(
     useImperativeHandle(ref, () => publicInterface, [publicInterface]);
 
     const disableUpload = useMemo(
-      () => !!disabled || loading,
+      () => !!disabled || !!loading,
       [disabled, loading],
     );
     const pClasses = useClassNames({ hidden: disableUpload });
@@ -68,7 +68,7 @@ export const ImageUploader = memo(
 );
 
 interface Props {
-  loading: boolean;
+  loading?: boolean;
   disabled?: boolean;
   image?: GradiumImage;
   onChange: ChangeEventHandler<HTMLInputElement>;

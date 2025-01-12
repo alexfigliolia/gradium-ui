@@ -1,0 +1,39 @@
+@use "Styles/Variables";
+
+.upload-grid.attachment-list {
+  width: 100%;
+  display: grid;
+  padding: 0 1em;
+  margin-bottom: 1em;
+  grid-template-columns: repeat(3, 1fr);
+  @media (min-width: Variables.$iphone-pro-max) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media (min-width: 550px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  @media (min-width: Variables.$small-desktop) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  &>label,
+  &>button {
+    width: 100%;
+    border: none;
+    padding: 0;
+    height: auto;
+    aspect-ratio: 1/1;
+    border-radius: 0.5em;
+    & p {
+      font-size: 0.8em;
+    }
+  }
+  &>button {
+    background-color: transparent;
+    &>label {
+      height: 100%;
+      width: 100%;
+      aspect-ratio: 1/1;
+      pointer-events: none;
+    }
+  }
+}

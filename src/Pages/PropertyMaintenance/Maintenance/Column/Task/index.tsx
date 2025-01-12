@@ -79,7 +79,7 @@ export const Task = memo(function Task(task: ManagementTask) {
           </div>
         </div>
       )}
-      <TaskTags totalImages={images.length} totalExpenses={expenses.length} />
+      <TaskTags totalImages={images.length} expenses={expenses} />
     </button>
   );
 });

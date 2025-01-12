@@ -950,6 +950,11 @@
   dependencies:
     "@figliolia/data-structures" "^1.1.0"
 
+"@figliolia/promises@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@figliolia/promises/-/promises-1.0.1.tgz#b1ee413a3e757623843696b88ca5cc67bc93e29d"
+  integrity sha512-iQsXHaw/XabP2tEakuwMv6wcpMSKob7smjV2/xI+vh/jJ4/8glZwz3tMLzpyMUCFNdqnssLZVGWe02tyCO4CWg==
+
 "@figliolia/react-galena@^3.2.1":
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/@figliolia/react-galena/-/react-galena-3.2.4.tgz#b9e23c452d842138a1072cf1cf330b598cf6b06c"

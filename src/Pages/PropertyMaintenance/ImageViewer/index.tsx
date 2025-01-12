@@ -1,4 +1,4 @@
-import type { RefCallback } from "react";
+import type { MutableRefObject } from "react";
 import { Component } from "react";
 import { Confirmation } from "Components/Confirmation";
 import type { Controller, ISliderChild } from "Components/TouchSlider";
@@ -13,8 +13,8 @@ import { ImageLink } from "./ImageLink";
 import "./styles.scss";
 
 export class ImageViewer extends Component<Props, State> {
-  private controller?: Maybe<Controller>;
   private slides = this.createSlides();
+  private controller?: Maybe<Controller>;
   public state: State = { index: 0, deleting: undefined };
   private readonly Toggle = ModalStack.create(
     () => {
@@ -68,7 +68,9 @@ export class ImageViewer extends Component<Props, State> {
   private readonly cacheController = (controller: Controller | null) => {
     if (controller) {
       this.controller = controller;
-      this.props?.controllerRef?.(controller);
+      if (this.props.controllerRef) {
+        this.props.controllerRef.current = controller;
+      }
     }
   };
 
@@ -129,5 +131,5 @@ interface Props {
   imageType: GradiumImageType;
   images: GradiumImage[];
   onDeleteImage: Callback<[GradiumImage]>;
-  controllerRef?: RefCallback<Controller>;
+  controllerRef?: MutableRefObject<Controller | undefined>;
 }

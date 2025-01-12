@@ -1,8 +1,7 @@
-import { memo, useCallback, useRef, useState } from "react";
+import { memo, useCallback, useRef } from "react";
 import { useController, useLoadingState } from "@figliolia/react-hooks";
 import { ActionButton } from "Components/ActionButton";
-import { CreateAttachments } from "Components/CreateAttachments";
-import type { ImageState } from "Components/UploaderGrid/Image";
+import type { IAnonymousUploader } from "Components/UploaderGrid";
 import {
   creatingExpense,
   ManagementTasks,
@@ -10,6 +9,7 @@ import {
 } from "State/ManagementTasks";
 import { Toasts } from "State/Toasts";
 import type { Propless } from "Types/React";
+import { AttachFiles } from "../AttachmentList";
 import type { Controller as InputController } from "../ExpenseViewer";
 import { ExpenseViewer } from "../ExpenseViewer";
 import { Controller } from "./Controller";
@@ -18,8 +18,8 @@ import "./styles.scss";
 export const CreateExpense = memo(
   function CreateExpense(_: Propless) {
     const open = useTasks(creatingExpense);
+    const uploader = useRef<IAnonymousUploader>(null);
     const inputController = useRef<InputController>(null);
-    const [images, setImages] = useState<ImageState[]>([]);
     const { loading, success, error, ...rest } = useLoadingState();
     const controller = useController(
       new Controller({
@@ -38,10 +38,10 @@ export const CreateExpense = memo(
 
     const onSubmit = useCallback(() => {
       void controller
-        .create(images)
-        .then(() => setImages([]))
+        .create(uploader.current?.getImages?.() ?? [])
+        .then(() => uploader.current?.clear?.())
         .catch(() => {});
-    }, [controller, images]);
+    }, [controller]);
 
     return (
       <ExpenseViewer
@@ -50,7 +50,7 @@ export const CreateExpense = memo(
         className="create-expense"
         onUpdate={controller.cacheData}
         close={ManagementTasks.createExpense.close}>
-        <CreateAttachments images={images} setImages={setImages} />
+        <AttachFiles ref={uploader} className="expense-attachments" />
         <ActionButton
           onClick={onSubmit}
           error={!!error}

@@ -26,7 +26,12 @@ export const Expenses = memo(function Expenses({ expenses }: Props) {
       </div>
       <div className="list">
         {expenses.map(expense => (
-          <Expense key={expense.id} totalCost={totalCost} {...expense} />
+          <Expense
+            key={expense.id}
+            totalCost={totalCost}
+            totalExpenses={expenses.length}
+            {...expense}
+          />
         ))}
         <DummyExpense />
       </div>

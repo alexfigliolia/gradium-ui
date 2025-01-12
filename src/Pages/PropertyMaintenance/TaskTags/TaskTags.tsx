@@ -1,14 +1,30 @@
-import { memo } from "react";
+import { memo, useMemo } from "react";
+import type { Expense } from "GraphQL/Types";
 import { Attachment } from "Icons/Attachment";
 import { MoneyStroked } from "Icons/Money";
+import { Price } from "Icons/Price";
+import { Numbers } from "Tools/Numbers";
 import { TaskTag } from "./TaskTag";
 import "./styles.scss";
 
 export const TaskTags = memo(function TaskTags({
-  totalExpenses,
+  expenses,
   totalImages,
 }: Props) {
-  if (!totalExpenses && !totalImages) {
+  const totalCost = useMemo(
+    () =>
+      expenses.reduce((acc, next) => {
+        acc += parseFloat(next.cost ?? "0");
+        return acc;
+      }, 0),
+    [expenses],
+  );
+  const costDisplay = useMemo(
+    () => Numbers.formatCurrency(totalCost).slice(1),
+    [totalCost],
+  );
+
+  if (!expenses.length && !totalImages) {
     return null;
   }
   return (
@@ -16,13 +32,19 @@ export const TaskTags = memo(function TaskTags({
       {!!totalImages && (
         <TaskTag>
           <Attachment />
-          {totalImages}
+          <span>{totalImages}</span>
         </TaskTag>
       )}
-      {!!totalExpenses && (
+      {!!expenses.length && (
         <TaskTag>
           <MoneyStroked />
-          {totalExpenses}
+          <span>{expenses.length}</span>
+        </TaskTag>
+      )}
+      {totalCost > 0 && (
+        <TaskTag>
+          <Price />
+          <span>{costDisplay}</span>
         </TaskTag>
       )}
     </div>
@@ -31,5 +53,5 @@ export const TaskTags = memo(function TaskTags({
 
 interface Props {
   totalImages: number;
-  totalExpenses: number;
+  expenses: Expense[];
 }

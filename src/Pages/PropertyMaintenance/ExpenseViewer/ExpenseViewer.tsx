@@ -10,13 +10,13 @@ import {
 import { useClassNames } from "@figliolia/classnames";
 import { useController } from "@figliolia/react-hooks";
 import { AutoSizeTextArea } from "Components/AutoSizeTextArea";
-import { Confirmation } from "Components/Confirmation";
 import { MoneyFilled } from "Icons/Money";
 import { selectScopedExpense, useTasks } from "State/ManagementTasks";
 import { Dates } from "Tools/Dates";
 import type { Callback } from "Types/Generics";
 import type { OptionalChildren } from "Types/React";
 import type { UpdateProxy } from "../BaseControllers";
+import { DataViewer } from "../DataViewer";
 import type { IState } from "./Controller";
 import { Controller } from "./Controller";
 import "./styles.scss";
@@ -47,7 +47,7 @@ export const ExpenseViewer = memo(
     const classes = useClassNames("expense-viewer", className);
 
     return (
-      <Confirmation open={open} className={classes} close={close}>
+      <DataViewer open={open} className={classes} close={close}>
         <div className="title">
           <MoneyFilled />
           <AutoSizeTextArea
@@ -81,7 +81,7 @@ export const ExpenseViewer = memo(
           />
         </div>
         {children}
-      </Confirmation>
+      </DataViewer>
     );
   }),
 );

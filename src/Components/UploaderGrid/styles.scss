@@ -1,0 +1,10 @@
+.upload-grid {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  &>* {
+    min-width: 80px;
+    min-height: 80px;
+  }
+}

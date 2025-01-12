@@ -46,16 +46,16 @@
     }
   }
   & .sheet-content {
-    & h2,
-    & p {
+    &>h2,
+    &>p {
       width: 100%;
       text-align: center;
     }
-    & h2 {
+    &>h2 {
       margin-top: 0.25em;
       margin-bottom: 0.5em;
     }
-    & p {
+    &>p {
       margin-bottom: 2em;
       color: var(--text-color-light);
     }

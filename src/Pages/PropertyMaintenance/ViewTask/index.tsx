@@ -1,7 +1,6 @@
 import { memo, useCallback, useRef, useState } from "react";
 import { useClassNames } from "@figliolia/classnames";
-import { useController, useDebouncer } from "@figliolia/react-hooks";
-import type { Controller } from "Components/TouchSlider";
+import { useDebouncer } from "@figliolia/react-hooks";
 import { updateManagementTask } from "GraphQL/Mutations/updateManagementTask.gql";
 import {
   type GradiumImage,
@@ -16,20 +15,17 @@ import {
   useTasks,
   viewing,
 } from "State/ManagementTasks";
-import { ModalStack } from "Tools/ModalStack";
 import type { Propless } from "Types/React";
-import { ImageViewer } from "../ImageViewer";
+import { AttachmentList } from "../AttachmentList";
 import type { Controller as InputController, IState } from "../TaskViewer";
 import { TaskViewer } from "../TaskViewer";
-import { ViewAttachments } from "../ViewAttachments";
 import { Expenses } from "./Expenses";
 
 export const ViewTask = memo(
   function ViewTask(_: Propless) {
     const open = useTasks(viewing);
     const task = useTasks(selectScopedTask);
-    const controller = useRef<Controller>();
-    const [openViewer, setOpen] = useState(false);
+    const [viewerOpen, setViewerOpen] = useState(false);
     const inputController = useRef<InputController>(null);
 
     const updateTask = useDebouncer(async (state: IState) => {
@@ -51,11 +47,6 @@ export const ViewTask = memo(
       }
     }, 500);
 
-    const onImageClick = useCallback((_: GradiumImage, index: number) => {
-      setOpen(true);
-      controller.current?.flickity?.selectCell?.(index, false, true);
-    }, []);
-
     const onUploadImage = useCallback(
       (image: GradiumImage) => {
         ManagementTasks.partialUpdateByID(task.id, {
@@ -74,15 +65,7 @@ export const ViewTask = memo(
       [task.id, task.images],
     );
 
-    const closeViewer = useCallback(() => setOpen(false), []);
-
-    const classes = useClassNames({ "viewer-open": openViewer });
-
-    const toggle = useController(ModalStack.create(onImageClick, closeViewer));
-
-    const cacheFlickity = useCallback((flickity: Controller) => {
-      controller.current = flickity;
-    }, []);
+    const classes = useClassNames({ "viewer-open": viewerOpen });
 
     return (
       <TaskViewer
@@ -91,23 +74,15 @@ export const ViewTask = memo(
         ref={inputController}
         onUpdate={updateTask.execute}
         close={ManagementTasks.viewTask.close}>
-        <ViewAttachments
-          id={task.id}
+        <AttachmentList
+          entityId={task.id}
           images={task.images}
-          onClick={toggle.open}
+          onToggle={setViewerOpen}
           onUpload={onUploadImage}
+          onDelete={onDeleteImage}
           imageType={GradiumImageType.TaskImage}
         />
         <Expenses expenses={task.expenses} />
-        <ImageViewer
-          entityId={task.id}
-          open={openViewer}
-          close={toggle.close}
-          images={task.images}
-          onDeleteImage={onDeleteImage}
-          controllerRef={cacheFlickity}
-          imageType={GradiumImageType.TaskImage}
-        />
       </TaskViewer>
     );
   },

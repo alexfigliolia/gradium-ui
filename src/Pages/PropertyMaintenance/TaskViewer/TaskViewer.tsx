@@ -11,12 +11,12 @@ import {
 import { useClassNames } from "@figliolia/classnames";
 import { useController } from "@figliolia/react-hooks";
 import { AutoSizeTextArea } from "Components/AutoSizeTextArea";
-import { Confirmation } from "Components/Confirmation";
 import { selectScopedTask, useTasks } from "State/ManagementTasks";
 import { Dates } from "Tools/Dates";
 import type { Callback } from "Types/Generics";
 import type { IHTMLOption, OptionalChildren } from "Types/React";
 import type { UpdateProxy } from "../BaseControllers";
+import { DataViewer } from "../DataViewer";
 import { Assigned } from "./Assigned";
 import type { IState } from "./Controller";
 import { Controller } from "./Controller";
@@ -60,7 +60,7 @@ export const TaskViewer = memo(
     const classes = useClassNames("task-viewer", className);
 
     return (
-      <Confirmation open={open} className={classes} close={close}>
+      <DataViewer open={open} className={classes} close={close}>
         <div className="title">
           <div className="selectors">
             <Priority
@@ -89,7 +89,7 @@ export const TaskViewer = memo(
           onChange={controller.onChangeText}
         />
         {children}
-      </Confirmation>
+      </DataViewer>
     );
   }),
 );
