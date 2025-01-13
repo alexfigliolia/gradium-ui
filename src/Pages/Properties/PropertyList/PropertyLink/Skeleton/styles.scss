@@ -7,34 +7,53 @@
   & .skeleton-text {
     color: transparent;
     line-height: 1;
-    margin: 0.2em 0;
     border-radius: 0.25em;
     @include Variables.skeleton;
   }
   & h3.skeleton-text {
-    padding: 0.1em 0;
-    margin-bottom: 0.4em;
+    margin: 0;
+    padding: 0.05em 0;
+    margin-bottom: 0.25em;
   }
-  & address {
-    & p {
-      line-height: 1;
-      &.skeleton-text, {
+  &>.pl-info {
+    &>address {
+      margin: 0.6em 0 0.3em;
+      @media (min-width: Variables.$small-vertical-tablet) {
+        margin: 0;
+      }
+      &>p,
+      &>p>span {
+        margin: 0;
+      }
+      &>p {
         margin-bottom: 0.5em;
-        width: 60%;
-        &:nth-of-type(2) {
-          width: 40%;
+        &.skeleton-text {
+          width: 60%;
+          &:nth-of-type(2) {
+            width: 40%;
+          } 
+        }
+        &:has(span) {
+          gap: 0.35em;
+          display: inline-flex;
+          margin: 0;
         }
       }
-      &>span.skeleton-text {
-        font-size: 0.9em;
-        border-radius: 0.35em;
+      & span.skeleton-text {
+        display: inline-block;
       }
+    }
+    &>div {
+      margin-top: 0.35em;
     }
   }
   & .link-placeholder {
     font-size: 0.95em;
     width: 100%;
-    padding: 1.15em;
+    height: 34px;
     border-radius: 2em;
+    @media (min-width: Variables.$small-vertical-tablet) {
+      height: 36px;
+    }
   }
 }

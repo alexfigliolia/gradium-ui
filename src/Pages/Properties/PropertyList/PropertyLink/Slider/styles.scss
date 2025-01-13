@@ -46,11 +46,22 @@
     }
   }
   &>.image-placeholder {
+    height: auto;
+    align-self: stretch;
     background-color: var(--background);
     @include Variables.center;
+    @media(min-width: Variables.$small-vertical-tablet) {
+      align-self: flex-start;
+      width: 100%;
+      height: 200px;
+    }
     &>.image-placeholder-icon {
-      height: 50%;
-      width: auto;
+      height: auto;
+      width: 65%;
+      @media(min-width: Variables.$small-vertical-tablet) {
+        height: 60%;
+        width: auto;
+      }
       &> g > g {
         fill: #d0cece;
       }
