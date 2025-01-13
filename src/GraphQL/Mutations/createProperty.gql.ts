@@ -3,8 +3,24 @@ import { AdminBasicPropertyFragment } from "GraphQL/Fragments/adminBasicProperty
 
 export const createProperty = gql`
   ${AdminBasicPropertyFragment}
-  mutation createProperty($name: String!, $organizationId: Int!) {
-    createProperty(name: $name, organizationId: $organizationId) {
+  mutation createProperty(
+    $organizationId: Int!
+    $name: String!
+    $address1: String!
+    $address2: String!
+    $city: String!
+    $state: String!
+    $zipCode: String!
+  ) {
+    createProperty(
+      organizationId: $organizationId
+      name: $name
+      address1: $address1
+      address2: $address2
+      city: $city
+      state: $state
+      zipCode: $zipCode
+    ) {
       ...AdminBasicPropertyFragment
     }
   }

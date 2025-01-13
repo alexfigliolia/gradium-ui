@@ -41,7 +41,7 @@ export const BasicImageInterface = memo(function BasicImageInterface({
       {url && (
         <Fragment>
           <ImageFader image={url} />
-          <Closer className="cii-closer" type="button" onClick={deleteImage} />
+          <Closer className="cii-closer" onClick={deleteImage} />
         </Fragment>
       )}
       {(!url || loading) && (

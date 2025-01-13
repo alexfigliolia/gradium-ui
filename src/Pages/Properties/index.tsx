@@ -5,7 +5,6 @@ import { Properties } from "State/Properties";
 import type { Propless } from "Types/React";
 import { LazyNewProperty } from "./NewProperty/Lazy";
 import { PropertyList } from "./PropertyList";
-import "./styles.scss";
 
 export default memo(
   function PropertiesPage(_: Propless) {
@@ -18,7 +17,7 @@ export default memo(
             <GradientButton
               className="new-property-button"
               onClick={Properties.newProperty.open}>
-              New Property
+              New
             </GradientButton>
           }>
           <PropertyList />

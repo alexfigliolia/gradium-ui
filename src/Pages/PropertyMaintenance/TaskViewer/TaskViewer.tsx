@@ -11,12 +11,12 @@ import {
 import { useClassNames } from "@figliolia/classnames";
 import { useController } from "@figliolia/react-hooks";
 import { AutoSizeTextArea } from "Components/AutoSizeTextArea";
+import { DataViewer } from "Components/DataViewer";
 import { selectScopedTask, useTasks } from "State/ManagementTasks";
 import { Dates } from "Tools/Dates";
 import type { Callback } from "Types/Generics";
 import type { IHTMLOption, OptionalChildren } from "Types/React";
 import type { UpdateProxy } from "../BaseControllers";
-import { DataViewer } from "../DataViewer";
 import { Assigned } from "./Assigned";
 import type { IState } from "./Controller";
 import { Controller } from "./Controller";

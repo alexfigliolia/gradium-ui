@@ -1,72 +1,58 @@
-import { memo, useRef } from "react";
-import { useFormState } from "@figliolia/react-hooks";
+import { memo } from "react";
+import { useController, useFormState } from "@figliolia/react-hooks";
 import { ActionButton } from "Components/ActionButton";
-import { Confirmation } from "Components/Confirmation";
-import { Input } from "Components/Input";
-import { createProperty } from "GraphQL/Mutations/createProperty.gql";
-import type {
-  CreatePropertyMutation,
-  CreatePropertyMutationVariables,
-} from "GraphQL/Types";
-import { UIClient } from "GraphQL/UIClient";
-import { Building } from "Icons/Building";
+import { AutoSizeTextArea } from "Components/AutoSizeTextArea";
+import { DataViewer } from "Components/DataViewer";
+import { Keys } from "Icons/Keys";
+import { AttachFiles } from "Pages/PropertyMaintenance/AttachmentList";
 import { newProperty, Properties, useProperties } from "State/Properties";
-import { Scope } from "State/Scope";
-import { Validators } from "Tools/Validators";
 import type { Propless } from "Types/React";
+import { Controller } from "./Controller";
 import "./styles.scss";
 
 export const NewProperty = memo(
   function NewProperty(_: Propless) {
-    const form = useRef<HTMLFormElement>(null);
     const open = useProperties(newProperty);
+    const controller = useController(new Controller());
     const { onSubmit, loading, success, error } = useFormState(
-      async (data, setState) => {
-        try {
-          const name = Validators.propertyNameParser(data);
-          const client = new UIClient({
-            setState,
-            successMessage: `The property <strong>${name}</strong> has been created!`,
-          });
-          const response = await client.executeQuery<
-            CreatePropertyMutation,
-            CreatePropertyMutationVariables
-          >(
-            createProperty,
-            {
-              name,
-              organizationId: Scope.getState().currentOrganizationId,
-            },
-            Properties.newProperty.close,
-          );
-          form.current?.reset?.();
-          Properties.addProperty(response.createProperty);
-        } catch (error) {
-          // silence
-        }
-      },
+      controller.create,
     );
     return (
-      <Confirmation
+      <DataViewer
         open={open}
-        className="new-property tight"
+        className="new-property"
         close={Properties.newProperty.close}>
-        <h2>New Property</h2>
-        <p>What would you like to name this property?</p>
-        <form ref={form} onSubmit={onSubmit}>
-          <Input
-            required
-            type="text"
-            name="property-name"
-            autoComplete="off"
-            icon={<Building />}
-            label="Property Nickname"
+        <form ref={controller.form} onSubmit={onSubmit}>
+          <div className="title">
+            <Keys />
+            <AutoSizeTextArea
+              className="h2"
+              name="property-name"
+              placeholder="New Property Name"
+            />
+          </div>
+          <AutoSizeTextArea
+            className="p"
+            name="address1"
+            placeholder="Address"
           />
+          <AutoSizeTextArea
+            className="p"
+            name="address2"
+            placeholder="Address 2"
+          />
+          <AutoSizeTextArea className="p" name="city" placeholder="City" />
+          <div className="splitter">
+            <AutoSizeTextArea className="p" name="state" placeholder="State" />
+            <AutoSizeTextArea className="p" name="zip" placeholder="Zip Code" />
+          </div>
+          <h3>Images</h3>
+          <AttachFiles ref={controller.uploader} />
           <ActionButton error={!!error} success={success} loading={loading}>
             Create
           </ActionButton>
         </form>
-      </Confirmation>
+      </DataViewer>
     );
   },
   () => true,

@@ -10,7 +10,7 @@ import { Scope } from "State/Scope";
 
 export class Controller {
   public readonly setState: ILoadingStateSetter;
-  private readonly Debouncer = new Debouncer(this.update.bind(this), 2000);
+  private readonly Debouncer = new Debouncer(this.update.bind(this), 1000);
   constructor(setState: ILoadingStateSetter) {
     this.setState = setState;
   }

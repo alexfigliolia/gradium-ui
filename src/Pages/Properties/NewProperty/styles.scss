@@ -1,15 +1,53 @@
 @use "Styles/Variables";
 
-.new-property.bottom-sheet {
-  & form {
-    width: 100%;
-    display: flex;
-    margin: 0 auto;
-    flex-direction: column;
-    row-gap: 2em;
-    &>.loading-action {
-      margin-left: auto;
-      margin-right: auto;
+.new-property.bottom-sheet.data-viewer {
+  & .title > .keys-icon {
+    width: 2.5em;
+    height: 2.5em;
+    margin-bottom: 0.5em;
+    stroke: url(#themeGradient);
+    margin-left: 0.5em;
+  }
+  &> .sheet {
+    @media (min-width: 670px) {
+      max-width: 600px;
+    }
+    &> .sheet-scroll-view > .sheet-content {
+      @media (min-width: 670px) {
+        width: 95%;
+      }
+      & textarea.p {
+        margin-top: 0em;
+      }
+      & .splitter {
+        gap: 1em;
+        display: flex;
+        white-space: nowrap;
+        align-items: flex-start;
+        justify-content: space-between;
+      }
+      & h3 {
+        margin-left: 0.85em;
+        font-weight: 500;
+        margin: 0.8em 0 1.25em 0.85em;
+      }
+      & .upload-grid.attachment-list {
+        @media (min-width: Variables.$small-vertical-tablet) {
+          &>label p {
+            font-size: 0.7em;
+          }
+        }
+        @media (min-width: Variables.$small-desktop) {
+          grid-template-columns: repeat(5, 1fr);
+        }
+      }
+      & .loading-action {
+        margin-top: 2em;
+        max-width: 400px;
+        &:not(.loading) {
+          width: 90%;
+        }
+      }
     }
   }
 }

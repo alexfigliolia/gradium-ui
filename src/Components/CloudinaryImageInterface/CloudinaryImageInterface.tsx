@@ -83,11 +83,7 @@ export const CloudinaryImageInterface = memo(
         {image && !state.loading && !disabled ? (
           <Fragment>
             {onDelete && (
-              <Closer
-                className="cii-closer"
-                type="button"
-                onClick={deleteImage}
-              />
+              <Closer className="cii-closer" onClick={deleteImage} />
             )}
           </Fragment>
         ) : (

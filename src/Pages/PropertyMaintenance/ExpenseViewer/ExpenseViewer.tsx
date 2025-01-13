@@ -10,13 +10,13 @@ import {
 import { useClassNames } from "@figliolia/classnames";
 import { useController } from "@figliolia/react-hooks";
 import { AutoSizeTextArea } from "Components/AutoSizeTextArea";
+import { DataViewer } from "Components/DataViewer";
 import { MoneyFilled } from "Icons/Money";
 import { selectScopedExpense, useTasks } from "State/ManagementTasks";
 import { Dates } from "Tools/Dates";
 import type { Callback } from "Types/Generics";
 import type { OptionalChildren } from "Types/React";
 import type { UpdateProxy } from "../BaseControllers";
-import { DataViewer } from "../DataViewer";
 import type { IState } from "./Controller";
 import { Controller } from "./Controller";
 import "./styles.scss";

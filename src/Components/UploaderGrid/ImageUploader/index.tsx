@@ -56,7 +56,9 @@ export const ImageUploader = memo(
         disabled={disabled}
         onChange={onChange}
         className={classes}>
-        {savedImage && onDelete && <Closer onClick={onDelete} />}
+        {savedImage && onDelete && (
+          <Closer onClick={onDelete} aria-label="delete image" />
+        )}
         <div className="upload-action">
           <ImagePlaceholder aria-hidden />
           <p aria-hidden={disabled}>Upload Image</p>

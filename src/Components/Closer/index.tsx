@@ -8,10 +8,10 @@ export const Closer = memo(function Closer({
   children,
   className,
   ...rest
-}: ButtonHTMLAttributes<HTMLButtonElement>) {
+}: Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type">) {
   const classes = useClassNames("closer-button", className);
   return (
-    <button className={classes} {...rest}>
+    <button className={classes} {...rest} type="button">
       <div>
         <X>{children}</X>
       </div>

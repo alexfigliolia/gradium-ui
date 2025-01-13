@@ -69,7 +69,7 @@ export class Validators {
   }
 
   public static parseForm(data: FormData, key: string) {
-    return (data.get(key) ?? "") as string;
+    return data.get(key)?.toString?.() ?? "";
   }
 
   public static nameParser = this.createParser("name", this.validateName);

@@ -1,9 +1,0 @@
-@use "Styles/Variables";
-
-.page.properties {
-  & .new-property-button {
-    @media (min-width: Variables.$small-vertical-tablet) {
-      font-size: 1.15em;
-    }
-  }
-}
