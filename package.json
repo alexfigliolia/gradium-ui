@@ -19,7 +19,7 @@
   "dependencies": {
     "@figliolia/bottom-sheet": "^1.4.1",
     "@figliolia/classnames": "^1.0.1",
-    "@figliolia/data-structures": "^1.1.0",
+    "@figliolia/data-structures": "^1.1.1",
     "@figliolia/day-night-toggle": "^1.0.5",
     "@figliolia/decorators": "^2.0.1",
     "@figliolia/drag-detector": "^1.0.7",
@@ -27,7 +27,7 @@
     "@figliolia/galena": "^2.3.5",
     "@figliolia/galena-dark-mode": "^1.1.1",
     "@figliolia/galena-window": "^1.0.1",
-    "@figliolia/modal-stack": "^1.0.7",
+    "@figliolia/modal-stack": "^1.0.8",
     "@figliolia/promises": "^1.0.1",
     "@figliolia/react-galena": "^3.2.1",
     "@figliolia/react-hooks": "^1.3.0",

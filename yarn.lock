@@ -896,6 +896,13 @@
   dependencies:
     "@figliolia/event-emitter" "^1.1.4"
 
+"@figliolia/data-structures@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@figliolia/data-structures/-/data-structures-1.1.1.tgz#e32ce8ed1fe4c4336588bf74df152ef71b1c452d"
+  integrity sha512-/aP0TqjkdNjbAPpSxuWX/LGuGQiRgMmjuO/E1FZdCFyECYPIJoAKfKWLEx/yK2uNLYdsC+8Goahh+Q5akI4JBw==
+  dependencies:
+    "@figliolia/event-emitter" "^1.1.4"
+
 "@figliolia/day-night-toggle@^1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@figliolia/day-night-toggle/-/day-night-toggle-1.0.5.tgz#7fe14a2955487d83fe12cb64112fa45ace9383f2"
@@ -943,12 +950,12 @@
   dependencies:
     "@figliolia/event-emitter" "^1.1.5"
 
-"@figliolia/modal-stack@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@figliolia/modal-stack/-/modal-stack-1.0.7.tgz#9226aef58f2746f566de0cb3a8daf8b9fd457697"
-  integrity sha512-lS7tdqQew4q26f3XFI7hymxifiY68FuadU6lyfQRNx6r6xZgr4jqUXvEfQIUJb5cEXTp/QzVXpiHl0Gkbwjctg==
+"@figliolia/modal-stack@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@figliolia/modal-stack/-/modal-stack-1.0.8.tgz#8eee35781babc89b69da3dd19d421a5f6c9a7c87"
+  integrity sha512-MNylFp4W+N/xqJUZolUx+lrPKEBmTMu9Jx9iQ2XNH048osrkOOIYloPBHuAaR75HnLCIXhpaeCU+ibyQ82jo9A==
   dependencies:
-    "@figliolia/data-structures" "^1.1.0"
+    "@figliolia/data-structures" "^1.1.1"
 
 "@figliolia/promises@^1.0.1":
   version "1.0.1"
