@@ -2,29 +2,46 @@ import { DataLoader } from "Generics/DataLoader";
 import { Properties } from "State/Properties";
 import { Scope } from "State/Scope";
 import { Toasts } from "State/Toasts";
+import type { Callback } from "Types/Generics";
 import { Authentication } from "./Authentication";
 import { GradiumRedirect } from "./GradiumRedirect";
 
 export class AppLoaders {
-  private static readonly register = new Set<DataLoader<any>>();
+  private static readonly register = new Map<string, DataLoader<any>>();
 
-  public static create<T>(callback: () => Promise<T>) {
+  public static create<T>(name: string, callback: () => Promise<T>) {
     const instance = new DataLoader(callback);
-    this.register.add(instance);
+    this.register.set(name, instance);
     return instance;
   }
 
+  public static get(name: string) {
+    const loader = this.register.get(name);
+    if (!loader) {
+      throw new Error(`A loader with the name '${name}' was not found`);
+    }
+    return loader;
+  }
+
   public static resetAll() {
-    for (const loader of this.register) {
+    for (const [_, loader] of this.register) {
       loader.reset();
     }
   }
 
-  public static Auth = this.create(async () => {
+  public static subscribe(name: string, callback: Callback) {
+    return this.get(name).register(callback);
+  }
+
+  public static unsubscribe(name: string, ID: string) {
+    return this.get(name).remove(ID);
+  }
+
+  public static Auth = this.create("auth", async () => {
     return Authentication.isAuthenticated();
   });
 
-  public static Scope = this.create(async () => {
+  public static Scope = this.create("scope", async () => {
     const authenticated = await this.Auth.get();
     if (!authenticated) {
       return GradiumRedirect.dispatch("/register/login");
@@ -42,7 +59,7 @@ export class AppLoaders {
     GradiumRedirect.dispatch("/register/login");
   });
 
-  public static Properties = this.create(async () => {
+  public static Properties = this.create("properties", async () => {
     Properties.loading(true);
     const scope = await this.Scope.get();
     if (!scope) {
