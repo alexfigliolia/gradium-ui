@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from "react";
+import { memo, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { GradientTransitionLink } from "Components/GradientTransitionButton";
 import { PermissedRoute } from "Components/PermissedRoute";
@@ -15,13 +15,11 @@ import { NameAndLocation } from "./NameAndLocation";
 import { PropertyImages } from "./PropertyImages";
 import "./styles.scss";
 
+const labelFN = (property: string) => `Welcome to ${property}`;
+
 export default memo(
   function PropertyConfiguration(_: Propless) {
     const { slug = "" } = useParams();
-    const labelFN = useCallback(
-      (property: string) => `Welcome to ${property}`,
-      [],
-    );
     const amenitiesRoute = useMemo(
       () => AdminRoutes.slugRoute(slug, "configure/amenities"),
       [slug],

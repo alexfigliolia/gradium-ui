@@ -17,7 +17,6 @@ export const InlineFilters = memo(function InlineFilters(_: Propless) {
   const loading = useAmenitySchedule(isLoading);
   const active = useAmenitySchedule(totalActiveFilters);
   const filterClasses = useClassNames("horizontal-filters", { dark });
-
   return (
     <Fragment>
       <FilterButton

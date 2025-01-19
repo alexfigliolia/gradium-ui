@@ -74,7 +74,6 @@ export class CloudinaryDeleter {
         propertyId: Properties.getState().current,
         organizationId: Scope.getState().currentOrganizationId,
       });
-      Properties.addImage(response.saveImage);
       return response.saveImage;
     } catch (error) {
       // silence

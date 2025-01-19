@@ -3,16 +3,17 @@ import type { Callback } from "Types/Generics";
 
 export const useAccessControlCallback = <T>({
   granted,
+  fetching,
   onAttempt,
   requirements,
 }: IUseAccessControl<T>) => {
   const invoked = useRef(false);
   useEffect(() => {
-    if (!granted && onAttempt && !invoked.current) {
+    if (!fetching && !granted && onAttempt && !invoked.current) {
       invoked.current = true;
       onAttempt();
     }
-  }, [granted, onAttempt]);
+  }, [fetching, granted, onAttempt]);
 
   useEffect(() => {
     if (invoked.current) {
@@ -23,6 +24,7 @@ export const useAccessControlCallback = <T>({
 
 interface IUseAccessControl<T> {
   granted: boolean;
+  fetching?: boolean;
   onAttempt?: Callback;
   requirements: T;
 }

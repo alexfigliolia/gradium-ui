@@ -9,6 +9,7 @@
   flex-direction: row;
   min-height: calc(100px + 2em);
   column-gap: 1em;
+  animation: show 0.5s;
   background-color: var(--tile-background);
   border-radius: 0.35em;
   box-shadow: var(--shadow-level-2-mid);

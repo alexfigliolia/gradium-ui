@@ -1,5 +1,5 @@
 import type { ChangeEvent, MutableRefObject, ReactNode } from "react";
-import { Component, createRef } from "react";
+import { Component } from "react";
 import { TimedPromise } from "@figliolia/promises";
 import type { GradiumImage, GradiumImageType } from "GraphQL/Types";
 import { CloudinaryDeleter } from "Tools/CloudinaryDeleter";
@@ -14,7 +14,6 @@ import "./styles.scss";
 export class EntityUploader extends Component<Props, State> {
   public state: State;
   private readonly Controller = new Controller();
-  private readonly clearInput = createRef<Callback>();
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -45,11 +44,12 @@ export class EntityUploader extends Component<Props, State> {
   }
 
   public override shouldComponentUpdate(
-    { className, renderItem }: Props,
+    { min, className, renderItem }: Props,
     state: State,
   ) {
     return (
       state !== this.state ||
+      min !== this.props.min ||
       className !== this.props.className ||
       renderItem !== this.props.renderItem
     );
@@ -102,7 +102,7 @@ export class EntityUploader extends Component<Props, State> {
     });
     try {
       await uploader.onUpload(e, { entityId, type: imageType });
-      this.clearInput.current?.();
+      e.target.value = "";
     } catch (error) {
       // silence
     }
@@ -208,10 +208,22 @@ export class EntityUploader extends Component<Props, State> {
     this.spliceImage(image, "initialImages");
   }
 
+  private getMinUploaders(totalLength: number, min?: number) {
+    let length = 0;
+    if (min === undefined) {
+      length = 1;
+    } else {
+      length = totalLength % min === 0 ? min : Math.max(1, min - totalLength);
+    }
+    return new Array(length).fill(null);
+  }
+
   public override render() {
     const { uploading, initialImages } = this.state;
-    const { className = "" } = this.props;
+    const { className = "", min } = this.props;
     const { length } = initialImages;
+    const totalLength = length + uploading.length;
+    const fill = this.getMinUploaders(totalLength, min);
     return (
       <div className={`upload-grid ${className}`}>
         {initialImages.map((image, index) =>
@@ -236,11 +248,9 @@ export class EntityUploader extends Component<Props, State> {
             index + length,
           ),
         )}
-        <ImageUploader
-          key="last"
-          ref={this.clearInput}
-          onChange={this.onChange}
-        />
+        {fill.map((_, i) => (
+          <ImageUploader key={i} onChange={this.onChange} />
+        ))}
       </div>
     );
   }
@@ -252,6 +262,7 @@ interface State {
 }
 
 interface Props {
+  min?: number;
   entityId: number;
   className?: string;
   images: GradiumImage[];

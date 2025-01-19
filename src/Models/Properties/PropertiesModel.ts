@@ -1,17 +1,16 @@
 import { StackModel } from "Generics/StackModel";
 import { adminBasicPropertiesList } from "GraphQL/Queries/adminBasicPropertiesList.gql";
 import { graphQLRequest } from "GraphQL/request";
-import type {
-  AdminBasicPropertiesListQuery,
-  AdminBasicPropertiesListQueryVariables,
-  AdminBasicProperty,
-  GradiumImage,
-  PropertyAddon,
+import type { GradiumImage } from "GraphQL/Types";
+import {
+  type AdminBasicPropertiesListQuery,
+  type AdminBasicPropertiesListQueryVariables,
+  type AdminBasicProperty,
+  PersonRoleType,
+  type PropertyAddon,
 } from "GraphQL/Types";
-import { PersonRoleType } from "GraphQL/Types";
-import { forceAtIndex } from "Tools/Arrays";
 import { Permission } from "Tools/Permission";
-import type { IProperties, PropertyWithNullImages } from "./types";
+import type { IProperties } from "./types";
 
 export class PropertiesModel extends StackModel<IProperties> {
   constructor() {
@@ -21,12 +20,6 @@ export class PropertiesModel extends StackModel<IProperties> {
       properties: {},
       newProperty: false,
       currentAddons: new Set(),
-    });
-  }
-
-  public addProperty(property: PropertyWithNullImages) {
-    this.update(state => {
-      state.properties = { ...state.properties, [property.id]: property };
     });
   }
 
@@ -41,20 +34,53 @@ export class PropertiesModel extends StackModel<IProperties> {
     return null;
   }
 
+  public addProperty(property: AdminBasicProperty) {
+    this.update(state => {
+      state.properties = { ...state.properties, [property.id]: property };
+    });
+  }
+
+  public addImage(id: number, image: GradiumImage) {
+    const property = this.getState().properties[id];
+    if (!property) {
+      return;
+    }
+    this.update(state => {
+      state.properties = {
+        ...state.properties,
+        [id]: { ...property, images: [...property.images, image] },
+      };
+    });
+  }
+
+  public deleteImage(id: number, image: GradiumImage) {
+    const property = this.getState().properties[id];
+    if (!property) {
+      return;
+    }
+    this.update(state => {
+      state.properties = {
+        ...state.properties,
+        [id]: {
+          ...property,
+          images: property.images.filter(img => img.id !== image.id),
+        },
+      };
+    });
+  }
+
   private async fetchAdminScope(organizationId: number) {
-    this.loading();
     const response = await graphQLRequest<
       AdminBasicPropertiesListQuery,
       AdminBasicPropertiesListQueryVariables
     >(adminBasicPropertiesList, {
       organizationId,
     });
-    const map: Record<number, PropertyWithNullImages> = {};
+    const map: Record<number, AdminBasicProperty> = {};
     for (const property of response.adminBasicPropertiesList) {
       map[property.id] = property;
     }
     this.update(state => {
-      state.loading = false;
       state.properties = map;
     });
     return map;
@@ -84,7 +110,7 @@ export class PropertiesModel extends StackModel<IProperties> {
     });
   }
 
-  public updateBasicInfo(property: PropertyWithNullImages) {
+  public updateBasicInfo(property: AdminBasicProperty) {
     this.update(state => {
       state.properties = {
         ...state.properties,
@@ -98,28 +124,7 @@ export class PropertiesModel extends StackModel<IProperties> {
     this.hashAddons(addons);
   }
 
-  public addImage(image: GradiumImage, index?: number) {
-    const images = this.getCurrent("images");
-    if (typeof index === "undefined") {
-      return this.setCurrentPropertyKey("images", [...images, image]);
-    }
-    this.setCurrentPropertyKey("images", forceAtIndex(images, index, image));
-  }
-
-  public deleteImage(image: GradiumImage, index?: number) {
-    const images = this.getCurrent("images");
-    if (typeof index === "undefined") {
-      return this.setCurrentPropertyKey(
-        "images",
-        images.filter(pic => pic?.id !== image.id),
-      );
-    }
-    const copy = [...images];
-    copy[index] = undefined;
-    return this.setCurrentPropertyKey("images", copy);
-  }
-
-  public getCurrent<K extends Extract<keyof PropertyWithNullImages, string>>(
+  public getCurrent<K extends Extract<keyof AdminBasicProperty, string>>(
     key: K,
   ) {
     const { current, properties } = this.getState();
@@ -132,9 +137,9 @@ export class PropertiesModel extends StackModel<IProperties> {
     });
   }
 
-  private setCurrentPropertyKey<K extends keyof PropertyWithNullImages>(
+  private setCurrentPropertyKey<K extends keyof AdminBasicProperty>(
     key: K,
-    value: PropertyWithNullImages[K],
+    value: AdminBasicProperty[K],
   ) {
     this.update(state => {
       const property = state.properties[state.current];

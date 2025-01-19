@@ -5,6 +5,7 @@ import { PermissedPropertyRoute } from "Components/PermissedPropertyRoute";
 import { Page, PageTitle } from "Layouts/Management";
 import { AdminRoutes } from "Router/AdminRoutes";
 import { AmenitySchedule } from "State/AmenitySchedule";
+import { isLoading, useProperties } from "State/Properties";
 import type { Propless } from "Types/React";
 import { LazyDialogs } from "./LazyDialogs";
 import { proxyReservationModifier } from "./ProxyReservationModifier";
@@ -13,6 +14,7 @@ import "./styles.scss";
 
 export default memo(
   function AmenityReservations(_: Propless) {
+    const loading = useProperties(isLoading);
     const newReservation = useMemo(
       () => proxyReservationModifier(AmenitySchedule.newReservation.open),
       [],
@@ -25,6 +27,7 @@ export default memo(
     return (
       <PermissedPropertyRoute
         fallback=".."
+        fetching={loading}
         requirements={AdminRoutes.access("PROPERTY_AMENITIES")}>
         <Page className="amenities-section">
           <PageTitle title="Amenity Reservations">
