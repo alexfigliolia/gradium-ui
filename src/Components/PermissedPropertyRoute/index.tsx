@@ -11,6 +11,7 @@ import type { OptionalChildren } from "Types/React";
 
 export const PermissedPropertyRoute = memo(function PermissedPropertyRoute({
   children,
+  fetching,
   onAttempt,
   requirements,
   fallback = null,
@@ -26,9 +27,14 @@ export const PermissedPropertyRoute = memo(function PermissedPropertyRoute({
 
   useAccessControlCallback({
     granted,
+    fetching,
     onAttempt,
     requirements,
   });
+
+  if (fetching) {
+    return children;
+  }
 
   if (!granted) {
     if (typeof fallback === "string") {
@@ -40,6 +46,7 @@ export const PermissedPropertyRoute = memo(function PermissedPropertyRoute({
 });
 
 interface Props extends OptionalChildren {
+  fetching?: boolean;
   onAttempt?: Callback;
   requirements: AccessControl;
   fallback?: ReactNode;

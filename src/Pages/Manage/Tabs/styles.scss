@@ -22,15 +22,6 @@
       font-size: 1em;
       --padding: 0.6em 1em;
     }
-    &:first-of-type {
-      margin-left: var(--core-padding);
-    }
-    &:last-of-type {
-      margin-right: var(--core-padding);
-    }
-    &:not(:last-of-type) {
-      margin-right: 1em;
-    }
     &.active {
       color: #fff;
       --background: transparent;
@@ -41,6 +32,30 @@
     }
     &>div {
       transition: background-color 0.3s, color 0.3s;
+    }
+  }
+  &>.skeleton-tab {
+    display: inline-block;
+    font-weight: 600;
+    text-transform: capitalize;
+    padding: calc(0.5em + 2px) calc(0.8em + 2px);
+    border-radius: 2em;
+    color: transparent;
+    @include Variables.skeleton;
+    @media (min-width: Variables.$small-vertical-tablet) {
+      padding: calc(0.6em + 4px) calc(1em + 4px);
+    }
+  }
+  &>.gradient-border-link,
+  &>.skeleton-tab {
+    &:first-of-type {
+      margin-left: var(--core-padding);
+    }
+    &:last-of-type {
+      margin-right: var(--core-padding);
+    }
+    &:not(:last-of-type) {
+      margin-right: 1em;
     }
   }
 }
