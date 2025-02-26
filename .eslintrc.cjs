@@ -9,8 +9,11 @@ module.exports = {
     "node_modules",
     "build",
     "coverage",
+    "*.env*",
+    "tsconfig.buildinfo",
     "__Stealth__",
     "**/*.graphql",
+    "**/GraphQL/Types/graphql.ts",
   ],
   extends: [
     "eslint:recommended",
