@@ -5,7 +5,8 @@ import { Page, PageTitle } from "Layouts/Management";
 import { AdminRoutes } from "Router/AdminRoutes";
 import { ManagementTasks } from "State/ManagementTasks";
 import type { Propless } from "Types/React";
-import { ConfirmDelete } from "./ConfirmDelete";
+import { ConfirmDeleteExpense } from "./ConfirmDeleteExpense";
+import { ConfirmDeleteTask } from "./ConfirmDeleteTask";
 import { CreateExpense } from "./CreateExpense";
 import { CreateTask } from "./CreateTask";
 import { Filters } from "./Filters";
@@ -36,7 +37,8 @@ export default memo(
         <ViewExpense />
         <CreateTask />
         <CreateExpense />
-        <ConfirmDelete />
+        <ConfirmDeleteTask />
+        <ConfirmDeleteExpense />
       </PermissedPropertyRoute>
     );
   },

@@ -17,6 +17,7 @@ import {
 } from "State/ManagementTasks";
 import type { Propless } from "Types/React";
 import { AttachmentList } from "../AttachmentList";
+import { DeleteButton } from "../DeleteButton";
 import type { Controller as InputController, IState } from "../TaskViewer";
 import { TaskViewer } from "../TaskViewer";
 import { Expenses } from "./Expenses";
@@ -83,6 +84,10 @@ export const ViewTask = memo(
           imageType={GradiumImageType.TaskImage}
         />
         <Expenses expenses={task.expenses} />
+        <DeleteButton
+          text="Delete Task"
+          onClick={ManagementTasks.deleteTask.open}
+        />
       </TaskViewer>
     );
   },

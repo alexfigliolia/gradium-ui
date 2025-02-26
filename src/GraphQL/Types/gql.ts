@@ -31,6 +31,7 @@ const documents = {
     "\n  \n  mutation createProperty(\n    $organizationId: Int!\n    $name: String!\n    $address1: String!\n    $address2: String!\n    $city: String!\n    $state: String!\n    $zipCode: String!\n  ) {\n    createProperty(\n      organizationId: $organizationId\n      name: $name\n      address1: $address1\n      address2: $address2\n      city: $city\n      state: $state\n      zipCode: $zipCode\n    ) {\n      ...AdminBasicPropertyFragment\n    }\n  }\n": types.CreatePropertyDocument,
     "\n  \n  mutation deleteAmenity($organizationId: Int!, $propertyId: Int!, $id: Int!) {\n    deleteAmenity(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      id: $id\n    ) {\n      ...AmenityFragment\n    }\n  }\n": types.DeleteAmenityDocument,
     "\n  \n  mutation deleteEmail($userId: Int!, $email: String!) {\n    deleteEmail(userId: $userId, email: $email) {\n      ...BasicUserFragment\n    }\n  }\n": types.DeleteEmailDocument,
+    "\n  mutation deleteExpense($organizationId: Int!, $propertyId: Int, $id: Int!) {\n    deleteExpense(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      id: $id\n    )\n  }\n": types.DeleteExpenseDocument,
     "\n  mutation deleteImage(\n    $propertyId: Int!\n    $organizationId: Int!\n    $id: Int!\n    $type: GradiumImageType!\n  ) {\n    deleteImage(\n      id: $id\n      type: $type\n      propertyId: $propertyId\n      organizationId: $organizationId\n    ) {\n      id\n      url\n    }\n  }\n": types.DeleteImageDocument,
     "\n  \n  mutation deleteLivingSpace(\n    $organizationId: Int!\n    $propertyId: Int!\n    $id: Int!\n  ) {\n    deleteLivingSpace(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      id: $id\n    ) {\n      ...LivingSpaceFragment\n    }\n  }\n": types.DeleteLivingSpaceDocument,
     "\n  mutation deleteManagementTask(\n    $id: Int!\n    $organizationId: Int!\n    $propertyId: Int\n  ) {\n    deleteManagementTask(\n      id: $id\n      organizationId: $organizationId\n      propertyId: $propertyId\n    )\n  }\n": types.DeleteManagementTaskDocument,
@@ -148,6 +149,10 @@ export function gql(source: "\n  \n  mutation deleteAmenity($organizationId: Int
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  \n  mutation deleteEmail($userId: Int!, $email: String!) {\n    deleteEmail(userId: $userId, email: $email) {\n      ...BasicUserFragment\n    }\n  }\n"): (typeof documents)["\n  \n  mutation deleteEmail($userId: Int!, $email: String!) {\n    deleteEmail(userId: $userId, email: $email) {\n      ...BasicUserFragment\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation deleteExpense($organizationId: Int!, $propertyId: Int, $id: Int!) {\n    deleteExpense(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      id: $id\n    )\n  }\n"): (typeof documents)["\n  mutation deleteExpense($organizationId: Int!, $propertyId: Int, $id: Int!) {\n    deleteExpense(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      id: $id\n    )\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

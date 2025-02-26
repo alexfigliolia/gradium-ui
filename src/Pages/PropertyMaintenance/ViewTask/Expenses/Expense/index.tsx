@@ -19,10 +19,10 @@ export const Expense = memo(function Expense({
   );
   const float = useMemo(() => parseFloat(cost), [cost]);
   const formattedCost = useMemo(() => Numbers.formatCurrency(float), [float]);
-  const portion = useMemo(
-    () => ((float * 100) / totalCost).toFixed(0),
-    [float, totalCost],
-  );
+  const portion = useMemo(() => {
+    const portion = (float * 100) / totalCost;
+    return isNaN(portion) ? 0 : portion.toFixed(0);
+  }, [float, totalCost]);
 
   const onClick = useCallback(() => {
     ManagementTasks.viewExpense.open(expense);

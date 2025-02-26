@@ -17,6 +17,7 @@ import {
 } from "State/ManagementTasks";
 import type { Propless } from "Types/React";
 import { AttachmentList } from "../AttachmentList";
+import { DeleteButton } from "../DeleteButton";
 import {
   type Controller as InputController,
   ExpenseViewer,
@@ -85,6 +86,10 @@ export const ViewExpense = memo(
           onDelete={onDeleteImage}
           images={expense.attachments}
           imageType={GradiumImageType.ExpenseAttachment}
+        />
+        <DeleteButton
+          text="Delete Expense"
+          onClick={ManagementTasks.deleteExpense.open}
         />
       </ExpenseViewer>
     );

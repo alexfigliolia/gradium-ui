@@ -1,0 +1,24 @@
+@use "Styles/Variables";
+
+.delete-maintenance-item {
+  @include Variables.center;
+  gap: 0.5em;
+  margin-top: 2.5em;
+  margin-left: auto;
+  outline: none;
+  border: none;
+  color: var(--text-color-light);
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+  background: var(--background-dark);
+  transition: box-shadow 0.4s;
+  &:hover,
+  &:focus-visible {
+    box-shadow: var(--shadow-level-2-mid);
+  }
+  &>.trash-icon {
+    width: 1.5em;
+    height: 1.5em;
+    fill: var(--text-color-light);
+  }
+}
