@@ -9,6 +9,7 @@ export const listManagementTasks = gql`
     $priority: [ManagementTaskPriority]
     $assignedToId: [Int]
     $searchString: String
+    $archive: Boolean
   ) {
     listManagementTasks(
       organizationId: $organizationId
@@ -16,6 +17,7 @@ export const listManagementTasks = gql`
       priority: $priority
       assignedToId: $assignedToId
       searchString: $searchString
+      archive: $archive
     ) {
       ...ManagementTaskFragment
     }

@@ -1,28 +1,22 @@
 import type {
   Expense,
   ManagementTask,
-  ManagementTaskPriority,
   ManagementTaskStatus,
 } from "GraphQL/Types";
-import type { EnhancedSet } from "Tools/EnhancedSet";
+import type { ITaskModel } from "Models/TaskModel";
 
 export type TaskTable = Record<number, ManagementTask>;
 
 export type SortedTasks = Record<ManagementTaskStatus, TaskTable>;
 
-export interface IManagementTasks {
-  filters: boolean;
-  loading: boolean;
+export interface IManagementTasks extends ITaskModel {
   creating: boolean;
   viewing: boolean;
   deleting: boolean;
   tasks: SortedTasks;
+  scopedExpense: Expense;
   creatingExpense: boolean;
   viewingExpense: boolean;
   deletingExpense: boolean;
   scopedTask: ManagementTask;
-  priorityFilter: EnhancedSet<ManagementTaskPriority>;
-  assignmentFilter: EnhancedSet<number>;
-  searchFilter?: string;
-  scopedExpense: Expense;
 }

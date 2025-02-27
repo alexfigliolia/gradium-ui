@@ -1,0 +1,7 @@
+.confirmation-sheet.bottom-sheet.data-viewer.archive {
+  &>.sheet {
+    @media (min-width: 670px) {
+      max-width: 1000px;
+    }
+  }
+}

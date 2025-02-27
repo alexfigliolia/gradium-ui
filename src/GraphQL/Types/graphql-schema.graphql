@@ -11,7 +11,7 @@ type Query {
   verifySession: Boolean!
   getLivingSpaces(propertyId: Int!, organizationId: Int!): [LivingSpace!]!
   listStaffMembers(organizationId: Int!, limit: Int, cursor: Int): PaginatedStaff!
-  listManagementTasks(organizationId: Int!, propertyId: Int, priority: [ManagementTaskPriority], assignedToId: [Int], searchString: String): [ManagementTask!]!
+  listManagementTasks(organizationId: Int!, propertyId: Int, priority: [ManagementTaskPriority], assignedToId: [Int], searchString: String, archive: Boolean): [ManagementTask!]!
   fetchAmenityReservations(propertyId: Int!, organizationId: Int!, date: DateTime!, amenityIds: [Int!], reservers: [Int!]): [AmenityReservation!]!
   generateUploadSignature(organizationId: Int!, type: GradiumImageType!): UploadSignature!
   generateDestroySignature(organizationId: Int!, publicId: String!, type: GradiumImageType!): DestroySignature!

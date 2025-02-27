@@ -5,6 +5,7 @@ import { Page, PageTitle } from "Layouts/Management";
 import { AdminRoutes } from "Router/AdminRoutes";
 import { ManagementTasks } from "State/ManagementTasks";
 import type { Propless } from "Types/React";
+import { Archive } from "./Archive";
 import { ConfirmDeleteExpense } from "./ConfirmDeleteExpense";
 import { ConfirmDeleteTask } from "./ConfirmDeleteTask";
 import { CreateExpense } from "./CreateExpense";
@@ -32,6 +33,7 @@ export default memo(
           </PageTitle>
           <Maintenance />
         </Page>
+        <Archive />
         <Filters />
         <ViewTask />
         <ViewExpense />

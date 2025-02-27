@@ -1,0 +1,13 @@
+.animated-expand {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s;
+  &>div {
+    opacity: 0;
+    transition: opacity 0.3s 0s;
+  }
+  &.open > div {
+    opacity: 1;
+    transition: opacity 0.3s 0.15s;
+  }
+}

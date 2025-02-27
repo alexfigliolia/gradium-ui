@@ -1,0 +1,14 @@
+.search-bar.archive-search {
+  max-width: 400px;
+  margin-bottom: 1.25em;
+  background-image: none;
+  box-shadow: var(--shadow-level-1-mid);
+  &:focus,
+  &:hover,
+  &:not(:placeholder-shown) {
+    box-shadow: var(--shadow-level-1-mid);
+  }
+  & input::placeholder {
+    color: var(--theme-gray);
+  }
+}

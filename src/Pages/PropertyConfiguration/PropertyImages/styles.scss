@@ -2,6 +2,7 @@
 
 .tile.property-images > .upload-grid.attachment-list {
   display: grid;
+  padding: 0;
   grid-template-columns: repeat(2, 1fr);
   @media (min-width: 550px) {
     grid-template-columns: repeat(3, 1fr);

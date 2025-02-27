@@ -1,5 +1,3 @@
-import { Debouncer } from "@figliolia/react-hooks";
-import { setManagementTaskStatus } from "GraphQL/Mutations/setManagementTaskStatus.gql";
 import { listManagementTasks } from "GraphQL/Queries/listManagementTasks.gql";
 import { graphQLRequest } from "GraphQL/request";
 import type {
@@ -7,20 +5,15 @@ import type {
   ListManagementTasksQuery,
   ListManagementTasksQueryVariables,
   ManagementTask,
-  SetManagementTaskStatusMutation,
-  SetManagementTaskStatusMutationVariables,
 } from "GraphQL/Types";
 import { ManagementTaskPriority, ManagementTaskStatus } from "GraphQL/Types";
-import { UIClient } from "GraphQL/UIClient";
-import { PropertyScopeModel } from "Models/PropertyScopeModel";
-import { Properties } from "State/Properties";
+import { TaskModel } from "Models/TaskModel";
 import { Scope } from "State/Scope";
 import { Toasts } from "State/Toasts";
 import { EnhancedSet } from "Tools/EnhancedSet";
 import type { IManagementTasks, SortedTasks } from "./types";
 
-export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
-  private readonly debouncer = new Debouncer(() => this.fetch(), 500);
+export class ManagementTaskModel extends TaskModel<IManagementTasks> {
   constructor() {
     super("Management Tasks", {
       loading: false,
@@ -43,20 +36,10 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
   public async fetch() {
     try {
       this.setLoading(true);
-      const { priorityFilter, assignmentFilter, searchFilter } =
-        this.getState();
       const response = await graphQLRequest<
         ListManagementTasksQuery,
         ListManagementTasksQueryVariables
-      >(listManagementTasks, {
-        assignedToId: assignmentFilter.size
-          ? Array.from(assignmentFilter)
-          : undefined,
-        searchString: searchFilter ? searchFilter : undefined,
-        priority: priorityFilter.size ? Array.from(priorityFilter) : undefined,
-        propertyId: Properties.getState().current,
-        organizationId: Scope.getState().currentOrganizationId,
-      });
+      >(listManagementTasks, this.getGQLArgs());
       const tasks = ManagementTaskModel.EMPTY_TABLE();
       for (const task of response.listManagementTasks) {
         tasks[task.status][task.id] = task;
@@ -69,19 +52,6 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
     } finally {
       this.setLoading(false);
     }
-  }
-
-  public setTaskStatus(task: ManagementTask, status: ManagementTaskStatus) {
-    this.updateByID({ ...task, status });
-    const client = new UIClient({});
-    void client.executeQuery<
-      SetManagementTaskStatusMutation,
-      SetManagementTaskStatusMutationVariables
-    >(setManagementTaskStatus, {
-      status,
-      id: task.id,
-      organizationId: Scope.getState().currentOrganizationId,
-    });
   }
 
   public push(task: ManagementTask) {
@@ -117,8 +87,14 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
       copy[task.status][task.id] = task;
       state.tasks = copy;
       if (scopedTask && state.scopedTask.id === task.id) {
-        state.scopedTask = task;
+        this.setScopedTask(task);
       }
+    });
+  }
+
+  public setScopedTask(task: ManagementTask) {
+    this.update(state => {
+      state.scopedTask = task;
     });
   }
 
@@ -138,8 +114,14 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
       state.tasks = copy;
       state.scopedTask = task;
       if (scoped) {
-        state.scopedExpense = expense;
+        this.setScopedExpense(expense);
       }
+    });
+  }
+
+  public setScopedExpense(expense: Expense) {
+    this.update(state => {
+      state.scopedExpense = expense;
     });
   }
 
@@ -173,58 +155,6 @@ export class ManagementTaskModel extends PropertyScopeModel<IManagementTasks> {
         return tasks[status][id];
       }
     }
-  }
-
-  public setLoading(loading: boolean) {
-    this.set("loading", loading);
-  }
-
-  public readonly filterByPriority = this.debouncedFetchProxy(
-    (priorities: EnhancedSet<ManagementTaskPriority>) => {
-      this.set("priorityFilter", priorities);
-    },
-  );
-
-  public readonly filterByAssignee = this.debouncedFetchProxy(
-    (assignees: EnhancedSet<number>) => {
-      this.set("assignmentFilter", assignees);
-    },
-  );
-
-  public readonly search = this.debouncedFetchProxy((search?: string) => {
-    this.set("searchFilter", search);
-  });
-
-  public readonly clearPriorityFilter = this.debouncedFetchProxy(() => {
-    this.set("priorityFilter", new EnhancedSet());
-  });
-
-  public readonly clearAssignmentFilter = this.debouncedFetchProxy(() => {
-    this.set("assignmentFilter", new EnhancedSet());
-  });
-
-  public readonly resetAllFilters = this.debouncedFetchProxy(() => {
-    this.update(state => {
-      state.assignmentFilter = new EnhancedSet();
-      state.priorityFilter = new EnhancedSet();
-      state.searchFilter = undefined;
-    });
-  });
-
-  private debouncedFetchProxy<F extends (...args: any[]) => any>(func: F) {
-    return (...args: Parameters<F>) => {
-      func(...args);
-      void this.debouncer.execute();
-    };
-  }
-
-  public set<K extends keyof IManagementTasks>(
-    key: K,
-    value: IManagementTasks[K],
-  ) {
-    this.update(state => {
-      state[key] = value;
-    });
   }
 
   private static EMPTY_TABLE(): SortedTasks {

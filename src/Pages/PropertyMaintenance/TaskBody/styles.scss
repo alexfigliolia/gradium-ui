@@ -1,0 +1,81 @@
+@use "Styles/Variables";
+
+.task {
+  width: 100%;
+  border-radius: 0.5em;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  transition: box-shadow 0.4s;
+  background-color: var(--maintenance-task-background);
+  & .subtext {
+    font-size: 0.9em;
+    color: var(--text-color-lightest);
+  }
+  &>.title {
+    display: flex;
+    gap: 0.5em;
+    width: 100%;
+    justify-content: space-between;
+    &>.title-content {
+      display: flex;
+      gap: 0.25em;
+      flex-direction: column;
+      &>div {
+        font-size: 1em;
+        font-weight: 400;
+        &.titletext {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;  
+          overflow: hidden;
+        }
+        &.subtext {
+          font-size: 0.9em;
+          color: var(--text-color-lightest);
+          &>span {
+            font-weight: 500;
+            @include Variables.gradientText;
+          }
+        }
+      }
+    }
+    &>.priority-icon {
+      min-width: 1.75em;
+    }
+  }
+  &>.description {
+    font-size: 0.95em;
+    color: var(--text-color-light);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+  }
+  &>.attachments {
+    width: 100%;
+    &>.subtext {
+      margin-bottom: 0.5em;
+    }
+    &>.grid {
+      gap: 0.5em;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      &>div {
+        aspect-ratio: 1/1;
+        width: calc(25% - 0.4em);
+        max-width: 70px;
+        overflow: hidden;
+        border-radius: 0.5em;
+        box-shadow: var(--shadow-level-1);
+        &>img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+}
