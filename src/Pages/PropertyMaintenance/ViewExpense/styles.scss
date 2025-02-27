@@ -1,0 +1,14 @@
+@use "Styles/Variables";
+
+.expense-viewer.data-viewer.bottom-sheet.confirmation-sheet {
+  &>.sheet > .sheet-scroll-view > .sheet-content {
+    & .attachment-list.upload-grid {
+      @media (min-width: 550px) {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      @media (min-width: Variables.$small-vertical-tablet) {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+  }
+}

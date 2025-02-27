@@ -23,6 +23,7 @@ import {
   ExpenseViewer,
   type IState,
 } from "../ExpenseViewer";
+import "./styles.scss";
 
 export const ViewExpense = memo(
   function ViewExpense(_: Propless) {

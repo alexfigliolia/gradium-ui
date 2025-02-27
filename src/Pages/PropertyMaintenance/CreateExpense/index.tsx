@@ -50,7 +50,7 @@ export const CreateExpense = memo(
         className="create-expense"
         onUpdate={controller.cacheData}
         close={ManagementTasks.createExpense.close}>
-        <AttachFiles ref={uploader} className="expense-attachments" />
+        <AttachFiles ref={uploader} />
         <ActionButton
           onClick={onSubmit}
           error={!!error}
