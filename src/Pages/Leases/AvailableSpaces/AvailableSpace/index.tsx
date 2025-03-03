@@ -1,18 +1,13 @@
-import { Fragment, useCallback } from "react";
+import { useCallback } from "react";
 import type { AvailableRentableSpace } from "GraphQL/Types";
 import { AvailableSpaceCard } from "Pages/Leases/AvailableSpaceCard";
 import { Numbers } from "Tools/Numbers";
 
 export const AvailableSpace = ({
-  id,
-  beds,
-  baths,
-  name,
-  images,
-  propertyName,
   availableSince,
+  ...rest
 }: AvailableRentableSpace) => {
-  const renderElapsed = useCallback((elapsed: number) => {
+  const renderElapsed = useCallback((_: string, elapsed: number) => {
     if (elapsed === 0) {
       return (
         <p>
@@ -36,17 +31,10 @@ export const AvailableSpace = ({
 
   return (
     <AvailableSpaceCard
-      id={id}
-      name={name}
-      beds={beds}
-      baths={baths}
-      images={images}
       date={availableSince}
       className="available-now"
-      propertyName={propertyName}
-      renderChildren={(_, elapsed) => (
-        <Fragment>{renderElapsed(elapsed)}</Fragment>
-      )}
+      renderChildren={renderElapsed}
+      {...rest}
     />
   );
 };

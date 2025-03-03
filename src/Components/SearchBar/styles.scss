@@ -17,10 +17,13 @@
     background-position: 100% 50%;
   }
   &:has(>div>input:focus-within) {
-    box-shadow: #{Variables.$shadow-level-2} var(--theme-mid);
+    box-shadow: #{Variables.$shadow-level-2} rgba(from var(--theme-mid) r g b / 50%);
     &>div>button>svg {
       fill: url(#themeGradient);      
     }
+  }
+  &:has(>div>input:not(:placeholder-shown)) > div > button > svg {
+    fill: url(#themeGradient);      
   }
   &>div {
     height: 100%;

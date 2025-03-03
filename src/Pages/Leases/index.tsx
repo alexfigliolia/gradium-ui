@@ -4,9 +4,7 @@ import { GradientButton } from "Components/GradientButton";
 import { PermissedPropertyRoute } from "Components/PermissedPropertyRoute";
 import { Add } from "Icons/Add";
 import { Search } from "Icons/Search";
-import { LeaseRemaining } from "Layouts/Leases";
 import { Page, PageTitle } from "Layouts/Management";
-import type { ILease } from "Models/Leases";
 import { AdminRoutes } from "Router/AdminRoutes";
 import { NewLease } from "State/LeaseCRUD";
 import { Leases } from "State/Leases";
@@ -18,10 +16,6 @@ import { LeaseCreator } from "./LeaseCreator";
 import { LeaseList } from "./LeaseList";
 import { LeaseModifier } from "./LeaseModifier";
 import "./styles.scss";
-
-const progressRenderer = (lease: ILease) => (
-  <LeaseRemaining {...lease} labelFN={endDate => `Available on ${endDate}`} />
-);
 
 export default memo(function LeasesPage(_: Propless) {
   const openNewLease = useCallback(() => {

@@ -1,0 +1,82 @@
+@use "Styles/Variables";
+
+.availability-skeleton {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
+  &>.management-page-title {
+    &>h2 {
+      border-radius: 0.5em;
+      @include Variables.skeleton;
+      color: transparent;
+    }
+    &>div > search {
+      box-shadow: none;
+      @include Variables.skeleton;
+      &>div {
+        background-color: transparent;
+        &>button {
+          display: none;
+        }
+        &>input {
+          display: none;
+        }
+      }
+    }
+  }
+  &>.space-list > div > .available-space-card.skeleton {
+    &>.as-title {
+      &>div {
+        &>p,
+        &>span {
+          color: transparent;
+          @include Variables.skeleton;
+        }
+        &>p {
+          line-height: 1;
+          margin-bottom: 0.1em;
+          border-radius: 0.5em;
+          width: 40%;
+        }
+        &>span {
+          box-shadow: none;
+        }
+      }
+      &>h3 {
+        color: transparent;
+        @include Variables.skeleton;
+        border-radius: 0.5em;
+        max-width: 60%;
+      }
+    }
+    &> p {
+      line-height: 1;
+      margin-top: 0.6em;
+      color: transparent;
+      @include Variables.skeleton;
+      border-radius: 0.5em;
+    }
+    &>.as-stats {
+      &>div {
+        @include Variables.skeleton;
+        border-radius: 0.5em;
+        &>* {
+          opacity: 0;
+        }
+      }
+    }
+    &>.as-images {
+      &>div {
+        @include Variables.skeleton;
+        border-radius: 0.5em;
+      }
+    }
+    &>.gradient-border-button {
+      &> div {
+        color: transparent;
+        @include Variables.skeleton;
+      }
+    }
+  }
+}

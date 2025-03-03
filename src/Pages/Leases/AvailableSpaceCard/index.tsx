@@ -2,9 +2,12 @@ import { differenceInDays } from "date-fns";
 import type { ReactNode } from "react";
 import { useMemo } from "react";
 import { useClassNames } from "@figliolia/classnames";
+import { GradientBorderButton } from "Components/GradientBorderButton";
 import { type GradiumImage } from "GraphQL/Types";
 import { Bath } from "Icons/Bath";
 import { Bed } from "Icons/Bed";
+import { ImagePlaceholder } from "Icons/ImagePlaceholder";
+import { Leases } from "State/Leases";
 import { Dates } from "Tools/Dates";
 import "./styles.scss";
 
@@ -41,6 +44,19 @@ export const AvailableSpaceCard = ({
     [renderChildren, since, elapsed],
   );
 
+  const photos = useMemo(() => {
+    const p: (GradiumImage | null)[] = [];
+    const K = 5;
+    const N = Math.min(K, images.length);
+    for (let i = 0; i < N; i++) {
+      p.push(images[i]);
+    }
+    if (N === 0) {
+      p.push(null);
+    }
+    return p;
+  }, [images]);
+
   return (
     <article className={classes}>
       <div className="as-title">
@@ -61,15 +77,16 @@ export const AvailableSpaceCard = ({
           <Bath />
         </div>
       </div>
-      {!!images.length && (
-        <div className="as-images">
-          {images.map(img => (
-            <div key={img.id}>
-              <img src={img.url} alt="property" />
-            </div>
-          ))}
-        </div>
-      )}
+      <div className="as-images">
+        {photos.map((img, i) => (
+          <div key={i}>
+            {img ? <img src={img.url} alt="property" /> : <ImagePlaceholder />}
+          </div>
+        ))}
+      </div>
+      <GradientBorderButton onClick={Leases.newLease.open}>
+        Add Lease
+      </GradientBorderButton>
     </article>
   );
 };

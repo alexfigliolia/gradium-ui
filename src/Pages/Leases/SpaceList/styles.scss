@@ -1,6 +1,8 @@
 .space-list {
   width: 100%;
   position: relative;
+  opacity: 0;
+  animation: show 0.5s forwards;
   &::after {
     content: "";
     background-image: linear-gradient(to right, transparent, var(--background));
