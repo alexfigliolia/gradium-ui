@@ -35,7 +35,7 @@ export const PropertyLink = memo(function PropertyLink({
         <div>
           <Link
             to={configure}
-            text="Configure"
+            text="Manage"
             className="to-configure"
             icon={<SettingsFilled />}
           />
