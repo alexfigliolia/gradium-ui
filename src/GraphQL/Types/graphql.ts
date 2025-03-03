@@ -583,12 +583,14 @@ export type QueryFetchAvailableSpacesArgs = {
   cursor?: InputMaybe<Scalars["Int"]["input"]>;
   limit?: InputMaybe<Scalars["Int"]["input"]>;
   organizationId: Scalars["Int"]["input"];
+  search?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type QueryFetchSoonToBeAvailableSpacesArgs = {
   cursor?: InputMaybe<Scalars["Int"]["input"]>;
   limit?: InputMaybe<Scalars["Int"]["input"]>;
   organizationId: Scalars["Int"]["input"];
+  search?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type QueryGenerateDestroySignatureArgs = {
@@ -1398,6 +1400,7 @@ export type FetchAvailableSpacesQueryVariables = Exact<{
   organizationId: Scalars["Int"]["input"];
   cursor?: InputMaybe<Scalars["Int"]["input"]>;
   limit?: InputMaybe<Scalars["Int"]["input"]>;
+  search?: InputMaybe<Scalars["String"]["input"]>;
 }>;
 
 export type FetchAvailableSpacesQuery = {
@@ -1430,6 +1433,7 @@ export type FetchSoonToBeAvailableSpacesQueryVariables = Exact<{
   organizationId: Scalars["Int"]["input"];
   cursor?: InputMaybe<Scalars["Int"]["input"]>;
   limit?: InputMaybe<Scalars["Int"]["input"]>;
+  search?: InputMaybe<Scalars["String"]["input"]>;
 }>;
 
 export type FetchSoonToBeAvailableSpacesQuery = {
@@ -6530,6 +6534,14 @@ export const FetchAvailableSpacesDocument = {
           },
           type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
         },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "search" },
+          },
+          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+        },
       ],
       selectionSet: {
         kind: "SelectionSet",
@@ -6560,6 +6572,14 @@ export const FetchAvailableSpacesDocument = {
                 value: {
                   kind: "Variable",
                   name: { kind: "Name", value: "limit" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "search" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "search" },
                 },
               },
             ],
@@ -6674,6 +6694,14 @@ export const FetchSoonToBeAvailableSpacesDocument = {
           },
           type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
         },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "search" },
+          },
+          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+        },
       ],
       selectionSet: {
         kind: "SelectionSet",
@@ -6704,6 +6732,14 @@ export const FetchSoonToBeAvailableSpacesDocument = {
                 value: {
                   kind: "Variable",
                   name: { kind: "Name", value: "limit" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "search" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "search" },
                 },
               },
             ],

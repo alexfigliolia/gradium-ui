@@ -52,6 +52,7 @@ export const createInfiniteQueryOptions = <
           signal,
         ),
       queryKey: [name, variables],
+      placeholderData: prev => prev,
       ...options,
     });
   };

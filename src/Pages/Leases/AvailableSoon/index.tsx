@@ -1,18 +1,22 @@
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { soonToBeAvailableSpaceOptions } from "GraphQL/Queries/fetchSoonToBeAvailableSpaces.gql";
-import { currentOrganizationId, useScope } from "State/Scope";
+import { Scope } from "State/Scope";
 import type { Propless } from "Types/React";
-import { AvailabilitySection } from "../AvailabilitySection";
+import {
+  AvailabilityContext,
+  AvailabilitySection,
+} from "../AvailabilitySection";
 import { SpaceSoonToBeAvailable } from "./SpaceSoonToBeAvailable";
 
 export const AvailableSoon = (_: Propless) => {
-  const organizationId = useScope(currentOrganizationId);
-  const { data, isLoading, error } = useInfiniteQuery(
+  const { search } = useContext(AvailabilityContext);
+  const { data, isLoading, isError, isFetching } = useInfiniteQuery(
     soonToBeAvailableSpaceOptions(
       {
-        organizationId,
+        search,
         limit: 20,
+        organizationId: Scope.getState().currentOrganizationId,
       },
       {
         getNextPageParam: page => page.fetchSoonToBeAvailableSpaces.cursor,
@@ -29,9 +33,9 @@ export const AvailableSoon = (_: Propless) => {
   return (
     <AvailabilitySection
       list={list}
-      error={!!error}
-      loading={isLoading}
+      error={isError}
       title="Available Soon"
+      loading={isLoading || isFetching}
       renderItem={space => <SpaceSoonToBeAvailable key={space.id} {...space} />}
     />
   );

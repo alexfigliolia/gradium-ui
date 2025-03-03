@@ -6,11 +6,17 @@ import type {
 import { createInfiniteQueryOptions } from "Tools/createQueryOptions";
 
 export const fetchAvailableSpaces = gql`
-  query fetchAvailableSpaces($organizationId: Int!, $cursor: Int, $limit: Int) {
+  query fetchAvailableSpaces(
+    $organizationId: Int!
+    $cursor: Int
+    $limit: Int
+    $search: String
+  ) {
     fetchAvailableSpaces(
       organizationId: $organizationId
       cursor: $cursor
       limit: $limit
+      search: $search
     ) {
       list {
         id

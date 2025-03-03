@@ -26,6 +26,7 @@ type Query {
   ): [ManagementTask!]!
   fetchAvailableSpaces(
     organizationId: Int!
+    search: String
     limit: Int
     cursor: Int
   ): PaginatedAvailableLivingSpaces!
@@ -48,6 +49,7 @@ type Query {
   adminBasicPropertiesList(organizationId: Int!): [AdminBasicProperty!]!
   fetchSoonToBeAvailableSpaces(
     organizationId: Int!
+    search: String
     limit: Int
     cursor: Int
   ): PaginatedAvailableSoonLivingSpaces!

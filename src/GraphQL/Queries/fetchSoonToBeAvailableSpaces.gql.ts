@@ -10,11 +10,13 @@ export const fetchSoonToBeAvailableSpaces = gql`
     $organizationId: Int!
     $cursor: Int
     $limit: Int
+    $search: String
   ) {
     fetchSoonToBeAvailableSpaces(
       organizationId: $organizationId
       cursor: $cursor
       limit: $limit
+      search: $search
     ) {
       list {
         id

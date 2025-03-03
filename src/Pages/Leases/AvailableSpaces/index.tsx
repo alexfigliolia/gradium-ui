@@ -1,15 +1,20 @@
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { availableSpacesOptions } from "GraphQL/Queries/fetchAvailableSpaces.gql";
 import { Scope } from "State/Scope";
 import type { Propless } from "Types/React";
-import { AvailabilitySection } from "../AvailabilitySection";
+import {
+  AvailabilityContext,
+  AvailabilitySection,
+} from "../AvailabilitySection";
 import { AvailableSpace } from "./AvailableSpace";
 
 export const AvailableSpaces = (_: Propless) => {
-  const { data, isLoading, error } = useInfiniteQuery(
+  const { search } = useContext(AvailabilityContext);
+  const { data, isLoading, error, isFetching } = useInfiniteQuery(
     availableSpacesOptions(
       {
+        search,
         limit: 20,
         organizationId: Scope.getState().currentOrganizationId,
       },
@@ -28,8 +33,8 @@ export const AvailableSpaces = (_: Propless) => {
     <AvailabilitySection
       list={list}
       error={!!error}
-      loading={isLoading}
       title="Available Spaces"
+      loading={isLoading || isFetching}
       renderItem={space => <AvailableSpace key={space.id} {...space} />}
     />
   );
