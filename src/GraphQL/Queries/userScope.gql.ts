@@ -1,7 +1,7 @@
 import { gql } from "graphql-request";
 import { LoggedInUserFragment } from "GraphQL/Fragments/loggedInUser.gql";
 import type { UserScopeQuery, UserScopeQueryVariables } from "GraphQL/Types";
-import { createQueryFN } from "Tools/createQuery";
+import { createQueryOptions } from "Tools/createQueryOptions";
 
 export const userScope = gql`
   ${LoggedInUserFragment}
@@ -12,7 +12,7 @@ export const userScope = gql`
   }
 `;
 
-export const userScopeOptions = createQueryFN<
+export const userScopeOptions = createQueryOptions<
   UserScopeQuery,
   UserScopeQueryVariables
 >(userScope)({});

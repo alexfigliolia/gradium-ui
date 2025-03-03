@@ -2,7 +2,6 @@ import { memo, useCallback } from "react";
 import { useUnmount } from "@figliolia/react-hooks";
 import { GradientButton } from "Components/GradientButton";
 import { PermissedPropertyRoute } from "Components/PermissedPropertyRoute";
-import { SearchBar } from "Components/SearchBar";
 import { Add } from "Icons/Add";
 import { Search } from "Icons/Search";
 import { LeaseRemaining } from "Layouts/Leases";
@@ -12,11 +11,12 @@ import { AdminRoutes } from "Router/AdminRoutes";
 import { NewLease } from "State/LeaseCRUD";
 import { Leases } from "State/Leases";
 import type { Propless } from "Types/React";
+import { AvailableSoon } from "./AvailableSoon";
+import { AvailableSpaces } from "./AvailableSpaces";
 import { Filters } from "./Filters";
 import { LeaseCreator } from "./LeaseCreator";
 import { LeaseList } from "./LeaseList";
 import { LeaseModifier } from "./LeaseModifier";
-import { SpaceList } from "./SpaceList";
 import "./styles.scss";
 
 const progressRenderer = (lease: ILease) => (
@@ -38,14 +38,8 @@ export default memo(function LeasesPage(_: Propless) {
       fallback=".."
       requirements={AdminRoutes.access("PROPERTY_LEASES")}>
       <Page className="leases-section">
-        <PageTitle title="Available Spaces" className="lease-title">
-          <SearchBar placeholder="Search" />
-        </PageTitle>
-        <SpaceList />
-        <PageTitle title="Available Soon" className="lease-title">
-          <SearchBar placeholder="Search" />
-        </PageTitle>
-        <SpaceList className="soon" childFN={progressRenderer} />
+        <AvailableSpaces />
+        <AvailableSoon />
         <PageTitle title="Leases" className="lease-title">
           <GradientButton onClick={openNewLease}>
             <Add />

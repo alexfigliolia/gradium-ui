@@ -32,4 +32,6 @@ export interface ILeases {
   newLease: boolean;
   editLease: boolean;
   leaseFilters: boolean;
+  availableSpaces: LivingSpace[];
+  availableSoon: LivingSpace[];
 }

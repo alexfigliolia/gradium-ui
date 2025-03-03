@@ -31,9 +31,8 @@ export class CodeGen {
   }
 
   private static lint() {
-    return new ChildProcess(
-      `yarn eslint --fix --ext .ts ${this.TYPES_DIRECTORY}`,
-    ).handler;
+    return new ChildProcess(`yarn prettier --write ${this.TYPES_DIRECTORY}`)
+      .handler;
   }
 
   private static get schemaPath() {

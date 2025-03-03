@@ -26,8 +26,12 @@ export class LeasesModel extends PropertyScopeModel<ILeases> {
       editLease: false,
       leaseFilters: false,
       leases: LeasesModel.LEASES,
+      availableSoon: [],
+      availableSpaces: [],
     });
   }
+
+  public initialize() {}
 
   public readonly previous = () => {
     this.update(state => {

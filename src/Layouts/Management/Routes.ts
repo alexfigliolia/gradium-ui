@@ -12,7 +12,7 @@ export class PropertyManagementRoutes {
       list.push("configure");
     }
     if (accessor(AdminRoutes.access("PROPERTY_LEASES"))) {
-      list.push("leases");
+      list.push("leasing");
     }
     if (accessor(AdminRoutes.access("PROPERTY_AMENITIES"))) {
       list.push("amenity-reservations");
@@ -29,7 +29,7 @@ export class PropertyManagementRoutes {
       return "/configure";
     }
     if (accessor(AdminRoutes.access("PROPERTY_LEASES"))) {
-      return "/leases";
+      return "/leasing";
     }
     if (accessor(AdminRoutes.access("PROPERTY_AMENITIES"))) {
       return "/amenity-reservations";

@@ -3,7 +3,7 @@ import type {
   VerifySessionQuery,
   VerifySessionQueryVariables,
 } from "GraphQL/Types";
-import { createQueryFN } from "Tools/createQuery";
+import { createQueryOptions } from "Tools/createQueryOptions";
 
 export const verifySession = gql`
   query verifySession {
@@ -11,7 +11,7 @@ export const verifySession = gql`
   }
 `;
 
-export const verifySessionOptions = createQueryFN<
+export const verifySessionOptions = createQueryOptions<
   VerifySessionQuery,
   VerifySessionQueryVariables
 >(verifySession, {

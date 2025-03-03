@@ -6,16 +6,51 @@ schema {
 scalar DateTime
 type Query {
   userScope: LoggedInUser!
+  getLeases(organizationId: Int!, limit: Int, cursor: Int): [PaginatedLeases!]!
   listPeople(organizationId: Int!, limit: Int, cursor: Int): PaginatedPeople!
   getAmenities(propertyId: Int!, organizationId: Int!): [Amenity!]!
   verifySession: Boolean!
   getLivingSpaces(propertyId: Int!, organizationId: Int!): [LivingSpace!]!
-  listStaffMembers(organizationId: Int!, limit: Int, cursor: Int): PaginatedStaff!
-  listManagementTasks(organizationId: Int!, propertyId: Int, priority: [ManagementTaskPriority], assignedToId: [Int], searchString: String, archive: Boolean): [ManagementTask!]!
-  fetchAmenityReservations(propertyId: Int!, organizationId: Int!, date: DateTime!, amenityIds: [Int!], reservers: [Int!]): [AmenityReservation!]!
-  generateUploadSignature(organizationId: Int!, type: GradiumImageType!): UploadSignature!
-  generateDestroySignature(organizationId: Int!, publicId: String!, type: GradiumImageType!): DestroySignature!
+  listStaffMembers(
+    organizationId: Int!
+    limit: Int
+    cursor: Int
+  ): PaginatedStaff!
+  listManagementTasks(
+    organizationId: Int!
+    propertyId: Int
+    priority: [ManagementTaskPriority]
+    assignedToId: [Int]
+    searchString: String
+    archive: Boolean
+  ): [ManagementTask!]!
+  fetchAvailableSpaces(
+    organizationId: Int!
+    limit: Int
+    cursor: Int
+  ): PaginatedAvailableLivingSpaces!
+  fetchAmenityReservations(
+    propertyId: Int!
+    organizationId: Int!
+    date: DateTime!
+    amenityIds: [Int!]
+    reservers: [Int!]
+  ): [AmenityReservation!]!
+  generateUploadSignature(
+    organizationId: Int!
+    type: GradiumImageType!
+  ): UploadSignature!
+  generateDestroySignature(
+    organizationId: Int!
+    publicId: String!
+    type: GradiumImageType!
+  ): DestroySignature!
   adminBasicPropertiesList(organizationId: Int!): [AdminBasicProperty!]!
+  fetchSoonToBeAvailableSpaces(
+    organizationId: Int!
+    limit: Int
+    cursor: Int
+  ): PaginatedAvailableSoonLivingSpaces!
 }
 type LoggedInUser {
   id: Int!
@@ -37,13 +72,26 @@ type OrgAffiliation {
 type PersonRole {
   role: PersonRoleType!
 }
-type PaginatedPeople {
+type PaginatedLeases {
+  list: [Lease!]!
   cursor: Int
-  list: [Person!]!
+}
+type Lease {
+  id: Int!
+  price: Float!
+  lessees: [Person!]!
+  paymentFrequency: RentPaymentFrequency!
+  start: DateTime!
+  end: DateTime!
+  status: LeaseStatus!
 }
 type Person {
   id: Int!
   name: String!
+}
+type PaginatedPeople {
+  list: [Person!]!
+  cursor: Int
 }
 type Amenity {
   id: Int!
@@ -73,8 +121,8 @@ type LivingSpace {
   floorPlans: [GradiumImage!]!
 }
 type PaginatedStaff {
-  cursor: Int
   list: [StaffMember!]!
+  cursor: Int
 }
 type StaffMember {
   id: Int!
@@ -100,6 +148,23 @@ type Expense {
   title: String!
   description: String!
   attachments: [GradiumImage!]!
+}
+type PaginatedAvailableLivingSpaces {
+  list: [AvailableRentableSpace!]!
+  cursor: Int
+}
+type AvailableRentableSpace {
+  id: Int!
+  name: String!
+  type: LivingSpaceType!
+  beds: Int!
+  baths: Float!
+  size: String!
+  propertyId: Int!
+  images: [GradiumImage!]!
+  floorPlans: [GradiumImage!]!
+  propertyName: String!
+  availableSince: DateTime!
 }
 type AmenityReservation {
   id: Int!
@@ -146,36 +211,175 @@ type PropertyAddon {
   id: Int!
   type: PropertyAddonType!
 }
+type PaginatedAvailableSoonLivingSpaces {
+  list: [AvailableSoonRentableSpace!]!
+  cursor: Int
+}
+type AvailableSoonRentableSpace {
+  id: Int!
+  name: String!
+  type: LivingSpaceType!
+  beds: Int!
+  baths: Float!
+  size: String!
+  propertyId: Int!
+  images: [GradiumImage!]!
+  floorPlans: [GradiumImage!]!
+  propertyName: String!
+  availableOn: DateTime!
+  lease: LeaseSnapShot!
+}
+type LeaseSnapShot {
+  start: DateTime!
+  end: DateTime!
+  status: LeaseStatus!
+}
 type Mutation {
   login(email: String!, password: String!): LoggedInUser!
   logout: Boolean!
   linkEmail(userId: Int!, email: String!): BasicUser!
-  saveImage(propertyId: Int!, organizationId: Int!, entityId: Int!, url: String!, type: GradiumImageType!): GradiumImage!
-  deleteImage(propertyId: Int!, organizationId: Int!, id: Int!, type: GradiumImageType!): GradiumImage!
+  saveImage(
+    propertyId: Int!
+    organizationId: Int!
+    entityId: Int!
+    url: String!
+    type: GradiumImageType!
+  ): GradiumImage!
+  deleteImage(
+    propertyId: Int!
+    organizationId: Int!
+    id: Int!
+    type: GradiumImageType!
+  ): GradiumImage!
   deleteEmail(userId: Int!, email: String!): BasicUser!
   updateEmail(userId: Int!, previous: String!, next: String!): BasicUser!
   resetPassword(userId: Int!, previous: String!, next: String!): Boolean!
   createAccount(name: String!, email: String!, password: String!): LoggedInUser!
   forgotPassword(email: String!): String!
   deleteAmenity(propertyId: Int!, organizationId: Int!, id: Int!): Amenity!
-  createProperty(organizationId: Int!, name: String!, address1: String!, address2: String!, city: String!, state: String!, zipCode: String!): AdminBasicProperty!
-  createExpense(taskId: Int!, organizationId: Int!, propertyId: Int, cost: String!, title: String!, description: String!): Expense!
-  updateExpense(id: Int!, organizationId: Int!, propertyId: Int, cost: String!, title: String!, description: String!): Expense!
+  createProperty(
+    organizationId: Int!
+    name: String!
+    address1: String!
+    address2: String!
+    city: String!
+    state: String!
+    zipCode: String!
+  ): AdminBasicProperty!
+  createExpense(
+    taskId: Int!
+    organizationId: Int!
+    propertyId: Int
+    cost: String!
+    title: String!
+    description: String!
+  ): Expense!
+  updateExpense(
+    id: Int!
+    organizationId: Int!
+    propertyId: Int
+    cost: String!
+    title: String!
+    description: String!
+  ): Expense!
   deleteExpense(id: Int!, organizationId: Int!, propertyId: Int): Boolean!
   inviteStaffMember(organizationId: Int!, email: String!): Boolean!
-  deleteLivingSpace(propertyId: Int!, organizationId: Int!, id: Int!): LivingSpace!
+  deleteLivingSpace(
+    propertyId: Int!
+    organizationId: Int!
+    id: Int!
+  ): LivingSpace!
   setOrganizationName(name: String!, organizationId: Int!): Boolean!
-  modifyPropertyAddons(propertyId: Int!, organizationId: Int!, additions: [PropertyAddonType!]!, deletions: [Int!]!): [PropertyAddon!]!
-  createOrUpdateAmenity(propertyId: Int!, organizationId: Int!, id: Int, name: String!, billed: BillFrequency!, open: DateTime!, close: DateTime!, price: String!, capacity: Int!): Amenity!
-  createManagementTask(organizationId: Int!, propertyId: Int, title: String!, description: String!, status: ManagementTaskStatus!, priority: ManagementTaskPriority!, assignedToId: Int): ManagementTask!
-  updateManagementTask(organizationId: Int!, propertyId: Int, title: String!, description: String!, status: ManagementTaskStatus!, priority: ManagementTaskPriority!, assignedToId: Int, id: Int!): ManagementTask!
-  deleteManagementTask(organizationId: Int!, propertyId: Int, id: Int!): Boolean!
-  setManagementTaskStatus(id: Int!, organizationId: Int!, status: ManagementTaskStatus!): Boolean!
-  updateBasicPropertyInfo(propertyId: Int!, organizationId: Int!, name: String!, address1: String!, address2: String!, city: String!, state: String!, zipCode: String!): AdminBasicProperty!
-  createAmenityReservation(propertyId: Int!, organizationId: Int!, amenityId: Int!, personId: Int!, start: DateTime!, end: DateTime!, charge: Boolean): AmenityReservation!
-  cancelAmenityReservation(id: Int!, propertyId: Int!, organizationId: Int!): Int!
-  updateAmenityReservation(id: Int!, propertyId: Int!, organizationId: Int!, amenityId: Int!, personId: Int!, start: DateTime!, end: DateTime!, charge: Boolean): AmenityReservation!
-  createOrUpdateLivingSpace(propertyId: Int!, organizationId: Int!, id: Int, name: String!, type: LivingSpaceType!, beds: Int!, baths: Float!, size: String!): LivingSpace!
+  modifyPropertyAddons(
+    propertyId: Int!
+    organizationId: Int!
+    additions: [PropertyAddonType!]!
+    deletions: [Int!]!
+  ): [PropertyAddon!]!
+  createOrUpdateAmenity(
+    propertyId: Int!
+    organizationId: Int!
+    id: Int
+    name: String!
+    billed: BillFrequency!
+    open: DateTime!
+    close: DateTime!
+    price: String!
+    capacity: Int!
+  ): Amenity!
+  createManagementTask(
+    organizationId: Int!
+    propertyId: Int
+    title: String!
+    description: String!
+    status: ManagementTaskStatus!
+    priority: ManagementTaskPriority!
+    assignedToId: Int
+  ): ManagementTask!
+  updateManagementTask(
+    organizationId: Int!
+    propertyId: Int
+    title: String!
+    description: String!
+    status: ManagementTaskStatus!
+    priority: ManagementTaskPriority!
+    assignedToId: Int
+    id: Int!
+  ): ManagementTask!
+  deleteManagementTask(
+    organizationId: Int!
+    propertyId: Int
+    id: Int!
+  ): Boolean!
+  setManagementTaskStatus(
+    id: Int!
+    organizationId: Int!
+    status: ManagementTaskStatus!
+  ): Boolean!
+  updateBasicPropertyInfo(
+    propertyId: Int!
+    organizationId: Int!
+    name: String!
+    address1: String!
+    address2: String!
+    city: String!
+    state: String!
+    zipCode: String!
+  ): AdminBasicProperty!
+  createAmenityReservation(
+    propertyId: Int!
+    organizationId: Int!
+    amenityId: Int!
+    personId: Int!
+    start: DateTime!
+    end: DateTime!
+    charge: Boolean
+  ): AmenityReservation!
+  cancelAmenityReservation(
+    id: Int!
+    propertyId: Int!
+    organizationId: Int!
+  ): Int!
+  updateAmenityReservation(
+    id: Int!
+    propertyId: Int!
+    organizationId: Int!
+    amenityId: Int!
+    personId: Int!
+    start: DateTime!
+    end: DateTime!
+    charge: Boolean
+  ): AmenityReservation!
+  createOrUpdateLivingSpace(
+    propertyId: Int!
+    organizationId: Int!
+    id: Int
+    name: String!
+    type: LivingSpaceType!
+    beds: Int!
+    baths: Float!
+    size: String!
+  ): LivingSpace!
 }
 type BasicUser {
   name: String!
@@ -186,6 +390,17 @@ enum PersonRoleType {
   manager
   maintenance
   resident
+}
+enum RentPaymentFrequency {
+  day
+  month
+  year
+}
+enum LeaseStatus {
+  complete
+  inProgress
+  terminated
+  pending
 }
 enum BillFrequency {
   hour
@@ -224,8 +439,8 @@ enum PropertyAddonType {
 }
 "Exposes a URL that specifies the behavior of this scalar."
 directive @specifiedBy(
-    "The URL that specifies the behavior of this scalar."
-    url: String!
-  ) on SCALAR
+  "The URL that specifies the behavior of this scalar."
+  url: String!
+) on SCALAR
 "Indicates exactly one field must be supplied and this field must not be `null`."
 directive @oneOf on INPUT_OBJECT

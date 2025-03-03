@@ -18,3 +18,5 @@ export const grants = (scope: IScope) => {
 export const coreMobileMenu = (state: IScope) => {
   return state.coreMobileMenu;
 };
+export const currentOrganizationId = (state: IScope) =>
+  state.currentOrganizationId;

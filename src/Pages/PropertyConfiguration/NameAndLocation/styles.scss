@@ -30,6 +30,7 @@
     }
   }
   &>.loading-action {
+    padding: 0;
     &>div:not(.triangle-loader) {
       height: 100%;
       width: 100%;
