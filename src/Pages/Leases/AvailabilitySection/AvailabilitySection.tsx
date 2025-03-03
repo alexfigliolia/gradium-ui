@@ -1,6 +1,7 @@
 import {
   Fragment,
   type ReactNode,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -20,6 +21,7 @@ export const AvailabilitySection = <T,>({
   title,
   loading,
   renderItem,
+  onScrollEnd,
 }: Props<T>) => {
   const initialLoad = useRef(true);
   const { search, onSearch } = useContext(AvailabilityContext);
@@ -28,6 +30,12 @@ export const AvailabilitySection = <T,>({
     () => list.map(space => renderItem(space)),
     [list, renderItem],
   );
+
+  const handleScrollEnd = useCallback(() => {
+    if (!loading) {
+      onScrollEnd();
+    }
+  }, [loading, onScrollEnd]);
 
   useEffect(() => {
     if (initialLoad.current && !loading) {
@@ -54,7 +62,9 @@ export const AvailabilitySection = <T,>({
           onChange={onSearch}
         />
       </PageTitle>
-      <SpaceList>{items.length ? items : <DummySpaceCard />}</SpaceList>
+      <SpaceList onScrollEnd={handleScrollEnd}>
+        {items.length ? items : <DummySpaceCard />}
+      </SpaceList>
     </Fragment>
   );
 };
@@ -64,5 +74,6 @@ interface Props<T> {
   title: string;
   loading: boolean;
   error: boolean;
+  onScrollEnd: Callback;
   renderItem: Callback<[item: T], ReactNode>;
 }
