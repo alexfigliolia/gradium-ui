@@ -11,6 +11,10 @@
   }
   &>.file-uploader {
     text-decoration: underline;
+    &:has(input:disabled) {
+      opacity: 0.25;
+      text-decoration: none;
+    }
   }
   &>button {
     border: none;
