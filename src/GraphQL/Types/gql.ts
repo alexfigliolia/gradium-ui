@@ -102,6 +102,8 @@ const documents = {
     types.GetAmenitiesDocument,
   "\n  \n  query getLivingSpaces($propertyId: Int!, $organizationId: Int!) {\n    getLivingSpaces(propertyId: $propertyId, organizationId: $organizationId) {\n      ...LivingSpaceFragment\n    }\n  }\n":
     types.GetLivingSpacesDocument,
+  "\n  query identifySpaces(\n    $propertyId: Int!\n    $organizationId: Int!\n    $cursor: Int\n    $limit: Int\n  ) {\n    identifySpaces(\n      propertyId: $propertyId\n      organizationId: $organizationId\n      cursor: $cursor\n      limit: $limit\n    ) {\n      cursor\n      list {\n        id\n        name\n      }\n    }\n  }\n":
+    types.IdentifySpacesDocument,
   "\n  \n  query listManagementTasks(\n    $organizationId: Int!\n    $propertyId: Int\n    $priority: [ManagementTaskPriority]\n    $assignedToId: [Int]\n    $searchString: String\n    $archive: Boolean\n  ) {\n    listManagementTasks(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      priority: $priority\n      assignedToId: $assignedToId\n      searchString: $searchString\n      archive: $archive\n    ) {\n      ...ManagementTaskFragment\n    }\n  }\n":
     types.ListManagementTasksDocument,
   "\n  query listPeople($organizationId: Int!, $cursor: Int, $limit: Int) {\n    listPeople(\n      organizationId: $organizationId\n      cursor: $cursor\n      limit: $limit\n    ) {\n      cursor\n      list {\n        id\n        name\n      }\n    }\n  }\n":
@@ -398,6 +400,12 @@ export function gql(
 export function gql(
   source: "\n  \n  query getLivingSpaces($propertyId: Int!, $organizationId: Int!) {\n    getLivingSpaces(propertyId: $propertyId, organizationId: $organizationId) {\n      ...LivingSpaceFragment\n    }\n  }\n",
 ): (typeof documents)["\n  \n  query getLivingSpaces($propertyId: Int!, $organizationId: Int!) {\n    getLivingSpaces(propertyId: $propertyId, organizationId: $organizationId) {\n      ...LivingSpaceFragment\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: "\n  query identifySpaces(\n    $propertyId: Int!\n    $organizationId: Int!\n    $cursor: Int\n    $limit: Int\n  ) {\n    identifySpaces(\n      propertyId: $propertyId\n      organizationId: $organizationId\n      cursor: $cursor\n      limit: $limit\n    ) {\n      cursor\n      list {\n        id\n        name\n      }\n    }\n  }\n",
+): (typeof documents)["\n  query identifySpaces(\n    $propertyId: Int!\n    $organizationId: Int!\n    $cursor: Int\n    $limit: Int\n  ) {\n    identifySpaces(\n      propertyId: $propertyId\n      organizationId: $organizationId\n      cursor: $cursor\n      limit: $limit\n    ) {\n      cursor\n      list {\n        id\n        name\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

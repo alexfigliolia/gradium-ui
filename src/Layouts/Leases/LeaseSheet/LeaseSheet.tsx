@@ -2,29 +2,23 @@ import type { FormEvent } from "react";
 import { memo, useCallback, useMemo, useRef } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import { createUseState } from "@figliolia/react-galena";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { ActionButton } from "Components/ActionButton";
 import { Confirmation } from "Components/Confirmation";
 import { DateInput } from "Components/DateInput";
-import { DropDown } from "Components/DropDown";
 import { Input } from "Components/Input";
+import { PaginatedDropDown } from "Components/PaginatedDropDown";
+import { identifySpacesOptions } from "GraphQL/Queries/identifySpaces.gql";
 import { Building } from "Icons/Building";
 import { Clock } from "Icons/Clock";
 import { Price } from "Icons/Price";
 import type { LeaseCRUDModel } from "Models/LeaseCRUD";
 import { selectFormValues } from "State/LeaseCRUD";
-import { Devices } from "Tools/Devices";
+import { Properties } from "State/Properties";
+import { Scope } from "State/Scope";
 import type { Callback } from "Types/Generics";
 import { Lessee } from "./Lessee";
 import "./styles.scss";
-
-const spaces = Array.from({ length: 10 }, (_, i) => ({
-  label: (202 + i).toString(),
-  value: i.toString(),
-}));
-
-if (Devices.IS_MOBILE_BROWSER) {
-  spaces.unshift({ label: "", value: "" });
-}
 
 export default memo(function LeaseSheet({
   open,
@@ -49,20 +43,47 @@ export default memo(function LeaseSheet({
 
   const classes = useClassNames("lease-sheet", className);
 
+  const { data, isFetching, fetchNextPage } = useInfiniteQuery(
+    identifySpacesOptions(
+      {
+        limit: 10,
+        propertyId: Properties.getState().current,
+        organizationId: Scope.getState().currentOrganizationId,
+      },
+      {
+        getNextPageParam: data => data.identifySpaces.cursor,
+        getPreviousPageParam: data => data.identifySpaces.cursor,
+      },
+    ),
+  );
+
+  const spaces = useMemo(
+    () =>
+      data?.pages?.flatMap?.(p =>
+        p.identifySpaces.list.map(item => ({
+          label: item.name,
+          value: item.id.toString(),
+        })),
+      ) ?? [],
+    [data?.pages],
+  );
+
   return (
     <Confirmation className={classes} open={open} close={close}>
       <h2>{title}</h2>
       {subtitle && <p>{subtitle}</p>}
       <form ref={form} className="options" onSubmit={onSubmit}>
-        <DropDown
+        <PaginatedDropDown
           value={unit}
           label="Space"
           list={spaces}
           multiple={false}
+          loading={isFetching}
           name="living-space"
           icon={<Building />}
           title="Living Spaces"
           onChange={model.setUnit}
+          fetchNextPage={fetchNextPage}
         />
         <h3>Term</h3>
         <div className="split">

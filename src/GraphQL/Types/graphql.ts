@@ -62,10 +62,10 @@ export type Amenity = {
 
 export type AmenityReservation = {
   __typename?: "AmenityReservation";
-  amenity: EntitySnapShot;
+  amenity: Identity;
   end: Scalars["DateTime"]["output"];
   id: Scalars["Int"]["output"];
-  person: EntitySnapShot;
+  person: Identity;
   start: Scalars["DateTime"]["output"];
 };
 
@@ -123,18 +123,12 @@ export type DestroySignature = {
   timestamp: Scalars["Int"]["output"];
 };
 
-export type EntitySnapShot = {
-  __typename?: "EntitySnapShot";
-  id: Scalars["Int"]["output"];
-  name: Scalars["String"]["output"];
-};
-
 export type Expense = {
   __typename?: "Expense";
   attachments: Array<GradiumImage>;
   cost: Scalars["String"]["output"];
   createdAt: Scalars["DateTime"]["output"];
-  createdBy: Person;
+  createdBy: Identity;
   description: Scalars["String"]["output"];
   id: Scalars["Int"]["output"];
   title: Scalars["String"]["output"];
@@ -156,11 +150,17 @@ export enum GradiumImageType {
   TaskImage = "taskImage",
 }
 
+export type Identity = {
+  __typename?: "Identity";
+  id: Scalars["Int"]["output"];
+  name: Scalars["String"]["output"];
+};
+
 export type Lease = {
   __typename?: "Lease";
   end: Scalars["DateTime"]["output"];
   id: Scalars["Int"]["output"];
-  lessees: Array<Person>;
+  lessees: Array<Identity>;
   paymentFrequency: RentPaymentFrequency;
   price: Scalars["Float"]["output"];
   start: Scalars["DateTime"]["output"];
@@ -214,9 +214,9 @@ export type LoggedInUser = {
 
 export type ManagementTask = {
   __typename?: "ManagementTask";
-  assignedTo?: Maybe<StaffMember>;
+  assignedTo?: Maybe<Identity>;
   createdAt: Scalars["DateTime"]["output"];
-  createdBy: Person;
+  createdBy: Identity;
   description: Scalars["String"]["output"];
   expenses: Array<Expense>;
   id: Scalars["Int"]["output"];
@@ -481,12 +481,6 @@ export type MutationUpdateManagementTaskArgs = {
   title: Scalars["String"]["input"];
 };
 
-export type OrgAffiliation = {
-  __typename?: "OrgAffiliation";
-  id: Scalars["Int"]["output"];
-  name: Scalars["String"]["output"];
-};
-
 export type PaginatedAvailableLivingSpaces = {
   __typename?: "PaginatedAvailableLivingSpaces";
   cursor?: Maybe<Scalars["Int"]["output"]>;
@@ -499,28 +493,16 @@ export type PaginatedAvailableSoonLivingSpaces = {
   list: Array<AvailableSoonRentableSpace>;
 };
 
+export type PaginatedIdentities = {
+  __typename?: "PaginatedIdentities";
+  cursor?: Maybe<Scalars["Int"]["output"]>;
+  list: Array<Identity>;
+};
+
 export type PaginatedLeases = {
   __typename?: "PaginatedLeases";
   cursor?: Maybe<Scalars["Int"]["output"]>;
   list: Array<Lease>;
-};
-
-export type PaginatedPeople = {
-  __typename?: "PaginatedPeople";
-  cursor?: Maybe<Scalars["Int"]["output"]>;
-  list: Array<Person>;
-};
-
-export type PaginatedStaff = {
-  __typename?: "PaginatedStaff";
-  cursor?: Maybe<Scalars["Int"]["output"]>;
-  list: Array<StaffMember>;
-};
-
-export type Person = {
-  __typename?: "Person";
-  id: Scalars["Int"]["output"];
-  name: Scalars["String"]["output"];
 };
 
 export type PersonRole = {
@@ -560,9 +542,10 @@ export type Query = {
   getAmenities: Array<Amenity>;
   getLeases: Array<PaginatedLeases>;
   getLivingSpaces: Array<LivingSpace>;
+  identifySpaces: PaginatedIdentities;
   listManagementTasks: Array<ManagementTask>;
-  listPeople: PaginatedPeople;
-  listStaffMembers: PaginatedStaff;
+  listPeople: PaginatedIdentities;
+  listStaffMembers: PaginatedIdentities;
   userScope: LoggedInUser;
   verifySession: Scalars["Boolean"]["output"];
 };
@@ -620,6 +603,13 @@ export type QueryGetLivingSpacesArgs = {
   propertyId: Scalars["Int"]["input"];
 };
 
+export type QueryIdentifySpacesArgs = {
+  cursor?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+  organizationId: Scalars["Int"]["input"];
+  propertyId: Scalars["Int"]["input"];
+};
+
 export type QueryListManagementTasksArgs = {
   archive?: InputMaybe<Scalars["Boolean"]["input"]>;
   assignedToId?: InputMaybe<Array<InputMaybe<Scalars["Int"]["input"]>>>;
@@ -647,12 +637,6 @@ export enum RentPaymentFrequency {
   Year = "year",
 }
 
-export type StaffMember = {
-  __typename?: "StaffMember";
-  id: Scalars["Int"]["output"];
-  name: Scalars["String"]["output"];
-};
-
 export type UploadSignature = {
   __typename?: "UploadSignature";
   api_key: Scalars["String"]["output"];
@@ -664,7 +648,7 @@ export type UploadSignature = {
 
 export type UserAffiliation = {
   __typename?: "UserAffiliation";
-  organization: OrgAffiliation;
+  organization: Identity;
   roles: Array<PersonRole>;
 };
 
@@ -706,8 +690,8 @@ export type AmenityReservationFragmentFragment = {
   id: number;
   start: string;
   end: string;
-  amenity: { __typename?: "EntitySnapShot"; id: number; name: string };
-  person: { __typename?: "EntitySnapShot"; id: number; name: string };
+  amenity: { __typename?: "Identity"; id: number; name: string };
+  person: { __typename?: "Identity"; id: number; name: string };
 };
 
 export type BasicUserFragmentFragment = {
@@ -723,7 +707,7 @@ export type ExpenseFragmentFragment = {
   createdAt: string;
   title: string;
   description: string;
-  createdBy: { __typename?: "Person"; id: number; name: string };
+  createdBy: { __typename?: "Identity"; id: number; name: string };
   attachments: Array<{ __typename?: "GradiumImage"; id: number; url: string }>;
 };
 
@@ -747,7 +731,7 @@ export type LoggedInUserFragmentFragment = {
   emails: Array<{ __typename?: "LinkedEmail"; email: string }>;
   affiliations: Array<{
     __typename?: "UserAffiliation";
-    organization: { __typename?: "OrgAffiliation"; id: number; name: string };
+    organization: { __typename?: "Identity"; id: number; name: string };
     roles: Array<{ __typename?: "PersonRole"; role: PersonRoleType }>;
   }>;
 };
@@ -760,9 +744,9 @@ export type ManagementTaskFragmentFragment = {
   description: string;
   status: ManagementTaskStatus;
   priority: ManagementTaskPriority;
-  createdBy: { __typename?: "Person"; id: number; name: string };
+  createdBy: { __typename?: "Identity"; id: number; name: string };
   images: Array<{ __typename?: "GradiumImage"; id: number; url: string }>;
-  assignedTo?: { __typename?: "StaffMember"; id: number; name: string } | null;
+  assignedTo?: { __typename?: "Identity"; id: number; name: string } | null;
   expenses: Array<{
     __typename?: "Expense";
     id: number;
@@ -770,7 +754,7 @@ export type ManagementTaskFragmentFragment = {
     createdAt: string;
     title: string;
     description: string;
-    createdBy: { __typename?: "Person"; id: number; name: string };
+    createdBy: { __typename?: "Identity"; id: number; name: string };
     attachments: Array<{
       __typename?: "GradiumImage";
       id: number;
@@ -805,7 +789,7 @@ export type CreateAccountMutation = {
     emails: Array<{ __typename?: "LinkedEmail"; email: string }>;
     affiliations: Array<{
       __typename?: "UserAffiliation";
-      organization: { __typename?: "OrgAffiliation"; id: number; name: string };
+      organization: { __typename?: "Identity"; id: number; name: string };
       roles: Array<{ __typename?: "PersonRole"; role: PersonRoleType }>;
     }>;
   };
@@ -828,8 +812,8 @@ export type CreateAmenityReservationMutation = {
     id: number;
     start: string;
     end: string;
-    amenity: { __typename?: "EntitySnapShot"; id: number; name: string };
-    person: { __typename?: "EntitySnapShot"; id: number; name: string };
+    amenity: { __typename?: "Identity"; id: number; name: string };
+    person: { __typename?: "Identity"; id: number; name: string };
   };
 };
 
@@ -851,7 +835,7 @@ export type CreateExpenseMutation = {
     createdAt: string;
     title: string;
     description: string;
-    createdBy: { __typename?: "Person"; id: number; name: string };
+    createdBy: { __typename?: "Identity"; id: number; name: string };
     attachments: Array<{
       __typename?: "GradiumImage";
       id: number;
@@ -880,13 +864,9 @@ export type CreateManagementTaskMutation = {
     description: string;
     status: ManagementTaskStatus;
     priority: ManagementTaskPriority;
-    createdBy: { __typename?: "Person"; id: number; name: string };
+    createdBy: { __typename?: "Identity"; id: number; name: string };
     images: Array<{ __typename?: "GradiumImage"; id: number; url: string }>;
-    assignedTo?: {
-      __typename?: "StaffMember";
-      id: number;
-      name: string;
-    } | null;
+    assignedTo?: { __typename?: "Identity"; id: number; name: string } | null;
     expenses: Array<{
       __typename?: "Expense";
       id: number;
@@ -894,7 +874,7 @@ export type CreateManagementTaskMutation = {
       createdAt: string;
       title: string;
       description: string;
-      createdBy: { __typename?: "Person"; id: number; name: string };
+      createdBy: { __typename?: "Identity"; id: number; name: string };
       attachments: Array<{
         __typename?: "GradiumImage";
         id: number;
@@ -1132,7 +1112,7 @@ export type LoginMutation = {
     emails: Array<{ __typename?: "LinkedEmail"; email: string }>;
     affiliations: Array<{
       __typename?: "UserAffiliation";
-      organization: { __typename?: "OrgAffiliation"; id: number; name: string };
+      organization: { __typename?: "Identity"; id: number; name: string };
       roles: Array<{ __typename?: "PersonRole"; role: PersonRoleType }>;
     }>;
   };
@@ -1221,8 +1201,8 @@ export type UpdateAmenityReservationMutation = {
     id: number;
     start: string;
     end: string;
-    amenity: { __typename?: "EntitySnapShot"; id: number; name: string };
-    person: { __typename?: "EntitySnapShot"; id: number; name: string };
+    amenity: { __typename?: "Identity"; id: number; name: string };
+    person: { __typename?: "Identity"; id: number; name: string };
   };
 };
 
@@ -1292,7 +1272,7 @@ export type UpdateExpenseMutation = {
     createdAt: string;
     title: string;
     description: string;
-    createdBy: { __typename?: "Person"; id: number; name: string };
+    createdBy: { __typename?: "Identity"; id: number; name: string };
     attachments: Array<{
       __typename?: "GradiumImage";
       id: number;
@@ -1322,13 +1302,9 @@ export type UpdateManagementTaskMutation = {
     description: string;
     status: ManagementTaskStatus;
     priority: ManagementTaskPriority;
-    createdBy: { __typename?: "Person"; id: number; name: string };
+    createdBy: { __typename?: "Identity"; id: number; name: string };
     images: Array<{ __typename?: "GradiumImage"; id: number; url: string }>;
-    assignedTo?: {
-      __typename?: "StaffMember";
-      id: number;
-      name: string;
-    } | null;
+    assignedTo?: { __typename?: "Identity"; id: number; name: string } | null;
     expenses: Array<{
       __typename?: "Expense";
       id: number;
@@ -1336,7 +1312,7 @@ export type UpdateManagementTaskMutation = {
       createdAt: string;
       title: string;
       description: string;
-      createdBy: { __typename?: "Person"; id: number; name: string };
+      createdBy: { __typename?: "Identity"; id: number; name: string };
       attachments: Array<{
         __typename?: "GradiumImage";
         id: number;
@@ -1391,8 +1367,8 @@ export type FetchAmenityReservationsQuery = {
     id: number;
     start: string;
     end: string;
-    amenity: { __typename?: "EntitySnapShot"; id: number; name: string };
-    person: { __typename?: "EntitySnapShot"; id: number; name: string };
+    amenity: { __typename?: "Identity"; id: number; name: string };
+    person: { __typename?: "Identity"; id: number; name: string };
   }>;
 };
 
@@ -1549,6 +1525,22 @@ export type GetLivingSpacesQuery = {
   }>;
 };
 
+export type IdentifySpacesQueryVariables = Exact<{
+  propertyId: Scalars["Int"]["input"];
+  organizationId: Scalars["Int"]["input"];
+  cursor?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+}>;
+
+export type IdentifySpacesQuery = {
+  __typename?: "Query";
+  identifySpaces: {
+    __typename?: "PaginatedIdentities";
+    cursor?: number | null;
+    list: Array<{ __typename?: "Identity"; id: number; name: string }>;
+  };
+};
+
 export type ListManagementTasksQueryVariables = Exact<{
   organizationId: Scalars["Int"]["input"];
   propertyId?: InputMaybe<Scalars["Int"]["input"]>;
@@ -1574,13 +1566,9 @@ export type ListManagementTasksQuery = {
     description: string;
     status: ManagementTaskStatus;
     priority: ManagementTaskPriority;
-    createdBy: { __typename?: "Person"; id: number; name: string };
+    createdBy: { __typename?: "Identity"; id: number; name: string };
     images: Array<{ __typename?: "GradiumImage"; id: number; url: string }>;
-    assignedTo?: {
-      __typename?: "StaffMember";
-      id: number;
-      name: string;
-    } | null;
+    assignedTo?: { __typename?: "Identity"; id: number; name: string } | null;
     expenses: Array<{
       __typename?: "Expense";
       id: number;
@@ -1588,7 +1576,7 @@ export type ListManagementTasksQuery = {
       createdAt: string;
       title: string;
       description: string;
-      createdBy: { __typename?: "Person"; id: number; name: string };
+      createdBy: { __typename?: "Identity"; id: number; name: string };
       attachments: Array<{
         __typename?: "GradiumImage";
         id: number;
@@ -1607,9 +1595,9 @@ export type ListPeopleQueryVariables = Exact<{
 export type ListPeopleQuery = {
   __typename?: "Query";
   listPeople: {
-    __typename?: "PaginatedPeople";
+    __typename?: "PaginatedIdentities";
     cursor?: number | null;
-    list: Array<{ __typename?: "Person"; id: number; name: string }>;
+    list: Array<{ __typename?: "Identity"; id: number; name: string }>;
   };
 };
 
@@ -1622,9 +1610,9 @@ export type ListStaffMembersQueryVariables = Exact<{
 export type ListStaffMembersQuery = {
   __typename?: "Query";
   listStaffMembers: {
-    __typename?: "PaginatedStaff";
+    __typename?: "PaginatedIdentities";
     cursor?: number | null;
-    list: Array<{ __typename?: "StaffMember"; id: number; name: string }>;
+    list: Array<{ __typename?: "Identity"; id: number; name: string }>;
   };
 };
 
@@ -1639,7 +1627,7 @@ export type UserScopeQuery = {
     emails: Array<{ __typename?: "LinkedEmail"; email: string }>;
     affiliations: Array<{
       __typename?: "UserAffiliation";
-      organization: { __typename?: "OrgAffiliation"; id: number; name: string };
+      organization: { __typename?: "Identity"; id: number; name: string };
       roles: Array<{ __typename?: "PersonRole"; role: PersonRoleType }>;
     }>;
   };
@@ -7244,6 +7232,116 @@ export const GetLivingSpacesDocument = {
   GetLivingSpacesQuery,
   GetLivingSpacesQueryVariables
 >;
+export const IdentifySpacesDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "identifySpaces" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "propertyId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "organizationId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "cursor" },
+          },
+          type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "limit" },
+          },
+          type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "identifySpaces" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "propertyId" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "propertyId" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "organizationId" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "organizationId" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "cursor" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "cursor" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "limit" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "limit" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "cursor" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "list" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<IdentifySpacesQuery, IdentifySpacesQueryVariables>;
 export const ListManagementTasksDocument = {
   kind: "Document",
   definitions: [

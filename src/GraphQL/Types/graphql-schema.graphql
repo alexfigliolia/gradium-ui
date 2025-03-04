@@ -7,15 +7,25 @@ scalar DateTime
 type Query {
   userScope: LoggedInUser!
   getLeases(organizationId: Int!, limit: Int, cursor: Int): [PaginatedLeases!]!
-  listPeople(organizationId: Int!, limit: Int, cursor: Int): PaginatedPeople!
+  listPeople(
+    organizationId: Int!
+    limit: Int
+    cursor: Int
+  ): PaginatedIdentities!
   getAmenities(propertyId: Int!, organizationId: Int!): [Amenity!]!
   verifySession: Boolean!
+  identifySpaces(
+    propertyId: Int!
+    organizationId: Int!
+    limit: Int
+    cursor: Int
+  ): PaginatedIdentities!
   getLivingSpaces(propertyId: Int!, organizationId: Int!): [LivingSpace!]!
   listStaffMembers(
     organizationId: Int!
     limit: Int
     cursor: Int
-  ): PaginatedStaff!
+  ): PaginatedIdentities!
   listManagementTasks(
     organizationId: Int!
     propertyId: Int
@@ -64,10 +74,10 @@ type LinkedEmail {
   email: String!
 }
 type UserAffiliation {
-  organization: OrgAffiliation!
+  organization: Identity!
   roles: [PersonRole!]!
 }
-type OrgAffiliation {
+type Identity {
   id: Int!
   name: String!
 }
@@ -81,18 +91,14 @@ type PaginatedLeases {
 type Lease {
   id: Int!
   price: Float!
-  lessees: [Person!]!
+  lessees: [Identity!]!
   paymentFrequency: RentPaymentFrequency!
   start: DateTime!
   end: DateTime!
   status: LeaseStatus!
 }
-type Person {
-  id: Int!
-  name: String!
-}
-type PaginatedPeople {
-  list: [Person!]!
+type PaginatedIdentities {
+  list: [Identity!]!
   cursor: Int
 }
 type Amenity {
@@ -122,14 +128,6 @@ type LivingSpace {
   images: [GradiumImage!]!
   floorPlans: [GradiumImage!]!
 }
-type PaginatedStaff {
-  list: [StaffMember!]!
-  cursor: Int
-}
-type StaffMember {
-  id: Int!
-  name: String!
-}
 type ManagementTask {
   id: Int!
   createdAt: DateTime!
@@ -137,15 +135,15 @@ type ManagementTask {
   description: String!
   status: ManagementTaskStatus!
   priority: ManagementTaskPriority!
-  createdBy: Person!
+  createdBy: Identity!
   images: [GradiumImage!]!
-  assignedTo: StaffMember
+  assignedTo: Identity
   expenses: [Expense!]!
 }
 type Expense {
   id: Int!
   createdAt: DateTime!
-  createdBy: Person!
+  createdBy: Identity!
   cost: String!
   title: String!
   description: String!
@@ -172,12 +170,8 @@ type AmenityReservation {
   id: Int!
   start: DateTime!
   end: DateTime!
-  amenity: EntitySnapShot!
-  person: EntitySnapShot!
-}
-type EntitySnapShot {
-  id: Int!
-  name: String!
+  amenity: Identity!
+  person: Identity!
 }
 type UploadSignature {
   api_key: String!
