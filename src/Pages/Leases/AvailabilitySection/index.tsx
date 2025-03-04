@@ -7,13 +7,13 @@ import {
   useMemo,
   useRef,
 } from "react";
+import { HorizontalList } from "Components/HorizontalList";
 import { SearchBar } from "Components/SearchBar";
 import { SearchContext } from "Components/SearchContext";
 import { PageTitle } from "Layouts/Management";
 import type { Callback } from "Types/Generics";
 import { AvailabilitySkeleton } from "../AvailabilitySkeleton";
 import { DummySpaceCard } from "../AvailableSpaceCard";
-import { SpaceList } from "../SpaceList";
 
 export const AvailabilitySection = <T,>({
   list,
@@ -62,9 +62,9 @@ export const AvailabilitySection = <T,>({
           onChange={onSearch}
         />
       </PageTitle>
-      <SpaceList onScrollEnd={handleScrollEnd}>
+      <HorizontalList onScrollEnd={handleScrollEnd}>
         {items.length ? items : <DummySpaceCard />}
-      </SpaceList>
+      </HorizontalList>
     </Fragment>
   );
 };

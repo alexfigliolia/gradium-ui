@@ -6,7 +6,7 @@ import type { Callback } from "Types/Generics";
 import type { OptionalChildren } from "Types/React";
 import "./styles.scss";
 
-export const SpaceList = memo(function SpaceList({
+export const HorizontalList = memo(function HorizontalList({
   children,
   className,
   onScrollEnd,
@@ -23,7 +23,7 @@ export const SpaceList = memo(function SpaceList({
   );
 
   const debouncer = useDebouncer(handleScroll, 200);
-  const classes = useClassNames("space-list", className);
+  const classes = useClassNames("horizontal-list", className);
 
   const onScroll = useMemo(
     () => (onScrollEnd ? debouncer.execute : undefined),

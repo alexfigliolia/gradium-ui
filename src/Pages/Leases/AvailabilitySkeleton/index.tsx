@@ -1,7 +1,7 @@
+import { HorizontalList } from "Components/HorizontalList";
 import { SearchBar } from "Components/SearchBar";
 import { PageTitle } from "Layouts/Management";
 import { AvailableSpaceCard } from "../AvailableSpaceCard";
-import { SpaceList } from "../SpaceList";
 import "./styles.scss";
 
 const LIST = new Array(4).fill(null);
@@ -12,7 +12,7 @@ export const AvailabilitySkeleton = ({ title }: Props) => {
       <PageTitle title={title} className="lease-title">
         <SearchBar placeholder="Search" />
       </PageTitle>
-      <SpaceList>
+      <HorizontalList>
         {LIST.map((_, i) => (
           <AvailableSpaceCard
             id={i}
@@ -27,7 +27,7 @@ export const AvailabilitySkeleton = ({ title }: Props) => {
             renderChildren={() => <p>Loading Availability</p>}
           />
         ))}
-      </SpaceList>
+      </HorizontalList>
     </div>
   );
 };
