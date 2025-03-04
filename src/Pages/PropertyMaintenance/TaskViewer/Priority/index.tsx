@@ -13,7 +13,7 @@ export const Priority = memo(function Priority({ priority, onChange }: Props) {
       onChange={onChange}
       title="Select a Priority"
       className="priority-selector"
-      options={DisplayController.priorityOptions}>
+      options={DisplayController.fullPriorityOptions}>
       <PriorityIcon fill priority={priority} />{" "}
       {DisplayController.displayPriority(priority)}
     </TaskSelector>

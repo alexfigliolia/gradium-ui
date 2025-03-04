@@ -21,6 +21,13 @@ export class DisplayController {
     label: this.displayPriority(priority),
   }));
 
+  public static readonly fullPriorityOptions = this.priorities.map(
+    priority => ({
+      value: priority,
+      label: this.displayPriorityFull(priority),
+    }),
+  );
+
   public static readonly statusOptions = this.statuses.map(status => ({
     value: status,
     label: this.displayStatus(status),
@@ -47,6 +54,17 @@ export class DisplayController {
         return "High";
       case ManagementTaskPriority.Immediate:
         return "Immediate";
+    }
+  }
+
+  public static displayPriorityFull(key: ManagementTaskPriority) {
+    switch (key) {
+      case ManagementTaskPriority.Low:
+        return "Low Priority";
+      case ManagementTaskPriority.High:
+        return "High Priority";
+      case ManagementTaskPriority.Immediate:
+        return "Immediate Priority";
     }
   }
 
