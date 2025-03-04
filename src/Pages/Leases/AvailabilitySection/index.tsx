@@ -8,12 +8,12 @@ import {
   useRef,
 } from "react";
 import { SearchBar } from "Components/SearchBar";
+import { SearchContext } from "Components/SearchContext";
 import { PageTitle } from "Layouts/Management";
 import type { Callback } from "Types/Generics";
 import { AvailabilitySkeleton } from "../AvailabilitySkeleton";
 import { DummySpaceCard } from "../AvailableSpaceCard";
 import { SpaceList } from "../SpaceList";
-import { AvailabilityContext } from "./Context";
 
 export const AvailabilitySection = <T,>({
   list,
@@ -24,7 +24,7 @@ export const AvailabilitySection = <T,>({
   onScrollEnd,
 }: Props<T>) => {
   const initialLoad = useRef(true);
-  const { search, onSearch } = useContext(AvailabilityContext);
+  const { search, onSearch } = useContext(SearchContext);
 
   const items = useMemo(
     () => list.map(space => renderItem(space)),

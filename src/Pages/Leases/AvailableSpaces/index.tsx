@@ -1,16 +1,14 @@
 import { useCallback, useContext, useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { SearchContext } from "Components/SearchContext";
 import { availableSpacesOptions } from "GraphQL/Queries/fetchAvailableSpaces.gql";
 import { Scope } from "State/Scope";
 import type { Propless } from "Types/React";
-import {
-  AvailabilityContext,
-  AvailabilitySection,
-} from "../AvailabilitySection";
+import { AvailabilitySection } from "../AvailabilitySection";
 import { AvailableSpace } from "./AvailableSpace";
 
 export const AvailableSpaces = (_: Propless) => {
-  const { search } = useContext(AvailabilityContext);
+  const { search } = useContext(SearchContext);
   const { data, isLoading, error, isFetching, fetchNextPage, hasNextPage } =
     useInfiniteQuery(
       availableSpacesOptions(

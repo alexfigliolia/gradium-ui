@@ -3,13 +3,13 @@ import { createContext, useCallback, useMemo, useState } from "react";
 import type { Callback } from "Types/Generics";
 import type { OptionalChildren } from "Types/React";
 
-export const AvailabilityContext = createContext<IAvailabilityContext>({
+export const SearchContext = createContext<ISearchContext>({
   search: "",
   onSearch: () => {},
   clearSearch: () => {},
 });
 
-export const AvailabilityContextProvider = ({ children }: OptionalChildren) => {
+export const SearchContextProvider = ({ children }: OptionalChildren) => {
   const [search, setSearch] = useState("");
 
   const clearSearch = useCallback(() => {
@@ -26,13 +26,11 @@ export const AvailabilityContextProvider = ({ children }: OptionalChildren) => {
   );
 
   return (
-    <AvailabilityContext.Provider value={value}>
-      {children}
-    </AvailabilityContext.Provider>
+    <SearchContext.Provider value={value}>{children}</SearchContext.Provider>
   );
 };
 
-interface IAvailabilityContext {
+interface ISearchContext {
   search: string;
   clearSearch: Callback;
   onSearch: Callback<[ChangeEvent<HTMLInputElement>]>;

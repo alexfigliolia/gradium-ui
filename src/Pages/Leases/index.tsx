@@ -2,6 +2,7 @@ import { memo, useCallback } from "react";
 import { useUnmount } from "@figliolia/react-hooks";
 import { GradientButton } from "Components/GradientButton";
 import { PermissedPropertyRoute } from "Components/PermissedPropertyRoute";
+import { SearchContextProvider } from "Components/SearchContext";
 import { Add } from "Icons/Add";
 import { Search } from "Icons/Search";
 import { Page, PageTitle } from "Layouts/Management";
@@ -9,7 +10,6 @@ import { AdminRoutes } from "Router/AdminRoutes";
 import { NewLease } from "State/LeaseCRUD";
 import { Leases } from "State/Leases";
 import type { Propless } from "Types/React";
-import { AvailabilityContextProvider } from "./AvailabilitySection";
 import { AvailableSoon } from "./AvailableSoon";
 import { AvailableSpaces } from "./AvailableSpaces";
 import { Filters } from "./Filters";
@@ -33,12 +33,12 @@ export default memo(function LeasesPage(_: Propless) {
       fallback=".."
       requirements={AdminRoutes.access("PROPERTY_LEASES")}>
       <Page className="leases-section">
-        <AvailabilityContextProvider>
+        <SearchContextProvider>
           <AvailableSpaces />
-        </AvailabilityContextProvider>
-        <AvailabilityContextProvider>
+        </SearchContextProvider>
+        <SearchContextProvider>
           <AvailableSoon />
-        </AvailabilityContextProvider>
+        </SearchContextProvider>
         <PageTitle title="Leases" className="lease-title">
           <GradientButton onClick={openNewLease}>
             <Add />
