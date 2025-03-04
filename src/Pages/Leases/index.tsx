@@ -2,7 +2,7 @@ import { memo } from "react";
 import { useUnmount } from "@figliolia/react-hooks";
 import { PermissedPropertyRoute } from "Components/PermissedPropertyRoute";
 import { SearchContextProvider } from "Components/SearchContext";
-import { Page, PageTitle } from "Layouts/Management";
+import { Page } from "Layouts/Management";
 import { AdminRoutes } from "Router/AdminRoutes";
 import { Leases } from "State/Leases";
 import type { Propless } from "Types/React";
@@ -10,6 +10,7 @@ import { AvailableSoon } from "./AvailableSoon";
 import { AvailableSpaces } from "./AvailableSpaces";
 import { LeaseCreator } from "./LeaseCreator";
 import { LeaseModifier } from "./LeaseModifier";
+import { LeasesList } from "./LeasesList";
 import "./styles.scss";
 
 export default memo(function LeasesPage(_: Propless) {
@@ -33,7 +34,7 @@ export default memo(function LeasesPage(_: Propless) {
         <SearchContextProvider>
           <AvailableSoon />
         </SearchContextProvider>
-        <PageTitle title="Leases" className="lease-title" />
+        <LeasesList />
         <LeaseCreator />
         <LeaseModifier />
       </Page>

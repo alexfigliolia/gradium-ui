@@ -172,7 +172,6 @@ function ConfigureReservationComponent<
         </div>
         <PeopleDropDown
           required
-          prefetch
           multiple={false}
           label="Resident"
           value={state.reserver}

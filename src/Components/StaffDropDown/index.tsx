@@ -5,17 +5,20 @@ import {
 } from "Components/PaginatedDropDown";
 import { User } from "Icons/User";
 import type { IHTMLOption } from "Types/React";
-import { fetchStaff } from "./fetchStaff";
+import { usePaginatedStaffList } from "./usePaginatedStaffList";
 
-function StaffDropDownComponent<M extends boolean | undefined>(
-  props: Props<M>,
-) {
+function StaffDropDownComponent<
+  M extends boolean | undefined,
+  F extends (...args: never[]) => any,
+>(props: Props<M, F>) {
+  const [list, isFetching, fetchNextPage] = usePaginatedStaffList();
   return (
     <PaginatedDropDown
-      prefetch
+      list={list}
       icon={<User />}
-      fetch={fetchStaff}
       title="Staff List"
+      loading={isFetching}
+      fetchNextPage={fetchNextPage}
       {...props}
     />
   );
@@ -25,9 +28,7 @@ export const StaffDropDown = memo(
   StaffDropDownComponent,
 ) as typeof StaffDropDownComponent;
 
-type Props<M extends boolean | undefined> = Omit<
-  DDProps<IHTMLOption, M>,
-  "fetch" | "icon"
->;
-
-export { fetchStaff } from "./fetchStaff";
+type Props<
+  M extends boolean | undefined,
+  F extends (...args: never[]) => any,
+> = Omit<DDProps<IHTMLOption, M, F>, "icon" | "list" | "fetchNextPage">;

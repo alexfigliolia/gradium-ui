@@ -1,55 +1,55 @@
-import { memo, useCallback } from "react";
-import type { ILoadingStateSetter } from "@figliolia/react-hooks";
+import { memo, useMemo } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import type { Props as PaginatedDropDownProps } from "Components/PaginatedDropDown";
 import { PaginatedDropDown } from "Components/PaginatedDropDown";
-import { listPeople } from "GraphQL/Queries/listPeople.gql";
-import type { ListPeopleQuery, ListPeopleQueryVariables } from "GraphQL/Types";
-import { UIClient } from "GraphQL/UIClient";
+import { listPeopleOptions } from "GraphQL/Queries/listPeople.gql";
 import { User } from "Icons/User";
 import { Scope } from "State/Scope";
-import type { Maybe } from "Types/Generics";
 import type { IHTMLOption } from "Types/React";
 
-function PeopleDropDownComponent<M extends boolean | undefined>({
+function PeopleDropDownComponent<
+  M extends boolean | undefined,
+  F extends (...args: never[]) => any,
+>({
   name = "user",
   label = "Resident",
   title = "Staff & Residents",
   ...rest
-}: Props<M>) {
-  const fetchPeople = useCallback(
-    async (setState: ILoadingStateSetter, cursor: Maybe<number>) => {
-      const client = new UIClient({ setState });
-      try {
-        const response = await client.executeQuery<
-          ListPeopleQuery,
-          ListPeopleQueryVariables
-        >(listPeople, {
-          cursor,
-          limit: 10,
-          organizationId: Scope.getState().currentOrganizationId,
-        });
-        return {
-          cursor: response.listPeople.cursor,
-          list: response.listPeople.list.map(item => ({
-            label: item.name,
-            value: item.id.toString(),
-          })),
-        };
-      } catch (error) {
-        // silence
-      }
-    },
-    [],
+}: Props<M, F>) {
+  const { data, isFetching, fetchNextPage } = useInfiniteQuery(
+    listPeopleOptions(
+      {
+        limit: 10,
+        organizationId: Scope.getState().currentOrganizationId,
+      },
+      {
+        getNextPageParam: data => data.listPeople.cursor,
+        getPreviousPageParam: data => data.listPeople.cursor,
+      },
+    ),
+  );
+
+  const list = useMemo(
+    () =>
+      data?.pages?.flatMap?.(p =>
+        p.listPeople.list.map(item => ({
+          label: item.name,
+          value: item.id.toString(),
+        })),
+      ) ?? [],
+    [data?.pages],
   );
 
   return (
     <PaginatedDropDown
       {...rest}
+      list={list}
       name={name}
       label={label}
-      icon={<User />}
       title={title}
-      fetch={fetchPeople}
+      icon={<User />}
+      loading={isFetching}
+      fetchNextPage={fetchNextPage}
     />
   );
 }
@@ -58,10 +58,12 @@ export const PeopleDropDown = memo(
   PeopleDropDownComponent,
 ) as typeof PeopleDropDownComponent;
 
-interface Props<M extends boolean | undefined>
-  extends Pick<
-    PaginatedDropDownProps<IHTMLOption, M>,
-    "multiple" | "onChange" | "required" | "prefetch" | "value" | "children"
+interface Props<
+  M extends boolean | undefined,
+  F extends (...args: never[]) => any,
+> extends Pick<
+    PaginatedDropDownProps<IHTMLOption, M, F>,
+    "multiple" | "onChange" | "required" | "value" | "children"
   > {
   name?: string;
   label?: string;

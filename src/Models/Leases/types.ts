@@ -23,9 +23,6 @@ export interface ILease {
 }
 
 export interface ILeases {
-  page: number;
-  maxPage: number;
-  leases: ILease[];
   space: string;
   endDate: string;
   startDate: string;

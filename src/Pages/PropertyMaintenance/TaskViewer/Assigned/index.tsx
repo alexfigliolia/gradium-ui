@@ -1,8 +1,7 @@
 import { Fragment, memo, useCallback, useMemo } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import { OptionSelection } from "Components/DropDown";
-import { useDropDownPagination } from "Components/PaginatedDropDown";
-import { fetchStaff } from "Components/StaffDropDown";
+import { usePaginatedStaffList } from "Components/StaffDropDown/usePaginatedStaffList";
 import { useMousePointerOutside } from "Hooks/useMousePointerOutside";
 import { useToggle } from "Hooks/useToggle";
 import { HashList } from "Tools/HashedList";
@@ -30,7 +29,7 @@ export const Assigned = memo(function Assigned({
     return <strong>Assign Task</strong>;
   }, [assigned]);
 
-  const { list } = useDropDownPagination(fetchStaff, true);
+  const [list] = usePaginatedStaffList();
 
   const table = useMemo(() => new HashList<IHTMLOption>(list, "value"), [list]);
 

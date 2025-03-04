@@ -1,8 +1,6 @@
-import { addYears, subYears } from "date-fns";
 import type { ChangeEvent } from "react";
-import { LivingSpaceType } from "GraphQL/Types";
 import { PropertyScopeModel } from "Models/PropertyScopeModel";
-import type { ILease, ILeases, ILeaseStatus } from "./types";
+import type { ILeases, ILeaseStatus } from "./types";
 
 export class LeasesModel extends PropertyScopeModel<ILeases> {
   public readonly DISPLAY_MAP: Record<ILeaseStatus | "unknown", string> = {
@@ -17,33 +15,18 @@ export class LeasesModel extends PropertyScopeModel<ILeases> {
   public readonly leaseFilters = this.createBasicToggle("leaseFilters");
   constructor() {
     super("Leases", {
-      page: 1,
       space: "",
       endDate: "",
       startDate: "",
-      maxPage: 10,
       newLease: false,
       editLease: false,
       leaseFilters: false,
-      leases: LeasesModel.LEASES,
       availableSoon: [],
       availableSpaces: [],
     });
   }
 
   public initialize() {}
-
-  public readonly previous = () => {
-    this.update(state => {
-      state.page = Math.max(1, state.page - 1);
-    });
-  };
-
-  public readonly next = () => {
-    this.update(state => {
-      state.page = Math.min(state.maxPage, state.page + 1);
-    });
-  };
 
   public readonly searchSpace = (e: ChangeEvent<HTMLInputElement>) => {
     this.update(state => {
@@ -70,82 +53,4 @@ export class LeasesModel extends PropertyScopeModel<ILeases> {
       state.startDate = "";
     });
   };
-
-  public get emptyLease(): ILease {
-    return {
-      id: -1,
-      space: {
-        name: "",
-        type: "" as LivingSpaceType,
-      },
-      end: "",
-      start: "",
-      rate: 0,
-      status: "" as ILeaseStatus,
-      lessees: [],
-    };
-  }
-
-  public static readonly LEASES: ILease[] = [
-    {
-      id: 0,
-      space: {
-        name: "201",
-        type: LivingSpaceType.Unit,
-      },
-      end: addYears(new Date(), 0.5).toISOString(),
-      start: addYears(new Date(), 1.5).toISOString(),
-      rate: 24000,
-      status: "pending",
-      lessees: [],
-    },
-    {
-      id: 1,
-      space: {
-        name: "202",
-        type: LivingSpaceType.Unit,
-      },
-      end: addYears(new Date(), 0.5).toISOString(),
-      start: subYears(new Date(), 0.5).toISOString(),
-      rate: 24000,
-      status: "in-progress",
-      lessees: [],
-    },
-    {
-      id: 2,
-      space: {
-        name: "203",
-        type: LivingSpaceType.Unit,
-      },
-      end: addYears(new Date(), 0.4).toISOString(),
-      start: subYears(new Date(), 0.6).toISOString(),
-      rate: 24000,
-      status: "complete",
-      lessees: [],
-    },
-    {
-      id: 3,
-      space: {
-        name: "204",
-        type: LivingSpaceType.Unit,
-      },
-      end: addYears(new Date(), 0.3).toISOString(),
-      start: subYears(new Date(), 0.7).toISOString(),
-      rate: 24000,
-      status: "terminated",
-      lessees: [],
-    },
-    {
-      id: 4,
-      space: {
-        name: "205",
-        type: LivingSpaceType.Unit,
-      },
-      end: addYears(new Date(), 0.7).toISOString(),
-      start: subYears(new Date(), 0.3).toISOString(),
-      rate: 24000,
-      status: "in-progress",
-      lessees: [],
-    },
-  ];
 }
