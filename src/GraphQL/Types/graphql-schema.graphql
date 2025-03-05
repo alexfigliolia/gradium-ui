@@ -6,12 +6,12 @@ schema {
 scalar DateTime
 type Query {
   userScope: LoggedInUser!
-  getLeases(organizationId: Int!, limit: Int, cursor: Int): [PaginatedLeases!]!
   listPeople(
     organizationId: Int!
     limit: Int
     cursor: Int
   ): PaginatedIdentities!
+  fetchLeases(organizationId: Int!, limit: Int, cursor: Int): PaginatedLeases!
   getAmenities(propertyId: Int!, organizationId: Int!): [Amenity!]!
   verifySession: Boolean!
   identifySpaces(
@@ -49,12 +49,14 @@ type Query {
   ): [AmenityReservation!]!
   generateUploadSignature(
     organizationId: Int!
-    type: GradiumImageType!
+    imageType: GradiumImageType
+    documentType: GradiumDocumentType
   ): UploadSignature!
   generateDestroySignature(
     organizationId: Int!
     publicId: String!
-    type: GradiumImageType!
+    imageType: GradiumImageType
+    documentType: GradiumDocumentType
   ): DestroySignature!
   adminBasicPropertiesList(organizationId: Int!): [AdminBasicProperty!]!
   fetchSoonToBeAvailableSpaces(
@@ -84,6 +86,10 @@ type Identity {
 type PersonRole {
   role: PersonRoleType!
 }
+type PaginatedIdentities {
+  list: [Identity!]!
+  cursor: Int
+}
 type PaginatedLeases {
   list: [Lease!]!
   cursor: Int
@@ -93,13 +99,11 @@ type Lease {
   price: Float!
   lessees: [Identity!]!
   paymentFrequency: RentPaymentFrequency!
+  terminatedDate: DateTime
+  documents: GradiumImageType!
   start: DateTime!
   end: DateTime!
   status: LeaseStatus!
-}
-type PaginatedIdentities {
-  list: [Identity!]!
-  cursor: Int
 }
 type Amenity {
   id: Int!
@@ -249,6 +253,14 @@ type Mutation {
   ): GradiumImage!
   deleteEmail(userId: Int!, email: String!): BasicUser!
   updateEmail(userId: Int!, previous: String!, next: String!): BasicUser!
+  saveDocument(
+    propertyId: Int!
+    organizationId: Int!
+    entityId: Int!
+    url: String!
+    thumbnail: String!
+    type: GradiumImageType!
+  ): GradiumImage!
   resetPassword(userId: Int!, previous: String!, next: String!): Boolean!
   createAccount(name: String!, email: String!, password: String!): LoggedInUser!
   forgotPassword(email: String!): String!
@@ -279,6 +291,12 @@ type Mutation {
     description: String!
   ): Expense!
   deleteExpense(id: Int!, organizationId: Int!, propertyId: Int): Boolean!
+  deleteDocument(
+    propertyId: Int!
+    organizationId: Int!
+    id: Int!
+    type: GradiumDocumentType!
+  ): GradiumImage!
   inviteStaffMember(organizationId: Int!, email: String!): Boolean!
   deleteLivingSpace(
     propertyId: Int!
@@ -392,6 +410,15 @@ enum RentPaymentFrequency {
   month
   year
 }
+enum GradiumImageType {
+  propertyImage
+  livingSpaceImage
+  livingSpaceFloorPlan
+  amenityImage
+  amenityFloorPlan
+  taskImage
+  expenseAttachment
+}
 enum LeaseStatus {
   complete
   inProgress
@@ -417,14 +444,8 @@ enum ManagementTaskPriority {
   low
   immediate
 }
-enum GradiumImageType {
-  propertyImage
-  livingSpaceImage
-  livingSpaceFloorPlan
-  amenityImage
-  amenityFloorPlan
-  taskImage
-  expenseAttachment
+enum GradiumDocumentType {
+  leaseDocument
 }
 enum PropertyAddonType {
   packageManagement

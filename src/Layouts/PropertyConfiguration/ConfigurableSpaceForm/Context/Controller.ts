@@ -100,9 +100,11 @@ export class Controller<
       const uploader = new CloudinaryUploader(urls => {
         this.model.dispatchTemporaryURL(this.ID, type, ...urls);
       });
-      void uploader.onUpload(e, { entityId: this.ID, type }).then(images => {
-        this.model.dispatchImage(this.ID, type, ...images);
-      });
+      void uploader
+        .onUploadImage(e, { entityId: this.ID, type })
+        .then(images => {
+          this.model.dispatchImage(this.ID, type, ...images);
+        });
     };
   }
 }

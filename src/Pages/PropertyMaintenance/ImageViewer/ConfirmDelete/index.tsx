@@ -22,7 +22,7 @@ export const ConfirmDelete = memo(function ConfirmDelete({
       return;
     }
     setState("loading", true);
-    void CloudinaryDeleter.delete(image, {
+    void CloudinaryDeleter.deleteImage(image, {
       type,
       entityId,
     }).then(img => {

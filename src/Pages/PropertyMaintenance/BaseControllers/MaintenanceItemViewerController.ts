@@ -1,5 +1,5 @@
 import type { Dispatch, SetStateAction } from "react";
-import type { StaffMember } from "GraphQL/Types";
+import type { Identity } from "GraphQL/Types";
 import type { Callback, Maybe } from "Types/Generics";
 import type { IHTMLOption } from "Types/React";
 
@@ -29,7 +29,7 @@ export abstract class MaintenanceItemViewerController<
 
   public abstract clearForm(): void;
 
-  public static toHTMLOption(item: Maybe<StaffMember>) {
+  public static toHTMLOption(item: Maybe<Identity>) {
     if (item) {
       return { value: item.id.toString(), label: item.name } as IHTMLOption;
     }

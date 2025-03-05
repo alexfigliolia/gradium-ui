@@ -3,9 +3,14 @@ import { gql } from "graphql-request";
 export const generateUploadSignature = gql`
   query generateUploadSignature(
     $organizationId: Int!
-    $type: GradiumImageType!
+    $imageType: GradiumImageType
+    $documentType: GradiumDocumentType
   ) {
-    generateUploadSignature(organizationId: $organizationId, type: $type) {
+    generateUploadSignature(
+      organizationId: $organizationId
+      imageType: $imageType
+      documentType: $documentType
+    ) {
       api_key
       name
       folder

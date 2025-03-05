@@ -4,12 +4,14 @@ export const generateDestroySignature = gql`
   query generateDestroySignature(
     $organizationId: Int!
     $publicId: String!
-    $type: GradiumImageType!
+    $imageType: GradiumImageType
+    $documentType: GradiumDocumentType
   ) {
     generateDestroySignature(
       organizationId: $organizationId
       publicId: $publicId
-      type: $type
+      imageType: $imageType
+      documentType: $documentType
     ) {
       name
       folder

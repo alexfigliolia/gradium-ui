@@ -134,6 +134,10 @@ export type Expense = {
   title: Scalars["String"]["output"];
 };
 
+export enum GradiumDocumentType {
+  LeaseDocument = "leaseDocument",
+}
+
 export type GradiumImage = {
   __typename?: "GradiumImage";
   id: Scalars["Int"]["output"];
@@ -158,6 +162,7 @@ export type Identity = {
 
 export type Lease = {
   __typename?: "Lease";
+  documents: GradiumImageType;
   end: Scalars["DateTime"]["output"];
   id: Scalars["Int"]["output"];
   lessees: Array<Identity>;
@@ -165,6 +170,7 @@ export type Lease = {
   price: Scalars["Float"]["output"];
   start: Scalars["DateTime"]["output"];
   status: LeaseStatus;
+  terminatedDate?: Maybe<Scalars["DateTime"]["output"]>;
 };
 
 export type LeaseSnapShot = {
@@ -250,6 +256,7 @@ export type Mutation = {
   createOrUpdateLivingSpace: LivingSpace;
   createProperty: AdminBasicProperty;
   deleteAmenity: Amenity;
+  deleteDocument: GradiumImage;
   deleteEmail: BasicUser;
   deleteExpense: Scalars["Boolean"]["output"];
   deleteImage: GradiumImage;
@@ -262,6 +269,7 @@ export type Mutation = {
   logout: Scalars["Boolean"]["output"];
   modifyPropertyAddons: Array<PropertyAddon>;
   resetPassword: Scalars["Boolean"]["output"];
+  saveDocument: GradiumImage;
   saveImage: GradiumImage;
   setManagementTaskStatus: Scalars["Boolean"]["output"];
   setOrganizationName: Scalars["Boolean"]["output"];
@@ -352,6 +360,13 @@ export type MutationDeleteAmenityArgs = {
   propertyId: Scalars["Int"]["input"];
 };
 
+export type MutationDeleteDocumentArgs = {
+  id: Scalars["Int"]["input"];
+  organizationId: Scalars["Int"]["input"];
+  propertyId: Scalars["Int"]["input"];
+  type: GradiumDocumentType;
+};
+
 export type MutationDeleteEmailArgs = {
   email: Scalars["String"]["input"];
   userId: Scalars["Int"]["input"];
@@ -412,6 +427,15 @@ export type MutationResetPasswordArgs = {
   next: Scalars["String"]["input"];
   previous: Scalars["String"]["input"];
   userId: Scalars["Int"]["input"];
+};
+
+export type MutationSaveDocumentArgs = {
+  entityId: Scalars["Int"]["input"];
+  organizationId: Scalars["Int"]["input"];
+  propertyId: Scalars["Int"]["input"];
+  thumbnail: Scalars["String"]["input"];
+  type: GradiumImageType;
+  url: Scalars["String"]["input"];
 };
 
 export type MutationSaveImageArgs = {
@@ -536,11 +560,11 @@ export type Query = {
   adminBasicPropertiesList: Array<AdminBasicProperty>;
   fetchAmenityReservations: Array<AmenityReservation>;
   fetchAvailableSpaces: PaginatedAvailableLivingSpaces;
+  fetchLeases: PaginatedLeases;
   fetchSoonToBeAvailableSpaces: PaginatedAvailableSoonLivingSpaces;
   generateDestroySignature: DestroySignature;
   generateUploadSignature: UploadSignature;
   getAmenities: Array<Amenity>;
-  getLeases: Array<PaginatedLeases>;
   getLivingSpaces: Array<LivingSpace>;
   identifySpaces: PaginatedIdentities;
   listManagementTasks: Array<ManagementTask>;
@@ -569,6 +593,12 @@ export type QueryFetchAvailableSpacesArgs = {
   search?: InputMaybe<Scalars["String"]["input"]>;
 };
 
+export type QueryFetchLeasesArgs = {
+  cursor?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+  organizationId: Scalars["Int"]["input"];
+};
+
 export type QueryFetchSoonToBeAvailableSpacesArgs = {
   cursor?: InputMaybe<Scalars["Int"]["input"]>;
   limit?: InputMaybe<Scalars["Int"]["input"]>;
@@ -577,25 +607,21 @@ export type QueryFetchSoonToBeAvailableSpacesArgs = {
 };
 
 export type QueryGenerateDestroySignatureArgs = {
+  documentType?: InputMaybe<GradiumDocumentType>;
+  imageType?: InputMaybe<GradiumImageType>;
   organizationId: Scalars["Int"]["input"];
   publicId: Scalars["String"]["input"];
-  type: GradiumImageType;
 };
 
 export type QueryGenerateUploadSignatureArgs = {
+  documentType?: InputMaybe<GradiumDocumentType>;
+  imageType?: InputMaybe<GradiumImageType>;
   organizationId: Scalars["Int"]["input"];
-  type: GradiumImageType;
 };
 
 export type QueryGetAmenitiesArgs = {
   organizationId: Scalars["Int"]["input"];
   propertyId: Scalars["Int"]["input"];
-};
-
-export type QueryGetLeasesArgs = {
-  cursor?: InputMaybe<Scalars["Int"]["input"]>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  organizationId: Scalars["Int"]["input"];
 };
 
 export type QueryGetLivingSpacesArgs = {
@@ -1447,7 +1473,8 @@ export type FetchSoonToBeAvailableSpacesQuery = {
 export type GenerateDestroySignatureQueryVariables = Exact<{
   organizationId: Scalars["Int"]["input"];
   publicId: Scalars["String"]["input"];
-  type: GradiumImageType;
+  imageType?: InputMaybe<GradiumImageType>;
+  documentType?: InputMaybe<GradiumDocumentType>;
 }>;
 
 export type GenerateDestroySignatureQuery = {
@@ -1467,7 +1494,8 @@ export type GenerateDestroySignatureQuery = {
 
 export type GenerateUploadSignatureQueryVariables = Exact<{
   organizationId: Scalars["Int"]["input"];
-  type: GradiumImageType;
+  imageType?: InputMaybe<GradiumImageType>;
+  documentType?: InputMaybe<GradiumDocumentType>;
 }>;
 
 export type GenerateUploadSignatureQuery = {
@@ -6863,13 +6891,24 @@ export const GenerateDestroySignatureDocument = {
         },
         {
           kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "type" } },
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "imageType" },
+          },
           type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "GradiumImageType" },
-            },
+            kind: "NamedType",
+            name: { kind: "Name", value: "GradiumImageType" },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "documentType" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "GradiumDocumentType" },
           },
         },
       ],
@@ -6898,10 +6937,18 @@ export const GenerateDestroySignatureDocument = {
               },
               {
                 kind: "Argument",
-                name: { kind: "Name", value: "type" },
+                name: { kind: "Name", value: "imageType" },
                 value: {
                   kind: "Variable",
-                  name: { kind: "Name", value: "type" },
+                  name: { kind: "Name", value: "imageType" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "documentType" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "documentType" },
                 },
               },
             ],
@@ -6951,13 +6998,24 @@ export const GenerateUploadSignatureDocument = {
         },
         {
           kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "type" } },
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "imageType" },
+          },
           type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "GradiumImageType" },
-            },
+            kind: "NamedType",
+            name: { kind: "Name", value: "GradiumImageType" },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "documentType" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "GradiumDocumentType" },
           },
         },
       ],
@@ -6978,10 +7036,18 @@ export const GenerateUploadSignatureDocument = {
               },
               {
                 kind: "Argument",
-                name: { kind: "Name", value: "type" },
+                name: { kind: "Name", value: "imageType" },
                 value: {
                   kind: "Variable",
-                  name: { kind: "Name", value: "type" },
+                  name: { kind: "Name", value: "imageType" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "documentType" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "documentType" },
                 },
               },
             ],

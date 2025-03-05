@@ -112,7 +112,7 @@ export class EntityUploader extends Component<Props, State> {
   private TimedDeletion(image: GradiumImage) {
     const { entityId, imageType } = this.props;
     return new TimedPromise(
-      () => CloudinaryDeleter.delete(image, { entityId, type: imageType }),
+      () => CloudinaryDeleter.deleteImage(image, { entityId, type: imageType }),
       1500,
     );
   }

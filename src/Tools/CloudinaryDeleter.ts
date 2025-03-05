@@ -19,7 +19,10 @@ import { Toasts } from "State/Toasts";
 import type { CloudinaryAssetScope } from "Types/Gradium";
 
 export class CloudinaryDeleter {
-  public static async delete(image: GradiumImage, scope: CloudinaryAssetScope) {
+  public static async deleteImage(
+    image: GradiumImage,
+    scope: CloudinaryAssetScope,
+  ) {
     const { id, url } = image;
     if (!id) {
       return;
@@ -27,7 +30,10 @@ export class CloudinaryDeleter {
     let resolvedImage: GradiumImage | undefined;
     try {
       resolvedImage = await this.deleteReference(id, scope.type);
-      const destination = await this.sign(this.toPublicID(url), scope.type);
+      const destination = await this.signImage(
+        this.toPublicID(url),
+        scope.type,
+      );
       await this.deleteFromCloudinary(destination);
       Toasts.success("Your image has been deleted");
       return image;
@@ -39,8 +45,8 @@ export class CloudinaryDeleter {
     }
   }
 
-  public static async rollBack(url: string, type: GradiumImageType) {
-    const destination = await this.sign(this.toPublicID(url), type);
+  public static async rollBackImage(url: string, type: GradiumImageType) {
+    const destination = await this.signImage(this.toPublicID(url), type);
     if (!destination) {
       return;
     }
@@ -80,12 +86,15 @@ export class CloudinaryDeleter {
     }
   }
 
-  private static async sign(publicId: string, type: GradiumImageType) {
+  private static async signImage(
+    publicId: string,
+    imageType: GradiumImageType,
+  ) {
     const response = await graphQLRequest<
       GenerateDestroySignatureQuery,
       GenerateDestroySignatureQueryVariables
     >(generateDestroySignature, {
-      type,
+      imageType,
       publicId,
       organizationId: Scope.getState().currentOrganizationId,
     });

@@ -83,13 +83,13 @@ export class UploadInterface<T extends IUploadInterface> {
     return filtered;
   }
 
-  private async signUpload(type: GradiumImageType) {
+  private async signUpload(imageType: GradiumImageType) {
     try {
       const response = await graphQLRequest<
         GenerateUploadSignatureQuery,
         GenerateUploadSignatureQueryVariables
       >(generateUploadSignature, {
-        type,
+        imageType,
         organizationId: Scope.getState().currentOrganizationId,
       });
       return response.generateUploadSignature;
@@ -111,7 +111,7 @@ export class UploadInterface<T extends IUploadInterface> {
       });
       return response.saveImage;
     } catch (error) {
-      await CloudinaryDeleter.rollBack(url, scope.type);
+      await CloudinaryDeleter.rollBackImage(url, scope.type);
       throw "DB transaction failed";
     }
   }

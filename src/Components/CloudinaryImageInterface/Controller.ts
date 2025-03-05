@@ -51,7 +51,7 @@ export class Controller {
         this.setTemporaryImage(urls[0]);
       }
     });
-    const images = await uploader.onUpload(e, scope);
+    const images = await uploader.onUploadImage(e, scope);
     if (images.length) {
       return images;
     }
@@ -61,7 +61,7 @@ export class Controller {
 
   public deleteImage(image: GradiumImage, scope: CloudinaryAssetScope) {
     this.activateLoader();
-    return CloudinaryDeleter.delete(image, scope)
+    return CloudinaryDeleter.deleteImage(image, scope)
       .then(img => img)
       .finally(() => {
         this.fadeLoader();

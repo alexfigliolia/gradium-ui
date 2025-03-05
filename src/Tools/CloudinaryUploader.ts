@@ -25,7 +25,7 @@ export class CloudinaryUploader {
     this.onObjectURL = onObjectUrl;
   }
 
-  public readonly onUpload = async (
+  public readonly onUploadImage = async (
     e: ChangeEvent<HTMLInputElement>,
     scope: CloudinaryAssetScope,
   ) => {
@@ -33,7 +33,7 @@ export class CloudinaryUploader {
     if (!files) {
       return [];
     }
-    const signature = await CloudinaryUploader.signUpload(scope.type);
+    const signature = await CloudinaryUploader.signImageUpload(scope.type);
     if (!signature) {
       return [];
     }
@@ -56,7 +56,7 @@ export class CloudinaryUploader {
   ) {
     try {
       const validFiles = this.validateFiles(files);
-      const signature = await this.signUpload(scope.type);
+      const signature = await this.signImageUpload(scope.type);
       if (!signature) {
         return [];
       }
@@ -110,13 +110,13 @@ export class CloudinaryUploader {
     return filtered;
   }
 
-  private static async signUpload(type: GradiumImageType) {
+  private static async signImageUpload(imageType: GradiumImageType) {
     try {
       const response = await graphQLRequest<
         GenerateUploadSignatureQuery,
         GenerateUploadSignatureQueryVariables
       >(generateUploadSignature, {
-        type,
+        imageType,
         organizationId: Scope.getState().currentOrganizationId,
       });
       return response.generateUploadSignature;
@@ -138,7 +138,7 @@ export class CloudinaryUploader {
       });
       return response.saveImage;
     } catch (error) {
-      await CloudinaryDeleter.rollBack(url, scope.type);
+      await CloudinaryDeleter.rollBackImage(url, scope.type);
       throw "DB transaction failed";
     }
   }
