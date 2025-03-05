@@ -23,6 +23,8 @@ const documents = {
     types.BasicUserFragmentFragmentDoc,
   "\n  fragment ExpenseFragment on Expense {\n    id\n    cost\n    createdAt\n    title\n    description\n    createdBy {\n      id\n      name\n    }\n    attachments {\n      id\n      url\n    }\n  }\n":
     types.ExpenseFragmentFragmentDoc,
+  "\n  fragment LeaseFragment on Lease {\n    id\n    start\n    end\n    status\n    price\n    lessees {\n      id\n      name\n      email\n    }\n    invites {\n      id\n      name\n      email\n    }\n    paymentFrequency\n    terminatedDate\n    documents {\n      id\n      url\n      thumbnail\n    }\n  }\n":
+    types.LeaseFragmentFragmentDoc,
   "\n  fragment LivingSpaceFragment on LivingSpace {\n    id\n    name\n    type\n    beds\n    baths\n    size\n    propertyId\n    images {\n      id\n      url\n    }\n    floorPlans {\n      id\n      url\n    }\n  }\n":
     types.LivingSpaceFragmentFragmentDoc,
   "\n  fragment LoggedInUserFragment on LoggedInUser {\n    id\n    name\n    emails {\n      email\n    }\n    affiliations {\n      organization {\n        id\n        name\n      }\n      roles {\n        role\n      }\n    }\n  }\n":
@@ -37,6 +39,8 @@ const documents = {
     types.CreateAmenityReservationDocument,
   "\n  \n  mutation createExpense(\n    $taskId: Int!\n    $organizationId: Int!\n    $propertyId: Int!\n    $title: String!\n    $description: String!\n    $cost: String!\n  ) {\n    createExpense(\n      taskId: $taskId\n      organizationId: $organizationId\n      propertyId: $propertyId\n      title: $title\n      description: $description\n      cost: $cost\n    ) {\n      ...ExpenseFragment\n    }\n  }\n":
     types.CreateExpenseDocument,
+  "\n  \n  mutation createLease(\n    $organizationId: Int!\n    $propertyId: Int!\n    $start: DateTime!\n    $end: DateTime!\n    $price: Float!\n    $lessees: [Lessee!]!\n    $paymentFrequency: RentPaymentFrequency!\n    $livingSpaceId: Int!\n  ) {\n    createLease(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      start: $start\n      end: $end\n      price: $price\n      lessees: $lessees\n      livingSpaceId: $livingSpaceId\n      paymentFrequency: $paymentFrequency\n    ) {\n      ...LeaseFragment\n    }\n  }\n":
+    types.CreateLeaseDocument,
   "\n  \n  mutation createManagementTask(\n    $organizationId: Int!\n    $propertyId: Int!\n    $title: String!\n    $description: String!\n    $status: ManagementTaskStatus!\n    $priority: ManagementTaskPriority!\n    $assignedToId: Int\n  ) {\n    createManagementTask(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      title: $title\n      description: $description\n      status: $status\n      priority: $priority\n      assignedToId: $assignedToId\n    ) {\n      ...ManagementTaskFragment\n    }\n  }\n":
     types.CreateManagementTaskDocument,
   "\n  \n  mutation createOrUpdateAmenity(\n    $id: Int\n    $propertyId: Int!\n    $organizationId: Int!\n    $name: String!\n    $billed: BillFrequency!\n    $open: DateTime!\n    $close: DateTime!\n    $capacity: Int!\n    $price: String!\n  ) {\n    createOrUpdateAmenity(\n      id: $id\n      propertyId: $propertyId\n      organizationId: $organizationId\n      name: $name\n      billed: $billed\n      open: $open\n      close: $close\n      capacity: $capacity\n      price: $price\n    ) {\n      ...AmenityFragment\n    }\n  }\n":
@@ -164,6 +168,12 @@ export function gql(
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(
+  source: "\n  fragment LeaseFragment on Lease {\n    id\n    start\n    end\n    status\n    price\n    lessees {\n      id\n      name\n      email\n    }\n    invites {\n      id\n      name\n      email\n    }\n    paymentFrequency\n    terminatedDate\n    documents {\n      id\n      url\n      thumbnail\n    }\n  }\n",
+): (typeof documents)["\n  fragment LeaseFragment on Lease {\n    id\n    start\n    end\n    status\n    price\n    lessees {\n      id\n      name\n      email\n    }\n    invites {\n      id\n      name\n      email\n    }\n    paymentFrequency\n    terminatedDate\n    documents {\n      id\n      url\n      thumbnail\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
   source: "\n  fragment LivingSpaceFragment on LivingSpace {\n    id\n    name\n    type\n    beds\n    baths\n    size\n    propertyId\n    images {\n      id\n      url\n    }\n    floorPlans {\n      id\n      url\n    }\n  }\n",
 ): (typeof documents)["\n  fragment LivingSpaceFragment on LivingSpace {\n    id\n    name\n    type\n    beds\n    baths\n    size\n    propertyId\n    images {\n      id\n      url\n    }\n    floorPlans {\n      id\n      url\n    }\n  }\n"];
 /**
@@ -202,6 +212,12 @@ export function gql(
 export function gql(
   source: "\n  \n  mutation createExpense(\n    $taskId: Int!\n    $organizationId: Int!\n    $propertyId: Int!\n    $title: String!\n    $description: String!\n    $cost: String!\n  ) {\n    createExpense(\n      taskId: $taskId\n      organizationId: $organizationId\n      propertyId: $propertyId\n      title: $title\n      description: $description\n      cost: $cost\n    ) {\n      ...ExpenseFragment\n    }\n  }\n",
 ): (typeof documents)["\n  \n  mutation createExpense(\n    $taskId: Int!\n    $organizationId: Int!\n    $propertyId: Int!\n    $title: String!\n    $description: String!\n    $cost: String!\n  ) {\n    createExpense(\n      taskId: $taskId\n      organizationId: $organizationId\n      propertyId: $propertyId\n      title: $title\n      description: $description\n      cost: $cost\n    ) {\n      ...ExpenseFragment\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: "\n  \n  mutation createLease(\n    $organizationId: Int!\n    $propertyId: Int!\n    $start: DateTime!\n    $end: DateTime!\n    $price: Float!\n    $lessees: [Lessee!]!\n    $paymentFrequency: RentPaymentFrequency!\n    $livingSpaceId: Int!\n  ) {\n    createLease(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      start: $start\n      end: $end\n      price: $price\n      lessees: $lessees\n      livingSpaceId: $livingSpaceId\n      paymentFrequency: $paymentFrequency\n    ) {\n      ...LeaseFragment\n    }\n  }\n",
+): (typeof documents)["\n  \n  mutation createLease(\n    $organizationId: Int!\n    $propertyId: Int!\n    $start: DateTime!\n    $end: DateTime!\n    $price: Float!\n    $lessees: [Lessee!]!\n    $paymentFrequency: RentPaymentFrequency!\n    $livingSpaceId: Int!\n  ) {\n    createLease(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      start: $start\n      end: $end\n      price: $price\n      lessees: $lessees\n      livingSpaceId: $livingSpaceId\n      paymentFrequency: $paymentFrequency\n    ) {\n      ...LeaseFragment\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

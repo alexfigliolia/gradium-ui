@@ -134,6 +134,13 @@ export type Expense = {
   title: Scalars["String"]["output"];
 };
 
+export type GradiumDocument = {
+  __typename?: "GradiumDocument";
+  id: Scalars["Int"]["output"];
+  thumbnail: Scalars["String"]["output"];
+  url: Scalars["String"]["output"];
+};
+
 export enum GradiumDocumentType {
   LeaseDocument = "leaseDocument",
 }
@@ -154,6 +161,13 @@ export enum GradiumImageType {
   TaskImage = "taskImage",
 }
 
+export type GradiumPerson = {
+  __typename?: "GradiumPerson";
+  email: Scalars["String"]["output"];
+  id: Scalars["Int"]["output"];
+  name: Scalars["String"]["output"];
+};
+
 export type Identity = {
   __typename?: "Identity";
   id: Scalars["Int"]["output"];
@@ -162,10 +176,11 @@ export type Identity = {
 
 export type Lease = {
   __typename?: "Lease";
-  documents: GradiumImageType;
+  documents: Array<GradiumDocument>;
   end: Scalars["DateTime"]["output"];
   id: Scalars["Int"]["output"];
-  lessees: Array<Identity>;
+  invites: Array<GradiumPerson>;
+  lessees: Array<GradiumPerson>;
   paymentFrequency: RentPaymentFrequency;
   price: Scalars["Float"]["output"];
   start: Scalars["DateTime"]["output"];
@@ -186,6 +201,11 @@ export enum LeaseStatus {
   Pending = "pending",
   Terminated = "terminated",
 }
+
+export type Lessee = {
+  email: Scalars["String"]["input"];
+  name: Scalars["String"]["input"];
+};
 
 export type LinkedEmail = {
   __typename?: "LinkedEmail";
@@ -251,6 +271,7 @@ export type Mutation = {
   createAccount: LoggedInUser;
   createAmenityReservation: AmenityReservation;
   createExpense: Expense;
+  createLease: Lease;
   createManagementTask: ManagementTask;
   createOrUpdateAmenity: Amenity;
   createOrUpdateLivingSpace: LivingSpace;
@@ -309,6 +330,17 @@ export type MutationCreateExpenseArgs = {
   propertyId?: InputMaybe<Scalars["Int"]["input"]>;
   taskId: Scalars["Int"]["input"];
   title: Scalars["String"]["input"];
+};
+
+export type MutationCreateLeaseArgs = {
+  end: Scalars["DateTime"]["input"];
+  lessees: Array<Lessee>;
+  livingSpaceId: Scalars["Int"]["input"];
+  organizationId: Scalars["Int"]["input"];
+  paymentFrequency: RentPaymentFrequency;
+  price: Scalars["Float"]["input"];
+  propertyId: Scalars["Int"]["input"];
+  start: Scalars["DateTime"]["input"];
 };
 
 export type MutationCreateManagementTaskArgs = {
@@ -737,6 +769,35 @@ export type ExpenseFragmentFragment = {
   attachments: Array<{ __typename?: "GradiumImage"; id: number; url: string }>;
 };
 
+export type LeaseFragmentFragment = {
+  __typename?: "Lease";
+  id: number;
+  start: string;
+  end: string;
+  status: LeaseStatus;
+  price: number;
+  paymentFrequency: RentPaymentFrequency;
+  terminatedDate?: string | null;
+  lessees: Array<{
+    __typename?: "GradiumPerson";
+    id: number;
+    name: string;
+    email: string;
+  }>;
+  invites: Array<{
+    __typename?: "GradiumPerson";
+    id: number;
+    name: string;
+    email: string;
+  }>;
+  documents: Array<{
+    __typename?: "GradiumDocument";
+    id: number;
+    url: string;
+    thumbnail: string;
+  }>;
+};
+
 export type LivingSpaceFragmentFragment = {
   __typename?: "LivingSpace";
   id: number;
@@ -866,6 +927,49 @@ export type CreateExpenseMutation = {
       __typename?: "GradiumImage";
       id: number;
       url: string;
+    }>;
+  };
+};
+
+export type CreateLeaseMutationVariables = Exact<{
+  organizationId: Scalars["Int"]["input"];
+  propertyId: Scalars["Int"]["input"];
+  start: Scalars["DateTime"]["input"];
+  end: Scalars["DateTime"]["input"];
+  price: Scalars["Float"]["input"];
+  lessees: Array<Lessee> | Lessee;
+  paymentFrequency: RentPaymentFrequency;
+  livingSpaceId: Scalars["Int"]["input"];
+}>;
+
+export type CreateLeaseMutation = {
+  __typename?: "Mutation";
+  createLease: {
+    __typename?: "Lease";
+    id: number;
+    start: string;
+    end: string;
+    status: LeaseStatus;
+    price: number;
+    paymentFrequency: RentPaymentFrequency;
+    terminatedDate?: string | null;
+    lessees: Array<{
+      __typename?: "GradiumPerson";
+      id: number;
+      name: string;
+      email: string;
+    }>;
+    invites: Array<{
+      __typename?: "GradiumPerson";
+      id: number;
+      name: string;
+      email: string;
+    }>;
+    documents: Array<{
+      __typename?: "GradiumDocument";
+      id: number;
+      url: string;
+      thumbnail: string;
     }>;
   };
 };
@@ -1837,6 +1941,67 @@ export const BasicUserFragmentFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<BasicUserFragmentFragment, unknown>;
+export const LeaseFragmentFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "LeaseFragment" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Lease" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "start" } },
+          { kind: "Field", name: { kind: "Name", value: "end" } },
+          { kind: "Field", name: { kind: "Name", value: "status" } },
+          { kind: "Field", name: { kind: "Name", value: "price" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "lessees" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "email" } },
+              ],
+            },
+          },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "invites" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "email" } },
+              ],
+            },
+          },
+          { kind: "Field", name: { kind: "Name", value: "paymentFrequency" } },
+          { kind: "Field", name: { kind: "Name", value: "terminatedDate" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "documents" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "thumbnail" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<LeaseFragmentFragment, unknown>;
 export const LivingSpaceFragmentFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -2733,6 +2898,261 @@ export const CreateExpenseDocument = {
   CreateExpenseMutation,
   CreateExpenseMutationVariables
 >;
+export const CreateLeaseDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "createLease" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "organizationId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "propertyId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "start" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "DateTime" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "end" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "DateTime" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "price" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "Float" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "lessees" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "ListType",
+              type: {
+                kind: "NonNullType",
+                type: {
+                  kind: "NamedType",
+                  name: { kind: "Name", value: "Lessee" },
+                },
+              },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "paymentFrequency" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "RentPaymentFrequency" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "livingSpaceId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "createLease" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "organizationId" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "organizationId" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "propertyId" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "propertyId" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "start" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "start" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "end" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "end" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "price" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "price" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "lessees" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "lessees" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "livingSpaceId" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "livingSpaceId" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "paymentFrequency" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "paymentFrequency" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "LeaseFragment" },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "LeaseFragment" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Lease" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "start" } },
+          { kind: "Field", name: { kind: "Name", value: "end" } },
+          { kind: "Field", name: { kind: "Name", value: "status" } },
+          { kind: "Field", name: { kind: "Name", value: "price" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "lessees" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "email" } },
+              ],
+            },
+          },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "invites" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "email" } },
+              ],
+            },
+          },
+          { kind: "Field", name: { kind: "Name", value: "paymentFrequency" } },
+          { kind: "Field", name: { kind: "Name", value: "terminatedDate" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "documents" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "thumbnail" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<CreateLeaseMutation, CreateLeaseMutationVariables>;
 export const CreateManagementTaskDocument = {
   kind: "Document",
   definitions: [

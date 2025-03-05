@@ -47,10 +47,7 @@ export const DateInput = memo(function DateInput({
         return;
       }
       const { value } = e.target;
-      if (!value) {
-        return onChange?.(value);
-      }
-      return onChange?.(Controller.toISOString(value));
+      onChange?.(value);
     },
     [onChange],
   );

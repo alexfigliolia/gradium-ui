@@ -97,13 +97,24 @@ type PaginatedLeases {
 type Lease {
   id: Int!
   price: Float!
-  lessees: [Identity!]!
+  lessees: [GradiumPerson!]!
+  invites: [GradiumPerson!]!
   paymentFrequency: RentPaymentFrequency!
   terminatedDate: DateTime
-  documents: GradiumImageType!
+  documents: [GradiumDocument!]!
   start: DateTime!
   end: DateTime!
   status: LeaseStatus!
+}
+type GradiumPerson {
+  id: Int!
+  name: String!
+  email: String!
+}
+type GradiumDocument {
+  id: Int!
+  url: String!
+  thumbnail: String!
 }
 type Amenity {
   id: Int!
@@ -251,6 +262,16 @@ type Mutation {
     id: Int!
     type: GradiumImageType!
   ): GradiumImage!
+  createLease(
+    start: DateTime!
+    end: DateTime!
+    price: Float!
+    lessees: [Lessee!]!
+    livingSpaceId: Int!
+    paymentFrequency: RentPaymentFrequency!
+    propertyId: Int!
+    organizationId: Int!
+  ): Lease!
   deleteEmail(userId: Int!, email: String!): BasicUser!
   updateEmail(userId: Int!, previous: String!, next: String!): BasicUser!
   saveDocument(
@@ -410,15 +431,6 @@ enum RentPaymentFrequency {
   month
   year
 }
-enum GradiumImageType {
-  propertyImage
-  livingSpaceImage
-  livingSpaceFloorPlan
-  amenityImage
-  amenityFloorPlan
-  taskImage
-  expenseAttachment
-}
 enum LeaseStatus {
   complete
   inProgress
@@ -444,6 +456,15 @@ enum ManagementTaskPriority {
   low
   immediate
 }
+enum GradiumImageType {
+  propertyImage
+  livingSpaceImage
+  livingSpaceFloorPlan
+  amenityImage
+  amenityFloorPlan
+  taskImage
+  expenseAttachment
+}
 enum GradiumDocumentType {
   leaseDocument
 }
@@ -453,6 +474,10 @@ enum PropertyAddonType {
   propertyEvents
   leaseManagement
   hoaManagement
+}
+input Lessee {
+  name: String!
+  email: String!
 }
 "Exposes a URL that specifies the behavior of this scalar."
 directive @specifiedBy(

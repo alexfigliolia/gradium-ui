@@ -8,8 +8,7 @@ import { Leases } from "State/Leases";
 import type { Propless } from "Types/React";
 import { AvailableSoon } from "./AvailableSoon";
 import { AvailableSpaces } from "./AvailableSpaces";
-import { LeaseCreator } from "./LeaseCreator";
-import { LeaseModifier } from "./LeaseModifier";
+import { CreateLease } from "./CreateLease";
 import { LeasesList } from "./LeasesList";
 import "./styles.scss";
 
@@ -35,8 +34,7 @@ export default memo(function LeasesPage(_: Propless) {
           <AvailableSoon />
         </SearchContextProvider>
         <LeasesList />
-        <LeaseCreator />
-        <LeaseModifier />
+        <CreateLease />
       </Page>
     </PermissedPropertyRoute>
   );

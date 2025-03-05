@@ -1,6 +1,6 @@
 import { differenceInDays } from "date-fns";
 import type { ReactNode } from "react";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import { GradientBorderButton } from "Components/GradientBorderButton";
 import { type GradiumImage } from "GraphQL/Types";
@@ -12,6 +12,7 @@ import { Dates } from "Tools/Dates";
 import "./styles.scss";
 
 export const AvailableSpaceCard = ({
+  id,
   beds,
   baths,
   name,
@@ -57,6 +58,10 @@ export const AvailableSpaceCard = ({
     return p;
   }, [images]);
 
+  const createLease = useCallback(() => {
+    Leases.newLease.open(id);
+  }, [id]);
+
   return (
     <article className={classes}>
       <div className="as-title">
@@ -84,7 +89,7 @@ export const AvailableSpaceCard = ({
           </div>
         ))}
       </div>
-      <GradientBorderButton onClick={Leases.newLease.open}>
+      <GradientBorderButton onClick={createLease}>
         Add Lease
       </GradientBorderButton>
     </article>

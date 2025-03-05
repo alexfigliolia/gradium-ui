@@ -1,18 +1,8 @@
 import type { ChangeEvent } from "react";
 import { PropertyScopeModel } from "Models/PropertyScopeModel";
-import type { ILeases, ILeaseStatus } from "./types";
+import type { ILeases } from "./types";
 
 export class LeasesModel extends PropertyScopeModel<ILeases> {
-  public readonly DISPLAY_MAP: Record<ILeaseStatus | "unknown", string> = {
-    complete: "Complete",
-    "in-progress": "In Progress",
-    terminated: "Terminated",
-    unknown: "Unknown",
-    pending: "Pending",
-  };
-  public readonly newLease = this.createBasicToggle("newLease");
-  public readonly editLease = this.createBasicToggle("editLease");
-  public readonly leaseFilters = this.createBasicToggle("leaseFilters");
   constructor() {
     super("Leases", {
       space: "",
@@ -23,6 +13,7 @@ export class LeasesModel extends PropertyScopeModel<ILeases> {
       leaseFilters: false,
       availableSoon: [],
       availableSpaces: [],
+      scopedUnit: -1,
     });
   }
 
@@ -53,4 +44,25 @@ export class LeasesModel extends PropertyScopeModel<ILeases> {
       state.startDate = "";
     });
   };
+
+  private readonly openNewLease = (unit = -1) => {
+    this.update(state => {
+      state.scopedUnit = unit;
+      state.newLease = true;
+    });
+  };
+
+  private readonly closeNewLease = () => {
+    this.update(state => {
+      state.scopedUnit = -1;
+      state.newLease = false;
+    });
+  };
+
+  public readonly newLease = this.createToggle(
+    this.openNewLease,
+    this.closeNewLease,
+  );
+  public readonly editLease = this.createBasicToggle("editLease");
+  public readonly leaseFilters = this.createBasicToggle("leaseFilters");
 }

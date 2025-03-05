@@ -29,8 +29,8 @@ export const ActionButton = memo(function ActionButton({
       {...rest}>
       <div>{children}</div>
       <TriangleLoader />
-      <Check />
-      <Error />
+      <Check aria-hidden />
+      <Error aria-hidden />
     </GradientButton>
   );
 });
