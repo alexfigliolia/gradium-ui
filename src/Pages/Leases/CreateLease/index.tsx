@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import type { ILoadingStateSetter } from "@figliolia/react-hooks";
 import { useController, useFormState } from "@figliolia/react-hooks";
 import { ActionButton } from "Components/ActionButton";
@@ -6,6 +6,7 @@ import { DateInput } from "Components/DateInput";
 import { DropDown } from "Components/DropDown";
 import { Input } from "Components/Input";
 import { LivingSpaceDropDown } from "Components/LivingSpaceDropDown";
+import { SearchContext } from "Components/SearchContext";
 import { createLease } from "GraphQL/Mutations/createLease.gql";
 import type {
   CreateLeaseMutation,
@@ -19,6 +20,7 @@ import { creating, Leases, scopedUnit, useLeases } from "State/Leases";
 import { Properties } from "State/Properties";
 import { Scope } from "State/Scope";
 import { Dates } from "Tools/Dates";
+import { useAvailableSpaces } from "../AvailableSpaces/useAvailableSpaces";
 import { DisplayController } from "../DisplayController";
 import { LeaseViewer } from "../LeaseViewer";
 import { Controller } from "./Controller";
@@ -28,6 +30,8 @@ import "./styles.scss";
 export const CreateLease = () => {
   const open = useLeases(creating);
   const initialUnit = useLeases(scopedUnit);
+  const { search } = useContext(SearchContext);
+  const { refetch } = useAvailableSpaces(search);
   const [state, setState] = useState(Controller.initialState(initialUnit));
   const controller = useController(new Controller(setState));
 
@@ -56,6 +60,7 @@ export const CreateLease = () => {
         () => {
           controller.resetState();
           Leases.newLease.close();
+          void refetch();
         },
       );
     },

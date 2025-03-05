@@ -1,28 +1,14 @@
 import { useCallback, useContext, useMemo } from "react";
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { SearchContext } from "Components/SearchContext";
-import { availableSpacesOptions } from "GraphQL/Queries/fetchAvailableSpaces.gql";
-import { Scope } from "State/Scope";
 import type { Propless } from "Types/React";
 import { AvailabilitySection } from "../AvailabilitySection";
 import { AvailableSpace } from "./AvailableSpace";
+import { useAvailableSpaces } from "./useAvailableSpaces";
 
 export const AvailableSpaces = (_: Propless) => {
   const { search } = useContext(SearchContext);
   const { data, isLoading, error, isFetching, fetchNextPage, hasNextPage } =
-    useInfiniteQuery(
-      availableSpacesOptions(
-        {
-          search,
-          limit: 4,
-          organizationId: Scope.getState().currentOrganizationId,
-        },
-        {
-          getNextPageParam: page => page.fetchAvailableSpaces.cursor,
-          getPreviousPageParam: page => page.fetchAvailableSpaces.cursor,
-        },
-      ),
-    );
+    useAvailableSpaces(search);
 
   const onScrollEnd = useCallback(() => {
     if (hasNextPage) {

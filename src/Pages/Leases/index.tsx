@@ -29,12 +29,12 @@ export default memo(function LeasesPage(_: Propless) {
       <Page className="leases-section">
         <SearchContextProvider>
           <AvailableSpaces />
+          <CreateLease />
         </SearchContextProvider>
         <SearchContextProvider>
           <AvailableSoon />
         </SearchContextProvider>
         <LeasesList />
-        <CreateLease />
       </Page>
     </PermissedPropertyRoute>
   );
