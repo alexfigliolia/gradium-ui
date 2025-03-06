@@ -3,7 +3,7 @@ import "./styles.scss";
 
 export const SpaceTitle = ({ propertyName, spaceName, children }: Props) => {
   return (
-    <div className="space-title">
+    <div className="space-card-title">
       <div>
         <p>{propertyName}</p>
         <span>{children}</span>

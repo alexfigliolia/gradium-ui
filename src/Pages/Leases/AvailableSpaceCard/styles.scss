@@ -15,7 +15,7 @@
     &>.space-photos > div > svg path {
       fill: url(#successGradient);
     }
-    &> .space-title > div > span {
+    &> .space-card-title > div > span {
       @include Variables.successGradient;
       box-shadow: Variables.$shadow-level-2 rgba(Variables.$success-dark, 0.5);
     }
@@ -36,7 +36,7 @@
     &>.space-photos > div > svg path {
       fill: url(#errorGradient);
     }
-    &> .space-title > div > span {
+    &> .space-card-title > div > span {
       @include Variables.errorGradient;
       box-shadow: Variables.$shadow-level-2 rgba(Variables.$error-dark, 0.5);
     }
@@ -57,7 +57,7 @@
     &>.space-photos > div > svg path {
       fill: url(#infoGradient);
     }
-    &> .space-title > div > span {
+    &> .space-card-title > div > span {
       @include Variables.infoGradient;
       box-shadow: Variables.$shadow-level-2 rgba(Variables.$info-dark, 0.5);
     }
