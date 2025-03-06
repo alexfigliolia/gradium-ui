@@ -16,9 +16,6 @@
       display: flex;
       flex-direction: column;
       gap: 1em;
-      & h3 {
-        @include Variables.gradientText;
-      }
       &>.split {
         width: 100%;
         @include Variables.center;
@@ -29,6 +26,19 @@
         }
         &.enforce {
           flex-direction: row;
+        }
+      }
+      & .price-input > .input-positioner > button > svg {
+        &:first-of-type {
+          stroke: none;
+          fill: var(--input-text-color);
+        }
+        &:last-of-type {
+          stroke: none;
+          fill: url(#themeGradient);
+        }
+        &>path {
+          stroke: none;
         }
       }
       & .delete-lessee {

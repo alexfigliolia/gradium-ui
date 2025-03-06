@@ -25,7 +25,7 @@ export const Lessees = memo(function Lessees({
   return (
     <Fragment>
       {!lessees.length && (
-        <p className="warning">At lease one lessee is required</p>
+        <p className="warning">At least one lessee is required</p>
       )}
       {lessees.map((lessee, i) => (
         <Lessee

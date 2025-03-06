@@ -13,11 +13,6 @@ import { LeasesList } from "./LeasesList";
 import "./styles.scss";
 
 export default memo(function LeasesPage(_: Propless) {
-  // const openNewLease = useCallback(() => {
-  //   NewLease.reset();
-  //   Leases.newLease.open();
-  // }, []);
-
   useUnmount(() => {
     Leases.closeAll();
   });

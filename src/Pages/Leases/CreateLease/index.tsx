@@ -109,7 +109,6 @@ export const CreateLease = () => {
           label="Paid Each"
           title="Payment Frequency"
           onChange={controller.setFrequency}
-          className="price-input"
           list={DisplayController.frequencyOptions}
         />
         <h3>Term</h3>
