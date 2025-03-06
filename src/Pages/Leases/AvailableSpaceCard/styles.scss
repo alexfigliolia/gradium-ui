@@ -12,16 +12,20 @@
       @include Variables.successGradient;
       @include Variables.clipText;
     }
-    &>.as-images > div > svg path {
+    &>.space-photos > div > svg path {
       fill: url(#successGradient);
     }
-    &> .as-title > div > span {
+    &> .space-title > div > span {
       @include Variables.successGradient;
       box-shadow: Variables.$shadow-level-2 rgba(Variables.$success-dark, 0.5);
     }
     &>.gradient-border-button {
       color: Variables.$success-dark;
       background-image: linear-gradient(to right, var(--tile-background), var(--tile-background), Variables.$success-light, Variables.$success-dark);
+      &>div > span {
+        @include Variables.successGradient;
+        @include Variables.clipText;
+      }
     }
   }
   &.error {
@@ -29,16 +33,20 @@
       @include Variables.errorGradient;
       @include Variables.clipText;
     }
-    &>.as-images > div > svg path {
+    &>.space-photos > div > svg path {
       fill: url(#errorGradient);
     }
-    &> .as-title > div > span {
+    &> .space-title > div > span {
       @include Variables.errorGradient;
       box-shadow: Variables.$shadow-level-2 rgba(Variables.$error-dark, 0.5);
     }
     &>.gradient-border-button {
       color: Variables.$error-dark;
       background-image: linear-gradient(to right, var(--tile-background), var(--tile-background), Variables.$error-light, Variables.$error-dark);
+      &>div > span {
+        @include Variables.errorGradient;
+        @include Variables.clipText;
+      }
     }
   }
   &.info {
@@ -46,38 +54,20 @@
       @include Variables.infoGradient;
       @include Variables.clipText;
     }
-    &>.as-images > div > svg path {
+    &>.space-photos > div > svg path {
       fill: url(#infoGradient);
     }
-    &> .as-title > div > span {
+    &> .space-title > div > span {
       @include Variables.infoGradient;
       box-shadow: Variables.$shadow-level-2 rgba(Variables.$info-dark, 0.5);
     }
     &>.gradient-border-button {
       color: Variables.$info-dark;
       background-image: linear-gradient(to right, var(--tile-background), var(--tile-background), Variables.$info-light, Variables.$info-dark);
-    }
-  }
-  &>.as-title {
-    &>div {
-      width: 100%;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      &>p {
-        font-size: 0.85em;
-        color: var(--text-color-lightest);
+      &>div > span {
+        @include Variables.infoGradient;
+        @include Variables.clipText;
       }
-      &>span {
-        font-size: 0.9em;
-        font-weight: 700;
-        padding: 0.15em 0.75em;
-        border-radius: 1em;
-        color: #fff;
-      }
-    }
-    &>h3 {
-      line-height: 1;
     }
   }
   &>p {
@@ -88,66 +78,6 @@
       font-weight: 500;
       @include Variables.gradientText;
     }
-  }
-  &>.as-stats {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 1.5em;
-    margin-top: 0.5em;
-    &>div {
-      @include Variables.center;
-      gap: 0.5em;
-      font-size: 0.9em;
-      &>span {
-        font-weight: 700;
-        font-size: 1.1em;
-        color: var(--text-color-lightest);
-      }
-      &>svg {
-        &.bed-icon {
-          width: 1.5em;
-          height: 1.5em;
-          stroke: var(--text-color-lightest); 
-        }
-        &.bath-icon {
-          width: 1.3em;
-          height: 1.3em;
-          fill: var(--text-color-lightest);
-        }
-      }
-    }
-  }
-  &>.as-images {
-    display: grid;
-    gap: 0.5em;
-    margin-top: 1em;
-    grid-template-columns: repeat(5, 1fr);
-    &>div {
-      aspect-ratio: 1 / 1;
-      height: 100%;
-      width: 100%;
-      border-radius: 0.5em;
-      overflow: hidden;
-      box-shadow: var(--shadow-level-1);
-      &>img,
-      &>svg {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-  }
-  &>.gradient-border-button {
-    display: block;
-    margin-top: 0.5em;
-    margin-left: auto;
-    font-size: 0.85em;
-    text-transform: uppercase;
-    font-weight: 700;
-    color: var(--text-color-light);
-    --padding: 0.35em 0.5em;
-    --background: var(--tile-background);
   }
 }
 

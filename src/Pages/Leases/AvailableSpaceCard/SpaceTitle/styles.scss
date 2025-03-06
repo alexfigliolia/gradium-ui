@@ -1,0 +1,25 @@
+@use "Styles/Variables";
+
+.space-title {
+  &>div {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    &>p {
+      font-size: 0.85em;
+      color: var(--text-color-lightest);
+    }
+    &>span {
+      font-size: 0.9em;
+      font-weight: 700;
+      padding: 0.15em 0.75em;
+      border-radius: 1em;
+      color: #fff;
+      @include Variables.themeGradient;
+    }
+  }
+  &>h3 {
+    line-height: 1;
+  }
+}

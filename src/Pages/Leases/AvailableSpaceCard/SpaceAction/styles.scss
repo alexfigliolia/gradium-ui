@@ -1,0 +1,11 @@
+.gradient-border-button.space-action {
+  display: block;
+  margin-top: 0.5em;
+  margin-left: auto;
+  font-size: 0.85em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--text-color-light);
+  --padding: 0.35em 0.5em;
+  --background: var(--tile-background);
+}

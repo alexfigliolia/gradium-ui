@@ -1,0 +1,31 @@
+@use "Styles/Variables";
+
+.beds-baths {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1.5em;
+  margin-top: 0.5em;
+  &>div {
+    @include Variables.center;
+    gap: 0.5em;
+    font-size: 0.9em;
+    &>span {
+      font-weight: 700;
+      font-size: 1.1em;
+      color: var(--text-color-lightest);
+    }
+    &>svg {
+      &.bed-icon {
+        width: 1.5em;
+        height: 1.5em;
+        stroke: var(--text-color-lightest); 
+      }
+      &.bath-icon {
+        width: 1.3em;
+        height: 1.3em;
+        fill: var(--text-color-lightest);
+      }
+    }
+  }
+}

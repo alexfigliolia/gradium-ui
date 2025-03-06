@@ -9,9 +9,6 @@ export const DummySpaceCard = memo(
     return (
       <AvailableSpaceCard
         id={-1}
-        beds={1}
-        baths={1}
-        images={[]}
         name="dummy"
         className="dummy"
         propertyName="dummy"

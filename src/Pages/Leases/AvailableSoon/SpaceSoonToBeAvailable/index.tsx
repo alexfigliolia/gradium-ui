@@ -1,13 +1,20 @@
-import { useCallback } from "react";
+import { Fragment, useCallback } from "react";
 import type { AvailableSoonRentableSpace } from "GraphQL/Types";
-import { AvailableSpaceCard } from "Pages/Leases/AvailableSpaceCard";
+import {
+  AvailableSpaceCard,
+  BedsBaths,
+  SpacePhotos,
+} from "Pages/Leases/AvailableSpaceCard";
 import { Numbers } from "Tools/Numbers";
 
 export const SpaceSoonToBeAvailable = ({
+  beds,
+  baths,
+  images,
   availableOn,
   ...rest
 }: AvailableSoonRentableSpace) => {
-  const renderLabel = useCallback((_: string, elapsed: number) => {
+  const renderLabel = useCallback((elapsed: number) => {
     if (elapsed === 1) {
       return (
         <p>
@@ -26,7 +33,13 @@ export const SpaceSoonToBeAvailable = ({
     <AvailableSpaceCard
       date={availableOn}
       className="available-soon"
-      renderChildren={renderLabel}
+      renderChildren={(_, elapsed) => (
+        <Fragment>
+          {renderLabel(elapsed)}
+          <BedsBaths beds={beds} baths={baths} />
+          <SpacePhotos images={images} />
+        </Fragment>
+      )}
       {...rest}
     />
   );

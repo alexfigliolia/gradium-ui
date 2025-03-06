@@ -34,7 +34,9 @@ export default memo(function LeasesPage(_: Propless) {
         <SearchContextProvider>
           <AvailableSoon />
         </SearchContextProvider>
-        <LeasesList />
+        <SearchContextProvider>
+          <LeasesList />
+        </SearchContextProvider>
       </Page>
     </PermissedPropertyRoute>
   );

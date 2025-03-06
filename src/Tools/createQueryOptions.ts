@@ -35,7 +35,10 @@ export const createInfiniteQueryOptions = <
   document: string,
 ) => {
   const name = extractOperationName(document);
-  return (variables: V, options: InfiniteObserverProps<D, number>) => {
+  return (
+    variables: Omit<V, "cursor">,
+    options: InfiniteObserverProps<D, number>,
+  ) => {
     return infiniteQueryOptions<
       D,
       GraphQLError,
@@ -46,7 +49,7 @@ export const createInfiniteQueryOptions = <
     >({
       initialPageParam: null,
       queryFn: ({ signal, pageParam }) =>
-        graphQLRequest<D, V>(
+        graphQLRequest<D, Omit<V, "cursor">>(
           document,
           { ...variables, cursor: pageParam },
           signal,

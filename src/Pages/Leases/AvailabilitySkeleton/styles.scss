@@ -26,7 +26,7 @@
     }
   }
   &>.horizontal-list > div > .available-space-card.skeleton {
-    &>.as-title {
+    &>.space-title {
       &>div {
         &>p,
         &>span {
@@ -57,7 +57,7 @@
       @include Variables.skeleton;
       border-radius: 0.5em;
     }
-    &>.as-stats {
+    &>.beds-baths {
       &>div {
         @include Variables.skeleton;
         border-radius: 0.5em;
@@ -66,7 +66,7 @@
         }
       }
     }
-    &>.as-images {
+    &>.space-photos {
       &>div {
         @include Variables.skeleton;
         border-radius: 0.5em;
@@ -75,10 +75,13 @@
         }
       }
     }
-    &>.gradient-border-button {
+    &>.gradient-border-button.space-action {
       &> div {
-        color: transparent;
         @include Variables.skeleton;
+        &>span {
+          color: transparent;
+          background: none;
+        }
       }
     }
   }
