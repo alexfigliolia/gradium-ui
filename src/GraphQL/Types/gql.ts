@@ -51,6 +51,8 @@ const documents = {
     types.CreatePropertyDocument,
   "\n  \n  mutation deleteAmenity($organizationId: Int!, $propertyId: Int!, $id: Int!) {\n    deleteAmenity(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      id: $id\n    ) {\n      ...AmenityFragment\n    }\n  }\n":
     types.DeleteAmenityDocument,
+  "\n  mutation deleteDocument(\n    $propertyId: Int!\n    $organizationId: Int!\n    $id: Int!\n    $type: GradiumDocumentType!\n  ) {\n    deleteDocument(\n      id: $id\n      type: $type\n      propertyId: $propertyId\n      organizationId: $organizationId\n    ) {\n      id\n      url\n      thumbnail\n    }\n  }\n":
+    types.DeleteDocumentDocument,
   "\n  \n  mutation deleteEmail($userId: Int!, $email: String!) {\n    deleteEmail(userId: $userId, email: $email) {\n      ...BasicUserFragment\n    }\n  }\n":
     types.DeleteEmailDocument,
   "\n  mutation deleteExpense($organizationId: Int!, $propertyId: Int, $id: Int!) {\n    deleteExpense(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      id: $id\n    )\n  }\n":
@@ -74,6 +76,8 @@ const documents = {
     types.ModifyPropertyAddonsDocument,
   "\n  mutation resetPassword($userId: Int!, $previous: String!, $next: String!) {\n    resetPassword(userId: $userId, previous: $previous, next: $next)\n  }\n":
     types.ResetPasswordDocument,
+  "\n  mutation saveDocument(\n    $propertyId: Int!\n    $organizationId: Int!\n    $entityId: Int!\n    $url: String!\n    $thumbnail: String!\n    $type: GradiumDocumentType!\n  ) {\n    saveDocument(\n      type: $type\n      thumbnail: $thumbnail\n      entityId: $entityId\n      propertyId: $propertyId\n      organizationId: $organizationId\n      url: $url\n    ) {\n      id\n      url\n      thumbnail\n    }\n  }\n":
+    types.SaveDocumentDocument,
   "\n  mutation saveImage(\n    $propertyId: Int!\n    $organizationId: Int!\n    $entityId: Int!\n    $url: String!\n    $type: GradiumImageType!\n  ) {\n    saveImage(\n      type: $type\n      entityId: $entityId\n      propertyId: $propertyId\n      organizationId: $organizationId\n      url: $url\n    ) {\n      id\n      url\n    }\n  }\n":
     types.SaveImageDocument,
   "\n  mutation setManagementTaskStatus(\n    $id: Int!\n    $organizationId: Int!\n    $status: ManagementTaskStatus!\n  ) {\n    setManagementTaskStatus(\n      id: $id\n      organizationId: $organizationId\n      status: $status\n    )\n  }\n":
@@ -254,6 +258,12 @@ export function gql(
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(
+  source: "\n  mutation deleteDocument(\n    $propertyId: Int!\n    $organizationId: Int!\n    $id: Int!\n    $type: GradiumDocumentType!\n  ) {\n    deleteDocument(\n      id: $id\n      type: $type\n      propertyId: $propertyId\n      organizationId: $organizationId\n    ) {\n      id\n      url\n      thumbnail\n    }\n  }\n",
+): (typeof documents)["\n  mutation deleteDocument(\n    $propertyId: Int!\n    $organizationId: Int!\n    $id: Int!\n    $type: GradiumDocumentType!\n  ) {\n    deleteDocument(\n      id: $id\n      type: $type\n      propertyId: $propertyId\n      organizationId: $organizationId\n    ) {\n      id\n      url\n      thumbnail\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
   source: "\n  \n  mutation deleteEmail($userId: Int!, $email: String!) {\n    deleteEmail(userId: $userId, email: $email) {\n      ...BasicUserFragment\n    }\n  }\n",
 ): (typeof documents)["\n  \n  mutation deleteEmail($userId: Int!, $email: String!) {\n    deleteEmail(userId: $userId, email: $email) {\n      ...BasicUserFragment\n    }\n  }\n"];
 /**
@@ -322,6 +332,12 @@ export function gql(
 export function gql(
   source: "\n  mutation resetPassword($userId: Int!, $previous: String!, $next: String!) {\n    resetPassword(userId: $userId, previous: $previous, next: $next)\n  }\n",
 ): (typeof documents)["\n  mutation resetPassword($userId: Int!, $previous: String!, $next: String!) {\n    resetPassword(userId: $userId, previous: $previous, next: $next)\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: "\n  mutation saveDocument(\n    $propertyId: Int!\n    $organizationId: Int!\n    $entityId: Int!\n    $url: String!\n    $thumbnail: String!\n    $type: GradiumDocumentType!\n  ) {\n    saveDocument(\n      type: $type\n      thumbnail: $thumbnail\n      entityId: $entityId\n      propertyId: $propertyId\n      organizationId: $organizationId\n      url: $url\n    ) {\n      id\n      url\n      thumbnail\n    }\n  }\n",
+): (typeof documents)["\n  mutation saveDocument(\n    $propertyId: Int!\n    $organizationId: Int!\n    $entityId: Int!\n    $url: String!\n    $thumbnail: String!\n    $type: GradiumDocumentType!\n  ) {\n    saveDocument(\n      type: $type\n      thumbnail: $thumbnail\n      entityId: $entityId\n      propertyId: $propertyId\n      organizationId: $organizationId\n      url: $url\n    ) {\n      id\n      url\n      thumbnail\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

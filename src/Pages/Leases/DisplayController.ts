@@ -14,10 +14,6 @@ export class DisplayController {
 
   public static displayStatus(status: LeaseStatus) {
     switch (status) {
-      case LeaseStatus.Complete:
-        return "Complete";
-      case LeaseStatus.InProgress:
-        return "In Progress";
       case LeaseStatus.Pending:
         return "Pending";
       case LeaseStatus.Terminated:

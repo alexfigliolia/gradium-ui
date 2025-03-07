@@ -277,7 +277,7 @@ export type Mutation = {
   createOrUpdateLivingSpace: LivingSpace;
   createProperty: AdminBasicProperty;
   deleteAmenity: Amenity;
-  deleteDocument: GradiumImage;
+  deleteDocument: GradiumDocument;
   deleteEmail: BasicUser;
   deleteExpense: Scalars["Boolean"]["output"];
   deleteImage: GradiumImage;
@@ -290,7 +290,7 @@ export type Mutation = {
   logout: Scalars["Boolean"]["output"];
   modifyPropertyAddons: Array<PropertyAddon>;
   resetPassword: Scalars["Boolean"]["output"];
-  saveDocument: GradiumImage;
+  saveDocument: GradiumDocument;
   saveImage: GradiumImage;
   setManagementTaskStatus: Scalars["Boolean"]["output"];
   setOrganizationName: Scalars["Boolean"]["output"];
@@ -466,7 +466,7 @@ export type MutationSaveDocumentArgs = {
   organizationId: Scalars["Int"]["input"];
   propertyId: Scalars["Int"]["input"];
   thumbnail: Scalars["String"]["input"];
-  type: GradiumImageType;
+  type: GradiumDocumentType;
   url: Scalars["String"]["input"];
 };
 
@@ -1130,6 +1130,23 @@ export type DeleteAmenityMutation = {
   };
 };
 
+export type DeleteDocumentMutationVariables = Exact<{
+  propertyId: Scalars["Int"]["input"];
+  organizationId: Scalars["Int"]["input"];
+  id: Scalars["Int"]["input"];
+  type: GradiumDocumentType;
+}>;
+
+export type DeleteDocumentMutation = {
+  __typename?: "Mutation";
+  deleteDocument: {
+    __typename?: "GradiumDocument";
+    id: number;
+    url: string;
+    thumbnail: string;
+  };
+};
+
 export type DeleteEmailMutationVariables = Exact<{
   userId: Scalars["Int"]["input"];
   email: Scalars["String"]["input"];
@@ -1282,6 +1299,25 @@ export type ResetPasswordMutationVariables = Exact<{
 export type ResetPasswordMutation = {
   __typename?: "Mutation";
   resetPassword: boolean;
+};
+
+export type SaveDocumentMutationVariables = Exact<{
+  propertyId: Scalars["Int"]["input"];
+  organizationId: Scalars["Int"]["input"];
+  entityId: Scalars["Int"]["input"];
+  url: Scalars["String"]["input"];
+  thumbnail: Scalars["String"]["input"];
+  type: GradiumDocumentType;
+}>;
+
+export type SaveDocumentMutation = {
+  __typename?: "Mutation";
+  saveDocument: {
+    __typename?: "GradiumDocument";
+    id: number;
+    url: string;
+    thumbnail: string;
+  };
 };
 
 export type SaveImageMutationVariables = Exact<{
@@ -4317,6 +4353,113 @@ export const DeleteAmenityDocument = {
   DeleteAmenityMutation,
   DeleteAmenityMutationVariables
 >;
+export const DeleteDocumentDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "deleteDocument" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "propertyId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "organizationId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "type" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "GradiumDocumentType" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "deleteDocument" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "id" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "id" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "type" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "type" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "propertyId" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "propertyId" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "organizationId" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "organizationId" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "thumbnail" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  DeleteDocumentMutation,
+  DeleteDocumentMutationVariables
+>;
 export const DeleteEmailDocument = {
   kind: "Document",
   definitions: [
@@ -5373,6 +5516,157 @@ export const ResetPasswordDocument = {
 } as unknown as DocumentNode<
   ResetPasswordMutation,
   ResetPasswordMutationVariables
+>;
+export const SaveDocumentDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "saveDocument" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "propertyId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "organizationId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "entityId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "url" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "thumbnail" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "type" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "GradiumDocumentType" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "saveDocument" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "type" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "type" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "thumbnail" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "thumbnail" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "entityId" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "entityId" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "propertyId" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "propertyId" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "organizationId" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "organizationId" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "url" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "url" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "thumbnail" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  SaveDocumentMutation,
+  SaveDocumentMutationVariables
 >;
 export const SaveImageDocument = {
   kind: "Document",

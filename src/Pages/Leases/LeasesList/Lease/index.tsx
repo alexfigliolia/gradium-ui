@@ -1,4 +1,9 @@
-import { differenceInDays, differenceInWeeks } from "date-fns";
+import {
+  differenceInDays,
+  differenceInWeeks,
+  isAfter,
+  isBefore,
+} from "date-fns";
 import { useMemo } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import { type Lease as ILease, LeaseStatus } from "GraphQL/Types";
@@ -28,7 +33,7 @@ export const Lease = ({
         </p>
       );
     }
-    if (status === LeaseStatus.InProgress) {
+    if (isAfter(start, new Date())) {
       return (
         <p>
           <strong>{differenceInWeeks(new Date(), end)}</strong> weeks remaining
@@ -46,7 +51,7 @@ export const Lease = ({
       }
       return <p>Ended early</p>;
     }
-    if (status === LeaseStatus.Complete) {
+    if (isBefore(end, new Date())) {
       return <p>Lease completed as scheduled</p>;
     }
     return "";

@@ -9,6 +9,8 @@ import {
 } from "../AvailableSpaceCard";
 import "./styles.scss";
 
+const DATE = new Date().toISOString();
+
 export const AvailabilitySkeleton = ({ title }: Props) => {
   return (
     <div className="availability-skeleton">
@@ -18,10 +20,10 @@ export const AvailabilitySkeleton = ({ title }: Props) => {
       <HorizontalList>
         <AvailableSpaceCard
           id={-1}
+          date={DATE}
           name="Loading"
           className="skeleton"
           propertyName="Loading"
-          date={new Date().toISOString()}
           renderChildren={() => (
             <Fragment>
               <p>Loading Availability</p>
