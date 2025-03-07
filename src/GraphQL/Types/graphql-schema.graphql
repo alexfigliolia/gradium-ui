@@ -11,10 +11,15 @@ type Query {
     limit: Int
     cursor: Int
   ): PaginatedIdentities!
-  fetchLeases(organizationId: Int!, limit: Int, cursor: Int): PaginatedLeases!
+  fetchLeases(
+    organizationId: Int!
+    search: String
+    limit: Int
+    cursor: Int
+  ): PaginatedLeases!
   getAmenities(propertyId: Int!, organizationId: Int!): [Amenity!]!
   verifySession: Boolean!
-  identifySpaces(
+  listSpacesForRent(
     propertyId: Int!
     organizationId: Int!
     limit: Int
@@ -100,6 +105,8 @@ type Lease {
   lessees: [GradiumPerson!]!
   invites: [GradiumPerson!]!
   paymentFrequency: RentPaymentFrequency!
+  propertyName: String!
+  spaceName: String!
   terminatedDate: DateTime
   documents: [GradiumDocument!]!
   start: DateTime!
@@ -432,8 +439,6 @@ enum RentPaymentFrequency {
   year
 }
 enum LeaseStatus {
-  complete
-  inProgress
   terminated
   pending
 }
@@ -442,8 +447,8 @@ enum BillFrequency {
   day
 }
 enum LivingSpaceType {
-  unit
-  dwelling
+  rental
+  condoCoop
 }
 enum ManagementTaskStatus {
   todo

@@ -1,9 +1,5 @@
 import { Fragment, memo, useCallback, useState } from "react";
-import {
-  useController,
-  useDebouncer,
-  useLoadingState,
-} from "@figliolia/react-hooks";
+import { useController, useLoadingState } from "@figliolia/react-hooks";
 import { CheckBoxGroup } from "Components/CheckBoxGroup";
 import { ColoredActionButton } from "Components/ColoredActionButton";
 import { Tile } from "Components/Tile";
@@ -25,16 +21,15 @@ export const AddonsTile = memo(function AddonsTile(_: Propless) {
   const [selections, setSelections] = useState(addons);
   const { loading, success, error, setState } = useLoadingState();
   const controller = useController(new Controller(setState));
-  const debouncer = useDebouncer(controller.synchronize, 2000);
 
   const onChange = useCallback(
     (set: Set<string>) => {
       setState("loading", true);
       const newSelections = set as Set<PropertyAddonType>;
       setSelections(newSelections);
-      void debouncer.execute(addons, newSelections);
+      void controller.synchronize(addons, newSelections);
     },
-    [addons, debouncer, setState],
+    [addons, controller, setState],
   );
 
   return (

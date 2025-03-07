@@ -1,4 +1,4 @@
-import type { ILoadingStateSetter } from "@figliolia/react-hooks";
+import { Debouncer, type ILoadingStateSetter } from "@figliolia/react-hooks";
 import { modifyPropertyAddons } from "GraphQL/Mutations/modifyPropertyAddons.gql";
 import type {
   ModifyPropertyAddonsMutation,
@@ -10,21 +10,24 @@ import { Properties } from "State/Properties";
 import { Scope } from "State/Scope";
 
 export class Controller {
+  public readonly synchronize: Controller["sync"];
   private readonly setState: ILoadingStateSetter;
+  private readonly debouncer = new Debouncer(this.sync.bind(this), 1500);
   constructor(setState: ILoadingStateSetter) {
     this.setState = setState;
+    this.synchronize = this.debouncer.execute;
   }
 
-  public readonly synchronize = (
+  private sync(
     current: Set<PropertyAddonType>,
     selections: Set<PropertyAddonType>,
-  ) => {
+  ) {
     const [additions, deletions] = this.diff(current, selections);
     if (!additions.size && !deletions.size) {
       return this.setState("loading", false);
     }
     return this.update(additions, deletions);
-  };
+  }
 
   private async update(
     additions: Set<PropertyAddonType>,

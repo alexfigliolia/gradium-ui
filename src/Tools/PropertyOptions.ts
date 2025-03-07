@@ -79,8 +79,8 @@ export class PropertyOptions {
   ];
 
   public static readonly SPACE_TYPE = [
-    { value: "unit", label: "Unit" },
-    { value: "dwelling", label: "Dwelling" },
+    { value: "rental", label: "Rental" },
+    { value: "condoCoop", label: "Condo or Co-op" },
   ];
 
   public static readonly BILLED_BY = [

@@ -14,6 +14,7 @@ import { PageTitle } from "Layouts/Management";
 import type { Callback } from "Types/Generics";
 import { AvailabilitySkeleton } from "../AvailabilitySkeleton";
 import { DummySpaceCard } from "../AvailableSpaceCard";
+import { AvailabilityError } from "./AvailabilityError";
 
 export const AvailabilitySection = <T,>({
   list,
@@ -43,10 +44,6 @@ export const AvailabilitySection = <T,>({
     }
   }, [loading]);
 
-  if (!search && !list.length && !loading && !error) {
-    return null;
-  }
-
   if (loading && initialLoad.current) {
     return <AvailabilitySkeleton title={title} />;
   }
@@ -62,9 +59,13 @@ export const AvailabilitySection = <T,>({
           onChange={onSearch}
         />
       </PageTitle>
-      <HorizontalList onScrollEnd={handleScrollEnd}>
-        {items.length ? items : <DummySpaceCard />}
-      </HorizontalList>
+      {error ? (
+        <AvailabilityError loading={loading} />
+      ) : (
+        <HorizontalList onScrollEnd={handleScrollEnd}>
+          {items.length ? items : <DummySpaceCard />}
+        </HorizontalList>
+      )}
     </Fragment>
   );
 };

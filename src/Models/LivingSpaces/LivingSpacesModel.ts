@@ -81,7 +81,7 @@ export class LivingSpacesModel extends ConfigurableSpaceModel<LivingSpace> {
   protected blankItem() {
     return {
       name: "",
-      type: LivingSpaceType.Unit,
+      type: LivingSpaceType.Rental,
       beds: 0,
       baths: 0,
       images: [],

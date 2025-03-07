@@ -23,7 +23,7 @@ const documents = {
     types.BasicUserFragmentFragmentDoc,
   "\n  fragment ExpenseFragment on Expense {\n    id\n    cost\n    createdAt\n    title\n    description\n    createdBy {\n      id\n      name\n    }\n    attachments {\n      id\n      url\n    }\n  }\n":
     types.ExpenseFragmentFragmentDoc,
-  "\n  fragment LeaseFragment on Lease {\n    id\n    start\n    end\n    status\n    price\n    lessees {\n      id\n      name\n      email\n    }\n    invites {\n      id\n      name\n      email\n    }\n    paymentFrequency\n    terminatedDate\n    documents {\n      id\n      url\n      thumbnail\n    }\n  }\n":
+  "\n  fragment LeaseFragment on Lease {\n    id\n    start\n    end\n    status\n    price\n    lessees {\n      id\n      name\n      email\n    }\n    invites {\n      id\n      name\n      email\n    }\n    spaceName\n    propertyName\n    paymentFrequency\n    terminatedDate\n    documents {\n      id\n      url\n      thumbnail\n    }\n  }\n":
     types.LeaseFragmentFragmentDoc,
   "\n  fragment LivingSpaceFragment on LivingSpace {\n    id\n    name\n    type\n    beds\n    baths\n    size\n    propertyId\n    images {\n      id\n      url\n    }\n    floorPlans {\n      id\n      url\n    }\n  }\n":
     types.LivingSpaceFragmentFragmentDoc,
@@ -96,6 +96,8 @@ const documents = {
     types.FetchAmenityReservationsDocument,
   "\n  query fetchAvailableSpaces(\n    $organizationId: Int!\n    $cursor: Int\n    $limit: Int\n    $search: String\n  ) {\n    fetchAvailableSpaces(\n      organizationId: $organizationId\n      cursor: $cursor\n      limit: $limit\n      search: $search\n    ) {\n      list {\n        id\n        name\n        type\n        beds\n        baths\n        size\n        propertyId\n        images {\n          id\n          url\n        }\n        floorPlans {\n          id\n          url\n        }\n        propertyName\n        availableSince\n      }\n      cursor\n    }\n  }\n":
     types.FetchAvailableSpacesDocument,
+  "\n  \n  query fetchLeases(\n    $organizationId: Int!\n    $limit: Int\n    $cursor: Int\n    $search: String\n  ) {\n    fetchLeases(\n      organizationId: $organizationId\n      limit: $limit\n      cursor: $cursor\n      search: $search\n    ) {\n      cursor\n      list {\n        ...LeaseFragment\n      }\n    }\n  }\n":
+    types.FetchLeasesDocument,
   "\n  query fetchSoonToBeAvailableSpaces(\n    $organizationId: Int!\n    $cursor: Int\n    $limit: Int\n    $search: String\n  ) {\n    fetchSoonToBeAvailableSpaces(\n      organizationId: $organizationId\n      cursor: $cursor\n      limit: $limit\n      search: $search\n    ) {\n      list {\n        id\n        name\n        type\n        beds\n        baths\n        size\n        propertyId\n        images {\n          id\n          url\n        }\n        floorPlans {\n          id\n          url\n        }\n        lease {\n          end\n          start\n          status\n        }\n        propertyName\n        availableOn\n      }\n      cursor\n    }\n  }\n":
     types.FetchSoonToBeAvailableSpacesDocument,
   "\n  query generateDestroySignature(\n    $organizationId: Int!\n    $publicId: String!\n    $imageType: GradiumImageType\n    $documentType: GradiumDocumentType\n  ) {\n    generateDestroySignature(\n      organizationId: $organizationId\n      publicId: $publicId\n      imageType: $imageType\n      documentType: $documentType\n    ) {\n      name\n      folder\n      api_key\n      public_id\n      timestamp\n      signature\n      invalidate\n      resource_type\n    }\n  }\n":
@@ -106,12 +108,12 @@ const documents = {
     types.GetAmenitiesDocument,
   "\n  \n  query getLivingSpaces($propertyId: Int!, $organizationId: Int!) {\n    getLivingSpaces(propertyId: $propertyId, organizationId: $organizationId) {\n      ...LivingSpaceFragment\n    }\n  }\n":
     types.GetLivingSpacesDocument,
-  "\n  query identifySpaces(\n    $propertyId: Int!\n    $organizationId: Int!\n    $cursor: Int\n    $limit: Int\n  ) {\n    identifySpaces(\n      propertyId: $propertyId\n      organizationId: $organizationId\n      cursor: $cursor\n      limit: $limit\n    ) {\n      cursor\n      list {\n        id\n        name\n      }\n    }\n  }\n":
-    types.IdentifySpacesDocument,
   "\n  \n  query listManagementTasks(\n    $organizationId: Int!\n    $propertyId: Int\n    $priority: [ManagementTaskPriority]\n    $assignedToId: [Int]\n    $searchString: String\n    $archive: Boolean\n  ) {\n    listManagementTasks(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      priority: $priority\n      assignedToId: $assignedToId\n      searchString: $searchString\n      archive: $archive\n    ) {\n      ...ManagementTaskFragment\n    }\n  }\n":
     types.ListManagementTasksDocument,
   "\n  query listPeople($organizationId: Int!, $cursor: Int, $limit: Int) {\n    listPeople(\n      organizationId: $organizationId\n      cursor: $cursor\n      limit: $limit\n    ) {\n      cursor\n      list {\n        id\n        name\n      }\n    }\n  }\n":
     types.ListPeopleDocument,
+  "\n  query listSpacesForRent(\n    $propertyId: Int!\n    $organizationId: Int!\n    $cursor: Int\n    $limit: Int\n  ) {\n    listSpacesForRent(\n      propertyId: $propertyId\n      organizationId: $organizationId\n      cursor: $cursor\n      limit: $limit\n    ) {\n      cursor\n      list {\n        id\n        name\n      }\n    }\n  }\n":
+    types.ListSpacesForRentDocument,
   "\n  query listStaffMembers($organizationId: Int!, $limit: Int, $cursor: Int) {\n    listStaffMembers(\n      organizationId: $organizationId\n      limit: $limit\n      cursor: $cursor\n    ) {\n      cursor\n      list {\n        id\n        name\n      }\n    }\n  }\n":
     types.ListStaffMembersDocument,
   "\n  \n  query userScope {\n    userScope {\n      ...LoggedInUserFragment\n    }\n  }\n":
@@ -168,8 +170,8 @@ export function gql(
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(
-  source: "\n  fragment LeaseFragment on Lease {\n    id\n    start\n    end\n    status\n    price\n    lessees {\n      id\n      name\n      email\n    }\n    invites {\n      id\n      name\n      email\n    }\n    paymentFrequency\n    terminatedDate\n    documents {\n      id\n      url\n      thumbnail\n    }\n  }\n",
-): (typeof documents)["\n  fragment LeaseFragment on Lease {\n    id\n    start\n    end\n    status\n    price\n    lessees {\n      id\n      name\n      email\n    }\n    invites {\n      id\n      name\n      email\n    }\n    paymentFrequency\n    terminatedDate\n    documents {\n      id\n      url\n      thumbnail\n    }\n  }\n"];
+  source: "\n  fragment LeaseFragment on Lease {\n    id\n    start\n    end\n    status\n    price\n    lessees {\n      id\n      name\n      email\n    }\n    invites {\n      id\n      name\n      email\n    }\n    spaceName\n    propertyName\n    paymentFrequency\n    terminatedDate\n    documents {\n      id\n      url\n      thumbnail\n    }\n  }\n",
+): (typeof documents)["\n  fragment LeaseFragment on Lease {\n    id\n    start\n    end\n    status\n    price\n    lessees {\n      id\n      name\n      email\n    }\n    invites {\n      id\n      name\n      email\n    }\n    spaceName\n    propertyName\n    paymentFrequency\n    terminatedDate\n    documents {\n      id\n      url\n      thumbnail\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -390,6 +392,12 @@ export function gql(
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(
+  source: "\n  \n  query fetchLeases(\n    $organizationId: Int!\n    $limit: Int\n    $cursor: Int\n    $search: String\n  ) {\n    fetchLeases(\n      organizationId: $organizationId\n      limit: $limit\n      cursor: $cursor\n      search: $search\n    ) {\n      cursor\n      list {\n        ...LeaseFragment\n      }\n    }\n  }\n",
+): (typeof documents)["\n  \n  query fetchLeases(\n    $organizationId: Int!\n    $limit: Int\n    $cursor: Int\n    $search: String\n  ) {\n    fetchLeases(\n      organizationId: $organizationId\n      limit: $limit\n      cursor: $cursor\n      search: $search\n    ) {\n      cursor\n      list {\n        ...LeaseFragment\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
   source: "\n  query fetchSoonToBeAvailableSpaces(\n    $organizationId: Int!\n    $cursor: Int\n    $limit: Int\n    $search: String\n  ) {\n    fetchSoonToBeAvailableSpaces(\n      organizationId: $organizationId\n      cursor: $cursor\n      limit: $limit\n      search: $search\n    ) {\n      list {\n        id\n        name\n        type\n        beds\n        baths\n        size\n        propertyId\n        images {\n          id\n          url\n        }\n        floorPlans {\n          id\n          url\n        }\n        lease {\n          end\n          start\n          status\n        }\n        propertyName\n        availableOn\n      }\n      cursor\n    }\n  }\n",
 ): (typeof documents)["\n  query fetchSoonToBeAvailableSpaces(\n    $organizationId: Int!\n    $cursor: Int\n    $limit: Int\n    $search: String\n  ) {\n    fetchSoonToBeAvailableSpaces(\n      organizationId: $organizationId\n      cursor: $cursor\n      limit: $limit\n      search: $search\n    ) {\n      list {\n        id\n        name\n        type\n        beds\n        baths\n        size\n        propertyId\n        images {\n          id\n          url\n        }\n        floorPlans {\n          id\n          url\n        }\n        lease {\n          end\n          start\n          status\n        }\n        propertyName\n        availableOn\n      }\n      cursor\n    }\n  }\n"];
 /**
@@ -420,12 +428,6 @@ export function gql(
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(
-  source: "\n  query identifySpaces(\n    $propertyId: Int!\n    $organizationId: Int!\n    $cursor: Int\n    $limit: Int\n  ) {\n    identifySpaces(\n      propertyId: $propertyId\n      organizationId: $organizationId\n      cursor: $cursor\n      limit: $limit\n    ) {\n      cursor\n      list {\n        id\n        name\n      }\n    }\n  }\n",
-): (typeof documents)["\n  query identifySpaces(\n    $propertyId: Int!\n    $organizationId: Int!\n    $cursor: Int\n    $limit: Int\n  ) {\n    identifySpaces(\n      propertyId: $propertyId\n      organizationId: $organizationId\n      cursor: $cursor\n      limit: $limit\n    ) {\n      cursor\n      list {\n        id\n        name\n      }\n    }\n  }\n"];
-/**
- * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function gql(
   source: "\n  \n  query listManagementTasks(\n    $organizationId: Int!\n    $propertyId: Int\n    $priority: [ManagementTaskPriority]\n    $assignedToId: [Int]\n    $searchString: String\n    $archive: Boolean\n  ) {\n    listManagementTasks(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      priority: $priority\n      assignedToId: $assignedToId\n      searchString: $searchString\n      archive: $archive\n    ) {\n      ...ManagementTaskFragment\n    }\n  }\n",
 ): (typeof documents)["\n  \n  query listManagementTasks(\n    $organizationId: Int!\n    $propertyId: Int\n    $priority: [ManagementTaskPriority]\n    $assignedToId: [Int]\n    $searchString: String\n    $archive: Boolean\n  ) {\n    listManagementTasks(\n      organizationId: $organizationId\n      propertyId: $propertyId\n      priority: $priority\n      assignedToId: $assignedToId\n      searchString: $searchString\n      archive: $archive\n    ) {\n      ...ManagementTaskFragment\n    }\n  }\n"];
 /**
@@ -434,6 +436,12 @@ export function gql(
 export function gql(
   source: "\n  query listPeople($organizationId: Int!, $cursor: Int, $limit: Int) {\n    listPeople(\n      organizationId: $organizationId\n      cursor: $cursor\n      limit: $limit\n    ) {\n      cursor\n      list {\n        id\n        name\n      }\n    }\n  }\n",
 ): (typeof documents)["\n  query listPeople($organizationId: Int!, $cursor: Int, $limit: Int) {\n    listPeople(\n      organizationId: $organizationId\n      cursor: $cursor\n      limit: $limit\n    ) {\n      cursor\n      list {\n        id\n        name\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: "\n  query listSpacesForRent(\n    $propertyId: Int!\n    $organizationId: Int!\n    $cursor: Int\n    $limit: Int\n  ) {\n    listSpacesForRent(\n      propertyId: $propertyId\n      organizationId: $organizationId\n      cursor: $cursor\n      limit: $limit\n    ) {\n      cursor\n      list {\n        id\n        name\n      }\n    }\n  }\n",
+): (typeof documents)["\n  query listSpacesForRent(\n    $propertyId: Int!\n    $organizationId: Int!\n    $cursor: Int\n    $limit: Int\n  ) {\n    listSpacesForRent(\n      propertyId: $propertyId\n      organizationId: $organizationId\n      cursor: $cursor\n      limit: $limit\n    ) {\n      cursor\n      list {\n        id\n        name\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

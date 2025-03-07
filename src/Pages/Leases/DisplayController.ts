@@ -1,4 +1,4 @@
-import { RentPaymentFrequency } from "GraphQL/Types";
+import { LeaseStatus, RentPaymentFrequency } from "GraphQL/Types";
 
 export class DisplayController {
   public static readonly frequencyList = [
@@ -11,4 +11,17 @@ export class DisplayController {
     value: f,
     label: `${f[0].toUpperCase()}${f.slice(1)}`,
   }));
+
+  public static displayStatus(status: LeaseStatus) {
+    switch (status) {
+      case LeaseStatus.Complete:
+        return "Complete";
+      case LeaseStatus.InProgress:
+        return "In Progress";
+      case LeaseStatus.Pending:
+        return "Pending";
+      case LeaseStatus.Terminated:
+        return "Ended Early";
+    }
+  }
 }

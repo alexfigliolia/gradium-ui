@@ -1,0 +1,89 @@
+@use "Styles/Variables";
+
+.lease-card {
+  padding: 1em;
+  width: 100%;
+  background-color: var(--tile-background);
+  border-radius: 0.5em;
+  box-shadow: var(--shadow-level-2-mid);
+  &.pending {
+    &>p > strong {
+      @include Variables.marketingGradient;
+      @include Variables.clipText;
+    }
+    &>.space-card-title > div > span {
+      @include Variables.marketingGradient;
+      box-shadow: Variables.$shadow-level-2 rgba(Variables.$teal, 0.5);
+    }
+    &>.gradient-border-button {
+      color: Variables.$teal;
+      background-image: linear-gradient(to right, var(--tile-background), var(--tile-background), Variables.$light-teal, Variables.$teal);
+      &>div > span {
+        @include Variables.marketingGradient;
+        @include Variables.clipText;
+      }
+    }
+  }
+  &.terminated {
+    &>p > strong {
+      @include Variables.errorGradient;
+      @include Variables.clipText;
+    }
+    &>.space-card-title > div > span {
+      @include Variables.errorGradient;
+      box-shadow: Variables.$shadow-level-2 rgba(Variables.$error-dark, 0.5);
+    }
+    &>.gradient-border-button {
+      color: Variables.$teal;
+      background-image: linear-gradient(to right, var(--tile-background), var(--tile-background), Variables.$error-light, Variables.$error-dark);
+      &>div > span {
+        @include Variables.errorGradient;
+        @include Variables.clipText;
+      }
+    }
+  }
+  &.inProgress {
+    &>p > strong {
+      @include Variables.infoGradient;
+      @include Variables.clipText;
+    }
+    &>.space-card-title > div > span {
+      @include Variables.infoGradient;
+      box-shadow: Variables.$shadow-level-2 rgba(Variables.$info-dark, 0.5);
+    }
+    &>.gradient-border-button {
+      color: Variables.$teal;
+      background-image: linear-gradient(to right, var(--tile-background), var(--tile-background), Variables.$info-light, Variables.$info-dark);
+      &>div > span {
+        @include Variables.infoGradient;
+        @include Variables.clipText;
+      }
+    }
+  }
+  &.complete {
+    &>p > strong {
+      @include Variables.successGradient;
+      @include Variables.clipText;
+    }
+    &>.space-card-title > div > span {
+      @include Variables.successGradient;
+      box-shadow: Variables.$shadow-level-2 rgba(Variables.$success-dark, 0.5);
+    }
+    &>.gradient-border-button {
+      color: Variables.$teal;
+      background-image: linear-gradient(to right, var(--tile-background), var(--tile-background), Variables.$success-light, Variables.$success-dark);
+      &>div > span {
+        @include Variables.successGradient;
+        @include Variables.clipText;
+      }
+    }
+  }
+  &>p {
+    margin-top: 0.15em;
+    font-weight: 300;
+    color: var(--text-color-light);
+    &> strong {
+      font-weight: 500;
+    }
+  }
+}

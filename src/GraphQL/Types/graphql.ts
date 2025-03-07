@@ -183,6 +183,8 @@ export type Lease = {
   lessees: Array<GradiumPerson>;
   paymentFrequency: RentPaymentFrequency;
   price: Scalars["Float"]["output"];
+  propertyName: Scalars["String"]["output"];
+  spaceName: Scalars["String"]["output"];
   start: Scalars["DateTime"]["output"];
   status: LeaseStatus;
   terminatedDate?: Maybe<Scalars["DateTime"]["output"]>;
@@ -196,8 +198,6 @@ export type LeaseSnapShot = {
 };
 
 export enum LeaseStatus {
-  Complete = "complete",
-  InProgress = "inProgress",
   Pending = "pending",
   Terminated = "terminated",
 }
@@ -226,8 +226,8 @@ export type LivingSpace = {
 };
 
 export enum LivingSpaceType {
-  Dwelling = "dwelling",
-  Unit = "unit",
+  CondoCoop = "condoCoop",
+  Rental = "rental",
 }
 
 export type LoggedInUser = {
@@ -598,9 +598,9 @@ export type Query = {
   generateUploadSignature: UploadSignature;
   getAmenities: Array<Amenity>;
   getLivingSpaces: Array<LivingSpace>;
-  identifySpaces: PaginatedIdentities;
   listManagementTasks: Array<ManagementTask>;
   listPeople: PaginatedIdentities;
+  listSpacesForRent: PaginatedIdentities;
   listStaffMembers: PaginatedIdentities;
   userScope: LoggedInUser;
   verifySession: Scalars["Boolean"]["output"];
@@ -629,6 +629,7 @@ export type QueryFetchLeasesArgs = {
   cursor?: InputMaybe<Scalars["Int"]["input"]>;
   limit?: InputMaybe<Scalars["Int"]["input"]>;
   organizationId: Scalars["Int"]["input"];
+  search?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type QueryFetchSoonToBeAvailableSpacesArgs = {
@@ -661,13 +662,6 @@ export type QueryGetLivingSpacesArgs = {
   propertyId: Scalars["Int"]["input"];
 };
 
-export type QueryIdentifySpacesArgs = {
-  cursor?: InputMaybe<Scalars["Int"]["input"]>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  organizationId: Scalars["Int"]["input"];
-  propertyId: Scalars["Int"]["input"];
-};
-
 export type QueryListManagementTasksArgs = {
   archive?: InputMaybe<Scalars["Boolean"]["input"]>;
   assignedToId?: InputMaybe<Array<InputMaybe<Scalars["Int"]["input"]>>>;
@@ -681,6 +675,13 @@ export type QueryListPeopleArgs = {
   cursor?: InputMaybe<Scalars["Int"]["input"]>;
   limit?: InputMaybe<Scalars["Int"]["input"]>;
   organizationId: Scalars["Int"]["input"];
+};
+
+export type QueryListSpacesForRentArgs = {
+  cursor?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+  organizationId: Scalars["Int"]["input"];
+  propertyId: Scalars["Int"]["input"];
 };
 
 export type QueryListStaffMembersArgs = {
@@ -776,6 +777,8 @@ export type LeaseFragmentFragment = {
   end: string;
   status: LeaseStatus;
   price: number;
+  spaceName: string;
+  propertyName: string;
   paymentFrequency: RentPaymentFrequency;
   terminatedDate?: string | null;
   lessees: Array<{
@@ -951,6 +954,8 @@ export type CreateLeaseMutation = {
     end: string;
     status: LeaseStatus;
     price: number;
+    spaceName: string;
+    propertyName: string;
     paymentFrequency: RentPaymentFrequency;
     terminatedDate?: string | null;
     lessees: Array<{
@@ -1535,6 +1540,51 @@ export type FetchAvailableSpacesQuery = {
   };
 };
 
+export type FetchLeasesQueryVariables = Exact<{
+  organizationId: Scalars["Int"]["input"];
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+  cursor?: InputMaybe<Scalars["Int"]["input"]>;
+  search?: InputMaybe<Scalars["String"]["input"]>;
+}>;
+
+export type FetchLeasesQuery = {
+  __typename?: "Query";
+  fetchLeases: {
+    __typename?: "PaginatedLeases";
+    cursor?: number | null;
+    list: Array<{
+      __typename?: "Lease";
+      id: number;
+      start: string;
+      end: string;
+      status: LeaseStatus;
+      price: number;
+      spaceName: string;
+      propertyName: string;
+      paymentFrequency: RentPaymentFrequency;
+      terminatedDate?: string | null;
+      lessees: Array<{
+        __typename?: "GradiumPerson";
+        id: number;
+        name: string;
+        email: string;
+      }>;
+      invites: Array<{
+        __typename?: "GradiumPerson";
+        id: number;
+        name: string;
+        email: string;
+      }>;
+      documents: Array<{
+        __typename?: "GradiumDocument";
+        id: number;
+        url: string;
+        thumbnail: string;
+      }>;
+    }>;
+  };
+};
+
 export type FetchSoonToBeAvailableSpacesQueryVariables = Exact<{
   organizationId: Scalars["Int"]["input"];
   cursor?: InputMaybe<Scalars["Int"]["input"]>;
@@ -1657,22 +1707,6 @@ export type GetLivingSpacesQuery = {
   }>;
 };
 
-export type IdentifySpacesQueryVariables = Exact<{
-  propertyId: Scalars["Int"]["input"];
-  organizationId: Scalars["Int"]["input"];
-  cursor?: InputMaybe<Scalars["Int"]["input"]>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-}>;
-
-export type IdentifySpacesQuery = {
-  __typename?: "Query";
-  identifySpaces: {
-    __typename?: "PaginatedIdentities";
-    cursor?: number | null;
-    list: Array<{ __typename?: "Identity"; id: number; name: string }>;
-  };
-};
-
 export type ListManagementTasksQueryVariables = Exact<{
   organizationId: Scalars["Int"]["input"];
   propertyId?: InputMaybe<Scalars["Int"]["input"]>;
@@ -1727,6 +1761,22 @@ export type ListPeopleQueryVariables = Exact<{
 export type ListPeopleQuery = {
   __typename?: "Query";
   listPeople: {
+    __typename?: "PaginatedIdentities";
+    cursor?: number | null;
+    list: Array<{ __typename?: "Identity"; id: number; name: string }>;
+  };
+};
+
+export type ListSpacesForRentQueryVariables = Exact<{
+  propertyId: Scalars["Int"]["input"];
+  organizationId: Scalars["Int"]["input"];
+  cursor?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+}>;
+
+export type ListSpacesForRentQuery = {
+  __typename?: "Query";
+  listSpacesForRent: {
     __typename?: "PaginatedIdentities";
     cursor?: number | null;
     list: Array<{ __typename?: "Identity"; id: number; name: string }>;
@@ -1983,6 +2033,8 @@ export const LeaseFragmentFragmentDoc = {
               ],
             },
           },
+          { kind: "Field", name: { kind: "Name", value: "spaceName" } },
+          { kind: "Field", name: { kind: "Name", value: "propertyName" } },
           { kind: "Field", name: { kind: "Name", value: "paymentFrequency" } },
           { kind: "Field", name: { kind: "Name", value: "terminatedDate" } },
           {
@@ -3134,6 +3186,8 @@ export const CreateLeaseDocument = {
               ],
             },
           },
+          { kind: "Field", name: { kind: "Name", value: "spaceName" } },
+          { kind: "Field", name: { kind: "Name", value: "propertyName" } },
           { kind: "Field", name: { kind: "Name", value: "paymentFrequency" } },
           { kind: "Field", name: { kind: "Name", value: "terminatedDate" } },
           {
@@ -7095,6 +7149,173 @@ export const FetchAvailableSpacesDocument = {
   FetchAvailableSpacesQuery,
   FetchAvailableSpacesQueryVariables
 >;
+export const FetchLeasesDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "fetchLeases" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "organizationId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "limit" },
+          },
+          type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "cursor" },
+          },
+          type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "search" },
+          },
+          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "fetchLeases" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "organizationId" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "organizationId" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "limit" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "limit" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "cursor" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "cursor" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "search" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "search" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "cursor" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "list" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "FragmentSpread",
+                        name: { kind: "Name", value: "LeaseFragment" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "LeaseFragment" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Lease" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "start" } },
+          { kind: "Field", name: { kind: "Name", value: "end" } },
+          { kind: "Field", name: { kind: "Name", value: "status" } },
+          { kind: "Field", name: { kind: "Name", value: "price" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "lessees" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "email" } },
+              ],
+            },
+          },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "invites" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "email" } },
+              ],
+            },
+          },
+          { kind: "Field", name: { kind: "Name", value: "spaceName" } },
+          { kind: "Field", name: { kind: "Name", value: "propertyName" } },
+          { kind: "Field", name: { kind: "Name", value: "paymentFrequency" } },
+          { kind: "Field", name: { kind: "Name", value: "terminatedDate" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "documents" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "thumbnail" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<FetchLeasesQuery, FetchLeasesQueryVariables>;
 export const FetchSoonToBeAvailableSpacesDocument = {
   kind: "Document",
   definitions: [
@@ -7718,116 +7939,6 @@ export const GetLivingSpacesDocument = {
   GetLivingSpacesQuery,
   GetLivingSpacesQueryVariables
 >;
-export const IdentifySpacesDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "identifySpaces" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "propertyId" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
-          },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "organizationId" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
-          },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "cursor" },
-          },
-          type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "limit" },
-          },
-          type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "identifySpaces" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "propertyId" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "propertyId" },
-                },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "organizationId" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "organizationId" },
-                },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "cursor" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "cursor" },
-                },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "limit" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "limit" },
-                },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "cursor" } },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "list" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      { kind: "Field", name: { kind: "Name", value: "name" } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<IdentifySpacesQuery, IdentifySpacesQueryVariables>;
 export const ListManagementTasksDocument = {
   kind: "Document",
   definitions: [
@@ -8167,6 +8278,119 @@ export const ListPeopleDocument = {
     },
   ],
 } as unknown as DocumentNode<ListPeopleQuery, ListPeopleQueryVariables>;
+export const ListSpacesForRentDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "listSpacesForRent" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "propertyId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "organizationId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "cursor" },
+          },
+          type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "limit" },
+          },
+          type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "listSpacesForRent" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "propertyId" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "propertyId" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "organizationId" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "organizationId" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "cursor" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "cursor" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "limit" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "limit" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "cursor" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "list" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  ListSpacesForRentQuery,
+  ListSpacesForRentQueryVariables
+>;
 export const ListStaffMembersDocument = {
   kind: "Document",
   definitions: [

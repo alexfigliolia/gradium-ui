@@ -17,6 +17,8 @@ export const LeaseFragment = gql`
       name
       email
     }
+    spaceName
+    propertyName
     paymentFrequency
     terminatedDate
     documents {

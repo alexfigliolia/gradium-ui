@@ -1,0 +1,49 @@
+@use "Styles/Variables";
+
+.space-availability-error {
+  @include Variables.center;
+  flex-direction: column;
+  gap: 1em;
+  height: 239px; // TODO - redesign
+  align-self: flex-start;
+  box-shadow: var(--shadow-level-2-mid);
+  padding: 1em;
+  border-radius: 0.5em;
+  background-color: var(--tile-background);
+  &>div {
+    @include Variables.center;
+    gap: 1em;
+    &>.not-found-illustation {
+      height: 130px;
+    }
+    &>.gradient-border-button {
+      margin-top: 0.5em;
+      &.loading > div > .refresh-icon {
+        animation: rotate 1s linear infinite forwards;
+      }
+      &>div {
+        gap: 0.5em;
+        &>.refresh-icon {
+          width: 1.5em;
+          height: 1.5em;
+          fill: none;
+          stroke: url(#themeGradient);
+        }
+      }
+    }
+  }
+  &>p {
+    max-width: 90%;
+    text-align: center;
+    color: var(--text-color-light);
+  }
+}
+
+@keyframes rotate {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 360deg;
+  }
+}
