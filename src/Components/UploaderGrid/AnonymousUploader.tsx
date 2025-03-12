@@ -10,132 +10,157 @@ import {
 import { useClassNames } from "@figliolia/classnames";
 import { useController } from "@figliolia/react-hooks";
 import { ImagePreloader } from "Generics/ImagePreloader";
-import { UploadInterface } from "Tools/UploadInterface";
+import type { GradiumDocument, GradiumImage } from "GraphQL/Types";
+import { CloudinaryUploader } from "Tools/CloudinaryUploader";
 import type { Callback } from "Types/Generics";
 import { Controller } from "./Controller";
-import type { ImageState } from "./ImageUploader";
-import { ImageUploader } from "./ImageUploader";
+import { FileUploader } from "./FileUploader";
+import type { IUploaderState } from "./useUploader";
 import "./styles.scss";
 
-export const AnonymousUploader = memo(
-  forwardRef(function AnonymousUploader(
-    { className }: Props,
-    ref: ForwardedRef<IAnonymousUploader>,
-  ) {
-    const clearInput = useRef<Callback>(null);
-    const controller = useController(new Controller());
-    const classes = useClassNames("upload-grid", className);
-    const [uploading, setUploading] = useState<AnonymousImage[]>([]);
+function AnonymousUploaderComponent<T extends "image" | "document">(
+  { className, type }: Props<T>,
+  ref: ForwardedRef<IAnonymousUploader>,
+) {
+  const clearInput = useRef<Callback>(null);
+  const controller = useController(new Controller());
+  const classes = useClassNames("upload-grid", className);
+  const [uploading, setUploading] = useState<AnonymousImage<T>[]>([]);
 
-    useImperativeHandle(
-      ref,
-      () => ({
-        clear: () => {
-          setUploading([]);
-          clearInput.current?.();
-        },
-        getImages: () => uploading.map(({ file }) => file),
-      }),
-      [uploading],
+  useImperativeHandle(
+    ref,
+    () => ({
+      clear: () => {
+        setUploading([]);
+        clearInput.current?.();
+      },
+      getFiles: () => uploading.map(({ file }) => file),
+    }),
+    [uploading],
+  );
+
+  const markLoadingAtIndex = useCallback((index: number, loading = true) => {
+    setUploading(ps =>
+      ps.map((state, i) => (i === index ? { ...state, loading } : state)),
     );
+  }, []);
 
-    const markLoadingAtIndex = useCallback((index: number, loading = true) => {
-      setUploading(ps =>
-        ps.map((state, i) => (i === index ? { ...state, loading } : state)),
-      );
-    }, []);
-
-    const upload = useCallback(
-      (e: ChangeEvent<HTMLInputElement>) => {
-        const files = UploadInterface.runValidations(e);
-        if (!files?.length) {
-          return;
-        }
-        const ID = controller.cache(uploading.length);
-        const nextState = files.map(file => {
-          const url = URL.createObjectURL(file);
-          return {
+  const upload = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const files = CloudinaryUploader.runValidations(e);
+      if (!files?.length) {
+        return;
+      }
+      const ID = controller.cache(uploading.length);
+      const nextState: AnonymousImage<T>[] = files.map(file => {
+        const id = parseInt(controller.ID()) * -1;
+        const url = URL.createObjectURL(file);
+        let savedDocument: GradiumDocument | GradiumImage;
+        if (type === "document") {
+          savedDocument = {
+            id,
             url,
-            file,
-            loading: true,
-            savedImage: {
-              url,
-              id: parseInt(controller.ID()) * -1,
-            },
+            thumbnail: "",
           };
-        });
-        setUploading(ps => [...ps, ...nextState]);
-        void Promise.all(
-          nextState.map(({ url }, i) =>
-            new ImagePreloader(url, () => {
-              markLoadingAtIndex(controller.get(ID) + i, false);
-            }).safePreload(),
-          ),
-        );
-      },
-      [controller, markLoadingAtIndex, uploading.length],
-    );
-
-    const onChange = useCallback(
-      (e: ChangeEvent<HTMLInputElement>) => {
-        const files = e.target.files;
-        if (!files) {
-          return;
+        } else {
+          savedDocument = {
+            id,
+            url,
+          };
         }
-        upload(e);
-      },
-      [upload],
-    );
-
-    const spliceImage = useCallback(
-      (index: number) => {
-        setUploading(ps =>
-          ps.filter((_, i) => {
-            if (i !== index) {
-              return true;
-            }
-            controller.decrementAll(i);
-            return false;
-          }),
-        );
-      },
-      [controller],
-    );
-
-    const deleteGenerator = useCallback(
-      (index: number) => {
-        return () => {
-          spliceImage(index);
+        return {
+          url,
+          file,
+          type,
+          loading: true,
+          savedDocument,
         };
-      },
-      [spliceImage],
-    );
+      });
+      setUploading(ps => [...ps, ...nextState]);
+      void Promise.all(
+        nextState.map(({ url }, i) => {
+          if (url) {
+            return new ImagePreloader(url, () => {
+              markLoadingAtIndex(controller.get(ID) + i, false);
+            }).safePreload();
+          }
+        }),
+      );
+    },
+    [controller, markLoadingAtIndex, uploading.length, type],
+  );
 
-    return (
-      <div className={classes}>
-        {uploading.map((state, index) => (
-          <ImageUploader
-            {...state}
-            onChange={onChange}
-            onDelete={deleteGenerator(index)}
-            key={index === uploading.length - 1 ? "last" : index}
-          />
-        ))}
-        <ImageUploader key="last" ref={clearInput} onChange={onChange} />
-      </div>
-    );
-  }),
-);
+  const onChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const files = e.target.files;
+      if (!files) {
+        return;
+      }
+      upload(e);
+    },
+    [upload],
+  );
 
-export interface AnonymousImage extends Omit<ImageState, "error"> {
+  const spliceImage = useCallback(
+    (index: number) => {
+      setUploading(ps =>
+        ps.filter((_, i) => {
+          if (i !== index) {
+            return true;
+          }
+          controller.decrementAll(i);
+          return false;
+        }),
+      );
+    },
+    [controller],
+  );
+
+  const deleteGenerator = useCallback(
+    (index: number) => {
+      return () => {
+        spliceImage(index);
+      };
+    },
+    [spliceImage],
+  );
+
+  return (
+    <div className={classes}>
+      {uploading.map((state, index) => (
+        <FileUploader
+          {...state}
+          key={index}
+          onChange={onChange}
+          onDelete={deleteGenerator(index)}
+        />
+      ))}
+      <FileUploader
+        key="last"
+        type={type}
+        ref={clearInput}
+        onChange={onChange}
+      />
+    </div>
+  );
+}
+
+export const AnonymousUploader = memo(
+  forwardRef(AnonymousUploaderComponent),
+) as typeof AnonymousUploaderComponent;
+
+export interface AnonymousImage<T extends "image" | "document">
+  extends Omit<IUploaderState<T>, "error"> {
   file: File;
 }
 
-interface Props {
+interface Props<T extends "image" | "document"> {
+  type: T;
   className?: string;
+  ref?: ForwardedRef<IAnonymousUploader>;
 }
 
 export interface IAnonymousUploader {
   clear: Callback;
-  getImages: () => File[];
+  getFiles: () => File[];
 }

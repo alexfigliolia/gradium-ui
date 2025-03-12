@@ -1,10 +1,85 @@
-import type { ChangeEvent, Dispatch, SetStateAction } from "react";
-import type { GradiumPerson } from "GraphQL/Types";
+import {
+  type ChangeEvent,
+  createRef,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
+import type { ILoadingStateSetter } from "@figliolia/react-hooks";
+import type { IAnonymousUploader } from "Components/UploaderGrid";
+import { createLease } from "GraphQL/Mutations/createLease.gql";
+import { graphQLRequest } from "GraphQL/request";
+import type { GradiumDocument } from "GraphQL/Types";
+import {
+  type CreateLeaseMutation,
+  type CreateLeaseMutationVariables,
+  GradiumDocumentType,
+  type GradiumPerson,
+  type Lease,
+  type RentPaymentFrequency,
+} from "GraphQL/Types";
+import { Leases } from "State/Leases";
+import { Properties } from "State/Properties";
+import { Scope } from "State/Scope";
+import { CloudinaryUploader } from "Tools/CloudinaryUploader";
+import { Dates } from "Tools/Dates";
+import { Emitter } from "../EventEmitter";
 
 export class Controller {
   public readonly setState: SetState;
+  public readonly uploader = createRef<IAnonymousUploader>();
   constructor(setState: SetState) {
     this.setState = setState;
+  }
+
+  public saveLease(state: IState) {
+    return async (setState: ILoadingStateSetter) => {
+      const { lessees, price, end, start, frequency, unit } = state;
+      setState("loading", true);
+      try {
+        const response = await graphQLRequest<
+          CreateLeaseMutation,
+          CreateLeaseMutationVariables
+        >(createLease, {
+          lessees,
+          price: parseFloat(price),
+          livingSpaceId: parseInt(unit),
+          propertyId: Properties.getState().current,
+          paymentFrequency: frequency as RentPaymentFrequency,
+          organizationId: Scope.getState().currentOrganizationId,
+          end: Dates.setTime(Dates.fromISODateString(end)).toISOString(),
+          start: Dates.setTime(Dates.fromISODateString(start)).toISOString(),
+        });
+        await this.uploadFiles(response.createLease);
+        setState("success", true);
+      } catch (error) {
+        setState("error", true);
+      } finally {
+        this.resetState();
+        Leases.newLease.close();
+        Emitter.emit("refetch", undefined);
+      }
+    };
+  }
+
+  public async uploadFiles(lease: Lease) {
+    const files = this.uploader.current?.getFiles();
+    if (!files) {
+      return;
+    }
+    const attachments = await CloudinaryUploader.uploadDocumentBatch(
+      {
+        entityId: lease.id,
+        type: GradiumDocumentType.LeaseDocument,
+      },
+      ...files,
+    );
+    const uploads: GradiumDocument[] = [];
+    for (const attachment of attachments) {
+      if (attachment.status === "fulfilled" && attachment.value) {
+        uploads.push(attachment.value);
+      }
+    }
+    return uploads;
   }
 
   public resetState() {

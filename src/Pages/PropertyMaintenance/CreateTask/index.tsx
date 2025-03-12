@@ -31,7 +31,7 @@ export const CreateTask = memo(
 
     const onSubmit = useCallback(() => {
       void controller
-        .create(uploader?.current?.getImages?.() ?? [])
+        .create(uploader?.current?.getFiles?.() ?? [])
         .then(() => uploader?.current?.clear?.())
         .catch(() => {});
     }, [controller]);

@@ -15,10 +15,16 @@
       scale: 1;
     }
   }
+  &.disabled p {
+    max-height: 0px;
+  }
   & p {
+    overflow: hidden;
     text-align: center;
     font-size: 65%;
     color: var(--text-color-light);
+    max-height: 1.5em;
+    transition: all 0.4s;
   }
   &.loading {
     &>.upload-action {
@@ -94,6 +100,11 @@
       & path {
         fill: var(--text-color-lightest);
       }
+    }
+    &>.document-icon {
+      width: 55%;
+      height: 55%;
+      fill: url(#themeGradient);
     }
   }
   &>.upload-pending {

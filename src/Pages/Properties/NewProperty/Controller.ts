@@ -68,11 +68,11 @@ export class Controller {
   }
 
   public async uploadImages(entityId: number) {
-    const images = this.uploader.current?.getImages();
+    const images = this.uploader.current?.getFiles();
     if (!images?.length) {
       return [];
     }
-    const attachments = await CloudinaryUploader.uploadBatch(
+    const attachments = await CloudinaryUploader.uploadImageBatch(
       {
         entityId,
         type: GradiumImageType.PropertyImage,

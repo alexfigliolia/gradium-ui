@@ -1,5 +1,4 @@
 import { memo, useContext, useMemo } from "react";
-import { ImageGrid } from "Components/ImageGrid";
 import { selectWidth, useScreen } from "State/Screen";
 import type { Propless } from "Types/React";
 import { CSFContext } from "../Context";
@@ -26,7 +25,7 @@ export const SpaceImages = memo(
     );
 
     return (
-      <ImageGrid className="space-grid">
+      <div className="space-image-grid">
         {images.map((image, i) => {
           return <Image key={i} image={image} type={model.IMAGE_TYPE} />;
         })}
@@ -36,7 +35,7 @@ export const SpaceImages = memo(
         {fill.map((_, i) => {
           return <Image key={i} image={undefined} type={model.IMAGE_TYPE} />;
         })}
-      </ImageGrid>
+      </div>
     );
   },
   () => true,

@@ -71,7 +71,7 @@ export abstract class CreateMaintentanceItemController<
   ): Promise<Data | void>;
 
   private async uploadAttachments(id: number, files: File[]) {
-    const attachments = await CloudinaryUploader.uploadBatch(
+    const attachments = await CloudinaryUploader.uploadImageBatch(
       {
         entityId: id,
         type: this.imageType,

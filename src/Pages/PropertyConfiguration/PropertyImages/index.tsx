@@ -37,13 +37,14 @@ export const PropertyImages = memo(
           properties
         </p>
         <EntityUploader
+          type="image"
           entityId={id}
-          images={images}
+          files={images}
           min={minVisible}
           onDelete={onDelete}
           onUpload={onUpload}
           className="attachment-list"
-          imageType={GradiumImageType.PropertyImage}
+          fileType={GradiumImageType.PropertyImage}
         />
       </Tile>
     );

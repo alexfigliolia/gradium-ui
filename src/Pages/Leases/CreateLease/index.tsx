@@ -6,21 +6,11 @@ import { DateInput } from "Components/DateInput";
 import { DropDown } from "Components/DropDown";
 import { Input } from "Components/Input";
 import { LivingSpaceDropDown } from "Components/LivingSpaceDropDown";
-import { createLease } from "GraphQL/Mutations/createLease.gql";
-import type {
-  CreateLeaseMutation,
-  CreateLeaseMutationVariables,
-  RentPaymentFrequency,
-} from "GraphQL/Types";
-import { UIClient } from "GraphQL/UIClient";
+import { AnonymousUploader } from "Components/UploaderGrid";
 import { Clock } from "Icons/Clock";
 import { Price } from "Icons/Price";
 import { creating, Leases, scopedUnit, useLeases } from "State/Leases";
-import { Properties } from "State/Properties";
-import { Scope } from "State/Scope";
-import { Dates } from "Tools/Dates";
 import { DisplayController } from "../DisplayController";
-import { Emitter } from "../EventEmitter";
 import { LeaseViewer } from "../LeaseViewer";
 import { Controller } from "./Controller";
 import { Lessees } from "./Lessees";
@@ -34,32 +24,8 @@ export const CreateLease = () => {
 
   const { loading, error, success, onSubmit } = useFormState(
     (_: FormData, setState: ILoadingStateSetter) => {
-      const { lessees, price, end, start, frequency, unit } = state;
-      const client = new UIClient({
-        setState,
-        successMessage: `Your lease has been created. ${controller.compileNames(lessees)} been notified and invited to your organization as residents`,
-      });
-      void client.executeQuery<
-        CreateLeaseMutation,
-        CreateLeaseMutationVariables
-      >(
-        createLease,
-        {
-          lessees,
-          price: parseFloat(price),
-          livingSpaceId: parseInt(unit),
-          propertyId: Properties.getState().current,
-          paymentFrequency: frequency as RentPaymentFrequency,
-          organizationId: Scope.getState().currentOrganizationId,
-          end: Dates.setTime(Dates.fromISODateString(end)).toISOString(),
-          start: Dates.setTime(Dates.fromISODateString(start)).toISOString(),
-        },
-        () => {
-          controller.resetState();
-          Leases.newLease.close();
-          Emitter.emit("refetch", undefined);
-        },
-      );
+      const operation = controller.saveLease(state);
+      void operation(setState);
     },
   );
 
@@ -138,6 +104,8 @@ export const CreateLease = () => {
           onDelete={controller.deleteLessee}
           onChange={controller.onChangeLessee}
         />
+        <h3>Upload Documents</h3>
+        <AnonymousUploader type="document" ref={controller.uploader} />
         <ActionButton loading={loading} error={!!error} success={success}>
           Create
         </ActionButton>

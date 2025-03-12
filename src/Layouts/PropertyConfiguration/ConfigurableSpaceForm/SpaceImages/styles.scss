@@ -1,41 +1,28 @@
 @use "Styles/Variables";
 
-.image-grid.space-grid {
-  padding-bottom: 0.5em;
+.space-image-grid {
   margin-bottom: -0.5em;
-  padding-top: 0.75em;
-  margin-top: -0.75em;
+  margin-top: -1em;
+  padding: 1em var(--tile-padding) 0.5em var(--tile-padding);
   min-width: calc(100% + (var(--tile-padding) * 2));
   position: relative;
   left: calc(var(--tile-padding) * -1);
   overflow-x: scroll;
-  display: flex;
-  gap: unset;
-  white-space: nowrap;
-  &>div {
-    display: inline-block;
-    margin-right: 1em;
-    width: calc(50% - (var(--tile-padding)) * 1.4);
-    @media (min-width: Variables.$small-vertical-tablet) {
-      width: calc(33.3333% - (var(--tile-padding)) * 1.2);
-    }
-    @media (min-width: Variables.$large-vertical-tablet) {
-      width: calc(33.3333% - (var(--tile-padding)));
-    }
-    @media (min-width: 1200px) {
-      margin-right: 1.25em;
-      width: calc(33.3333% - (var(--tile-padding)) * 1.1);
-    }
-    @media (min-width: 1400px) {
-      margin-right: 1em;
-      width: calc(16.66665% - (var(--tile-padding)) * 0.75);
-    }
-    &:first-of-type {
-      margin-left: var(--tile-padding);
-    }
-    &:last-of-type {
-      margin-right: var(--tile-padding);
-    }
+  display: grid;
+  grid-auto-columns: calc(50% - (var(--tile-padding) / 2));
+  grid-auto-flow: column;
+  gap: var(--tile-padding);
+  @media (min-width: Variables.$small-vertical-tablet) {
+    grid-auto-columns: calc(33.3333% - (var(--tile-padding) * 0.66666));
+  }
+  @media (min-width: 1200px) {
+    grid-auto-columns: calc(25% - (var(--tile-padding) * 0.75));
+  }
+  @media (min-width: 1400px) {
+    grid-auto-columns: calc(20% - var(--tile-padding) * 0.8);
+  }
+  @media (min-width: 1550px) {
+    grid-auto-columns: calc(16.6666% - var(--tile-padding) * 0.8333333);
   }
 }
 

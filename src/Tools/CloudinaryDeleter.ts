@@ -1,27 +1,38 @@
+import { deleteDocument } from "GraphQL/Mutations/deleteDocument.gql";
 import { deleteImage } from "GraphQL/Mutations/deleteImage.gql";
+import { saveDocument } from "GraphQL/Mutations/saveDocument.gql";
 import { saveImage } from "GraphQL/Mutations/saveImage.gql";
 import { generateDestroySignature } from "GraphQL/Queries/generateDestroySignature.gql";
 import { graphQLRequest } from "GraphQL/request";
 import type {
+  DeleteDocumentMutation,
+  DeleteDocumentMutationVariables,
   DeleteImageMutation,
   DeleteImageMutationVariables,
   DestroySignature,
   GenerateDestroySignatureQuery,
   GenerateDestroySignatureQueryVariables,
+  GradiumDocument,
+  GradiumDocumentType,
   GradiumImage,
   GradiumImageType,
+  SaveDocumentMutation,
+  SaveDocumentMutationVariables,
   SaveImageMutation,
   SaveImageMutationVariables,
 } from "GraphQL/Types";
 import { Properties } from "State/Properties";
 import { Scope } from "State/Scope";
 import { Toasts } from "State/Toasts";
-import type { CloudinaryAssetScope } from "Types/Gradium";
+import type {
+  CloudinaryDocumentScope,
+  CloudinaryImageScope,
+} from "Types/Gradium";
 
 export class CloudinaryDeleter {
   public static async deleteImage(
     image: GradiumImage,
-    scope: CloudinaryAssetScope,
+    scope: CloudinaryImageScope,
   ) {
     const { id, url } = image;
     if (!id) {
@@ -29,8 +40,8 @@ export class CloudinaryDeleter {
     }
     let resolvedImage: GradiumImage | undefined;
     try {
-      resolvedImage = await this.deleteReference(id, scope.type);
-      const destination = await this.signImage(
+      resolvedImage = await this.deleteImageReference(id, scope.type);
+      const destination = await this.signImageDeletion(
         this.toPublicID(url),
         scope.type,
       );
@@ -39,21 +50,74 @@ export class CloudinaryDeleter {
       return image;
     } catch (error) {
       if (resolvedImage) {
-        void this.restoreReference(resolvedImage.url, scope);
+        void this.restoreImageReference(resolvedImage.url, scope);
       }
       this.toastError();
     }
   }
 
-  public static async rollBackImage(url: string, type: GradiumImageType) {
-    const destination = await this.signImage(this.toPublicID(url), type);
+  public static async deleteDocument(
+    file: GradiumDocument,
+    scope: CloudinaryDocumentScope,
+  ) {
+    const { id, url } = file;
+    if (!id) {
+      return;
+    }
+    let resolvedDocument: GradiumDocument | undefined;
+    try {
+      resolvedDocument = await this.deleteDocumentReference(id, scope.type);
+      const destination = await this.signDocumentDeletion(
+        this.toPublicID(url),
+        scope.type,
+      );
+      await this.deleteFromCloudinary(destination);
+      Toasts.success("Your document has been deleted");
+      return file;
+    } catch (error) {
+      if (resolvedDocument) {
+        void this.restoreDocumentReference(
+          resolvedDocument.url,
+          resolvedDocument.thumbnail,
+          scope,
+        );
+      }
+      this.toastError();
+    }
+  }
+
+  public static async rollBackImageDeletion(
+    url: string,
+    type: GradiumImageType,
+  ) {
+    const destination = await this.signImageDeletion(
+      this.toPublicID(url),
+      type,
+    );
     if (!destination) {
       return;
     }
     return this.deleteFromCloudinary(destination);
   }
 
-  private static async deleteReference(id: number, type: GradiumImageType) {
+  public static async rollBackDocumentDeletion(
+    url: string,
+    type: GradiumDocumentType,
+  ) {
+    const destination = await this.signDocumentDeletion(
+      this.toPublicID(url),
+      type,
+    );
+    if (!destination) {
+      return;
+    }
+    return this.deleteFromCloudinary(destination);
+  }
+
+  private static async deleteImageReference(
+    id: number,
+    type: GradiumImageType,
+  ) {
     const response = await graphQLRequest<
       DeleteImageMutation,
       DeleteImageMutationVariables
@@ -66,9 +130,25 @@ export class CloudinaryDeleter {
     return response.deleteImage;
   }
 
-  private static async restoreReference(
+  private static async deleteDocumentReference(
+    id: number,
+    type: GradiumDocumentType,
+  ) {
+    const response = await graphQLRequest<
+      DeleteDocumentMutation,
+      DeleteDocumentMutationVariables
+    >(deleteDocument, {
+      id,
+      type,
+      propertyId: Properties.getState().current,
+      organizationId: Scope.getState().currentOrganizationId,
+    });
+    return response.deleteDocument;
+  }
+
+  private static async restoreImageReference(
     url: string,
-    scope: CloudinaryAssetScope,
+    scope: CloudinaryImageScope,
   ) {
     try {
       const response = await graphQLRequest<
@@ -86,7 +166,29 @@ export class CloudinaryDeleter {
     }
   }
 
-  private static async signImage(
+  private static async restoreDocumentReference(
+    url: string,
+    thumbnail: string,
+    scope: CloudinaryDocumentScope,
+  ) {
+    try {
+      const response = await graphQLRequest<
+        SaveDocumentMutation,
+        SaveDocumentMutationVariables
+      >(saveDocument, {
+        url,
+        thumbnail,
+        ...scope,
+        propertyId: Properties.getState().current,
+        organizationId: Scope.getState().currentOrganizationId,
+      });
+      return response.saveDocument;
+    } catch (error) {
+      // silence
+    }
+  }
+
+  private static async signImageDeletion(
     publicId: string,
     imageType: GradiumImageType,
   ) {
@@ -95,6 +197,21 @@ export class CloudinaryDeleter {
       GenerateDestroySignatureQueryVariables
     >(generateDestroySignature, {
       imageType,
+      publicId,
+      organizationId: Scope.getState().currentOrganizationId,
+    });
+    return response.generateDestroySignature;
+  }
+
+  private static async signDocumentDeletion(
+    publicId: string,
+    documentType: GradiumDocumentType,
+  ) {
+    const response = await graphQLRequest<
+      GenerateDestroySignatureQuery,
+      GenerateDestroySignatureQueryVariables
+    >(generateDestroySignature, {
+      documentType,
       publicId,
       organizationId: Scope.getState().currentOrganizationId,
     });

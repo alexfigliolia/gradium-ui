@@ -11,7 +11,7 @@ export const AttachFiles = memo(
     ref: ForwardedRef<IAnonymousUploader>,
   ) {
     const classes = useClassNames("attachment-list", className);
-    return <AnonymousUploader ref={ref} className={classes} />;
+    return <AnonymousUploader type="image" ref={ref} className={classes} />;
   }),
   () => true,
 );

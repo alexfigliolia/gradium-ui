@@ -1,51 +1,59 @@
 import type { ChangeEvent, MutableRefObject, ReactNode } from "react";
 import { Component } from "react";
 import { TimedPromise } from "@figliolia/promises";
-import type { GradiumImage, GradiumImageType } from "GraphQL/Types";
+import type {
+  GradiumDocument,
+  GradiumDocumentType,
+  GradiumImage,
+  GradiumImageType,
+} from "GraphQL/Types";
 import { CloudinaryDeleter } from "Tools/CloudinaryDeleter";
 import { UploadInterface } from "Tools/UploadInterface";
-import type { GradiumImageCallback } from "Types/Cloudinary";
+import type { GradiumAsset, GradiumUploadCallback } from "Types/Cloudinary";
 import type { Callback } from "Types/Generics";
 import { Controller } from "./Controller";
-import type { ImageState } from "./ImageUploader";
-import { ImageUploader } from "./ImageUploader";
+import { FileUploader } from "./FileUploader";
+import type { IUploaderState } from "./useUploader";
 import "./styles.scss";
 
-export class EntityUploader extends Component<Props, State> {
-  public state: State;
+export class EntityUploader<T extends "image" | "document"> extends Component<
+  Props<T>,
+  State<T>
+> {
+  public state: State<T>;
   private readonly Controller = new Controller();
-  constructor(props: Props) {
+  constructor(props: Props<T>) {
     super(props);
     this.state = {
       uploading: [],
-      initialImages: EntityUploader.initialize(this.props.images),
+      initialFiles: this.initialize(this.props.files),
     };
-    const { deleteImage } = this.props;
-    if (deleteImage) {
-      deleteImage.current = (image: GradiumImage) =>
-        this.deleteImageExternal(image);
+    const { deleteFile } = this.props;
+    if (deleteFile) {
+      deleteFile.current = (file: GradiumImage | GradiumDocument) =>
+        this.deleteFileExternal(file);
     }
   }
 
-  private static initialize(images: GradiumImage[]) {
-    return images.map(img => ({ savedImage: img }));
+  private initialize(files: (GradiumImage | GradiumDocument)[]) {
+    return files.map(file => ({ savedDocument: file, type: this.props.type }));
   }
 
   public override UNSAFE_componentWillReceiveProps({
-    images,
+    files,
     entityId,
-  }: Props) {
+  }: Props<T>) {
     if (entityId !== this.props.entityId) {
       this.setState({
         uploading: [],
-        initialImages: EntityUploader.initialize(images),
+        initialFiles: this.initialize(files),
       });
     }
   }
 
   public override shouldComponentUpdate(
-    { min, className, renderItem }: Props,
-    state: State,
+    { min, className, renderItem }: Props<T>,
+    state: State<T>,
   ) {
     return (
       state !== this.state ||
@@ -63,6 +71,7 @@ export class EntityUploader extends Component<Props, State> {
         ...files.map(file => ({
           error: false,
           loading: true,
+          type: this.props.type,
           url: URL.createObjectURL(file),
         })),
       ],
@@ -70,16 +79,16 @@ export class EntityUploader extends Component<Props, State> {
   };
 
   private readonly onSuccess = (ID: string) => {
-    return (_: File, image: GradiumImage, index: number) => {
+    return (_: File, document: GradiumAsset<T>, index: number) => {
       const startIndex = this.Controller.get(ID);
       this.setState(ps => ({
         uploading: ps.uploading.map((state, i) =>
           i === index + startIndex
-            ? { ...state, loading: false, savedImage: image }
+            ? { ...state, loading: false, savedDocument: document }
             : state,
         ),
       }));
-      this.props.onUpload(image);
+      this.props.onUpload(document);
     };
   };
 
@@ -92,16 +101,21 @@ export class EntityUploader extends Component<Props, State> {
   };
 
   private async upload(e: ChangeEvent<HTMLInputElement>) {
-    const { imageType, entityId } = this.props;
+    const { fileType, entityId, type } = this.props;
     const ID = this.Controller.cache(this.state.uploading.length);
-    const uploader = new UploadInterface({
+    const uploader = new UploadInterface<T>({
+      type,
       onSuccess: this.onSuccess(ID),
       onValidFiles: this.onValidFiles,
       onError: (_, index) =>
         this.markErrorAtIndex(this.Controller.get(ID) + index, "uploading"),
     });
     try {
-      await uploader.onUpload(e, { entityId, type: imageType });
+      if (this.isImageType(fileType)) {
+        await uploader.onUploadImage(e, { entityId, type: fileType });
+      } else {
+        await uploader.onUploadDocument(e, { entityId, type: fileType });
+      }
       e.target.value = "";
     } catch (error) {
       // silence
@@ -109,22 +123,63 @@ export class EntityUploader extends Component<Props, State> {
     this.Controller.delete(ID);
   }
 
-  private TimedDeletion(image: GradiumImage) {
-    const { entityId, imageType } = this.props;
-    return new TimedPromise(
-      () => CloudinaryDeleter.deleteImage(image, { entityId, type: imageType }),
-      1500,
-    );
+  private TimedDeletion(file: GradiumImage | GradiumDocument) {
+    const { entityId, fileType } = this.props;
+    if (this.isImageFile(file) && this.isImageType(fileType)) {
+      return new TimedPromise(
+        () => CloudinaryDeleter.deleteImage(file, { entityId, type: fileType }),
+        1500,
+      );
+    }
+    if (this.isDocumentFile(file) && this.isDocumentType(fileType)) {
+      return new TimedPromise(
+        () =>
+          CloudinaryDeleter.deleteDocument(file, { entityId, type: fileType }),
+        1500,
+      );
+    }
   }
 
-  private async onDelete(index: number, image: GradiumImage, key: keyof State) {
+  private isImageFile(
+    file: GradiumImage | GradiumDocument,
+  ): file is GradiumImage {
+    return this.props.type === "image" && !!file;
+  }
+
+  private isImageType(
+    type: GradiumImageType | GradiumDocumentType,
+  ): type is GradiumImageType {
+    return this.props.type === "image" && !!type;
+  }
+
+  private isDocumentFile(
+    file: GradiumImage | GradiumDocument,
+  ): file is GradiumDocument {
+    return this.props.type === "document" && !!file;
+  }
+
+  private isDocumentType(
+    type: GradiumImageType | GradiumDocumentType,
+  ): type is GradiumDocumentType {
+    return this.props.type === "document" && !!type;
+  }
+
+  private async onDelete(
+    index: number,
+    file: GradiumImage | GradiumDocument,
+    key: keyof State<T>,
+  ) {
     try {
       this.markLoadingAtIndex(index, key);
-      const TP = this.TimedDeletion(image);
+      const TP = this.TimedDeletion(file);
+      if (!TP) {
+        throw new Error("Internal type validation failure");
+      }
       const { remainingMS } = await TP.run();
       setTimeout(() => {
-        this.props.onDelete?.(image);
-        this.spliceImage(image, key);
+        // @ts-ignore
+        this.props.onDelete?.(file);
+        this.spliceFile(file, key);
       }, remainingMS);
     } catch (error) {
       this.markErrorAtIndex(index, key);
@@ -140,8 +195,8 @@ export class EntityUploader extends Component<Props, State> {
     }
     return () => {
       const { uploading } = this.state;
-      if (uploading[index].savedImage) {
-        void this.onDelete(index, uploading[index].savedImage, "uploading");
+      if (uploading[index].savedDocument) {
+        void this.onDelete(index, uploading[index].savedDocument, "uploading");
       }
     };
   }
@@ -151,18 +206,18 @@ export class EntityUploader extends Component<Props, State> {
       return;
     }
     return () => {
-      const { initialImages } = this.state;
-      if (initialImages[index].savedImage) {
+      const { initialFiles } = this.state;
+      if (initialFiles[index].savedDocument) {
         void this.onDelete(
           index,
-          initialImages[index].savedImage,
-          "initialImages",
+          initialFiles[index].savedDocument,
+          "initialFiles",
         );
       }
     };
   }
 
-  private markErrorAtIndex(index: number, key: keyof State, error = true) {
+  private markErrorAtIndex(index: number, key: keyof State<T>, error = true) {
     this.setState(ps => ({
       ...ps,
       [key]: ps[key].map((state, i) =>
@@ -171,7 +226,7 @@ export class EntityUploader extends Component<Props, State> {
     }));
   }
 
-  private markLoadingAtIndex(index: number, key: keyof State) {
+  private markLoadingAtIndex(index: number, key: keyof State<T>) {
     this.setState(ps => ({
       ...ps,
       [key]: ps[key].map((state, i) =>
@@ -180,11 +235,14 @@ export class EntityUploader extends Component<Props, State> {
     }));
   }
 
-  private spliceImage<K extends keyof State>(image: GradiumImage, key: K) {
+  private spliceFile<K extends keyof State<T>>(
+    file: GradiumImage | GradiumDocument,
+    key: K,
+  ) {
     this.setState(ps => ({
       ...ps,
       [key]: ps[key].filter((img, i) => {
-        if (img.savedImage?.id !== image.id) {
+        if (img.savedDocument?.id !== file.id) {
           return true;
         }
         if (key === "uploading") {
@@ -203,9 +261,9 @@ export class EntityUploader extends Component<Props, State> {
     return child;
   }
 
-  private deleteImageExternal(image: GradiumImage) {
-    this.spliceImage(image, "uploading");
-    this.spliceImage(image, "initialImages");
+  private deleteFileExternal(file: GradiumImage | GradiumDocument) {
+    this.spliceFile(file, "uploading");
+    this.spliceFile(file, "initialFiles");
   }
 
   private getMinUploaders(totalLength: number, min?: number) {
@@ -219,19 +277,19 @@ export class EntityUploader extends Component<Props, State> {
   }
 
   public override render() {
-    const { uploading, initialImages } = this.state;
-    const { className = "", min } = this.props;
-    const { length } = initialImages;
+    const { uploading, initialFiles } = this.state;
+    const { className = "", min, type } = this.props;
+    const { length } = initialFiles;
     const totalLength = length + uploading.length;
     const fill = this.getMinUploaders(totalLength, min);
     return (
       <div className={`upload-grid ${className}`}>
-        {initialImages.map((image, index) =>
+        {initialFiles.map((image, index) =>
           this.renderNode(
-            <ImageUploader
+            <FileUploader
               {...image}
-              key={image.savedImage.id}
-              url={image.savedImage.url}
+              key={image.savedDocument.id}
+              url={image.savedDocument.url}
               onDelete={this.deleteInitialGenerator(index)}
             />,
             index,
@@ -239,7 +297,7 @@ export class EntityUploader extends Component<Props, State> {
         )}
         {uploading.map((state, index) =>
           this.renderNode(
-            <ImageUploader
+            <FileUploader
               key={index}
               {...state}
               onChange={this.onChange}
@@ -249,30 +307,32 @@ export class EntityUploader extends Component<Props, State> {
           ),
         )}
         {fill.map((_, i) => (
-          <ImageUploader key={i} onChange={this.onChange} />
+          <FileUploader key={i} type={type} onChange={this.onChange} />
         ))}
       </div>
     );
   }
 }
 
-interface State {
-  uploading: ImageState[];
-  initialImages: CachedImage[];
+interface State<T extends "image" | "document"> {
+  uploading: IUploaderState<T>[];
+  initialFiles: CachedImage<T>[];
 }
 
-interface Props {
+interface Props<T extends "image" | "document"> {
+  type: T;
   min?: number;
   entityId: number;
   className?: string;
-  images: GradiumImage[];
-  imageType: GradiumImageType;
-  onUpload: GradiumImageCallback;
-  onDelete?: GradiumImageCallback;
+  files: (GradiumImage | GradiumDocument)[];
+  onUpload: GradiumUploadCallback<T>;
+  onDelete?: GradiumUploadCallback<T>;
   renderItem?: Callback<[ReactNode, number], ReactNode>;
-  deleteImage?: MutableRefObject<GradiumImageCallback | undefined>;
+  deleteFile?: MutableRefObject<GradiumUploadCallback<T> | undefined>;
+  fileType: T extends "image" ? GradiumImageType : GradiumDocumentType;
 }
 
-interface CachedImage extends Omit<ImageState, "savedImage"> {
-  savedImage: GradiumImage;
+interface CachedImage<T extends "image" | "document">
+  extends Omit<IUploaderState<T>, "savedDocument"> {
+  savedDocument: GradiumImage | GradiumDocument;
 }

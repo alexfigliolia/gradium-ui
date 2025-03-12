@@ -6,7 +6,7 @@ import type { GradiumImage } from "GraphQL/Types";
 import { CloudinaryDeleter } from "Tools/CloudinaryDeleter";
 import { CloudinaryUploader } from "Tools/CloudinaryUploader";
 import type { Callback } from "Types/Generics";
-import type { CloudinaryAssetScope } from "Types/Gradium";
+import type { CloudinaryImageScope } from "Types/Gradium";
 import type { IImageUploader } from "./ImageUploader";
 
 export interface IState {
@@ -26,8 +26,8 @@ export class Controller {
   }
 
   public static DEV_WARN(
-    args: Partial<CloudinaryAssetScope>,
-  ): args is CloudinaryAssetScope {
+    args: Partial<CloudinaryImageScope>,
+  ): args is CloudinaryImageScope {
     const { type, entityId } = args;
     if (!type || !entityId) {
       if (import.meta.env.DEV) {
@@ -43,7 +43,7 @@ export class Controller {
 
   public readonly onUpload = async (
     e: ChangeEvent<HTMLInputElement>,
-    scope: CloudinaryAssetScope,
+    scope: CloudinaryImageScope,
   ) => {
     this.activateLoader();
     const uploader = new CloudinaryUploader(urls => {
@@ -59,7 +59,7 @@ export class Controller {
     this.setTemporaryImage(null);
   };
 
-  public deleteImage(image: GradiumImage, scope: CloudinaryAssetScope) {
+  public deleteImage(image: GradiumImage, scope: CloudinaryImageScope) {
     this.activateLoader();
     return CloudinaryDeleter.deleteImage(image, scope)
       .then(img => img)

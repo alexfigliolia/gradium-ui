@@ -48,12 +48,13 @@ export const AttachmentList = memo(function AttachmentList({
   return (
     <Fragment>
       <EntityUploader
-        images={images}
+        type="image"
+        files={images}
         entityId={entityId}
         onUpload={onUpload}
-        imageType={imageType}
+        fileType={imageType}
         renderItem={renderItem}
-        deleteImage={deleteImage}
+        deleteFile={deleteImage}
         className="attachment-list"
       />
       <ImageViewer
