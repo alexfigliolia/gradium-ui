@@ -19,7 +19,7 @@ export const AttachmentList = memo(function AttachmentList({
 }: Props) {
   const controller = useRef<Controller>();
   const [viewerOpen, viewerToggle] = useToggle();
-  const deleteImage = useRef<GradiumImageCallback | undefined>();
+  const deleteImage = useRef<GradiumImageCallback>(null);
 
   const onDeleteImage = useCallback(
     (image: GradiumImage) => {

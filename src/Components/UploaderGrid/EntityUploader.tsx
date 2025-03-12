@@ -1,4 +1,4 @@
-import type { ChangeEvent, MutableRefObject, ReactNode } from "react";
+import type { ChangeEvent, ReactNode, RefObject } from "react";
 import { Component } from "react";
 import { TimedPromise } from "@figliolia/promises";
 import type {
@@ -28,10 +28,13 @@ export class EntityUploader<T extends "image" | "document"> extends Component<
       uploading: [],
       initialFiles: this.initialize(this.props.files),
     };
-    const { deleteFile } = this.props;
+    const { deleteFile, uploadFile } = this.props;
     if (deleteFile) {
       deleteFile.current = (file: GradiumImage | GradiumDocument) =>
         this.deleteFileExternal(file);
+    }
+    if (uploadFile) {
+      uploadFile.current = this.onChange;
     }
   }
 
@@ -327,8 +330,9 @@ interface Props<T extends "image" | "document"> {
   files: (GradiumImage | GradiumDocument)[];
   onUpload: GradiumUploadCallback<T>;
   onDelete?: GradiumUploadCallback<T>;
+  deleteFile?: RefObject<GradiumUploadCallback<T>>;
   renderItem?: Callback<[ReactNode, number], ReactNode>;
-  deleteFile?: MutableRefObject<GradiumUploadCallback<T> | undefined>;
+  uploadFile?: RefObject<Callback<[ChangeEvent<HTMLInputElement>]>>;
   fileType: T extends "image" ? GradiumImageType : GradiumDocumentType;
 }
 
