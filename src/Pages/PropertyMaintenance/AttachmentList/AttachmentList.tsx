@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Fragment, memo, useCallback, useRef } from "react";
 import type { Controller } from "Components/TouchSlider";
-import { EntityUploader } from "Components/UploaderGrid";
+import { EntityImageUploader } from "Components/UploaderGrid";
 import type { GradiumImage } from "GraphQL/Types";
 import type { GradiumImageType } from "GraphQL/Types";
 import { useToggle } from "Hooks/useToggle";
@@ -19,7 +19,7 @@ export const AttachmentList = memo(function AttachmentList({
 }: Props) {
   const controller = useRef<Controller>();
   const [viewerOpen, viewerToggle] = useToggle();
-  const deleteImage = useRef<GradiumImageCallback>(null);
+  const deleteImage = useRef<GradiumImageCallback | undefined>();
 
   const onDeleteImage = useCallback(
     (image: GradiumImage) => {
@@ -47,12 +47,11 @@ export const AttachmentList = memo(function AttachmentList({
 
   return (
     <Fragment>
-      <EntityUploader
-        type="image"
+      <EntityImageUploader
         files={images}
+        type={imageType}
         entityId={entityId}
         onUpload={onUpload}
-        fileType={imageType}
         renderItem={renderItem}
         deleteFile={deleteImage}
         className="attachment-list"

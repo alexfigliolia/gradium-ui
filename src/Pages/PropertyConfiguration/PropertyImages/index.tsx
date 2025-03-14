@@ -2,7 +2,7 @@ import type { ChangeEvent } from "react";
 import { memo, useCallback, useRef } from "react";
 import { Tile } from "Components/Tile";
 import { Uploader } from "Components/Uploader";
-import { EntityUploader } from "Components/UploaderGrid";
+import { EntityImageUploader } from "Components/UploaderGrid";
 import { type GradiumImage, GradiumImageType } from "GraphQL/Types";
 import { ImagePlaceholder } from "Icons/ImagePlaceholder";
 import { currentProperty, Properties, useProperties } from "State/Properties";
@@ -15,7 +15,7 @@ export const PropertyImages = memo(
   function PropertyImages(_: Propless) {
     const minVisible = useMinSlots();
     const { id, images } = useProperties(currentProperty);
-    const pushFile = useRef<Callback<[ChangeEvent<HTMLInputElement>]>>(null);
+    const pushFile = useRef<Callback<[ChangeEvent<HTMLInputElement>]>>();
 
     const uploadFile = useCallback((e: ChangeEvent<HTMLInputElement>) => {
       pushFile.current?.(e);
@@ -47,8 +47,7 @@ export const PropertyImages = memo(
         <Uploader multiple accept="image/*" onChange={uploadFile}>
           Upload Photos
         </Uploader>
-        <EntityUploader
-          type="image"
+        <EntityImageUploader
           entityId={id}
           files={images}
           min={minVisible}
@@ -56,7 +55,7 @@ export const PropertyImages = memo(
           onUpload={onUpload}
           uploadFile={pushFile}
           className="attachment-list"
-          fileType={GradiumImageType.PropertyImage}
+          type={GradiumImageType.PropertyImage}
         />
       </Tile>
     );

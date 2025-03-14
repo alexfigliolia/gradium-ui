@@ -6,7 +6,7 @@ import { DateInput } from "Components/DateInput";
 import { DropDown } from "Components/DropDown";
 import { Input } from "Components/Input";
 import { LivingSpaceDropDown } from "Components/LivingSpaceDropDown";
-import { AnonymousUploader } from "Components/UploaderGrid";
+import { AnonymousDocumentUploader } from "Components/UploaderGrid";
 import { Clock } from "Icons/Clock";
 import { Price } from "Icons/Price";
 import { creating, Leases, scopedUnit, useLeases } from "State/Leases";
@@ -105,7 +105,7 @@ export const CreateLease = () => {
           onChange={controller.onChangeLessee}
         />
         <h3>Upload Documents</h3>
-        <AnonymousUploader type="document" ref={controller.uploader} />
+        <AnonymousDocumentUploader ref={controller.uploader} />
         <ActionButton loading={loading} error={!!error} success={success}>
           Create
         </ActionButton>

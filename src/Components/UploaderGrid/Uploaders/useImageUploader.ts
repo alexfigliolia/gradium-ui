@@ -1,15 +1,14 @@
 import { useEffect, useMemo, useRef } from "react";
 import { useClassNames } from "@figliolia/classnames";
-import type { GradiumDocument, GradiumImage } from "GraphQL/Types";
 import type { Callback } from "Types/Generics";
+import type { IUploaderState } from "../types";
 
-export const useUploader = <T extends "image" | "document">({
-  type,
+export const useImageUploader = ({
   url,
   error,
   loading,
   savedDocument,
-}: IUploaderState<T>) => {
+}: IUploaderState) => {
   const fadeLoader = useRef<Callback<[boolean]>>(null);
 
   useEffect(() => {
@@ -25,7 +24,6 @@ export const useUploader = <T extends "image" | "document">({
     loading: !!loading,
     error: !!error,
     saved: !!savedDocument,
-    documentUploader: type === "document",
   });
 
   const style = useMemo(
@@ -33,13 +31,6 @@ export const useUploader = <T extends "image" | "document">({
       url ? { background: `url(${url}) no-repeat center / cover` } : undefined,
     [url],
   );
+
   return { classes, style, disabled, fadeLoader };
 };
-
-export interface IUploaderState<T extends "image" | "document"> {
-  type: T;
-  url?: string;
-  error?: boolean;
-  loading?: boolean;
-  savedDocument?: GradiumDocument | GradiumImage;
-}

@@ -1,3 +1,4 @@
-export * from "./AnonymousUploader";
-export * from "./EntityUploader";
-export * from "./FileUploader";
+export * from "./AnonymousDocumentUploader";
+export * from "./AnonymousImageUploader";
+export * from "./EntityImageUploader";
+export * from "./types";

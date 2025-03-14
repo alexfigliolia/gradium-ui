@@ -17,7 +17,6 @@ import {
   type Lease,
   type RentPaymentFrequency,
 } from "GraphQL/Types";
-import { Leases } from "State/Leases";
 import { Properties } from "State/Properties";
 import { Scope } from "State/Scope";
 import { CloudinaryUploader } from "Tools/CloudinaryUploader";
@@ -55,7 +54,7 @@ export class Controller {
         setState("error", true);
       } finally {
         this.resetState();
-        Leases.newLease.close();
+        // Leases.newLease.close();
         Emitter.emit("refetch", undefined);
       }
     };

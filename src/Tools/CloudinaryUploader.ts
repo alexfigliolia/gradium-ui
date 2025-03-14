@@ -120,7 +120,7 @@ export class CloudinaryUploader {
     notify = true,
   }: UploadConfig<"image">) {
     try {
-      const url = await this.saveImageToCloudinary(file, signature);
+      const url = await this.toCloudinary(file, signature);
       const image = await this.saveImage(url, scope);
       if (notify) {
         Toasts.success(`<strong>${file.name}</strong> uploaded successfully!`);
@@ -140,15 +140,16 @@ export class CloudinaryUploader {
     notify = true,
   }: UploadConfig<"document">) {
     try {
-      const { url, thumbnail } = await this.saveDocumentToCloudinary(
-        file,
-        signature,
-      );
-      const image = await this.saveDocument(url, thumbnail, scope);
+      const url = await this.toCloudinary(file, signature);
+      const thumbnail = `${url.replace("/upload/", "/upload/c_thumb,h_200,w_200/").slice(0, -3)}png`;
+      console.log({ url, thumbnail });
+      //c_thumb,h_500,w_800/FamilyDocs_10_03_2024__18_06_23
+      // "https://res.cloudinary.com/socialapps1991/image/upload/v1741803573/gradium/lease_documents/frpjdxm4xprwiumup8ee.pdf"
+      const document = await this.saveDocument(url, thumbnail, scope);
       if (notify) {
         Toasts.success(`<strong>${file.name}</strong> uploaded successfully!`);
       }
-      return image;
+      return document;
     } catch (error) {
       Toasts.error(
         `Something went wrong while uploading <strong>${file.name}</strong>. Please try again`,
@@ -239,10 +240,7 @@ export class CloudinaryUploader {
     }
   }
 
-  public static async saveImageToCloudinary(
-    file: File,
-    destination: UploadSignature,
-  ) {
+  public static async toCloudinary(file: File, destination: UploadSignature) {
     const { name, __typename: _, ...rest } = destination;
     const data = new FormData();
     data.append("file", file);
@@ -262,35 +260,6 @@ export class CloudinaryUploader {
       throw json;
     }
     return json.secure_url as string;
-  }
-
-  public static async saveDocumentToCloudinary(
-    file: File,
-    destination: UploadSignature,
-  ) {
-    const { name, __typename: _, ...rest } = destination;
-    const data = new FormData();
-    data.append("file", file);
-    for (const K in rest) {
-      const key = K as keyof Omit<UploadSignature, "__typename" | "name">;
-      data.append(key, rest[key].toString());
-    }
-    const response = await fetch(
-      `https://api.cloudinary.com/v1_1/${name}/image/upload`,
-      {
-        method: "POST",
-        body: data,
-      },
-    );
-    const json = await response.json();
-    console.log("UPLOAD", json);
-    if (!("secure_url" in json)) {
-      throw json;
-    }
-    return {
-      url: json.secure_url as string,
-      thumbnail: json.secure_thumbnail_url as string,
-    };
   }
 
   private static validateEvent(e: ChangeEvent<HTMLInputElement>) {

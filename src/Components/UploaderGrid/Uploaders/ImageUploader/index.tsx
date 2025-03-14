@@ -1,20 +1,18 @@
 import type { ChangeEvent, ForwardedRef } from "react";
-import { forwardRef, memo, useMemo } from "react";
+import { forwardRef, useMemo } from "react";
 import { useClassNames } from "@figliolia/classnames";
 import { Closer } from "Components/Closer";
 import { FadingLoader } from "Components/FadingLoader";
 import { Uploader } from "Components/Uploader";
-import { Document } from "Icons/Document";
+import type { IUploaderState } from "Components/UploaderGrid";
 import { Error } from "Icons/Error";
 import { ImagePlaceholder } from "Icons/ImagePlaceholder";
 import type { Callback } from "Types/Generics";
-import type { IUploaderState } from "../useUploader";
-import { useUploader } from "../useUploader";
+import { useImageUploader } from "../useImageUploader";
 import "./styles.scss";
 
-function FileUploaderComponent<T extends "image" | "document">(
+export const ImageUploader = forwardRef(function ImageUploader(
   {
-    type,
     loading = false,
     error = false,
     url = "",
@@ -22,26 +20,15 @@ function FileUploaderComponent<T extends "image" | "document">(
     onChange,
     onDelete,
     savedDocument,
-  }: Props<T>,
+  }: Props,
   ref: ForwardedRef<Callback>,
 ) {
-  const { classes, style, disabled, fadeLoader } = useUploader({
+  const { classes, style, disabled, fadeLoader } = useImageUploader({
     url,
-    type,
     error,
     loading,
     savedDocument,
   });
-
-  const accept = useMemo(
-    () => (type === "image" ? "image/*" : "document/pdf"),
-    [type],
-  );
-
-  const Placeholder = useMemo(
-    () => (type === "image" ? ImagePlaceholder : Document),
-    [type],
-  );
 
   const uploadDisabled = useMemo(
     () => !!isDisabled || disabled,
@@ -55,16 +42,16 @@ function FileUploaderComponent<T extends "image" | "document">(
       multiple
       ref={ref}
       style={style}
-      accept={accept}
+      accept="image/*"
       onChange={onChange}
       className={classNames}
       disabled={uploadDisabled}>
       {savedDocument && onDelete && !isDisabled && (
-        <Closer onClick={onDelete} aria-label={`delete ${type}`} />
+        <Closer onClick={onDelete} aria-label="Delete image" />
       )}
       <div className="upload-action">
-        <Placeholder aria-hidden />
-        <p aria-hidden={disabled}>Upload {type}</p>
+        <ImagePlaceholder aria-hidden />
+        <p aria-hidden={disabled}>Upload Image</p>
       </div>
       <div className="upload-pending">
         <FadingLoader ref={fadeLoader} initialState={!loading} />
@@ -77,13 +64,9 @@ function FileUploaderComponent<T extends "image" | "document">(
       </div>
     </Uploader>
   );
-}
+});
 
-export const FileUploader = memo(forwardRef(FileUploaderComponent));
-
-export interface Props<T extends "image" | "document">
-  extends IUploaderState<T> {
-  type: T;
+export interface Props extends IUploaderState {
   disabled?: boolean;
   onDelete?: Callback;
   onChange?: Callback<[ChangeEvent<HTMLInputElement>]>;

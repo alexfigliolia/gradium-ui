@@ -1,6 +1,6 @@
 import { AutoIncrementingID } from "@figliolia/event-emitter";
 
-export class Controller {
+export class InstanceTracker {
   private readonly IDs = new AutoIncrementingID();
   private readonly mutations = new Map<string, number>();
 
