@@ -68,7 +68,7 @@ export abstract class EntityController<
     if (min === undefined) {
       length = 1;
     } else {
-      length = totalLength % min === 0 ? min : Math.max(1, min - totalLength);
+      length = Math.max(1, min - totalLength);
     }
     return new Array(length).fill(null);
   }

@@ -9,7 +9,7 @@ import {
 import type { Controller } from "Components/CloudinaryImageInterface";
 import { CloudinaryImageInterface } from "Components/CloudinaryImageInterface";
 import type { GradiumImage, GradiumImageType } from "GraphQL/Types";
-import { CSFContext } from "../../Context";
+import { CSFContext } from "../Context";
 
 export const Image = memo(function Image({ type, image }: Props) {
   const loading = useRef(false);
